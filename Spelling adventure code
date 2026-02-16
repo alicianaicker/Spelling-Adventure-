@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Spelling Adventure 🎯 Master Your Words</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Inter:wght@400;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .comic-font {
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s infinite;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .word-card {
+            transition: all 0.3s ease;
+        }
+        
+        .word-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            position: absolute;
+            animation: confetti 5s ease-in-out infinite;
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+        
+        .progress-ring {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .celebration {
+            animation: celebration 0.5s ease-in-out;
+        }
+        
+        @keyframes celebration {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .word-badge {
+            transition: all 0.2s ease;
+        }
+        
+        .word-badge:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: currentColor;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .streak-flame {
+            filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.5));
+        }
+        
+        .achievement-unlock {
+            animation: unlock 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes unlock {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 min-h-screen relative overflow-x-hidden">
+    <!-- Animated background elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-yellow-300 opacity-10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-300 opacity-10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div id="app" class="relative z-10"></div>
+
+    <!-- Toast notification container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <script>
+        // ==================== ADVANCED STATE MANAGEMENT ====================
+        const store = {
+            state: {
+                mode: 'home',
+                gameState: 'setup',
+                studentName: '',
+                words: [],
+                currentIndex: 0,
+                userAnswer: '',
+                score: 0,
+                showAnswer: false,
+                answered: false,
+                correctAnswers: [],
+                streak: 0,
+                bestStreak: parseInt(localStorage.getItem('bestStreak') || '0'),
+                totalWords: parseInt(localStorage.getItem('totalWords') || '0'),
+                testResults: JSON.parse(localStorage.getItem('testResults') || '[]'),
+                showHint: false,
+                achievements: JSON.parse(localStorage.getItem('achievements') || '[]'),
+                soundEnabled: localStorage.getItem('soundEnabled') !== 'false',
+                darkMode: localStorage.getItem('darkMode') === 'true',
+                volume: parseFloat(localStorage.getItem('volume') || '1'),
+                typingProgress: 0,
+                timeRemaining: null,
+                startTime: null,
+                wordHistory: [],
+                favoriteWords: [],
+                lastPlayed: localStorage.getItem('lastPlayed'),
+                dailyGoal: parseInt(localStorage.getItem('dailyGoal') || '10'),
+                dailyProgress: parseInt(localStorage.getItem('dailyProgress') || '0'),
+                lastDailyReset: localStorage.getItem('lastDailyReset') || new Date().toDateString()
+            },
+
+            // Reactive updates with middleware
+            set(key, value) {
+                const oldValue = this.state[key];
+                this.state[key] = value;
+                this.middleware(key, value, oldValue);
+                this.saveToStorage(key, value);
+                this.render();
+            },
+
+            middleware(key, newVal, oldVal) {
+                // Achievement checks
+                if (key === 'streak' && newVal >= 5 && !this.state.achievements.includes('streak_5')) {
+                    this.unlockAchievement('streak_5', '🔥 Hot Streak!', 'Get 5 words correct in a row');
+                }
+                if (key === 'streak' && newVal >= 10 && !this.state.achievements.includes('streak_10')) {
+                    this.unlockAchievement('streak_10', '⚡ On Fire!', 'Get 10 words correct in a row');
+                }
+                if (key === 'totalWords' && newVal >= 50 && !this.state.achievements.includes('word_master_50')) {
+                    this.unlockAchievement('word_master_50', '📚 Word Novice', 'Spell 50 words correctly');
+                }
+                if (key === 'totalWords' && newVal >= 100 && !this.state.achievements.includes('word_master_100')) {
+                    this.unlockAchievement('word_master_100', '🎓 Word Scholar', 'Spell 100 words correctly');
+                }
+                if (key === 'totalWords' && newVal >= 500 && !this.state.achievements.includes('word_master_500')) {
+                    this.unlockAchievement('word_master_500', '👑 Word Master', 'Spell 500 words correctly');
+                }
+
+                // Daily progress tracking
+                if (key === 'score' && newVal > oldVal) {
+                    this.checkDailyReset();
+                    this.state.dailyProgress = Math.min(this.state.dailyProgress + 1, this.state.dailyGoal);
+                    localStorage.setItem('dailyProgress', this.state.dailyProgress);
+                    
+                    if (this.state.dailyProgress === this.state.dailyGoal && !this.state.achievements.includes('daily_goal')) {
+                        this.unlockAchievement('daily_goal', '🎯 Goal Crusher', 'Complete your daily goal');
+                    }
+                }
+            },
+
+            unlockAchievement(id, title, description) {
+                if (!this.state.achievements.includes(id)) {
+                    this.state.achievements.push(id);
+                    localStorage.setItem('achievements', JSON.stringify(this.state.achievements));
+                    this.showToast(`🏆 Achievement Unlocked: ${title}`, 'achievement');
+                    this.playSound('achievement');
+                }
+            },
+
+            saveToStorage(key, value) {
+                if (['bestStreak', 'totalWords', 'testResults', 'achievements', 'soundEnabled', 'darkMode', 'volume', 'dailyGoal', 'dailyProgress', 'lastDailyReset'].includes(key)) {
+                    localStorage.setItem(key, typeof value === 'object' ? JSON.stringify(value) : value);
+                }
+            },
+
+            checkDailyReset() {
+                const today = new Date().toDateString();
+                if (this.state.lastDailyReset !== today) {
+                    this.state.dailyProgress = 0;
+                    this.state.lastDailyReset = today;
+                    localStorage.setItem('dailyProgress', '0');
+                    localStorage.setItem('lastDailyReset', today);
+                }
+            },
+
+            // ==================== ADVANCED HINT SYSTEM ====================
+            getHint(word) {
+                word = word.toLowerCase().trim();
+                
+                // Check for homophones
+                const homophones = {
+                    'there': 'Their house is over there, but they\'re not home.',
+                    'their': 'Their house is over there, but they\'re not home.',
+                    'they\'re': 'Their house is over there, but they\'re not home.',
+                    'your': 'You\'re going to love your new book.',
+                    'you\'re': 'You\'re going to love your new book.',
+                    'its': 'The dog chased its tail.',
+                    'it\'s': 'It\'s a beautiful day.',
+                    'to': 'I want to go to the store too.',
+                    'too': 'I want to go to the store too.',
+                    'two': 'I want to go to the store too.'
+                };
+                
+                if (homophones[word]) {
+                    return homophones[word];
+                }
+
+                // Generate dynamic sentence based on word patterns
+                const patterns = [
+                    // Action words
+                    { pattern: /ing$/, template: 'I am _____ right now.', type: 'action' },
+                    { pattern: /ed$/, template: 'Yesterday, I _____.', type: 'past' },
+                    { pattern: /er$|or$/, template: 'The _____ is here.', type: 'person' },
+                    { pattern: /ly$/, template: 'She moved _____.', type: 'adverb' },
+                    
+                    // Common categories
+                    { pattern: /(cat|dog|fish|bird)$/, template: 'The _____ is my pet.', type: 'pet' },
+                    { pattern: /(apple|banana|orange|grape)$/, template: 'I ate an _____ today.', type: 'fruit' },
+                    { pattern: /(car|bus|train|plane)$/, template: 'The _____ is fast.', type: 'vehicle' },
+                    { pattern: /(red|blue|green|yellow)$/, template: 'The _____ color is bright.', type: 'color' },
+                    { pattern: /(happy|sad|angry|excited)$/, template: 'I feel _____ today.', type: 'emotion' },
+                    { pattern: /(big|small|tall|short)$/, template: 'It is very _____.', type: 'size' },
+                    { pattern: /(run|jump|swim|fly)$/, template: 'I love to _____ every day.', type: 'action' }
+                ];
+
+                for (let p of patterns) {
+                    if (p.pattern.test(word)) {
+                        return p.template.replace('_____', word);
+                    }
+                }
+
+                // Educational hints based on word structure
+                const educationalHints = [
+                    `The word "${word}" has ${word.length} letters.`,
+                    `"${word}" starts with the letter '${word[0]}' and ends with '${word[word.length-1]}'.`,
+                    `Can you find the letter '${word[Math.floor(word.length/2)]}' in the middle?`,
+                    `"${word}" rhymes with words like ${this.getRhymeHint(word)}.`,
+                    `The word "${word}" is a ${this.getWordType(word)}.`
+                ];
+
+                // Simple contextual sentences
+                const contexts = [
+                    `Can you spell "${word}"?`,
+                    `Listen carefully: ${word}.`,
+                    `Now it's your turn to spell: ${word}.`,
+                    `The word is: ${word}.`,
+                    `Try your best to spell "${word}" correctly!`
+                ];
+
+                // Combine both types for richer hints
+                return Math.random() > 0.5 
+                    ? educationalHints[Math.floor(Math.random() * educationalHints.length)]
+                    : contexts[Math.floor(Math.random() * contexts.length)];
+            },
+
+            getRhymeHint(word) {
+                const commonRhymes = {
+                    'cat': 'bat, hat, mat',
+                    'dog': 'frog, log, cog',
+                    'sun': 'fun, run, bun',
+                    'ball': 'tall, fall, call'
+                };
+                return commonRhymes[word] || 'other words you know';
+            },
+
+            getWordType(word) {
+                if (word.match(/(ing|ed|s)$/)) return 'action word';
+                if (word.match(/(er|or|ist)$/)) return 'person who does something';
+                if (word.match(/(ly)$/)) return 'describing word';
+                if (word.match(/(tion|sion|ness|ment)$/)) return 'thing or idea';
+                return 'word';
+            },
+
+            // ==================== AUDIO SYSTEM ====================
+            playSound(type) {
+                if (!this.state.soundEnabled) return;
+                
+                const sounds = {
+                    correct: { text: '✅ Great job!', rate: 1 },
+                    incorrect: { text: '💪 Try again!', rate: 0.8 },
+                    achievement: { text: '🏆 Achievement unlocked!', rate: 1.2 },
+                    click: { text: 'click', rate: 1 },
+                    complete: { text: '🎉 Test complete! Well done!', rate: 1 },
+                    hint: { text: '💡 Here\'s a hint', rate: 0.9 }
+                };
+
+                if ('speechSynthesis' in window && sounds[type]) {
+                    speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(sounds[type].text);
+                    utterance.rate = sounds[type].rate * this.state.volume;
+                    utterance.pitch = 1;
+                    utterance.volume = this.state.volume;
+                    speechSynthesis.speak(utterance);
+                }
+            },
+
+            speakWord(word, rate = 0.7) {
+                if ('speechSynthesis' in window) {
+                    speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(word);
+                    utterance.rate = rate * this.state.volume;
+                    utterance.pitch = 1.1;
+                    utterance.volume = this.state.volume;
+                    
+                    // Try to get a clear American voice
+                    const voices = speechSynthesis.getVoices();
+                    const preferredVoice = voices.find(v => v.lang.includes('en-US') && v.name.includes('Google')) 
+                        || voices.find(v => v.lang.includes('en-US'));
+                    if (preferredVoice) utterance.voice = preferredVoice;
+                    
+                    speechSynthesis.speak(utterance);
+                }
+            },
+
+            speakHint(word) {
+                const hint = this.getHint(word);
+                if ('speechSynthesis' in window) {
+                    speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(hint);
+                    utterance.rate = 0.6 * this.state.volume;
+                    utterance.pitch = 1.1;
+                    utterance.volume = this.state.volume;
+                    speechSynthesis.speak(utterance);
+                }
+                this.showToast('💡 Hint spoken! Listen carefully...', 'info');
+            },
+
+            // ==================== UI HELPERS ====================
+            showToast(message, type = 'info') {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                
+                const colors = {
+                    success: 'bg-green-500',
+                    error: 'bg-red-500',
+                    info: 'bg-blue-500',
+                    achievement: 'bg-yellow-500 animate-bounce'
+                };
+                
+                toast.className = `${colors[type]} text-white px-6 py-4 rounded-2xl shadow-2xl transform transition-all duration-500 translate-x-full opacity-0 flex items-center space-x-3 max-w-md`;
+                toast.innerHTML = `<span>${message}</span>`;
+                
+                container.appendChild(toast);
+                
+                // Animate in
+                setTimeout(() => {
+                    toast.classList.remove('translate-x-full', 'opacity-0');
+                }, 100);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    toast.classList.add('translate-x-full', 'opacity-0');
+                    setTimeout(() => toast.remove(), 500);
+                }, 3000);
+            },
+
+            // ==================== RENDERING ENGINE ====================
+            render() {
+                const app = document.getElementById('app');
+                
+                const screens = {
+                    home: () => this.renderHome(),
+                    parent: () => this.renderParent(),
+                    student: () => {
+                        if (this.state.gameState === 'setup') return this.renderSetup();
+                        if (this.state.gameState === 'playing') return this.renderPlaying();
+                        if (this.state.gameState === 'results') return this.renderResults();
+                    }
+                };
+
+                app.innerHTML = screens[this.state.mode]();
+                this.attachEventListeners();
+            },
+
+            renderHome() {
+                return `
+                    <div class="max-w-6xl mx-auto p-4 md:p-8 animate-float">
+                        <div class="glass-morphism rounded-3xl shadow-2xl p-8 md:p-12">
+                            <div class="text-center mb-12">
+                                <h1 class="text-6xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent comic-font animate-pulse">
+                                    Spelling Adventure 🎯
+                                </h1>
+                                <p class="text-2xl text-white/90">Master words, earn achievements, become a spelling champion!</p>
+                            </div>
+
+                            <!-- Daily Challenge Progress -->
+                            <div class="mb-8 bg-white/20 rounded-2xl p-6 backdrop-blur-sm">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-white font-bold text-lg">📅 Daily Goal: ${this.state.dailyProgress}/${this.state.dailyGoal}</span>
+                                    <span class="text-white/80">${Math.round(this.state.dailyProgress/this.state.dailyGoal*100)}%</span>
+                                </div>
+                                <div class="w-full bg-white/30 rounded-full h-4 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-green-400 to-green-600 h-4 rounded-full transition-all duration-500" 
+                                         style="width: ${(this.state.dailyProgress/this.state.dailyGoal)*100}%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Stats Grid -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                                ${this.renderStatCard('🔥 Best Streak', this.state.bestStreak, 'from-yellow-400 to-orange-500', '⚡')}
+                                ${this.renderStatCard('📚 Words Mastered', this.state.totalWords, 'from-green-400 to-emerald-500', '✅')}
+                                ${this.renderStatCard('📊 Tests Done', this.state.testResults.length, 'from-blue-400 to-indigo-500', '📝')}
+                                ${this.renderStatCard('🏆 Achievements', this.state.achievements.length, 'from-purple-400 to-pink-500', '⭐')}
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                                <button onclick="app.startLearning()" 
+                                        class="group relative overflow-hidden bg-gradient-to-r from-green-500 to-emerald-600 text-white text-2xl font-bold py-8 rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                                    <span class="relative z-10">🚀 Start Learning</span>
+                                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                                </button>
+                                <button onclick="app.openParentDashboard()" 
+                                        class="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-2xl font-bold py-8 rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                                    <span class="relative z-10">👨‍👩‍👧‍👦 Parent Dashboard</span>
+                                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                                </button>
+                            </div>
+
+                            <!-- Achievement Preview -->
+                            ${this.renderAchievementPreview()}
+
+                            <!-- Settings -->
+                            <div class="mt-8 flex justify-center space-x-4">
+                                <button onclick="app.toggleSound()" class="text-white/80 hover:text-white transition-colors text-2xl">
+                                    ${this.state.soundEnabled ? '🔊' : '🔇'}
+                                </button>
+                                <button onclick="app.toggleDarkMode()" class="text-white/80 hover:text-white transition-colors text-2xl">
+                                    ${this.state.darkMode ? '🌙' : '☀️'}
+                                </button>
+                                <input type="range" min="0" max="1" step="0.1" value="${this.state.volume}" 
+                                       onchange="app.setVolume(this.value)" class="w-24 accent-purple-500">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderStatCard(label, value, gradient, emoji) {
+                return `
+                    <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-105 hover:bg-white/30">
+                        <div class="text-4xl mb-2">${emoji}</div>
+                        <div class="text-3xl font-bold text-white">${value}</div>
+                        <div class="text-sm text-white/80 mt-2">${label}</div>
+                    </div>
+                `;
+            },
+
+            renderAchievementPreview() {
+                if (this.state.achievements.length === 0) return '';
+                
+                const achievementIcons = {
+                    'streak_5': '🔥',
+                    'streak_10': '⚡',
+                    'word_master_50': '📚',
+                    'word_master_100': '🎓',
+                    'word_master_500': '👑',
+                    'daily_goal': '🎯'
+                };
+
+                return `
+                    <div class="mt-8 p-6 bg-white/20 rounded-2xl backdrop-blur-sm">
+                        <h3 class="text-white font-bold mb-4">🏆 Recent Achievements</h3>
+                        <div class="flex flex-wrap gap-3">
+                            ${this.state.achievements.slice(-3).map(ach => `
+                                <span class="px-4 py-2 bg-yellow-400 text-yellow-900 rounded-full font-bold text-sm">
+                                    ${achievementIcons[ach] || '🏆'} ${ach.replace(/_/g, ' ')}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderPlaying() {
+                const currentWord = this.state.words[this.state.currentIndex];
+                const progress = ((this.state.currentIndex + 1) / this.state.words.length) * 100;
+
+                return `
+                    <div class="max-w-2xl mx-auto p-4 md:p-8">
+                        <div class="glass-morphism rounded-3xl shadow-2xl p-6 md:p-8">
+                            <!-- Header -->
+                            <div class="flex justify-between items-center mb-6">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-white">Hey ${this.state.studentName}! ✨</h2>
+                                    <p class="text-white/80">Keep up the great work!</p>
+                                </div>
+                                <button onclick="app.goHome()" class="px-4 py-2 bg-white/20 text-white rounded-xl hover:bg-white/30 transition-colors">
+                                    🏠 Exit
+                                </button>
+                            </div>
+
+                            <!-- Progress & Stats -->
+                            <div class="grid grid-cols-3 gap-3 mb-6">
+                                <div class="bg-white/20 rounded-xl p-3 text-center">
+                                    <div class="text-2xl font-bold text-white">${this.state.currentIndex + 1}/${this.state.words.length}</div>
+                                    <div class="text-xs text-white/80">Word</div>
+                                </div>
+                                <div class="bg-white/20 rounded-xl p-3 text-center">
+                                    <div class="text-2xl font-bold text-white">${this.state.score}</div>
+                                    <div class="text-xs text-white/80">Score</div>
+                                </div>
+                                <div class="bg-white/20 rounded-xl p-3 text-center relative">
+                                    <div class="text-2xl font-bold text-white ${this.state.streak >= 3 ? 'streak-flame' : ''}">${this.state.streak}</div>
+                                    <div class="text-xs text-white/80">Streak ${this.state.streak >= 3 ? '🔥' : ''}</div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Bar -->
+                            <div class="mb-8">
+                                <div class="w-full bg-white/30 rounded-full h-4 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-green-400 to-green-600 h-4 rounded-full transition-all duration-500 relative"
+                                         style="width: ${progress}%">
+                                        <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Main Game Area -->
+                            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6 mb-6">
+                                <div class="text-center mb-4">
+                                    <div class="text-6xl mb-3 animate-bounce-slow">🎧</div>
+                                    <p class="text-lg text-white font-bold">Listen and spell the word:</p>
+                                </div>
+
+                                <!-- Control Buttons -->
+                                <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <button onclick="app.speakWord('${currentWord}')" 
+                                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-4 rounded-xl font-bold transition-all transform hover:scale-105 flex items-center justify-center space-x-2">
+                                        <span>🔊</span>
+                                        <span>Say Word</span>
+                                    </button>
+                                    <button onclick="app.toggleHint('${currentWord}')" 
+                                            class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-4 rounded-xl font-bold transition-all transform hover:scale-105 flex items-center justify-center space-x-2">
+                                        <span>💡</span>
+                                        <span>Hint</span>
+                                    </button>
+                                </div>
+
+                                <!-- Hint Display -->
+                                ${this.state.showHint ? `
+                                    <div class="mt-4 p-4 bg-purple-900/50 rounded-xl border-2 border-purple-400">
+                                        <p class="text-white text-center italic">"${this.getHint(currentWord)}"</p>
+                                        <button onclick="app.speakHint('${currentWord}')" class="mt-3 w-full px-4 py-2 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors">
+                                            🔄 Hear Hint Again
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            <!-- Answer Input -->
+                            <div class="mb-4">
+                                <input type="text" id="answerInput" 
+                                       value="${this.state.userAnswer}"
+                                       oninput="app.updateAnswer(this.value)"
+                                       ${this.state.answered ? 'disabled' : ''}
+                                       class="w-full px-6 py-5 text-2xl text-center bg-white/90 border-4 ${this.state.answered ? 'border-gray-400' : 'border-purple-400 focus:border-pink-400'} rounded-2xl font-bold focus:outline-none transition-all"
+                                       placeholder="✏️ Type here..."
+                                       autocomplete="off" autocorrect="off" spellcheck="false">
+                                <div class="typing-cursor"></div>
+                            </div>
+
+                            <!-- Result Display -->
+                            ${this.state.showAnswer ? `
+                                <div class="p-6 rounded-2xl mb-4 text-center transform celebration ${
+                                    this.state.userAnswer.toLowerCase().trim() === currentWord 
+                                        ? 'bg-green-500/30 border-4 border-green-400' 
+                                        : 'bg-red-500/30 border-4 border-red-400'
+                                }">
+                                    <div class="text-6xl mb-2">${this.state.userAnswer.toLowerCase().trim() === currentWord ? '🎉✨' : '💪📚'}</div>
+                                    <p class="text-2xl font-bold text-white">
+                                        ${this.state.userAnswer.toLowerCase().trim() === currentWord 
+                                            ? 'Perfect! You got it right! 🌟' 
+                                            : `Correct spelling: "${currentWord}"`}
+                                    </p>
+                                    ${this.state.userAnswer.toLowerCase().trim() !== currentWord ? `
+                                        <p class="text-white/80 mt-2">Keep practicing, you'll get it next time!</p>
+                                    ` : ''}
+                                </div>
+                            ` : ''}
+
+                            <!-- Action Button -->
+                            ${!this.state.answered ? `
+                                <button onclick="app.submitAnswer()" 
+                                        class="w-full py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl font-bold rounded-2xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all shadow-xl">
+                                    ✅ Check Answer
+                                </button>
+                            ` : `
+                                <button onclick="app.nextWord()" 
+                                        class="w-full py-5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xl font-bold rounded-2xl hover:from-green-600 hover:to-emerald-600 transform hover:scale-105 transition-all shadow-xl">
+                                    ${this.state.currentIndex < this.state.words.length - 1 ? '🚀 Next Word' : '🏆 See Results'}
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderSetup() {
+                return `
+                    <div class="max-w-2xl mx-auto p-4 md:p-8">
+                        <div class="glass-morphism rounded-3xl shadow-2xl p-6 md:p-8">
+                            <div class="flex justify-between items-center mb-6">
+                                <h1 class="text-3xl font-bold text-white">📚 Setup Your Adventure</h1>
+                                <button onclick="app.goHome()" class="px-4 py-2 bg-white/20 text-white rounded-xl hover:bg-white/30">
+                                    🏠
+                                </button>
+                            </div>
+
+                            <!-- Name Input with Suggestions -->
+                            <div class="mb-6">
+                                <label class="block text-white font-bold mb-2">What's your name? 🌟</label>
+                                <input type="text" 
+                                       value="${this.state.studentName}"
+                                       oninput="app.updateName(this.value)"
+                                       class="w-full px-4 py-4 bg-white/90 border-2 border-purple-300 rounded-xl text-lg focus:border-purple-500 focus:outline-none"
+                                       placeholder="Enter your name...">
+                                <div class="mt-2 flex gap-2">
+                                    ${['Spelling Star', 'Word Champ', 'Grammar Hero'].map(name => `
+                                        <button onclick="app.updateName('${name}')" class="px-3 py-1 bg-white/20 text-white rounded-lg text-sm hover:bg-white/30">
+                                            ${name}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <!-- Word Input with Suggestions -->
+                            <div class="mb-6">
+                                <label class="block text-white font-bold mb-2">Add spelling words 📝</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="newWord" 
+                                           placeholder="Type a word..."
+                                           class="flex-1 px-4 py-4 bg-white/90 border-2 border-blue-300 rounded-xl text-lg focus:border-blue-500 focus:outline-none"
+                                           onkeypress="if(event.key==='Enter') app.addWord()">
+                                    <button onclick="app.addWord()" class="px-6 py-4 bg-blue-500 text-white rounded-xl font-bold hover:bg-blue-600 transform hover:scale-105 transition-all">
+                                        ➕ Add
+                                    </button>
+                                </div>
+
+                                <!-- Suggested Words -->
+                                <div class="mt-3">
+                                    <p class="text-white/80 text-sm mb-2">Popular words:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${['cat', 'dog', 'sun', 'run', 'big', 'red', 'hat', 'ball', 'book', 'fish'].map(word => `
+                                            <button onclick="app.addSuggestedWord('${word}')" 
+                                                    class="px-3 py-2 bg-white/30 text-white rounded-lg text-sm hover:bg-white/40 transition-colors word-badge">
+                                                ${word}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Word List with Categories -->
+                            ${this.state.words.length > 0 ? `
+                                <div class="mb-6">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <h3 class="text-white font-bold">Your Words (${this.state.words.length})</h3>
+                                        <button onclick="app.clearAllWords()" class="text-red-300 hover:text-red-400 text-sm">
+                                            Clear All
+                                        </button>
+                                    </div>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                        ${this.state.words.map((word, i) => `
+                                            <div class="bg-yellow-400/30 backdrop-blur-sm rounded-lg p-2 flex justify-between items-center group">
+                                                <span class="text-white font-bold capitalize">${word}</span>
+                                                <button onclick="app.removeWord(${i})" 
+                                                        class="text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    ❌
+                                                </button>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <!-- Start Button with Preview -->
+                            <button onclick="app.startGame()" 
+                                    ${this.state.words.length === 0 || !this.state.studentName.trim() ? 'disabled' : ''}
+                                    class="w-full py-5 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xl font-bold rounded-2xl transform hover:scale-105 transition-all shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center space-x-3">
+                                <span>🚀</span>
+                                <span>Start Adventure!</span>
+                                ${this.state.words.length > 0 ? `<span class="bg-white/30 px-3 py-1 rounded-full text-sm">${this.state.words.length} words</span>` : ''}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderResults() {
+                const percentage = Math.round((this.state.score / this.state.words.length) * 100);
+                const message = this.getEncouragementMessage(percentage);
+                const newAchievements = this.checkNewAchievements();
+
+                return `
+                    <div class="max-w-3xl mx-auto p-4 md:p-8">
+                        <div class="glass-morphism rounded-3xl shadow-2xl p-6 md:p-8">
+                            <!-- Header with Celebration -->
+                            <div class="text-center mb-8">
+                                <div class="text-8xl mb-4 animate-bounce">
+                                    ${percentage === 100 ? '🏆🌟' : percentage >= 80 ? '🎉✨' : '📚💪'}
+                                </div>
+                                <h2 class="text-4xl font-bold text-white mb-2">
+                                    ${percentage === 100 ? 'PERFECT SCORE!' : 
+                                      percentage >= 80 ? 'Excellent Work!' : 
+                                      percentage >= 60 ? 'Good Job!' : 'Great Effort!'}
+                                </h2>
+                                <p class="text-xl text-white/90">${message}</p>
+                            </div>
+
+                            <!-- Score Card -->
+                            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-8 mb-8 text-center">
+                                <div class="text-7xl font-bold text-white mb-2">${this.state.score}/${this.state.words.length}</div>
+                                <div class="text-3xl font-bold text-white/90">${percentage}%</div>
+                                
+                                <!-- Star Rating -->
+                                <div class="flex justify-center space-x-2 mt-4">
+                                    ${this.getStarRating(percentage).map(star => 
+                                        `<span class="text-3xl">${star}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+
+                            <!-- New Achievements -->
+                            ${newAchievements.length > 0 ? `
+                                <div class="mb-8 p-6 bg-yellow-400/30 rounded-2xl border-4 border-yellow-400 achievement-unlock">
+                                    <h3 class="text-2xl font-bold text-white mb-3">🏆 New Achievements!</h3>
+                                    <div class="space-y-2">
+                                        ${newAchievements.map(ach => `
+                                            <div class="bg-yellow-400/50 p-3 rounded-xl text-white font-bold">
+                                                ${ach.icon} ${ach.title} - ${ach.description}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <!-- Word Results Grid -->
+                            <h3 class="text-2xl font-bold text-white mb-4">Your Words:</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
+                                ${this.state.words.map((word, i) => `
+                                    <div class="p-4 rounded-xl ${this.state.correctAnswers.includes(i) ? 'bg-green-500/30 border-2 border-green-400' : 'bg-red-500/30 border-2 border-red-400'} word-card">
+                                        <div class="font-bold text-white capitalize mb-1">${word}</div>
+                                        <div class="text-2xl text-center">${this.state.correctAnswers.includes(i) ? '✅' : '❌'}</div>
+                                        ${!this.state.correctAnswers.includes(i) ? `
+                                            <div class="text-xs text-white/80 mt-1">Correct: ${word}</div>
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <button onclick="app.practiceAgain()" 
+                                        class="py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl font-bold rounded-2xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all">
+                                    🔄 Practice Again
+                                </button>
+                                <button onclick="app.newWords()"
+                                        class="py-5 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xl font-bold rounded-2xl hover:from-blue-600 hover:to-indigo-600 transform hover:scale-105 transition-all">
+                                    ➕ New Words
+                                </button>
+                            </div>
+
+                            <!-- Share Option -->
+                            <div class="mt-6 text-center">
+                                <button onclick="app.shareResult()" class="text-white/80 hover:text-white transition-colors">
+                                    📤 Share your progress!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            getEncouragementMessage(percentage) {
+                if (percentage === 100) return "Absolutely perfect! You're a spelling superstar! 🌟";
+                if (percentage >= 90) return "Outstanding! So close to perfection! 🎯";
+                if (percentage >= 80) return "Great work! You're really getting good at this! 💪";
+                if (percentage >= 70) return "Good job! Keep practicing to reach the next level! 📈";
+                if (percentage >= 60) return "Nice effort! Every mistake is a chance to learn! 🌱";
+                if (percentage >= 50) return "You're making progress! Keep going! 🚀";
+                return "Great effort! Remember, practice makes perfect! Keep trying! 💫";
+            },
+
+            getStarRating(percentage) {
+                const stars = [];
+                const fullStars = Math.floor(percentage / 20);
+                for (let i = 0; i < 5; i++) {
+                    if (i < fullStars) stars.push('⭐');
+                    else if (i === fullStars && percentage % 20 >= 10) stars.push('✨');
+                    else stars.push('☆');
+                }
+                return stars;
+            },
+
+            checkNewAchievements() {
+                // This would track newly unlocked achievements
+                return []; // Simplified for now
+            },
+
+            // ==================== EVENT HANDLERS ====================
+            attachEventListeners() {
+                // Any dynamic event listeners can be attached here
+            },
+
+            // Navigation
+            startLearning() { this.state.mode = 'student'; this.render(); },
+            openParentDashboard() { this.state.mode = 'parent'; this.render(); },
+            goHome() { this.state.mode = 'home'; this.render(); },
+
+            // Game actions
+            updateName(name) { this.state.studentName = name; this.render(); },
+            updateAnswer(answer) { this.state.userAnswer = answer; },
+            
+            addWord() {
+                const input = document.getElementById('newWord');
+                const word = input.value.trim().toLowerCase();
+                if (word && !this.state.words.includes(word)) {
+                    this.state.words.push(word);
+                    input.value = '';
+                    this.playSound('click');
+                    this.render();
+                } else if (this.state.words.includes(word)) {
+                    this.showToast('Word already added!', 'error');
+                }
+            },
+
+            addSuggestedWord(word) {
+                if (!this.state.words.includes(word)) {
+                    this.state.words.push(word);
+                    this.playSound('click');
+                    this.render();
+                }
+            },
+
+            removeWord(index) {
+                this.state.words.splice(index, 1);
+                this.playSound('click');
+                this.render();
+            },
+
+            clearAllWords() {
+                if (confirm('Remove all words?')) {
+                    this.state.words = [];
+                    this.render();
+                }
+            },
+
+            startGame() {
+                if (this.state.words.length > 0 && this.state.studentName.trim()) {
+                    this.state.gameState = 'playing';
+                    this.state.currentIndex = 0;
+                    this.state.score = 0;
+                    this.state.correctAnswers = [];
+                    this.state.userAnswer = '';
+                    this.state.showAnswer = false;
+                    this.state.answered = false;
+                    this.state.streak = 0;
+                    this.state.showHint = false;
+                    this.state.startTime = Date.now();
+                    this.render();
+                    setTimeout(() => this.speakWord(this.state.words[0]), 1000);
+                    this.playSound('click');
+                }
+            },
+
+            submitAnswer() {
+                const input = document.getElementById('answerInput');
+                if (input) {
+                    this.state.userAnswer = input.value;
+                }
+                this.checkAnswer();
+                this.render();
+            },
+
+            checkAnswer() {
+                const correct = this.state.userAnswer.toLowerCase().trim() === this.state.words[this.state.currentIndex];
+                if (correct) {
+                    this.state.score++;
+                    this.state.correctAnswers.push(this.state.currentIndex);
+                    this.state.streak++;
+                    this.state.totalWords++;
+                    
+                    if (this.state.streak > this.state.bestStreak) {
+                        this.state.bestStreak = this.state.streak;
+                    }
+                    
+                    this.playSound('correct');
+                    this.showToast('✅ Correct! Great job!', 'success');
+                } else {
+                    this.state.streak = 0;
+                    this.playSound('incorrect');
+                    this.showToast('❌ Not quite! Keep trying!', 'error');
+                }
+                
+                this.state.showAnswer = true;
+                this.state.answered = true;
+                
+                // Track word history
+                this.state.wordHistory.push({
+                    word: this.state.words[this.state.currentIndex],
+                    correct: correct,
+                    timestamp: new Date().toISOString()
+                });
+            },
+
+            nextWord() {
+                if (this.state.currentIndex < this.state.words.length - 1) {
+                    this.state.currentIndex++;
+                    this.state.userAnswer = '';
+                    this.state.showAnswer = false;
+                    this.state.answered = false;
+                    this.state.showHint = false;
+                    this.render();
+                    setTimeout(() => this.speakWord(this.state.words[this.state.currentIndex]), 500);
+                } else {
+                    this.finishGame();
+                }
+            },
+
+            finishGame() {
+                const timeTaken = Math.round((Date.now() - this.state.startTime) / 1000);
+                
+                const result = {
+                    studentName: this.state.studentName,
+                    date: new Date().toISOString(),
+                    words: [...this.state.words],
+                    score: this.state.score,
+                    total: this.state.words.length,
+                    percentage: Math.round((this.state.score / this.state.words.length) * 100),
+                    correctAnswers: [...this.state.correctAnswers],
+                    timeTaken: timeTaken,
+                    streak: this.state.streak
+                };
+                
+                this.state.testResults.push(result);
+                
+                this.state.gameState = 'results';
+                this.playSound('complete');
+                this.showToast('🎉 Test complete! Well done!', 'success');
+                this.render();
+            },
+
+            toggleHint(word) {
+                this.state.showHint = !this.state.showHint;
+                if (this.state.showHint) {
+                    setTimeout(() => this.speakHint(word), 200);
+                }
+                this.render();
+            },
+
+            speakWord(word) {
+                this.speakWord(word);
+            },
+
+            speakHint(word) {
+                this.speakHint(word);
+            },
+
+            practiceAgain() {
+                this.state.gameState = 'playing';
+                this.state.currentIndex = 0;
+                this.state.score = 0;
+                this.state.correctAnswers = [];
+                this.state.userAnswer = '';
+                this.state.showAnswer = false;
+                this.state.answered = false;
+                this.state.streak = 0;
+                this.state.showHint = false;
+                this.render();
+                setTimeout(() => this.speakWord(this.state.words[0]), 1000);
+            },
+
+            newWords() {
+                this.state.words = [];
+                this.state.gameState = 'setup';
+                this.render();
+            },
+
+            toggleSound() {
+                this.state.soundEnabled = !this.state.soundEnabled;
+                localStorage.setItem('soundEnabled', this.state.soundEnabled);
+                this.showToast(this.state.soundEnabled ? '🔊 Sound On' : '🔇 Sound Off', 'info');
+                this.render();
+            },
+
+            toggleDarkMode() {
+                this.state.darkMode = !this.state.darkMode;
+                localStorage.setItem('darkMode', this.state.darkMode);
+                // Apply dark mode styles
+                document.body.className = this.state.darkMode 
+                    ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 min-h-screen'
+                    : 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 min-h-screen';
+                this.render();
+            },
+
+            setVolume(value) {
+                this.state.volume = parseFloat(value);
+                localStorage.setItem('volume', value);
+            },
+
+            shareResult() {
+                const text = `I just scored ${this.state.score}/${this.state.words.length} (${Math.round(this.state.score/this.state.words.length*100)}%) on Spelling Adventure! 🎯`;
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'My Spelling Score',
+                        text: text,
+                    });
+                } else {
+                    navigator.clipboard.writeText(text);
+                    this.showToast('📋 Copied to clipboard!', 'success');
+                }
+            },
+
+            // Parent Dashboard
+            renderParent() {
+                const app = document.getElementById('app');
+                const studentStats = {};
+                
+                // Calculate statistics
+                this.state.testResults.forEach(result => {
+                    if (!studentStats[result.studentName]) {
+                        studentStats[result.studentName] = {
+                            tests: [],
+                            totalScore: 0,
+                            totalWords: 0,
+                            totalTime: 0,
+                            bestScore: 0
+                        };
+                    }
+                    studentStats[result.studentName].tests.push(result);
+                    studentStats[result.studentName].totalScore += result.score;
+                    studentStats[result.studentName].totalWords += result.total;
+                    studentStats[result.studentName].totalTime += result.timeTaken || 0;
+                    studentStats[result.studentName].bestScore = Math.max(studentStats[result.studentName].bestScore, result.percentage);
+                });
+
+                let content = `
+                    <div class="max-w-7xl mx-auto p-4 md:p-8">
+                        <div class="glass-morphism rounded-3xl shadow-2xl p-6 md:p-8">
+                            <div class="flex justify-between items-center mb-8">
+                                <h1 class="text-4xl font-bold text-white">👨‍👩‍👧‍👦 Parent Dashboard</h1>
+                                <button onclick="app.goHome()" class="px-6 py-3 bg-white/20 text-white rounded-xl hover:bg-white/30">
+                                    🏠 Home
+                                </button>
+                            </div>
+                `;
+
+                if (Object.keys(studentStats).length === 0) {
+                    content += `
+                        <div class="text-center py-16 bg-white/20 rounded-2xl">
+                            <div class="text-7xl mb-4">📊</div>
+                            <h3 class="text-3xl font-bold text-white mb-2">No Data Yet</h3>
+                            <p class="text-xl text-white/80">Complete some spelling tests to see progress!</p>
+                        </div>
+                    `;
+                } else {
+                    // Overall Statistics
+                    const totalTests = this.state.testResults.length;
+                    const avgScore = Math.round(this.state.testResults.reduce((acc, t) => acc + t.percentage, 0) / totalTests);
+                    
+                    content += `
+                        <!-- Overall Progress -->
+                        <div class="grid grid-cols-4 gap-4 mb-8">
+                            <div class="bg-green-500/30 rounded-xl p-6 text-center">
+                                <div class="text-3xl font-bold text-white">${totalTests}</div>
+                                <div class="text-white/80">Total Tests</div>
+                            </div>
+                            <div class="bg-blue-500/30 rounded-xl p-6 text-center">
+                                <div class="text-3xl font-bold text-white">${avgScore}%</div>
+                                <div class="text-white/80">Average Score</div>
+                            </div>
+                            <div class="bg-purple-500/30 rounded-xl p-6 text-center">
+                                <div class="text-3xl font-bold text-white">${this.state.totalWords}</div>
+                                <div class="text-white/80">Words Mastered</div>
+                            </div>
+                            <div class="bg-yellow-500/30 rounded-xl p-6 text-center">
+                                <div class="text-3xl font-bold text-white">${this.state.bestStreak}</div>
+                                <div class="text-white/80">Best Streak</div>
+                            </div>
+                        </div>
+
+                        <!-- Individual Student Stats -->
+                        <div class="space-y-6">
+                    `;
+                    
+                    Object.entries(studentStats).forEach(([name, stats]) => {
+                        const avgScore = Math.round((stats.totalScore / stats.totalWords) * 100);
+                        const recentTests = stats.tests.slice(-5).reverse();
+                        
+                        content += `
+                            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-3xl font-bold text-white">👑 ${name}</h2>
+                                    <span class="px-4 py-2 bg-yellow-400/30 rounded-full text-white font-bold">
+                                        Best: ${stats.bestScore}%
+                                    </span>
+                                </div>
+                                
+                                <div class="grid grid-cols-5 gap-3 mb-6">
+                                    <div class="bg-blue-500/30 rounded-xl p-3 text-center">
+                                        <div class="text-xl font-bold text-white">${stats.tests.length}</div>
+                                        <div class="text-xs text-white/80">Tests</div>
+                                    </div>
+                                    <div class="bg-green-500/30 rounded-xl p-3 text-center">
+                                        <div class="text-xl font-bold text-white">${avgScore}%</div>
+                                        <div class="text-xs text-white/80">Average</div>
+                                    </div>
+                                    <div class="bg-purple-500/30 rounded-xl p-3 text-center">
+                                        <div class="text-xl font-bold text-white">${stats.totalWords}</div>
+                                        <div class="text-xs text-white/80">Practiced</div>
+                                    </div>
+                                    <div class="bg-yellow-500/30 rounded-xl p-3 text-center">
+                                        <div class="text-xl font-bold text-white">${stats.totalScore}</div>
+                                        <div class="text-xs text-white/80">Mastered</div>
+                                    </div>
+                                    <div class="bg-pink-500/30 rounded-xl p-3 text-center">
+                                        <div class="text-xl font-bold text-white">${Math.round(stats.totalTime / stats.tests.length)}s</div>
+                                        <div class="text-xs text-white/80">Avg Time</div>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="font-bold text-white mb-3">Recent Progress:</h3>
+                                <div class="space-y-2">
+                        `;
+                        
+                        recentTests.forEach(test => {
+                            const date = new Date(test.date);
+                            const isToday = date.toDateString() === new Date().toDateString();
+                            
+                            content += `
+                                <div class="p-4 rounded-xl ${test.percentage >= 80 ? 'bg-green-500/30 border-green-400' : 'bg-yellow-500/30 border-yellow-400'} border-2">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <span class="font-bold text-white">${test.score}/${test.total} (${test.percentage}%)</span>
+                                            <span class="ml-3 text-white/80 text-sm">
+                                                ${isToday ? 'Today' : date.toLocaleDateString()}
+                                                ${test.timeTaken ? ` • ${test.timeTaken}s` : ''}
+                                            </span>
+                                        </div>
+                                        <span class="text-2xl">${test.percentage >= 80 ? '🌟' : '📚'}</span>
+                                    </div>
+                                    <div class="text-sm text-white/80 mt-2">
+                                        Words: ${test.words.slice(0, 5).join(', ')}${test.words.length > 5 ? '...' : ''}
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        content += `
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    content += `
+                        </div>
+
+                        <!-- Progress Chart (simplified visualization) -->
+                        <div class="mt-8 p-6 bg-white/20 rounded-2xl">
+                            <h3 class="text-xl font-bold text-white mb-4">📈 Progress Over Time</h3>
+                            <div class="h-32 flex items-end space-x-2">
+                                ${this.state.testResults.slice(-10).map((test, i) => `
+                                    <div class="flex-1 flex flex-col items-center">
+                                        <div class="w-full bg-gradient-to-t from-blue-500 to-purple-500 rounded-t-lg" 
+                                             style="height: ${test.percentage}%"></div>
+                                        <span class="text-xs text-white/80 mt-1">${i+1}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Settings Section
+                content += `
+                    <!-- Settings & Data Management -->
+                    <div class="mt-8 grid md:grid-cols-2 gap-6">
+                        <div class="bg-red-500/20 border-2 border-red-500/50 rounded-2xl p-6">
+                            <h3 class="text-2xl font-bold text-white mb-4">⚠️ Data Management</h3>
+                            <p class="text-white/80 mb-4">Clear all app data and reset progress.</p>
+                            <button onclick="app.clearAllData()"
+                                    class="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors">
+                                🗑️ Reset All Data
+                            </button>
+                        </div>
+                        
+                        <div class="bg-blue-500/20 border-2 border-blue-500/50 rounded-2xl p-6">
+                            <h3 class="text-2xl font-bold text-white mb-4">⚙️ Export Data</h3>
+                            <p class="text-white/80 mb-4">Download learning progress as CSV.</p>
+                            <button onclick="app.exportData()"
+                                    class="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors">
+                                📥 Export to CSV
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                content += `</div></div>`;
+                app.innerHTML = content;
+            },
+
+            clearAllData() {
+                if (confirm('⚠️ Are you sure? This will delete ALL progress for ALL students!')) {
+                    localStorage.clear();
+                    this.state.testResults = [];
+                    this.state.totalWords = 0;
+                    this.state.bestStreak = 0;
+                    this.state.achievements = [];
+                    this.showToast('✅ All data cleared', 'success');
+                    this.render();
+                }
+            },
+
+            exportData() {
+                const data = this.state.testResults.map(r => ({
+                    Student: r.studentName,
+                    Date: new Date(r.date).toLocaleDateString(),
+                    Score: `${r.score}/${r.total}`,
+                    Percentage: `${r.percentage}%`,
+                    Words: r.words.join('; ')
+                }));
+                
+                const csv = this.convertToCSV(data);
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `spelling-progress-${new Date().toISOString().split('T')[0]}.csv`;
+                a.click();
+                
+                this.showToast('📊 Data exported successfully!', 'success');
+            },
+
+            convertToCSV(objArray) {
+                const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+                let str = `${Object.keys(array[0]).join(',')}\r\n`;
+                return array.reduce((str, next) => {
+                    str += Object.values(next).map(value => `"${value}"`).join(',') + '\r\n';
+                    return str;
+                }, str);
+            }
+        };
+
+        // ==================== INITIALIZATION ====================
+        const app = store;
+        window.app = app; // Make app globally accessible
+        
+        // Check for daily reset
+        app.checkDailyReset();
+        
+        // Initialize with a welcome message
+        setTimeout(() => {
+            if (app.state.lastPlayed) {
+                const lastPlayed = new Date(app.state.lastPlayed);
+                const daysAgo = Math.round((new Date() - lastPlayed) / (1000 * 60 * 60 * 24));
+                if (daysAgo > 0) {
+                    app.showToast(`Welcome back! You were last here ${daysAgo} day${daysAgo > 1 ? 's' : ''} ago! 👋`, 'info');
+                }
+            }
+            app.state.lastPlayed = new Date().toISOString();
+            localStorage.setItem('lastPlayed', app.state.lastPlayed);
+        }, 1000);
+
+        // Initial render
+        app.render();
+    </script>
+</body>
+</html>
