@@ -86,6 +86,31 @@
         .theme-toggle:hover {
             transform: rotate(15deg);
         }
+        .hint-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #4a4a6a;
+        }
+        .dark-mode .hint-text {
+            color: #d0d0ff;
+        }
+        .speak-button {
+            transition: all 0.2s ease;
+        }
+        .speak-button:active {
+            transform: scale(0.95);
+        }
+        .word-highlight {
+            font-weight: 700;
+            color: #7c3aed;
+            background: rgba(124, 58, 237, 0.1);
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        .dark-mode .word-highlight {
+            color: #a78bfa;
+            background: rgba(167, 139, 250, 0.2);
+        }
     </style>
 </head>
 <body id="body" class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen transition-colors duration-300">
@@ -120,137 +145,207 @@
         // ==================== SOUTH AFRICAN SPEECH FUNCTIONS ====================
         function speakText(text) {
             if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
                 window.speechSynthesis.cancel();
                 
-                // Create utterance
-                const utterance = new SpeechSynthesisUtterance(text);
-                
-                // Get available voices
-                const voices = window.speechSynthesis.getVoices();
-                
-                // Try to find a South African English voice
-                let selectedVoice = voices.find(voice => 
-                    voice.lang.includes('en-ZA') || 
-                    voice.name.includes('South African') ||
-                    voice.name.includes('Tessa') ||  // Common SA voice name
-                    voice.name.includes('Zola')      // Common SA voice name
-                );
-                
-                // Fallback to any English voice with South African preference
-                if (!selectedVoice) {
-                    // Try Australian/NZ as they're closer to SA accent
-                    selectedVoice = voices.find(voice => 
-                        voice.lang.includes('en-AU') || 
-                        voice.lang.includes('en-NZ')
+                // Small delay to ensure clean playback
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    
+                    // Get available voices
+                    const voices = window.speechSynthesis.getVoices();
+                    
+                    // Try to find a South African English voice
+                    let selectedVoice = voices.find(voice => 
+                        voice.lang.includes('en-ZA') || 
+                        voice.name.includes('South African') ||
+                        voice.name.includes('Tessa') ||
+                        voice.name.includes('Zola')
                     );
-                }
-                
-                // Final fallback to any English voice
-                if (!selectedVoice) {
-                    selectedVoice = voices.find(voice => voice.lang.includes('en-'));
-                }
-                
-                if (selectedVoice) {
-                    utterance.voice = selectedVoice;
-                    console.log('Using voice:', selectedVoice.name);
-                }
-                
-                // Adjust speech parameters for more natural South African sound
-                utterance.rate = 0.85;      // Slightly slower for clarity
-                utterance.pitch = 1.0;       // Natural pitch
-                utterance.volume = 1.0;
-                
-                // South African English often has a slight sing-song quality
-                // We can simulate this with slight pitch variation
-                if (text.length > 10) {
-                    utterance.pitch = 1.1;   // Slightly higher for longer sentences
-                }
-                
-                window.speechSynthesis.speak(utterance);
+                    
+                    // Fallback to any English voice
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => voice.lang.includes('en-'));
+                    }
+                    
+                    if (selectedVoice) {
+                        utterance.voice = selectedVoice;
+                    }
+                    
+                    // Clear, slow, deliberate speech
+                    utterance.rate = 0.75;      // Slower for clarity
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+                    
+                    window.speechSynthesis.speak(utterance);
+                }, 100);
             }
         }
 
-        // Pre-load voices (they load asynchronously)
+        // Pre-load voices
         if ('speechSynthesis' in window) {
             window.speechSynthesis.getVoices();
-            // Some browsers need this event
             window.speechSynthesis.onvoiceschanged = function() {
                 window.speechSynthesis.getVoices();
             };
         }
 
-        // ==================== IMPROVED HINT SYSTEM ====================
+        // ==================== IMPROVED HINT SYSTEM - NO WORD IN TEXT ====================
         function getContextualHint(word) {
             word = word.toLowerCase().trim();
             
             if (!word) return "Please enter a word to spell.";
             
-            const length = word.length;
+            // Category 1: Animals
+            const animals = ['cat', 'dog', 'fish', 'bird', 'rabbit', 'horse', 'cow', 'lion', 'tiger', 'elephant', 'giraffe', 'zebra', 'monkey', 'snake', 'frog'];
+            if (animals.includes(word)) {
+                const hints = [
+                    "This animal is often kept as a pet.",
+                    "You might see this animal on a farm.",
+                    "This animal lives in the wild.",
+                    "This animal makes a distinctive sound.",
+                    "Children love to learn about this animal."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
             
-            // Category 1: Action words (verbs)
+            // Category 2: Food
+            const foods = ['apple', 'banana', 'orange', 'bread', 'milk', 'cake', 'pizza', 'rice', 'soup', 'egg', 'cheese', 'chicken', 'fish', 'water'];
+            if (foods.includes(word)) {
+                const hints = [
+                    "You can eat this for breakfast.",
+                    "This is a healthy food to eat.",
+                    "Many people enjoy eating this.",
+                    "You might find this in a kitchen.",
+                    "This is something you can buy at a shop."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
+            
+            // Category 3: Actions (verbs)
+            const actions = ['run', 'jump', 'swim', 'fly', 'eat', 'drink', 'sleep', 'play', 'read', 'write', 'sing', 'dance', 'walk', 'talk'];
+            if (actions.includes(word)) {
+                const hints = [
+                    "This is something you can do with your body.",
+                    "People do this every day.",
+                    "This is an action word.",
+                    "You can do this for fun.",
+                    "This is something active."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
+            
+            // Category 4: Colors
+            const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown', 'black', 'white', 'pink'];
+            if (colors.includes(word)) {
+                const hints = [
+                    "This is a colour you can see in a rainbow.",
+                    "Many things in nature are this colour.",
+                    "You can find this colour in a box of crayons.",
+                    "This colour is bright and easy to spot."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
+            
+            // Category 5: Objects
+            const objects = ['ball', 'car', 'book', 'pen', 'chair', 'table', 'door', 'window', 'house', 'school', 'bag', 'shoe', 'hat', 'shirt'];
+            if (objects.includes(word)) {
+                const hints = [
+                    "You can find this in a classroom.",
+                    "This is something you use every day.",
+                    "This object is useful at home.",
+                    "You might see this at school.",
+                    "This is a common thing people own."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
+            
+            // Category 6: People
+            const people = ['mom', 'dad', 'baby', 'girl', 'boy', 'teacher', 'doctor', 'friend', 'family'];
+            if (people.includes(word)) {
+                const hints = [
+                    "This is someone you know.",
+                    "This person is important in your life.",
+                    "This is a role that people have.",
+                    "You see this person often."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
+            
+            // Category 7: Places
+            const places = ['park', 'beach', 'store', 'home', 'zoo', 'school', 'hospital', 'library'];
+            if (places.includes(word)) {
+                const hints = [
+                    "This is a place you can visit.",
+                    "People go here for different reasons.",
+                    "You might go here with your family.",
+                    "This is a fun place to be."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
+            
+            // Category 8: Weather
+            const weather = ['rain', 'snow', 'wind', 'cloud', 'sun', 'storm', 'fog'];
+            if (weather.includes(word)) {
+                const hints = [
+                    "This is a type of weather.",
+                    "You might see this outside today.",
+                    "This affects what you wear.",
+                    "This is part of nature."
+                ];
+                return hints[Math.floor(Math.random() * hints.length)];
+            }
+            
+            // Category 9: Words with specific endings
             if (word.endsWith('ing')) {
-                const base = word.slice(0, -3);
-                return `Someone is ${word} right now. Like "They are ${word} outside."`;
+                return "This word shows an action that is happening right now.";
             }
             if (word.endsWith('ed')) {
-                return `This happened in the past. "Yesterday, they ${word} something."`;
+                return "This word shows an action that already happened.";
             }
-            
-            // Category 2: Describing words (adjectives)
+            if (word.endsWith('er') || word.endsWith('or')) {
+                return "This word describes a person who does something.";
+            }
             if (word.endsWith('ful')) {
-                return `This means full of something. "The view is so ${word}!"`;
+                return "This word means 'full of' something.";
             }
             if (word.endsWith('less')) {
-                return `This means without something. "The toy was ${word}."`;
+                return "This word means 'without' something.";
             }
             if (word.endsWith('y') && word.length > 3) {
-                return `This describes how something looks. "It was very ${word} today."`;
+                return "This word describes how something looks or feels.";
             }
             
-            // Category 3: People (nouns)
-            if (word.endsWith('er') || word.endsWith('or')) {
-                return `This is someone who does something. "The ${word} is working hard."`;
-            }
-            if (word.endsWith('ist')) {
-                return `This is an expert in something. "The ${word} knows a lot."`;
+            // Category 10: Very long words
+            if (word.length > 8) {
+                return "This is quite a long word. Take your time spelling it.";
             }
             
-            // Category 4: Places
-            if (word.includes('room') || word.includes('house') || word.includes('store')) {
-                return `This is a place you can visit. "Let's go to the ${word}."`;
-            }
-            
-            // Category 5: Very long words
-            if (length > 10) {
-                return `This is a long word with ${length} letters. Take your time spelling it: ${word}`;
-            }
-            
-            // Category 6: Short common words
-            if (length <= 4) {
-                const templates = [
-                    `"${word}" is a short word. Can you spell it?`,
-                    `Listen carefully: ${word}. Now you try!`,
-                    `The word is "${word}". Give it a go!`,
-                    `"${word}" - you know this one, hey?`
+            // Category 11: Short words
+            if (word.length <= 4) {
+                const hints = [
+                    "This is a short word.",
+                    "You might use this word every day.",
+                    "This word is easy to learn.",
+                    "Try to remember how this word sounds."
                 ];
-                return templates[Math.floor(Math.random() * templates.length)];
+                return hints[Math.floor(Math.random() * hints.length)];
             }
             
-            // Category 7: Words with double letters
+            // Category 12: Words with double letters
             for (let i = 0; i < word.length - 1; i++) {
                 if (word[i] === word[i + 1]) {
-                    return `Watch out! "${word}" has double ${word[i]}'s in the middle.`;
+                    return "Be careful - this word has two of the same letters together.";
                 }
             }
             
-            // Category 8: Default helpful hints
+            // Default hints for any other word
             const defaultHints = [
-                `The word is "${word}". Listen carefully: ${word}`,
-                `Can you spell "${word}"? Take your time.`,
-                `"${word}" has ${length} letters. Try spelling it: ${word}`,
-                `Let's practice "${word}" together. You can do it!`,
-                `Spell "${word}" - I know you can get it right!`,
-                `"${word}" - give it your best shot!`
+                "Listen carefully to how this word sounds.",
+                "Think about each letter as you spell it.",
+                "Take your time with this word.",
+                "Try breaking the word into smaller parts.",
+                "You can do this - just focus on the sounds."
             ];
             
             return defaultHints[Math.floor(Math.random() * defaultHints.length)];
@@ -268,7 +363,7 @@
                 body.classList.remove('dark-mode');
             }
             
-            render(); // Re-render to update theme toggle icon
+            render();
         }
 
         // ==================== RENDER FUNCTIONS ====================
@@ -337,13 +432,11 @@
         function renderParent() {
             const app = document.getElementById('app');
             
-            // Calculate statistics
             const totalTests = state.testResults.length;
             const averageScore = totalTests > 0 
                 ? Math.round(state.testResults.reduce((acc, t) => acc + t.percentage, 0) / totalTests) 
                 : 0;
             
-            // Group by student
             const studentMap = new Map();
             state.testResults.forEach(test => {
                 if (!studentMap.has(test.studentName)) {
@@ -362,12 +455,10 @@
             app.innerHTML = `
                 <div class="max-w-6xl mx-auto p-4 md:p-8">
                     <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <!-- Theme Toggle -->
                         <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
                             ${state.darkMode ? '☀️' : '🌙'}
                         </button>
 
-                        <!-- Header -->
                         <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                             <h1 class="text-3xl md:text-4xl font-bold">👨‍👩‍👧‍👦 Parent Dashboard</h1>
                             <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors w-full md:w-auto">
@@ -376,7 +467,6 @@
                         </div>
 
                         ${totalTests === 0 ? `
-                            <!-- Empty State -->
                             <div class="text-center py-16 bg-gray-50 rounded-2xl">
                                 <div class="text-7xl mb-4">📊</div>
                                 <h3 class="text-2xl font-bold text-gray-700 mb-2">No Data Yet</h3>
@@ -386,7 +476,6 @@
                                 </button>
                             </div>
                         ` : `
-                            <!-- Overall Statistics -->
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                                 <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center">
                                     <div class="text-3xl font-bold text-blue-800">${totalTests}</div>
@@ -406,7 +495,6 @@
                                 </div>
                             </div>
 
-                            <!-- Student Sections -->
                             <div class="space-y-8">
                                 ${Array.from(studentMap.entries()).map(([name, data]) => {
                                     const studentAvg = Math.round((data.totalCorrect / data.totalWords) * 100);
@@ -461,7 +549,6 @@
                                 }).join('')}
                             </div>
 
-                            <!-- Progress Chart -->
                             <div class="mt-8 bg-gray-50 rounded-2xl p-6">
                                 <h3 class="text-xl font-bold mb-4">📈 Progress Over Time</h3>
                                 <div class="h-40 flex items-end justify-between gap-1">
@@ -475,7 +562,6 @@
                                 </div>
                             </div>
 
-                            <!-- Data Management -->
                             <div class="mt-8 grid md:grid-cols-2 gap-4">
                                 <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
                                     <h3 class="text-xl font-bold text-red-800 mb-2">⚠️ Clear All Data</h3>
@@ -504,7 +590,6 @@
             app.innerHTML = `
                 <div class="max-w-2xl mx-auto p-4 md:p-8">
                     <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <!-- Theme Toggle -->
                         <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
                             ${state.darkMode ? '☀️' : '🌙'}
                         </button>
@@ -534,7 +619,7 @@
                                     Add
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 mt-2">✨ Any word works - we'll create a helpful hint!</p>
+                            <p class="text-sm text-gray-500 mt-2">✨ Any word works - we'll give you a hint!</p>
                         </div>
 
                         ${state.words.length > 0 ? `
@@ -572,23 +657,20 @@
             app.innerHTML = `
                 <div class="max-w-xl mx-auto p-4 md:p-8">
                     <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <!-- Theme Toggle -->
                         <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
                             ${state.darkMode ? '☀️' : '🌙'}
                         </button>
 
-                        <!-- Header -->
                         <div class="flex justify-between items-center mb-6">
                             <div>
                                 <h2 class="text-2xl font-bold">Hello, ${state.studentName}! ✨</h2>
-                                <p class="text-gray-600">Keep going, you're doing great!</p>
+                                <p class="text-gray-600">Listen carefully and spell the word</p>
                             </div>
                             <button onclick="goHome()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
                                 Exit
                             </button>
                         </div>
 
-                        <!-- Progress Bar -->
                         <div class="mb-6">
                             <div class="flex justify-between text-sm mb-2">
                                 <span>Word ${state.currentIndex + 1} of ${state.words.length}</span>
@@ -600,18 +682,17 @@
                             </div>
                         </div>
 
-                        <!-- Main Game Area -->
                         <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 mb-6">
                             <div class="text-center mb-4">
                                 <div class="text-5xl mb-3">🔊</div>
-                                <p class="text-lg font-bold mb-4">Listen and spell the word:</p>
+                                <p class="text-lg font-bold mb-4">Click to hear the word:</p>
                             </div>
 
-                            <!-- Action Buttons -->
                             <div class="space-y-3">
                                 <button onclick="speakWord('${currentWord}')" 
-                                        class="w-full bg-blue-500 text-white px-6 py-4 rounded-xl font-bold hover:bg-blue-600 transform hover:scale-105 transition-all flex items-center justify-center gap-2">
-                                    🔊 Hear the Word
+                                        class="speak-button w-full bg-blue-500 text-white px-6 py-5 rounded-xl font-bold hover:bg-blue-600 transform hover:scale-105 transition-all flex items-center justify-center gap-3 text-lg">
+                                    <span class="text-2xl">🔊</span>
+                                    <span>SAY THE WORD</span>
                                 </button>
                                 
                                 <button onclick="toggleHint('${currentWord}')"
@@ -620,18 +701,16 @@
                                 </button>
                             </div>
 
-                            <!-- Hint Display -->
                             ${state.showHint ? `
-                                <div class="mt-4 p-5 bg-purple-100 rounded-xl border-2 border-purple-300">
-                                    <p class="text-purple-800 text-center font-medium">"${hint}"</p>
-                                    <button onclick="speakHint('${currentWord}')" class="mt-3 w-full px-4 py-2 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors">
+                                <div class="mt-4 p-6 bg-purple-100 rounded-xl border-2 border-purple-300">
+                                    <p class="hint-text text-center">"${hint}"</p>
+                                    <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
                                         🔁 Hear Hint Again
                                     </button>
                                 </div>
                             ` : ''}
                         </div>
 
-                        <!-- Answer Input -->
                         <div class="mb-4">
                             <input type="text" id="answerInput" value="${state.userAnswer}"
                                    oninput="updateUserAnswer(this.value)"
@@ -641,7 +720,6 @@
                                    autocomplete="off" autocorrect="off" spellcheck="false">
                         </div>
 
-                        <!-- Result Display -->
                         ${state.showAnswer ? `
                             <div class="p-6 rounded-xl mb-4 text-center ${
                                 state.userAnswer.toLowerCase().trim() === currentWord 
@@ -658,13 +736,12 @@
                                 </p>
                                 <p class="text-gray-600 mt-2">
                                     ${state.userAnswer.toLowerCase().trim() === currentWord 
-                                        ? 'Amazing job! 🌟' 
+                                        ? 'Well done! 🌟' 
                                         : 'Keep practicing - you\'ll get it next time! 💪'}
                                 </p>
                             </div>
                         ` : ''}
 
-                        <!-- Action Button -->
                         ${!state.answered ? `
                             <button onclick="submitAnswer()" 
                                     class="w-full py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl font-bold rounded-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all shadow-lg">
@@ -708,33 +785,28 @@
             app.innerHTML = `
                 <div class="max-w-2xl mx-auto p-4 md:p-8">
                     <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <!-- Theme Toggle -->
                         <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
                             ${state.darkMode ? '☀️' : '🌙'}
                         </button>
 
-                        <!-- Header -->
                         <div class="flex justify-end mb-4">
                             <button onclick="goHome()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
                                 🏠 Home
                             </button>
                         </div>
 
-                        <!-- Celebration -->
                         <div class="text-center mb-6">
                             <div class="text-7xl mb-4 animate-bounce">${emoji}</div>
                             <h2 class="text-3xl md:text-4xl font-bold mb-3">Great job, ${state.studentName}!</h2>
                             <p class="text-xl text-gray-600">${message}</p>
                         </div>
 
-                        <!-- Score Card -->
                         <div class="bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl p-8 mb-8 text-white text-center">
                             <div class="text-6xl font-bold mb-2">${state.score}/${state.words.length}</div>
                             <div class="text-3xl font-bold">${percentage}%</div>
                             <div class="mt-4 text-lg">Words correct: ${state.score}</div>
                         </div>
 
-                        <!-- Word Results -->
                         <h3 class="text-2xl font-bold mb-4">Your Results:</h3>
                         <div class="grid grid-cols-2 gap-3 mb-8">
                             ${state.words.map((word, i) => `
@@ -747,7 +819,6 @@
                             `).join('')}
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="grid grid-cols-2 gap-4">
                             <button onclick="practiceAgain()" 
                                     class="py-4 bg-purple-500 text-white text-xl font-bold rounded-xl hover:bg-purple-600 transform hover:scale-105 transition-all">
@@ -827,7 +898,7 @@
                 state.streak = 0;
                 state.showHint = false;
                 render();
-                setTimeout(() => speakWord(state.words[0]), 500);
+                // DON'T auto-play the word
             }
         }
 
@@ -842,9 +913,7 @@
 
         function toggleHint(word) {
             state.showHint = !state.showHint;
-            if (state.showHint) {
-                setTimeout(() => speakHint(word), 200);
-            }
+            // DON'T auto-play the hint
             render();
         }
 
@@ -884,7 +953,7 @@
                 state.answered = false;
                 state.showHint = false;
                 render();
-                setTimeout(() => speakWord(state.words[state.currentIndex]), 500);
+                // DON'T auto-play the next word
             } else {
                 finishGame();
             }
@@ -917,7 +986,7 @@
             state.streak = 0;
             state.showHint = false;
             render();
-            setTimeout(() => speakWord(state.words[0]), 500);
+            // DON'T auto-play the word
         }
 
         function newWords() {
