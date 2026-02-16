@@ -34,7 +34,6 @@
         .dark-mode h3 {
             color: #ffffff !important;
             font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .dark-mode .text-gray-600,
@@ -266,15 +265,31 @@
             font-size: 1.25rem;
             font-style: italic;
             color: #333333;
-            padding: 12px 16px;
+            padding: 16px 20px;
             border-left: 4px solid #8b5cf6;
             line-height: 1.6;
+            background: #f5f0ff;
+            border-radius: 12px;
         }
         
         .dark-mode .spelling-bee-quote {
             color: #ffffff !important;
             background: #2a2445;
             border-left-color: #b79aff;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -305,6 +320,8 @@
             totalWords: parseInt(localStorage.getItem('totalWords') || '0'),
             testResults: JSON.parse(localStorage.getItem('testResults') || '[]'),
             showHint: false,
+            currentSentence: '',
+            isLoadingHint: false,
             darkMode: localStorage.getItem('darkMode') === 'true'
         };
 
@@ -355,130 +372,70 @@
             };
         }
 
-        // ==================== SIMPLE SENTENCE HINTS ====================
-        function getSentenceForWord(word) {
-            word = word.toLowerCase().trim();
-            
-            // Simple sentences that just use the word in context - no extra clues
-            const sentences = {
-                // Animals
-                'cat': "The cat sat on the windowsill.",
-                'dog': "My dog loves to play in the garden.",
-                'fish': "The fish swam in the pond.",
-                'bird': "A bird sang in the tree.",
-                'rabbit': "The rabbit hopped across the lawn.",
-                'horse': "The horse galloped across the field.",
-                'cow': "The cow grazed in the meadow.",
-                'lion': "The lion rested under the tree.",
-                'tiger': "The tiger walked through the jungle.",
-                'elephant': "The elephant drank from the river.",
+        // ==================== FREE DICTIONARY API ====================
+        // Using the free Dictionary API (https://dictionaryapi.dev/)
+        async function fetchSentenceFromDictionary(word) {
+            try {
+                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
                 
-                // Food
-                'apple': "She ate a juicy apple.",
-                'banana': "He peeled the yellow banana.",
-                'bread': "The bread was fresh from the oven.",
-                'milk': "Please pour some milk into the glass.",
-                'water': "The water was cool and refreshing.",
-                'cake': "They shared the chocolate cake.",
-                'pizza': "We ordered a large pizza.",
-                'rice': "The rice cooked on the stove.",
-                'soup': "The soup was hot and tasty.",
-                'egg': "She fried an egg for breakfast.",
+                if (!response.ok) {
+                    throw new Error('Word not found in dictionary');
+                }
                 
-                // Actions
-                'run': "The children run in the park.",
-                'jump': "Can you jump over the rope?",
-                'swim': "They swim in the pool.",
-                'fly': "The planes fly overhead.",
-                'eat': "We eat dinner together.",
-                'drink': "You should drink water daily.",
-                'sleep': "The baby will sleep soon.",
-                'play': "Let's play outside today.",
-                'read': "I read a book last night.",
-                'write': "Please write your name here.",
+                const data = await response.json();
                 
-                // Colors
-                'red': "She wore a red dress.",
-                'blue': "The sky is blue today.",
-                'green': "The grass is green.",
-                'yellow': "The sun is yellow.",
-                'orange': "He picked an orange from the tree.",
-                'purple': "The flower was purple.",
-                'brown': "The bear was brown.",
-                'black': "The cat was black.",
-                'white': "The snow was white.",
-                'pink': "She likes pink roses.",
+                // Extract an example sentence from the API response
+                // The API returns multiple meanings and definitions
+                if (data && data[0] && data[0].meanings) {
+                    // Look through all meanings for an example
+                    for (const meaning of data[0].meanings) {
+                        if (meaning.definitions) {
+                            for (const definition of meaning.definitions) {
+                                // If there's an example sentence, use it
+                                if (definition.example) {
+                                    return definition.example;
+                                }
+                            }
+                        }
+                    }
+                }
                 
-                // Objects
-                'ball': "He kicked the ball.",
-                'car': "The car drove slowly.",
-                'book': "She opened the book.",
-                'pen': "The pen ran out of ink.",
-                'chair': "Please sit on the chair.",
-                'table': "The book is on the table.",
-                'door': "Close the door please.",
-                'window': "Open the window.",
-                'house': "Their house is big.",
-                'school': "School starts at eight.",
+                // If no example found, try to create a sentence from a definition
+                if (data && data[0] && data[0].meanings && data[0].meanings[0] && 
+                    data[0].meanings[0].definitions && data[0].meanings[0].definitions[0]) {
+                    const definition = data[0].meanings[0].definitions[0].definition;
+                    // Create a simple sentence using the definition
+                    return `The word "${word}" means: ${definition}`;
+                }
                 
-                // People
-                'mom': "My mom made dinner.",
-                'dad': "Dad fixed the car.",
-                'baby': "The baby smiled.",
-                'girl': "The girl laughed.",
-                'boy': "The boy ran home.",
-                'teacher': "The teacher explained the lesson.",
-                'doctor': "The doctor checked my temperature.",
-                'friend': "My friend came to visit.",
+                throw new Error('No example found');
                 
-                // Places
-                'park': "We walked to the park.",
-                'beach': "They went to the beach.",
-                'store': "I went to the store.",
-                'home': "Time to go home.",
-                'zoo': "We saw lions at the zoo.",
-                
-                // Weather
-                'rain': "The rain fell gently.",
-                'snow': "The snow covered the ground.",
-                'wind': "The wind blew hard.",
-                'cloud': "A cloud floated by.",
-                'sun': "The sun came out.",
-                
-                // Numbers
-                'one': "I have one apple.",
-                'two': "She has two cats.",
-                'three': "A triangle has three sides.",
-                'four': "There are four seasons.",
-                'five': "I can count to five.",
-                
-                // Common words
-                'the': "The sun is shining.",
-                'and': "Apples and oranges are fruit.",
-                'for': "This is for you.",
-                'you': "You are doing well.",
-                'are': "We are learning.",
-                'can': "I can spell this word.",
-                'has': "She has a new book.",
-                'was': "It was a good day.",
-                'had': "We had fun playing."
-            };
-            
-            // Return the sentence if it exists
-            if (sentences[word]) {
-                return sentences[word];
+            } catch (error) {
+                console.error('Dictionary API error:', error);
+                // Fallback to a simple sentence if API fails
+                const fallbackSentences = [
+                    `The word for this round is "${word}".`,
+                    `Please spell the word "${word}" correctly.`,
+                    `Listen carefully to the word "${word}".`,
+                    `Your next word to spell is "${word}".`
+                ];
+                return fallbackSentences[Math.floor(Math.random() * fallbackSentences.length)];
+            }
+        }
+
+        // Cache for sentences to avoid repeated API calls
+        const sentenceCache = new Map();
+
+        async function getSentenceForWord(word) {
+            // Check cache first
+            if (sentenceCache.has(word)) {
+                return sentenceCache.get(word);
             }
             
-            // For words not in our list, use a simple template
-            const templates = [
-                `The word is "${word}".`,
-                `Please spell "${word}".`,
-                `Listen to the word "${word}".`,
-                `Now spell "${word}" correctly.`,
-                `Your word is "${word}".`
-            ];
-            
-            return templates[Math.floor(Math.random() * templates.length)];
+            // Fetch from API
+            const sentence = await fetchSentenceFromDictionary(word);
+            sentenceCache.set(word, sentence);
+            return sentence;
         }
 
         // ==================== DARK MODE TOGGLE ====================
@@ -740,7 +697,7 @@
                                     Add Word
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll use it in a sentence</p>
+                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll find real dictionary examples</p>
                         </div>
 
                         ${state.words.length > 0 ? `
@@ -769,11 +726,21 @@
             `;
         }
 
+        async function showHint(word) {
+            state.isLoadingHint = true;
+            state.showHint = true;
+            render();
+            
+            const sentence = await getSentenceForWord(word);
+            state.currentSentence = sentence;
+            state.isLoadingHint = false;
+            render();
+        }
+
         function renderPlaying() {
             const app = document.getElementById('app');
             const progress = ((state.currentIndex + 1) / state.words.length) * 100;
             const currentWord = state.words[state.currentIndex];
-            const sentence = getSentenceForWord(currentWord);
 
             app.innerHTML = `
                 <div class="w-full max-w-2xl mx-auto">
@@ -811,19 +778,26 @@
                                 <span>SAY THE WORD</span>
                             </button>
                             
-                            <button onclick="toggleHint('${currentWord}')"
+                            <button onclick="showHint('${currentWord}')"
                                     class="w-full mt-4 bg-purple-500 text-white px-8 py-5 rounded-2xl font-bold hover:bg-purple-600 transform hover:scale-105 transition-all flex items-center justify-center gap-3 text-xl">
-                                💡 Hear it in a Sentence
+                                💡 Use the word in a sentence
                             </button>
 
                             ${state.showHint ? `
                                 <div class="hint-section mt-6">
-                                    <div class="spelling-bee-quote">
-                                        "${sentence}"
-                                    </div>
-                                    <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
-                                        🔁 Hear Sentence Again
-                                    </button>
+                                    ${state.isLoadingHint ? `
+                                        <div class="flex items-center justify-center py-8">
+                                            <div class="loading-spinner"></div>
+                                            <span class="ml-3 text-purple-600">Finding a sentence...</span>
+                                        </div>
+                                    ` : `
+                                        <div class="spelling-bee-quote">
+                                            "${state.currentSentence}"
+                                        </div>
+                                        <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
+                                            🔁 Hear Sentence Again
+                                        </button>
+                                    `}
                                 </div>
                             ` : ''}
                         </div>
@@ -1015,6 +989,7 @@
                 state.answered = false;
                 state.streak = 0;
                 state.showHint = false;
+                state.currentSentence = '';
                 render();
             }
         }
@@ -1024,13 +999,9 @@
         }
 
         function speakHint(word) {
-            const sentence = getSentenceForWord(word);
-            speakText(sentence);
-        }
-
-        function toggleHint(word) {
-            state.showHint = !state.showHint;
-            render();
+            if (state.currentSentence) {
+                speakText(state.currentSentence);
+            }
         }
 
         function submitAnswer() {
@@ -1068,6 +1039,7 @@
                 state.showAnswer = false;
                 state.answered = false;
                 state.showHint = false;
+                state.currentSentence = '';
                 render();
             } else {
                 finishGame();
@@ -1100,6 +1072,7 @@
             state.answered = false;
             state.streak = 0;
             state.showHint = false;
+            state.currentSentence = '';
             render();
         }
 
@@ -1115,6 +1088,7 @@
                 state.testResults = [];
                 state.totalWords = 0;
                 state.bestStreak = 0;
+                sentenceCache.clear(); // Clear the sentence cache
                 render();
             }
         }
@@ -1131,7 +1105,7 @@
         window.startGame = startGame;
         window.speakWord = speakWord;
         window.speakHint = speakHint;
-        window.toggleHint = toggleHint;
+        window.showHint = showHint;
         window.submitAnswer = submitAnswer;
         window.nextWord = nextWord;
         window.practiceAgain = practiceAgain;
