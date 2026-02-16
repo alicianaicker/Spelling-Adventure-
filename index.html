@@ -2,119 +2,222 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Spelling Adventure - South African English</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+        
         /* Dark mode styles */
         .dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2d1b4b 100%) !important;
         }
-        .dark-mode .bg-white {
-            background-color: #1e1e2f;
-            color: #e0e0e0;
+        
+        .dark-mode .card {
+            background-color: #1e293b !important;
+            color: #e2e8f0 !important;
+            border-color: #475569 !important;
         }
-        .dark-mode .text-gray-600 {
-            color: #b0b0b0;
+        
+        .dark-mode .card-header {
+            border-bottom-color: #334155 !important;
         }
-        .dark-mode .text-gray-500 {
-            color: #909090;
+        
+        .dark-mode .text-gray-600, 
+        .dark-mode .text-gray-700 {
+            color: #cbd5e1 !important;
         }
-        .dark-mode .bg-gray-50 {
-            background-color: #2a2a3a;
+        
+        .dark-mode .stat-card {
+            background-color: #2d3a4f !important;
+            color: #f1f5f9 !important;
         }
-        .dark-mode .bg-gray-100 {
-            background-color: #2a2a3a;
+        
+        .dark-mode .stat-card div {
+            color: #f1f5f9 !important;
         }
-        .dark-mode .border-2 {
-            border-color: #4a4a6a;
-        }
+        
         .dark-mode input {
-            background-color: #2a2a3a;
-            color: #e0e0e0;
-            border-color: #4a4a6a;
+            background-color: #334155 !important;
+            color: #f1f5f9 !important;
+            border-color: #64748b !important;
         }
+        
+        .dark-mode input::placeholder {
+            color: #94a3b8 !important;
+        }
+        
+        .dark-mode .bg-gray-50 {
+            background-color: #1e293b !important;
+        }
+        
+        .dark-mode .bg-gray-100 {
+            background-color: #1e293b !important;
+        }
+        
         .dark-mode .bg-yellow-100 {
-            background-color: #4a3a2a;
-            color: #e0b080;
+            background-color: #422f1f !important;
+            color: #fcd34d !important;
         }
+        
         .dark-mode .bg-green-100 {
-            background-color: #2a4a3a;
-            color: #a0e0a0;
+            background-color: #1f4030 !important;
+            color: #6ee7b7 !important;
         }
+        
         .dark-mode .bg-blue-100 {
-            background-color: #2a3a5a;
-            color: #a0c0ff;
+            background-color: #1e3a5f !important;
+            color: #93c5fd !important;
         }
+        
         .dark-mode .bg-purple-100 {
-            background-color: #3a2a5a;
-            color: #d0a0ff;
+            background-color: #352d5e !important;
+            color: #c4b5fd !important;
         }
+        
         .dark-mode .bg-red-100 {
-            background-color: #5a2a2a;
-            color: #ffa0a0;
+            background-color: #542c2c !important;
+            color: #fca5a5 !important;
         }
         
         .correct-icon {
             color: #10b981;
             animation: pop 0.3s ease;
         }
+        
         .incorrect-icon {
             color: #ef4444;
             animation: shake 0.3s ease;
         }
+        
         @keyframes pop {
             0% { transform: scale(0.8); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
+        
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
+        
         .stat-card {
             transition: all 0.2s ease;
         }
+        
         .stat-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
         }
+        
         .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
             transition: all 0.3s ease;
+            border: 2px solid white;
         }
+        
+        .dark-mode .theme-toggle {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #64748b;
+        }
+        
         .theme-toggle:hover {
-            transform: rotate(15deg);
+            transform: scale(1.1) rotate(15deg);
         }
-        .hint-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #4a4a6a;
-        }
-        .dark-mode .hint-text {
-            color: #d0d0ff;
-        }
+        
         .speak-button {
             transition: all 0.2s ease;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
+        
         .speak-button:active {
             transform: scale(0.95);
         }
-        .word-highlight {
-            font-weight: 700;
-            color: #7c3aed;
-            background: rgba(124, 58, 237, 0.1);
-            padding: 0 4px;
-            border-radius: 4px;
+        
+        .hint-card {
+            background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+            border-left: 6px solid #8b5cf6;
         }
-        .dark-mode .word-highlight {
-            color: #a78bfa;
-            background: rgba(167, 139, 250, 0.2);
+        
+        .dark-mode .hint-card {
+            background: linear-gradient(135deg, #2e293a, #1e1a2a);
+            border-left-color: #a78bfa;
+        }
+        
+        .game-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark-mode .game-card {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            transition: width 0.3s ease;
+        }
+        
+        .word-chip {
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+            border: 1px solid #c084fc;
+        }
+        
+        .dark-mode .word-chip {
+            background: linear-gradient(135deg, #2e293a, #2a2438);
+            border-color: #6b21a8;
+        }
+        
+        .full-height {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        
+        @media (max-width: 640px) {
+            .full-height {
+                padding: 12px;
+            }
         }
     </style>
 </head>
-<body id="body" class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen transition-colors duration-300">
-    <div id="app"></div>
+<body id="body" class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
+    <div id="app" class="full-height"></div>
+    
+    <!-- Theme Toggle - Fixed position separate from app -->
+    <button onclick="window.toggleDarkMode()" class="theme-toggle">
+        <span id="theme-icon">🌙</span>
+    </button>
 
     <script>
         // ==================== STATE MANAGEMENT ====================
@@ -140,22 +243,19 @@
         // Apply dark mode on load
         if (state.darkMode) {
             document.getElementById('body').classList.add('dark-mode');
+            document.getElementById('theme-icon').textContent = '☀️';
         }
 
         // ==================== SOUTH AFRICAN SPEECH FUNCTIONS ====================
         function speakText(text) {
             if ('speechSynthesis' in window) {
-                // Cancel any ongoing speech
                 window.speechSynthesis.cancel();
                 
-                // Small delay to ensure clean playback
                 setTimeout(() => {
                     const utterance = new SpeechSynthesisUtterance(text);
-                    
-                    // Get available voices
                     const voices = window.speechSynthesis.getVoices();
                     
-                    // Try to find a South African English voice
+                    // Try South African voices
                     let selectedVoice = voices.find(voice => 
                         voice.lang.includes('en-ZA') || 
                         voice.name.includes('South African') ||
@@ -163,7 +263,6 @@
                         voice.name.includes('Zola')
                     );
                     
-                    // Fallback to any English voice
                     if (!selectedVoice) {
                         selectedVoice = voices.find(voice => voice.lang.includes('en-'));
                     }
@@ -172,8 +271,7 @@
                         utterance.voice = selectedVoice;
                     }
                     
-                    // Clear, slow, deliberate speech
-                    utterance.rate = 0.75;      // Slower for clarity
+                    utterance.rate = 0.75;
                     utterance.pitch = 1.0;
                     utterance.volume = 1.0;
                     
@@ -190,162 +288,121 @@
             };
         }
 
-        // ==================== IMPROVED HINT SYSTEM - NO WORD IN TEXT ====================
+        // ==================== CONTEXTUAL HINT SYSTEM ====================
         function getContextualHint(word) {
             word = word.toLowerCase().trim();
             
-            if (!word) return "Please enter a word to spell.";
+            // Animal hints
+            if (word === 'cat') return "This furry friend says 'meow' and loves to nap in the sun.";
+            if (word === 'dog') return "People call this animal 'man's best friend' and it loves to wag its tail.";
+            if (word === 'fish') return "This creature lives in water and swims using its fins.";
+            if (word === 'bird') return "This animal has feathers and can fly through the sky.";
+            if (word === 'rabbit') return "This fluffy animal has long ears and loves to hop.";
+            if (word === 'horse') return "People ride this tall animal with a mane and tail.";
+            if (word === 'cow') return "This farm animal gives us milk and says 'moo'.";
+            if (word === 'lion') return "Known as the king of the jungle, this big cat has a mighty roar.";
+            if (word === 'tiger') return "This striped big cat is orange with black stripes.";
+            if (word === 'elephant') return "The largest land animal with a long trunk and big tusks.";
             
-            // Category 1: Animals
-            const animals = ['cat', 'dog', 'fish', 'bird', 'rabbit', 'horse', 'cow', 'lion', 'tiger', 'elephant', 'giraffe', 'zebra', 'monkey', 'snake', 'frog'];
-            if (animals.includes(word)) {
-                const hints = [
-                    "This animal is often kept as a pet.",
-                    "You might see this animal on a farm.",
-                    "This animal lives in the wild.",
-                    "This animal makes a distinctive sound.",
-                    "Children love to learn about this animal."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // Food hints
+            if (word === 'apple') return "A crunchy fruit that can be red, green, or yellow. Good for keeping doctors away!";
+            if (word === 'banana') return "A long yellow fruit that monkeys love to eat. You need to peel it first.";
+            if (word === 'bread') return "A food made from flour that you toast in the morning for breakfast.";
+            if (word === 'milk') return "A white drink that comes from cows. Good for strong bones!";
+            if (word === 'water') return "The clear liquid we drink every day to stay healthy.";
+            if (word === 'cake') return "A sweet dessert with icing that people have on birthdays.";
+            if (word === 'pizza') return "An Italian dish with a round base, tomato sauce, and cheese on top.";
+            if (word === 'rice') return "Small white grains that are a staple food in many countries.";
+            if (word === 'soup') return "A warm liquid food eaten with a spoon, especially when you're sick.";
+            if (word === 'egg') return "A food that comes from chickens. You can have it fried or boiled.";
             
-            // Category 2: Food
-            const foods = ['apple', 'banana', 'orange', 'bread', 'milk', 'cake', 'pizza', 'rice', 'soup', 'egg', 'cheese', 'chicken', 'fish', 'water'];
-            if (foods.includes(word)) {
-                const hints = [
-                    "You can eat this for breakfast.",
-                    "This is a healthy food to eat.",
-                    "Many people enjoy eating this.",
-                    "You might find this in a kitchen.",
-                    "This is something you can buy at a shop."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // Action hints
+            if (word === 'run') return "To move quickly using your legs, faster than walking.";
+            if (word === 'jump') return "To push yourself off the ground and land somewhere else.";
+            if (word === 'swim') return "To move through water using your arms and legs.";
+            if (word === 'fly') return "To move through the air like a bird or an aeroplane.";
+            if (word === 'eat') return "To put food in your mouth and swallow it.";
+            if (word === 'drink') return "To take liquid into your body through your mouth.";
+            if (word === 'sleep') return "To rest with your eyes closed at night.";
+            if (word === 'play') return "To have fun with toys, games, or friends.";
+            if (word === 'read') return "To look at words in a book and understand them.";
+            if (word === 'write') return "To put words on paper using a pen or pencil.";
             
-            // Category 3: Actions (verbs)
-            const actions = ['run', 'jump', 'swim', 'fly', 'eat', 'drink', 'sleep', 'play', 'read', 'write', 'sing', 'dance', 'walk', 'talk'];
-            if (actions.includes(word)) {
-                const hints = [
-                    "This is something you can do with your body.",
-                    "People do this every day.",
-                    "This is an action word.",
-                    "You can do this for fun.",
-                    "This is something active."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // Color hints
+            if (word === 'red') return "The colour of a ripe apple, a fire truck, or a rose.";
+            if (word === 'blue') return "The colour of the sky on a clear day and the deep ocean.";
+            if (word === 'green') return "The colour of grass, leaves on trees, and fresh vegetables.";
+            if (word === 'yellow') return "The colour of the sun, bananas, and bright flowers.";
+            if (word === 'orange') return "A mix of red and yellow, like the fruit with the same name.";
+            if (word === 'purple') return "The colour of grapes and some pretty flowers.";
+            if (word === 'brown') return "The colour of chocolate, tree trunks, and soil.";
+            if (word === 'black') return "The colour of night sky and coal.";
+            if (word === 'white') return "The colour of snow, milk, and clouds.";
+            if (word === 'pink') return "A soft colour often seen in flowers and candy.";
             
-            // Category 4: Colors
-            const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown', 'black', 'white', 'pink'];
-            if (colors.includes(word)) {
-                const hints = [
-                    "This is a colour you can see in a rainbow.",
-                    "Many things in nature are this colour.",
-                    "You can find this colour in a box of crayons.",
-                    "This colour is bright and easy to spot."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // Object hints
+            if (word === 'ball') return "A round object you can throw, catch, or kick in games.";
+            if (word === 'car') return "A vehicle with four wheels that takes people places.";
+            if (word === 'book') return "Something with pages that you read to learn or enjoy stories.";
+            if (word === 'pen') return "A tool with ink inside for writing on paper.";
+            if (word === 'chair') return "Furniture with legs and a back that you sit on.";
+            if (word === 'table') return "Furniture with a flat top where you eat meals or work.";
+            if (word === 'door') return "A moving panel that opens to let you into a room.";
+            if (word === 'window') return "A glass opening in a wall that lets you see outside.";
+            if (word === 'house') return "A building where people live with their family.";
+            if (word === 'school') return "A place where children go to learn from teachers.";
             
-            // Category 5: Objects
-            const objects = ['ball', 'car', 'book', 'pen', 'chair', 'table', 'door', 'window', 'house', 'school', 'bag', 'shoe', 'hat', 'shirt'];
-            if (objects.includes(word)) {
-                const hints = [
-                    "You can find this in a classroom.",
-                    "This is something you use every day.",
-                    "This object is useful at home.",
-                    "You might see this at school.",
-                    "This is a common thing people own."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // People hints
+            if (word === 'mom') return "The woman who gave birth to you and takes care of you.";
+            if (word === 'dad') return "The man in your family who loves and protects you.";
+            if (word === 'baby') return "A very young child who can't walk or talk yet.";
+            if (word === 'girl') return "A young female child who might play with dolls.";
+            if (word === 'boy') return "A young male child who might play with trucks.";
+            if (word === 'teacher') return "A person who helps students learn at school.";
+            if (word === 'doctor') return "A person who helps sick people feel better.";
+            if (word === 'friend') return "Someone you like to spend time and play with.";
             
-            // Category 6: People
-            const people = ['mom', 'dad', 'baby', 'girl', 'boy', 'teacher', 'doctor', 'friend', 'family'];
-            if (people.includes(word)) {
-                const hints = [
-                    "This is someone you know.",
-                    "This person is important in your life.",
-                    "This is a role that people have.",
-                    "You see this person often."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // Place hints
+            if (word === 'park') return "An outdoor area with grass, trees, and playgrounds for fun.";
+            if (word === 'beach') return "A sandy place by the ocean where you can swim and build sandcastles.";
+            if (word === 'store') return "A place where you go to buy things like food and toys.";
+            if (word === 'home') return "The place where you live with your family.";
+            if (word === 'zoo') return "A place where you can see many different animals.";
             
-            // Category 7: Places
-            const places = ['park', 'beach', 'store', 'home', 'zoo', 'school', 'hospital', 'library'];
-            if (places.includes(word)) {
-                const hints = [
-                    "This is a place you can visit.",
-                    "People go here for different reasons.",
-                    "You might go here with your family.",
-                    "This is a fun place to be."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // Weather hints
+            if (word === 'rain') return "Water that falls from clouds in drops.";
+            if (word === 'snow') return "Soft white frozen water that falls in winter.";
+            if (word === 'wind') return "Moving air that you can feel but not see.";
+            if (word === 'cloud') return "Fluffy white shapes in the sky made of water drops.";
+            if (word === 'sun') return "The bright star in the sky that gives us light and warmth.";
             
-            // Category 8: Weather
-            const weather = ['rain', 'snow', 'wind', 'cloud', 'sun', 'storm', 'fog'];
-            if (weather.includes(word)) {
-                const hints = [
-                    "This is a type of weather.",
-                    "You might see this outside today.",
-                    "This affects what you wear.",
-                    "This is part of nature."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
+            // Word pattern hints
+            if (word.endsWith('ing')) return "This word describes an action that is happening right now.";
+            if (word.endsWith('ed')) return "This word describes something that already happened in the past.";
+            if (word.endsWith('er') || word.endsWith('or')) return "This word describes a person who does a specific job or action.";
+            if (word.endsWith('ful')) return "This word describes something that is full of a certain quality.";
+            if (word.endsWith('less')) return "This word describes something that is without a certain quality.";
             
-            // Category 9: Words with specific endings
-            if (word.endsWith('ing')) {
-                return "This word shows an action that is happening right now.";
-            }
-            if (word.endsWith('ed')) {
-                return "This word shows an action that already happened.";
-            }
-            if (word.endsWith('er') || word.endsWith('or')) {
-                return "This word describes a person who does something.";
-            }
-            if (word.endsWith('ful')) {
-                return "This word means 'full of' something.";
-            }
-            if (word.endsWith('less')) {
-                return "This word means 'without' something.";
-            }
-            if (word.endsWith('y') && word.length > 3) {
-                return "This word describes how something looks or feels.";
-            }
+            // Length-based hints
+            if (word.length > 8) return `This is a long word with ${word.length} letters. Take your time spelling it!`;
+            if (word.length <= 4) return "This is a short word that you use often in daily life.";
             
-            // Category 10: Very long words
-            if (word.length > 8) {
-                return "This is quite a long word. Take your time spelling it.";
-            }
-            
-            // Category 11: Short words
-            if (word.length <= 4) {
-                const hints = [
-                    "This is a short word.",
-                    "You might use this word every day.",
-                    "This word is easy to learn.",
-                    "Try to remember how this word sounds."
-                ];
-                return hints[Math.floor(Math.random() * hints.length)];
-            }
-            
-            // Category 12: Words with double letters
+            // Double letter check
             for (let i = 0; i < word.length - 1; i++) {
                 if (word[i] === word[i + 1]) {
-                    return "Be careful - this word has two of the same letters together.";
+                    return `Be careful - this word has two ${word[i]} letters together in the middle.`;
                 }
             }
             
-            // Default hints for any other word
+            // Default hints for any word
             const defaultHints = [
-                "Listen carefully to how this word sounds.",
+                "Listen carefully to the sounds in this word.",
                 "Think about each letter as you spell it.",
-                "Take your time with this word.",
-                "Try breaking the word into smaller parts.",
-                "You can do this - just focus on the sounds."
+                "Try saying the word slowly to hear all the sounds.",
+                "Break the word into smaller parts to spell it.",
+                "Focus on the beginning, middle, and end of the word.",
+                "Take a deep breath and spell it one letter at a time.",
+                "You know this word - just trust your ears!"
             ];
             
             return defaultHints[Math.floor(Math.random() * defaultHints.length)];
@@ -357,10 +414,14 @@
             localStorage.setItem('darkMode', state.darkMode);
             
             const body = document.getElementById('body');
+            const icon = document.getElementById('theme-icon');
+            
             if (state.darkMode) {
                 body.classList.add('dark-mode');
+                icon.textContent = '☀️';
             } else {
                 body.classList.remove('dark-mode');
+                icon.textContent = '🌙';
             }
             
             render();
@@ -372,46 +433,41 @@
             
             if (state.mode === 'home') {
                 app.innerHTML = `
-                    <div class="max-w-4xl mx-auto p-4 md:p-8">
-                        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                            <!-- Theme Toggle -->
-                            <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
-                                ${state.darkMode ? '☀️' : '🌙'}
-                            </button>
-
-                            <div class="text-center mb-8">
-                                <h1 class="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    <div class="w-full max-w-6xl mx-auto">
+                        <div class="game-card rounded-3xl shadow-2xl p-6 md:p-10">
+                            <div class="text-center mb-10">
+                                <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
                                     ✨ Spelling Adventure ✨
                                 </h1>
-                                <p class="text-xl text-gray-600">South African English Edition 🇿🇦</p>
+                                <p class="text-xl md:text-2xl text-gray-600">South African English Edition 🇿🇦</p>
                             </div>
 
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8">
-                                <div class="stat-card bg-yellow-100 rounded-xl p-4 md:p-6 text-center">
-                                    <div class="text-3xl md:text-4xl font-bold text-yellow-800">${state.bestStreak}</div>
-                                    <div class="text-xs md:text-sm text-yellow-700">🔥 Best Streak</div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+                                <div class="stat-card bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl md:text-5xl font-bold text-yellow-800">${state.bestStreak}</div>
+                                    <div class="text-sm md:text-base text-yellow-700 font-medium">Best Streak 🔥</div>
                                 </div>
-                                <div class="stat-card bg-green-100 rounded-xl p-4 md:p-6 text-center">
-                                    <div class="text-3xl md:text-4xl font-bold text-green-800">${state.totalWords}</div>
-                                    <div class="text-xs md:text-sm text-green-700">📚 Words Mastered</div>
+                                <div class="stat-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl md:text-5xl font-bold text-green-800">${state.totalWords}</div>
+                                    <div class="text-sm md:text-base text-green-700 font-medium">Words Mastered 📚</div>
                                 </div>
-                                <div class="stat-card bg-blue-100 rounded-xl p-4 md:p-6 text-center">
-                                    <div class="text-3xl md:text-4xl font-bold text-blue-800">${state.testResults.length}</div>
-                                    <div class="text-xs md:text-sm text-blue-700">📝 Tests Done</div>
+                                <div class="stat-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl md:text-5xl font-bold text-blue-800">${state.testResults.length}</div>
+                                    <div class="text-sm md:text-base text-blue-700 font-medium">Tests Done 📝</div>
                                 </div>
-                                <div class="stat-card bg-purple-100 rounded-xl p-4 md:p-6 text-center">
-                                    <div class="text-3xl md:text-4xl font-bold text-purple-800">${state.words.length}</div>
-                                    <div class="text-xs md:text-sm text-purple-700">🎯 Words Ready</div>
+                                <div class="stat-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl md:text-5xl font-bold text-purple-800">${state.words.length}</div>
+                                    <div class="text-sm md:text-base text-purple-700 font-medium">Words Ready 🎯</div>
                                 </div>
                             </div>
 
-                            <div class="flex flex-col gap-4">
+                            <div class="flex flex-col md:flex-row gap-4 md:gap-6">
                                 <button onclick="startLearning()" 
-                                        class="py-6 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xl font-bold rounded-xl hover:from-green-600 hover:to-emerald-600 transform hover:scale-105 transition-all">
+                                        class="flex-1 py-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-2xl font-bold rounded-2xl hover:from-green-600 hover:to-emerald-700 transform hover:scale-105 transition-all shadow-xl">
                                     🚀 Start Learning
                                 </button>
                                 <button onclick="openParentDashboard()" 
-                                        class="py-6 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xl font-bold rounded-xl hover:from-blue-600 hover:to-indigo-600 transform hover:scale-105 transition-all">
+                                        class="flex-1 py-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-2xl font-bold rounded-2xl hover:from-blue-600 hover:to-indigo-700 transform hover:scale-105 transition-all shadow-xl">
                                     👨‍👩‍👧‍👦 Parent Dashboard
                                 </button>
                             </div>
@@ -453,44 +509,40 @@
             });
 
             app.innerHTML = `
-                <div class="max-w-6xl mx-auto p-4 md:p-8">
-                    <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
-                            ${state.darkMode ? '☀️' : '🌙'}
-                        </button>
-
+                <div class="w-full max-w-7xl mx-auto">
+                    <div class="game-card rounded-3xl shadow-2xl p-6 md:p-10">
                         <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                             <h1 class="text-3xl md:text-4xl font-bold">👨‍👩‍👧‍👦 Parent Dashboard</h1>
-                            <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors w-full md:w-auto">
+                            <button onclick="goHome()" class="px-8 py-4 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors text-lg font-bold w-full md:w-auto">
                                 🏠 Back to Home
                             </button>
                         </div>
 
                         ${totalTests === 0 ? `
-                            <div class="text-center py-16 bg-gray-50 rounded-2xl">
-                                <div class="text-7xl mb-4">📊</div>
-                                <h3 class="text-2xl font-bold text-gray-700 mb-2">No Data Yet</h3>
-                                <p class="text-gray-500">Complete some spelling tests to see progress here!</p>
-                                <button onclick="startLearning()" class="mt-6 px-8 py-4 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600">
+                            <div class="text-center py-20 bg-gray-50 rounded-3xl">
+                                <div class="text-8xl mb-6">📊</div>
+                                <h3 class="text-3xl font-bold text-gray-700 mb-3">No Data Yet</h3>
+                                <p class="text-xl text-gray-500 mb-8">Complete some spelling tests to see progress here!</p>
+                                <button onclick="startLearning()" class="px-10 py-5 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600 text-xl">
                                     🚀 Start Your First Test
                                 </button>
                             </div>
                         ` : `
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center">
-                                    <div class="text-3xl font-bold text-blue-800">${totalTests}</div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                                <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl font-bold text-blue-800">${totalTests}</div>
                                     <div class="text-sm text-blue-600">Total Tests</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center">
-                                    <div class="text-3xl font-bold text-green-800">${averageScore}%</div>
+                                <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl font-bold text-green-800">${averageScore}%</div>
                                     <div class="text-sm text-green-600">Average Score</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 text-center">
-                                    <div class="text-3xl font-bold text-purple-800">${state.totalWords}</div>
+                                <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl font-bold text-purple-800">${state.totalWords}</div>
                                     <div class="text-sm text-purple-600">Words Mastered</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 text-center">
-                                    <div class="text-3xl font-bold text-yellow-800">${state.bestStreak}</div>
+                                <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 text-center">
+                                    <div class="text-4xl font-bold text-yellow-800">${state.bestStreak}</div>
                                     <div class="text-sm text-yellow-600">Best Streak</div>
                                 </div>
                             </div>
@@ -501,44 +553,44 @@
                                     const recentTests = data.tests.slice(-5).reverse();
                                     
                                     return `
-                                        <div class="bg-gray-50 rounded-2xl p-6">
-                                            <div class="flex items-center gap-3 mb-6">
-                                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                        <div class="bg-gray-50 rounded-2xl p-6 md:p-8">
+                                            <div class="flex items-center gap-4 mb-6">
+                                                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
                                                     ${name.charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <h2 class="text-2xl font-bold">${name}</h2>
-                                                    <p class="text-gray-600">${data.tests.length} tests completed</p>
+                                                    <h2 class="text-3xl font-bold">${name}</h2>
+                                                    <p class="text-gray-600 text-lg">${data.tests.length} tests completed</p>
                                                 </div>
                                             </div>
                                             
                                             <div class="grid grid-cols-3 gap-4 mb-6">
                                                 <div class="bg-white rounded-xl p-4 text-center">
-                                                    <div class="text-2xl font-bold text-blue-600">${studentAvg}%</div>
-                                                    <div class="text-xs text-gray-500">Average</div>
+                                                    <div class="text-3xl font-bold text-blue-600">${studentAvg}%</div>
+                                                    <div class="text-sm text-gray-500">Average</div>
                                                 </div>
                                                 <div class="bg-white rounded-xl p-4 text-center">
-                                                    <div class="text-2xl font-bold text-green-600">${data.totalCorrect}</div>
-                                                    <div class="text-xs text-gray-500">Correct</div>
+                                                    <div class="text-3xl font-bold text-green-600">${data.totalCorrect}</div>
+                                                    <div class="text-sm text-gray-500">Correct</div>
                                                 </div>
                                                 <div class="bg-white rounded-xl p-4 text-center">
-                                                    <div class="text-2xl font-bold text-purple-600">${data.totalWords}</div>
-                                                    <div class="text-xs text-gray-500">Total Words</div>
+                                                    <div class="text-3xl font-bold text-purple-600">${data.totalWords}</div>
+                                                    <div class="text-sm text-gray-500">Total Words</div>
                                                 </div>
                                             </div>
                                             
-                                            <h3 class="font-bold mb-3">📋 Recent Tests</h3>
-                                            <div class="space-y-3">
+                                            <h3 class="font-bold text-xl mb-4">📋 Recent Tests</h3>
+                                            <div class="space-y-4">
                                                 ${recentTests.map(test => `
-                                                    <div class="bg-white rounded-xl p-4 border-l-4 ${test.percentage >= 80 ? 'border-green-500' : 'border-yellow-500'}">
-                                                        <div class="flex justify-between items-center mb-2">
-                                                            <span class="font-bold">${test.score}/${test.total} words correct</span>
-                                                            <span class="text-sm text-gray-500">${new Date(test.date).toLocaleDateString()}</span>
+                                                    <div class="bg-white rounded-xl p-5 border-l-4 ${test.percentage >= 80 ? 'border-green-500' : 'border-yellow-500'}">
+                                                        <div class="flex justify-between items-center mb-3">
+                                                            <span class="font-bold text-lg">${test.score}/${test.total} words correct</span>
+                                                            <span class="text-gray-500">${new Date(test.date).toLocaleDateString()}</span>
                                                         </div>
-                                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                                            <div class="bg-${test.percentage >= 80 ? 'green' : 'yellow'}-500 h-2 rounded-full" style="width: ${test.percentage}%"></div>
+                                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                                            <div class="bg-${test.percentage >= 80 ? 'green' : 'yellow'}-500 h-3 rounded-full" style="width: ${test.percentage}%"></div>
                                                         </div>
-                                                        <div class="mt-2 text-sm text-gray-600">
+                                                        <div class="mt-3 text-gray-600">
                                                             Words: ${test.words.join(', ')}
                                                         </div>
                                                     </div>
@@ -551,12 +603,12 @@
 
                             <div class="mt-8 bg-gray-50 rounded-2xl p-6">
                                 <h3 class="text-xl font-bold mb-4">📈 Progress Over Time</h3>
-                                <div class="h-40 flex items-end justify-between gap-1">
+                                <div class="h-48 flex items-end justify-between gap-2">
                                     ${state.testResults.slice(-10).map((test, i) => `
                                         <div class="flex-1 flex flex-col items-center">
                                             <div class="w-full bg-gradient-to-t from-blue-500 to-purple-500 rounded-t-lg transition-all hover:from-blue-600 hover:to-purple-600" 
-                                                 style="height: ${test.percentage}%"></div>
-                                            <span class="text-xs text-gray-600 mt-2">${i+1}</span>
+                                                 style="height: ${test.percentage * 1.5}%"></div>
+                                            <span class="text-xs text-gray-600 mt-2">Test ${i+1}</span>
                                         </div>
                                     `).join('')}
                                 </div>
@@ -588,48 +640,44 @@
         function renderSetup() {
             const app = document.getElementById('app');
             app.innerHTML = `
-                <div class="max-w-2xl mx-auto p-4 md:p-8">
-                    <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
-                            ${state.darkMode ? '☀️' : '🌙'}
-                        </button>
-
-                        <div class="flex justify-between items-center mb-6">
-                            <h1 class="text-2xl md:text-3xl font-bold">📚 Let's Get Started</h1>
-                            <button onclick="goHome()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
-                                🏠
+                <div class="w-full max-w-2xl mx-auto">
+                    <div class="game-card rounded-3xl shadow-2xl p-6 md:p-10">
+                        <div class="flex justify-between items-center mb-8">
+                            <h1 class="text-3xl md:text-4xl font-bold">📚 Let's Get Started</h1>
+                            <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
+                                🏠 Home
                             </button>
                         </div>
 
-                        <div class="mb-6">
-                            <label class="block text-lg font-bold mb-2">What's your name? 🌟</label>
+                        <div class="mb-8">
+                            <label class="block text-xl font-bold mb-3">What's your name? 🌟</label>
                             <input type="text" id="studentNameInput" value="${state.studentName}" 
                                    oninput="updateStudentName(this.value)"
-                                   class="w-full px-4 py-4 border-2 border-purple-300 rounded-xl text-lg focus:border-purple-500 focus:outline-none"
+                                   class="w-full px-6 py-5 border-2 border-purple-300 rounded-2xl text-xl focus:border-purple-500 focus:outline-none"
                                    placeholder="Enter your name...">
                         </div>
 
-                        <div class="mb-6">
-                            <label class="block text-lg font-bold mb-2">Add spelling words 📝</label>
-                            <div class="flex gap-2">
+                        <div class="mb-8">
+                            <label class="block text-xl font-bold mb-3">Add spelling words 📝</label>
+                            <div class="flex flex-col md:flex-row gap-3">
                                 <input type="text" id="newWord" placeholder="Type a word..."
-                                       class="flex-1 px-4 py-4 border-2 border-blue-300 rounded-xl text-lg focus:border-blue-500 focus:outline-none"
+                                       class="flex-1 px-6 py-5 border-2 border-blue-300 rounded-2xl text-xl focus:border-blue-500 focus:outline-none"
                                        onkeypress="if(event.key==='Enter') addWord()">
-                                <button onclick="addWord()" class="px-6 bg-blue-500 text-white rounded-xl font-bold hover:bg-blue-600 transition-colors">
-                                    Add
+                                <button onclick="addWord()" class="px-8 py-5 bg-blue-500 text-white rounded-2xl font-bold hover:bg-blue-600 transition-colors text-xl">
+                                    Add Word
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 mt-2">✨ Any word works - we'll give you a hint!</p>
+                            <p class="text-sm text-gray-500 mt-3">✨ Any word works - we'll give you a helpful hint!</p>
                         </div>
 
                         ${state.words.length > 0 ? `
-                            <div class="mb-6">
-                                <h3 class="font-bold mb-3">Your Words (${state.words.length})</h3>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                            <div class="mb-8">
+                                <h3 class="font-bold text-xl mb-4">Your Words (${state.words.length})</h3>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
                                     ${state.words.map((word, i) => `
-                                        <div class="bg-purple-100 rounded-lg p-3 flex justify-between items-center group">
-                                            <span class="font-medium capitalize">${word}</span>
-                                            <button onclick="removeWord(${i})" class="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div class="word-chip rounded-xl p-4 flex justify-between items-center group">
+                                            <span class="font-bold text-lg capitalize">${word}</span>
+                                            <button onclick="removeWord(${i})" class="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity text-xl">
                                                 ✕
                                             </button>
                                         </div>
@@ -640,7 +688,7 @@
 
                         <button onclick="startGame()" 
                                 ${state.words.length === 0 || !state.studentName.trim() ? 'disabled' : ''}
-                                class="w-full py-5 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xl font-bold rounded-xl hover:from-green-600 hover:to-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                                class="w-full py-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-2xl font-bold rounded-2xl hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl">
                             🚀 Start Spelling Adventure!
                         </button>
                     </div>
@@ -655,86 +703,80 @@
             const hint = getContextualHint(currentWord);
 
             app.innerHTML = `
-                <div class="max-w-xl mx-auto p-4 md:p-8">
-                    <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
-                            ${state.darkMode ? '☀️' : '🌙'}
-                        </button>
-
+                <div class="w-full max-w-2xl mx-auto">
+                    <div class="game-card rounded-3xl shadow-2xl p-6 md:p-10">
                         <div class="flex justify-between items-center mb-6">
                             <div>
-                                <h2 class="text-2xl font-bold">Hello, ${state.studentName}! ✨</h2>
-                                <p class="text-gray-600">Listen carefully and spell the word</p>
+                                <h2 class="text-3xl md:text-4xl font-bold">Hello, ${state.studentName}! ✨</h2>
+                                <p class="text-lg text-gray-600 mt-2">Listen and spell the word</p>
                             </div>
-                            <button onclick="goHome()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                            <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
                                 Exit
                             </button>
                         </div>
 
-                        <div class="mb-6">
-                            <div class="flex justify-between text-sm mb-2">
-                                <span>Word ${state.currentIndex + 1} of ${state.words.length}</span>
-                                <span>Score: ${state.score} ⭐</span>
-                                <span>Streak: ${state.streak} 🔥</span>
+                        <div class="mb-8">
+                            <div class="flex justify-between text-base md:text-lg mb-3">
+                                <span class="font-medium">Word ${state.currentIndex + 1} of ${state.words.length}</span>
+                                <span class="font-medium">Score: ${state.score} ⭐</span>
+                                <span class="font-medium">Streak: ${state.streak} 🔥</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-4">
-                                <div class="bg-green-500 h-4 rounded-full transition-all duration-300" style="width: ${progress}%"></div>
+                            <div class="w-full bg-gray-200 rounded-full h-5">
+                                <div class="progress-bar h-5 rounded-full" style="width: ${progress}%"></div>
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 mb-6">
-                            <div class="text-center mb-4">
-                                <div class="text-5xl mb-3">🔊</div>
-                                <p class="text-lg font-bold mb-4">Click to hear the word:</p>
+                        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-8 mb-8">
+                            <div class="text-center mb-6">
+                                <div class="text-6xl mb-4">🔊</div>
+                                <p class="text-xl font-bold mb-6">Click the button to hear the word:</p>
                             </div>
 
-                            <div class="space-y-3">
-                                <button onclick="speakWord('${currentWord}')" 
-                                        class="speak-button w-full bg-blue-500 text-white px-6 py-5 rounded-xl font-bold hover:bg-blue-600 transform hover:scale-105 transition-all flex items-center justify-center gap-3 text-lg">
-                                    <span class="text-2xl">🔊</span>
-                                    <span>SAY THE WORD</span>
-                                </button>
-                                
-                                <button onclick="toggleHint('${currentWord}')"
-                                        class="w-full bg-purple-500 text-white px-6 py-4 rounded-xl font-bold hover:bg-purple-600 transform hover:scale-105 transition-all flex items-center justify-center gap-2">
-                                    💡 Get a Hint
-                                </button>
-                            </div>
+                            <button onclick="speakWord('${currentWord}')" 
+                                    class="speak-button w-full text-white px-8 py-6 rounded-2xl font-bold transform hover:scale-105 transition-all flex items-center justify-center gap-4 text-2xl">
+                                <span class="text-3xl">🔊</span>
+                                <span>SAY THE WORD</span>
+                            </button>
+                            
+                            <button onclick="toggleHint('${currentWord}')"
+                                    class="w-full mt-4 bg-purple-500 text-white px-8 py-5 rounded-2xl font-bold hover:bg-purple-600 transform hover:scale-105 transition-all flex items-center justify-center gap-3 text-xl">
+                                💡 Need a Hint?
+                            </button>
 
                             ${state.showHint ? `
-                                <div class="mt-4 p-6 bg-purple-100 rounded-xl border-2 border-purple-300">
-                                    <p class="hint-text text-center">"${hint}"</p>
-                                    <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
+                                <div class="hint-card mt-6 p-6 rounded-2xl">
+                                    <p class="text-lg md:text-xl leading-relaxed">${hint}</p>
+                                    <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
                                         🔁 Hear Hint Again
                                     </button>
                                 </div>
                             ` : ''}
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-6">
                             <input type="text" id="answerInput" value="${state.userAnswer}"
                                    oninput="updateUserAnswer(this.value)"
                                    ${state.answered ? 'disabled' : ''}
-                                   class="w-full px-6 py-5 text-2xl text-center border-2 ${state.answered ? 'border-gray-300' : 'border-purple-400'} rounded-xl font-bold focus:border-purple-500 focus:outline-none"
+                                   class="w-full px-8 py-6 text-2xl md:text-3xl text-center border-4 ${state.answered ? 'border-gray-300' : 'border-purple-400'} rounded-2xl font-bold focus:border-purple-500 focus:outline-none"
                                    placeholder="✏️ Type your answer..."
                                    autocomplete="off" autocorrect="off" spellcheck="false">
                         </div>
 
                         ${state.showAnswer ? `
-                            <div class="p-6 rounded-xl mb-4 text-center ${
+                            <div class="p-8 rounded-2xl mb-6 text-center ${
                                 state.userAnswer.toLowerCase().trim() === currentWord 
-                                    ? 'bg-green-100 border-2 border-green-400' 
-                                    : 'bg-red-100 border-2 border-red-400'
+                                    ? 'bg-green-100 border-4 border-green-400' 
+                                    : 'bg-red-100 border-4 border-red-400'
                             }">
-                                <div class="text-5xl mb-2">
+                                <div class="text-6xl mb-4">
                                     ${state.userAnswer.toLowerCase().trim() === currentWord ? '✓✓✓' : '✗✗✗'}
                                 </div>
-                                <p class="text-xl font-bold">
+                                <p class="text-2xl md:text-3xl font-bold mb-3">
                                     ${state.userAnswer.toLowerCase().trim() === currentWord 
                                         ? 'Lekker! You got it right!' 
                                         : `The correct spelling is: "${currentWord}"`}
                                 </p>
-                                <p class="text-gray-600 mt-2">
+                                <p class="text-xl text-gray-600">
                                     ${state.userAnswer.toLowerCase().trim() === currentWord 
                                         ? 'Well done! 🌟' 
                                         : 'Keep practicing - you\'ll get it next time! 💪'}
@@ -744,12 +786,12 @@
 
                         ${!state.answered ? `
                             <button onclick="submitAnswer()" 
-                                    class="w-full py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl font-bold rounded-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all shadow-lg">
+                                    class="w-full py-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-2xl font-bold rounded-2xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all shadow-xl">
                                 ✅ Check My Answer
                             </button>
                         ` : `
                             <button onclick="nextWord()" 
-                                    class="w-full py-5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xl font-bold rounded-xl hover:from-green-600 hover:to-emerald-600 transform hover:scale-105 transition-all shadow-lg">
+                                    class="w-full py-6 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-2xl font-bold rounded-2xl hover:from-green-600 hover:to-emerald-600 transform hover:scale-105 transition-all shadow-xl">
                                 ${state.currentIndex < state.words.length - 1 ? '🚀 Next Word' : '🎉 See My Results'}
                             </button>
                         `}
@@ -768,51 +810,52 @@
             
             let message = '';
             let emoji = '';
+            let color = '';
             if (percentage === 100) {
                 message = "PERFECT SCORE! You're a spelling champion!";
                 emoji = "🏆🌟🎉";
+                color = "from-yellow-400 to-orange-400";
             } else if (percentage >= 80) {
                 message = "Excellent work! You're getting really good!";
                 emoji = "🎉✨⭐";
+                color = "from-green-400 to-emerald-400";
             } else if (percentage >= 60) {
                 message = "Good job! Keep practicing to get even better!";
                 emoji = "👍📚💪";
+                color = "from-blue-400 to-indigo-400";
             } else {
                 message = "Nice try! Every mistake helps you learn. Try again!";
                 emoji = "💪🌟📝";
+                color = "from-purple-400 to-pink-400";
             }
 
             app.innerHTML = `
-                <div class="max-w-2xl mx-auto p-4 md:p-8">
-                    <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 relative">
-                        <button onclick="toggleDarkMode()" class="absolute top-4 right-4 text-2xl theme-toggle">
-                            ${state.darkMode ? '☀️' : '🌙'}
-                        </button>
-
+                <div class="w-full max-w-2xl mx-auto">
+                    <div class="game-card rounded-3xl shadow-2xl p-6 md:p-10">
                         <div class="flex justify-end mb-4">
-                            <button onclick="goHome()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                            <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
                                 🏠 Home
                             </button>
                         </div>
 
-                        <div class="text-center mb-6">
-                            <div class="text-7xl mb-4 animate-bounce">${emoji}</div>
-                            <h2 class="text-3xl md:text-4xl font-bold mb-3">Great job, ${state.studentName}!</h2>
-                            <p class="text-xl text-gray-600">${message}</p>
+                        <div class="text-center mb-8">
+                            <div class="text-8xl mb-6 animate-bounce">${emoji}</div>
+                            <h2 class="text-4xl md:text-5xl font-bold mb-4">Great job, ${state.studentName}!</h2>
+                            <p class="text-2xl text-gray-600">${message}</p>
                         </div>
 
-                        <div class="bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl p-8 mb-8 text-white text-center">
-                            <div class="text-6xl font-bold mb-2">${state.score}/${state.words.length}</div>
-                            <div class="text-3xl font-bold">${percentage}%</div>
-                            <div class="mt-4 text-lg">Words correct: ${state.score}</div>
+                        <div class="bg-gradient-to-r ${color} rounded-2xl p-10 mb-8 text-white text-center">
+                            <div class="text-7xl font-bold mb-4">${state.score}/${state.words.length}</div>
+                            <div class="text-4xl font-bold mb-4">${percentage}%</div>
+                            <div class="text-2xl">Words correct: ${state.score}</div>
                         </div>
 
-                        <h3 class="text-2xl font-bold mb-4">Your Results:</h3>
-                        <div class="grid grid-cols-2 gap-3 mb-8">
+                        <h3 class="text-3xl font-bold mb-6">Your Results:</h3>
+                        <div class="grid grid-cols-2 gap-4 mb-10">
                             ${state.words.map((word, i) => `
-                                <div class="p-4 rounded-xl ${state.correctAnswers.includes(i) ? 'bg-green-100 border-2 border-green-400' : 'bg-red-100 border-2 border-red-400'} flex justify-between items-center">
-                                    <span class="font-bold capitalize">${word}</span>
-                                    <span class="text-2xl ${state.correctAnswers.includes(i) ? 'correct-icon' : 'incorrect-icon'}">
+                                <div class="p-5 rounded-xl ${state.correctAnswers.includes(i) ? 'bg-green-100 border-2 border-green-400' : 'bg-red-100 border-2 border-red-400'} flex justify-between items-center">
+                                    <span class="font-bold text-xl capitalize">${word}</span>
+                                    <span class="text-3xl ${state.correctAnswers.includes(i) ? 'correct-icon' : 'incorrect-icon'}">
                                         ${state.correctAnswers.includes(i) ? '✓✓' : '✗✗'}
                                     </span>
                                 </div>
@@ -821,11 +864,11 @@
 
                         <div class="grid grid-cols-2 gap-4">
                             <button onclick="practiceAgain()" 
-                                    class="py-4 bg-purple-500 text-white text-xl font-bold rounded-xl hover:bg-purple-600 transform hover:scale-105 transition-all">
+                                    class="py-5 bg-purple-500 text-white text-xl font-bold rounded-xl hover:bg-purple-600 transform hover:scale-105 transition-all">
                                 🔄 Practice Again
                             </button>
                             <button onclick="newWords()"
-                                    class="py-4 bg-blue-500 text-white text-xl font-bold rounded-xl hover:bg-blue-600 transform hover:scale-105 transition-all">
+                                    class="py-5 bg-blue-500 text-white text-xl font-bold rounded-xl hover:bg-blue-600 transform hover:scale-105 transition-all">
                                 ➕ New Words
                             </button>
                         </div>
@@ -898,7 +941,6 @@
                 state.streak = 0;
                 state.showHint = false;
                 render();
-                // DON'T auto-play the word
             }
         }
 
@@ -913,7 +955,6 @@
 
         function toggleHint(word) {
             state.showHint = !state.showHint;
-            // DON'T auto-play the hint
             render();
         }
 
@@ -953,7 +994,6 @@
                 state.answered = false;
                 state.showHint = false;
                 render();
-                // DON'T auto-play the next word
             } else {
                 finishGame();
             }
@@ -986,7 +1026,6 @@
             state.streak = 0;
             state.showHint = false;
             render();
-            // DON'T auto-play the word
         }
 
         function newWords() {
