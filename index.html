@@ -18,144 +18,193 @@
             transition: background 0.3s ease;
         }
         
-        /* Dark mode styles */
+        /* ==================== DARK MODE - FIXED COLORS ==================== */
         .dark-mode {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2d1b4b 100%) !important;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1625 50%, #1f1a2e 100%) !important;
         }
         
-        .dark-mode .card {
-            background-color: #1e293b !important;
-            color: #e2e8f0 !important;
-            border-color: #475569 !important;
+        .dark-mode .game-card {
+            background: #1e1a2b !important;
+            border: 1px solid #2d2a40;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         
-        .dark-mode .card-header {
-            border-bottom-color: #334155 !important;
+        .dark-mode h1, 
+        .dark-mode h2, 
+        .dark-mode h3, 
+        .dark-mode .font-bold {
+            color: #f0e9ff !important;
         }
         
-        .dark-mode .text-gray-600, 
-        .dark-mode .text-gray-700 {
-            color: #cbd5e1 !important;
+        .dark-mode p, 
+        .dark-mode span, 
+        .dark-mode label {
+            color: #cfc9e6 !important;
+        }
+        
+        .dark-mode .text-gray-600,
+        .dark-mode .text-gray-700,
+        .dark-mode .text-gray-500 {
+            color: #a89fc9 !important;
         }
         
         .dark-mode .stat-card {
-            background-color: #2d3a4f !important;
-            color: #f1f5f9 !important;
+            background: #2a253a !important;
+            border: 1px solid #3d3555;
         }
         
         .dark-mode .stat-card div {
-            color: #f1f5f9 !important;
+            color: #e6ddff !important;
+        }
+        
+        .dark-mode .stat-card .text-sm {
+            color: #b4abcf !important;
         }
         
         .dark-mode input {
-            background-color: #334155 !important;
-            color: #f1f5f9 !important;
-            border-color: #64748b !important;
+            background: #252135 !important;
+            border-color: #403b58 !important;
+            color: #f0e9ff !important;
         }
         
         .dark-mode input::placeholder {
-            color: #94a3b8 !important;
+            color: #7f779b !important;
         }
         
-        .dark-mode .bg-gray-50 {
-            background-color: #1e293b !important;
-        }
-        
-        .dark-mode .bg-gray-100 {
-            background-color: #1e293b !important;
+        .dark-mode .bg-gradient-to-br.from-yellow-50 {
+            background: #312b3f !important;
+            border: 1px solid #4a415f;
         }
         
         .dark-mode .bg-yellow-100 {
-            background-color: #422f1f !important;
-            color: #fcd34d !important;
+            background: #403520 !important;
+            color: #ffd966 !important;
         }
         
         .dark-mode .bg-green-100 {
-            background-color: #1f4030 !important;
-            color: #6ee7b7 !important;
+            background: #1e3a2a !important;
+            color: #8febb2 !important;
         }
         
         .dark-mode .bg-blue-100 {
-            background-color: #1e3a5f !important;
-            color: #93c5fd !important;
+            background: #1e3347 !important;
+            color: #9ac7ff !important;
         }
         
         .dark-mode .bg-purple-100 {
-            background-color: #352d5e !important;
-            color: #c4b5fd !important;
+            background: #2e2645 !important;
+            color: #d2b7ff !important;
         }
         
         .dark-mode .bg-red-100 {
-            background-color: #542c2c !important;
-            color: #fca5a5 !important;
+            background: #482a2a !important;
+            color: #ffaaaa !important;
         }
         
-        .correct-icon {
-            color: #10b981;
-            animation: pop 0.3s ease;
+        .dark-mode .bg-gray-50 {
+            background: #242033 !important;
         }
         
-        .incorrect-icon {
-            color: #ef4444;
-            animation: shake 0.3s ease;
+        .dark-mode .bg-white {
+            background: #2a253a !important;
+            border-color: #403b58 !important;
         }
         
-        @keyframes pop {
-            0% { transform: scale(0.8); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        .dark-mode .border-2 {
+            border-color: #403b58 !important;
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        .dark-mode .border-4 {
+            border-color: #4a415f !important;
         }
         
-        .stat-card {
-            transition: all 0.2s ease;
+        .dark-mode .word-chip {
+            background: #2e2645 !important;
+            border-color: #5e4d8c !important;
         }
         
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        .dark-mode .word-chip span {
+            color: #e6ddff !important;
+        }
+        
+        .dark-mode .hint-section {
+            background: #2a253f !important;
+            border: 1px solid #4f4580;
+        }
+        
+        .dark-mode .hint-section p {
+            color: #e2d9ff !important;
+        }
+        
+        .dark-mode .bg-gradient-to-br.from-blue-50 {
+            background: #23203a !important;
+        }
+        
+        .dark-mode .bg-gradient-to-br.from-green-50 {
+            background: #1f2e2a !important;
+        }
+        
+        .dark-mode .bg-gradient-to-br.from-purple-50 {
+            background: #28223d !important;
+        }
+        
+        .dark-mode .bg-gradient-to-br.from-yellow-50 {
+            background: #332d25 !important;
+        }
+        
+        .dark-mode .bg-red-50 {
+            background: #382828 !important;
+            border-color: #663d3d !important;
+        }
+        
+        .dark-mode .bg-blue-50 {
+            background: #222a3d !important;
+            border-color: #2d4a8c !important;
+        }
+        
+        .dark-mode .border-l-4.border-green-500 {
+            border-left-color: #2d6e4b !important;
+        }
+        
+        .dark-mode .border-l-4.border-yellow-500 {
+            border-left-color: #997d3a !important;
         }
         
         /* Theme toggle - properly positioned */
         .theme-toggle {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
             z-index: 1000;
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
             background: white;
-            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid #e2e8f0;
         }
         
         .dark-mode .theme-toggle {
-            background: #1e293b;
-            border-color: #475569;
+            background: #2d2a40;
+            border-color: #5e4d8c;
+            color: #e6ddff;
         }
         
         .theme-toggle:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(10deg);
         }
         
         /* Main content area - accounts for fixed elements */
         .main-content {
             min-height: 100vh;
             padding: 20px;
-            padding-bottom: 100px; /* Space for theme toggle */
+            padding-bottom: 100px;
         }
         
         @media (min-width: 768px) {
@@ -177,24 +226,16 @@
         
         /* Hint section styles */
         .hint-section {
-            background: linear-gradient(135deg, #f3e8ff, #ede9fe);
-            border-radius: 24px;
-            padding: 24px;
-            margin-top: 24px;
+            background: linear-gradient(135deg, #f8f4ff, #f0eaff);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 6px solid #8b5cf6;
         }
         
         .dark-mode .hint-section {
-            background: linear-gradient(135deg, #2e293a, #26223a);
-        }
-        
-        .hint-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            background: #2a253f;
+            border-left-color: #b79aff;
         }
         
         .game-card {
@@ -205,8 +246,7 @@
         }
         
         .dark-mode .game-card {
-            background: rgba(30, 41, 59, 0.98);
-            backdrop-filter: blur(10px);
+            background: #1e1a2b;
         }
         
         .progress-bar {
@@ -222,70 +262,29 @@
         }
         
         .dark-mode .word-chip {
-            background: linear-gradient(135deg, #2e293a, #2a2438);
-            border-color: #6b21a8;
+            background: #2e2645;
+            border-color: #6d4fa8;
         }
         
-        .letter-tile {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0 4px;
-            transition: all 0.2s ease;
+        .spelling-bee-quote {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #4c1d95;
+            background: #f5f3ff;
+            padding: 16px;
+            border-radius: 16px;
+            border-left: 4px solid #8b5cf6;
         }
         
-        .dark-mode .letter-tile {
-            background: #2d3a4f;
-            border-color: #64748b;
-            color: #f1f5f9;
-        }
-        
-        .letter-tile.highlight {
-            border-color: #8b5cf6;
-            background: #ede9fe;
-            transform: scale(1.1);
-        }
-        
-        .dark-mode .letter-tile.highlight {
-            background: #4c3b6e;
-            border-color: #a78bfa;
-        }
-        
-        .rhyme-word {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #e2e8f0;
-            border-radius: 20px;
-            margin: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .rhyme-word:hover {
-            background: #cbd5e1;
-            transform: scale(1.05);
-        }
-        
-        .dark-mode .rhyme-word {
-            background: #334155;
-            color: #f1f5f9;
-        }
-        
-        .dark-mode .rhyme-word:hover {
-            background: #475569;
+        .dark-mode .spelling-bee-quote {
+            color: #d8b4ff;
+            background: #2e2645;
+            border-left-color: #b47aff;
         }
     </style>
 </head>
 <body id="body" class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
-    <!-- Theme Toggle - Fixed position outside main content -->
+    <!-- Theme Toggle - Fixed position -->
     <button onclick="window.toggleDarkMode()" class="theme-toggle">
         <span id="theme-icon">🌙</span>
     </button>
@@ -311,7 +310,6 @@
             totalWords: parseInt(localStorage.getItem('totalWords') || '0'),
             testResults: JSON.parse(localStorage.getItem('testResults') || '[]'),
             showHint: false,
-            hintLevel: 'basic', // basic, syllable, rhyme, letter
             darkMode: localStorage.getItem('darkMode') === 'true'
         };
 
@@ -362,182 +360,131 @@
             };
         }
 
-        // ==================== MULTI-LEVEL HINT SYSTEM ====================
-        function getHint(word, level) {
+        // ==================== SPELLING BEE STYLE SENTENCES ====================
+        function getSpellingBeeSentence(word) {
             word = word.toLowerCase().trim();
             
-            switch(level) {
-                case 'basic':
-                    return getBasicHint(word);
-                case 'syllable':
-                    return getSyllableHint(word);
-                case 'rhyme':
-                    return getRhymeHint(word);
-                case 'letter':
-                    return getLetterHint(word);
-                default:
-                    return getBasicHint(word);
-            }
-        }
-        
-        function getBasicHint(word) {
-            const hints = {
+            const sentences = {
                 // Animals
-                'cat': "🐱 This furry friend says 'meow' and loves to nap in sunny spots.",
-                'dog': "🐕 People call this animal 'man's best friend'. It wags its tail when happy.",
-                'fish': "🐠 This creature lives in water and swims using its fins.",
-                'bird': "🕊️ This animal has feathers and can fly through the sky.",
-                'rabbit': "🐰 This fluffy animal has long ears and loves to hop.",
-                'horse': "🐎 People ride this tall animal with a flowing mane and tail.",
-                'cow': "🐄 This farm animal gives us milk and says 'moo'.",
-                'lion': "🦁 Known as the king of the jungle, this big cat has a mighty roar.",
-                'tiger': "🐯 This striped big cat is orange with black stripes.",
-                'elephant': "🐘 The largest land animal with a long trunk and big tusks.",
+                'cat': "The fluffy cat curled up on the warm windowsill.",
+                'dog': "My neighbour's friendly dog loves to play fetch at the park.",
+                'fish': "The colourful fish swam gracefully through the coral reef.",
+                'bird': "A tiny bird built its nest in the old oak tree.",
+                'rabbit': "The speedy rabbit hopped quickly through the garden.",
+                'horse': "The majestic horse galloped across the open field.",
+                'cow': "The spotted cow grazed peacefully in the meadow.",
+                'lion': "The mighty lion rested under the shade of the acacia tree.",
+                'tiger': "The striped tiger prowled silently through the jungle.",
+                'elephant': "The enormous elephant sprayed water with its long trunk.",
                 
                 // Food
-                'apple': "🍎 A crunchy fruit that can be red, green, or yellow. Good for keeping doctors away!",
-                'banana': "🍌 A long yellow fruit that monkeys love. You need to peel it first.",
-                'bread': "🍞 A food made from flour that you toast in the morning for breakfast.",
-                'milk': "🥛 A white drink that comes from cows. Good for strong bones!",
-                'water': "💧 The clear liquid we drink every day to stay healthy.",
-                'cake': "🎂 A sweet dessert with icing that people have on birthdays.",
-                'pizza': "🍕 An Italian dish with a round base, tomato sauce, and cheese on top.",
-                'rice': "🍚 Small white grains that are a staple food in many countries.",
-                'soup': "🥣 A warm liquid food eaten with a spoon, especially when you're sick.",
-                'egg': "🥚 A food that comes from chickens. You can have it fried or boiled.",
+                'apple': "She packed a crisp red apple in her lunchbox.",
+                'banana': "Monkeys love to eat ripe yellow bananas.",
+                'bread': "Fresh bread from the bakery smells absolutely wonderful.",
+                'milk': "Please pour a glass of cold milk for the children.",
+                'water': "Remember to drink plenty of clean water every day.",
+                'cake': "Grandma baked a delicious chocolate cake for my birthday.",
+                'pizza': "We ordered a large pepperoni pizza for dinner.",
+                'rice': "Rice is a staple food in many countries around the world.",
+                'soup': "Hot chicken soup is perfect when you're feeling sick.",
+                'egg': "She fried an egg for breakfast this morning.",
                 
                 // Actions
-                'run': "🏃 To move quickly using your legs, faster than walking.",
-                'jump': "🤸 To push yourself off the ground and land somewhere else.",
-                'swim': "🏊 To move through water using your arms and legs.",
-                'fly': "✈️ To move through the air like a bird or an aeroplane.",
-                'eat': "🍽️ To put food in your mouth and swallow it.",
-                'drink': "🥤 To take liquid into your body through your mouth.",
-                'sleep': "😴 To rest with your eyes closed, usually at night.",
-                'play': "🎮 To have fun with toys, games, or friends.",
-                'read': "📚 To look at words in a book and understand them.",
-                'write': "✍️ To put words on paper using a pen or pencil.",
+                'run': "The children love to run and play in the playground.",
+                'jump': "Can you jump over the small puddle on the path?",
+                'swim': "We learned how to swim at the community pool.",
+                'fly': "Pilots must train for many years before they can fly planes.",
+                'eat': "It's important to eat healthy foods to grow strong.",
+                'drink': "You should drink eight glasses of water each day.",
+                'sleep': "Young children need plenty of sleep to grow properly.",
+                'play': "After finishing homework, we can play outside.",
+                'read': "I love to read adventure stories before bedtime.",
+                'write': "Please write your name clearly at the top of the page.",
                 
                 // Colors
-                'red': "🔴 The colour of a ripe apple, a fire truck, or a rose.",
-                'blue': "🔵 The colour of the sky on a clear day and the deep ocean.",
-                'green': "🟢 The colour of grass, leaves on trees, and fresh vegetables.",
-                'yellow': "🟡 The colour of the sun, bananas, and bright flowers.",
-                'orange': "🟠 A mix of red and yellow, like the fruit with the same name.",
-                'purple': "🟣 The colour of grapes and some pretty flowers.",
-                'brown': "🟤 The colour of chocolate, tree trunks, and soil.",
-                'black': "⚫ The colour of night sky and coal.",
-                'white': "⚪ The colour of snow, milk, and clouds.",
-                'pink': "🌸 A soft colour often seen in flowers and candy.",
+                'red': "She wore a bright red dress to the party.",
+                'blue': "The clear blue sky stretched endlessly above us.",
+                'green': "Fresh green grass covered the hillside after the rain.",
+                'yellow': "Daffodils are beautiful yellow flowers that bloom in spring.",
+                'orange': "He peeled the juicy orange and shared it with his sister.",
+                'purple': "The royal purple robe was adorned with gold trim.",
+                'brown': "The brown bear searched for salmon in the river.",
+                'black': "A black cat crossed the path on Halloween night.",
+                'white': "Pure white snow covered the mountain peaks.",
+                'pink': "The garden was full of pretty pink roses.",
                 
                 // Objects
-                'ball': "⚽ A round object you can throw, catch, or kick in games.",
-                'car': "🚗 A vehicle with four wheels that takes people places.",
-                'book': "📖 Something with pages that you read to learn or enjoy stories.",
-                'pen': "🖊️ A tool with ink inside for writing on paper.",
-                'chair': "🪑 Furniture with legs and a back that you sit on.",
-                'table': "🪑 Furniture with a flat top where you eat meals or work.",
-                'door': "🚪 A moving panel that opens to let you into a room.",
-                'window': "🪟 A glass opening in a wall that lets you see outside.",
-                'house': "🏠 A building where people live with their family.",
-                'school': "🏫 A place where children go to learn from teachers."
+                'ball': "He kicked the ball straight into the goal.",
+                'car': "The red sports car zoomed down the highway.",
+                'book': "She borrowed an interesting book from the library.",
+                'pen': "Please use a blue pen to complete the test.",
+                'chair': "Pull up a chair and join us at the table.",
+                'table': "We gathered around the table for Sunday dinner.",
+                'door': "Please close the door gently when you leave.",
+                'window': "Open the window to let in some fresh air.",
+                'house': "Their house has a beautiful garden in front.",
+                'school': "School starts at eight o'clock every morning.",
+                
+                // People
+                'mom': "My mom makes the best pancakes on Saturday mornings.",
+                'dad': "Dad taught me how to ride a bicycle.",
+                'baby': "The baby slept peacefully in its crib.",
+                'girl': "A little girl skipped happily down the street.",
+                'boy': "The young boy helped his grandmother carry groceries.",
+                'teacher': "Our teacher explained the maths problem clearly.",
+                'doctor': "The doctor prescribed medicine for the cough.",
+                'friend': "My best friend moved to a different city last year.",
+                
+                // Places
+                'park': "We had a picnic at the park on Sunday afternoon.",
+                'beach': "Building sandcastles at the beach is lots of fun.",
+                'store': "I need to stop at the store to buy milk.",
+                'home': "After a long day, I was happy to be home.",
+                'zoo': "The zoo has a new exhibit for the penguins.",
+                
+                // Weather
+                'rain': "Don't forget your umbrella when it starts to rain.",
+                'snow': "The first snow of winter fell during the night.",
+                'wind': "Strong wind blew the leaves across the yard.",
+                'cloud': "A single white cloud floated across the blue sky.",
+                'sun': "The warm sun felt good on our faces.",
+                
+                // Numbers
+                'one': "I would like one scoop of ice cream please.",
+                'two': "She has two cats and one dog at home.",
+                'three': "A triangle has three sides of equal length.",
+                'four': "There are four seasons in the calendar year.",
+                'five': "I have five fingers on my left hand.",
+                
+                // Common words
+                'the': "The sun sets beautifully over the ocean.",
+                'and': "Bread and butter is a simple snack.",
+                'for': "This gift is for your birthday celebration.",
+                'you': "You are doing a fantastic job with your spelling.",
+                'are': "We are going to the museum tomorrow.",
+                'can': "I can spell many words correctly now.",
+                'has': "She has a collection of seashells from the beach.",
+                'was': "It was a beautiful day for a walk.",
+                'had': "We had fun playing games all afternoon."
             };
             
-            if (hints[word]) {
-                return hints[word];
+            // Return the sentence if it exists
+            if (sentences[word]) {
+                return sentences[word];
             }
             
-            // Pattern-based hints for unknown words
-            if (word.endsWith('ing')) {
-                return "⏳ This word shows an action that is happening right now.";
-            }
-            if (word.endsWith('ed')) {
-                return "📅 This word shows an action that already happened in the past.";
-            }
-            if (word.endsWith('er') || word.endsWith('or')) {
-                return "👤 This word describes a person who does a specific job.";
-            }
-            if (word.endsWith('ful')) {
-                return "✨ This word describes something that is full of a certain quality.";
-            }
-            if (word.endsWith('less')) {
-                return "🚫 This word describes something that is without a certain quality.";
-            }
+            // For words not in our list, generate a simple sentence
+            // that still uses the word in context
+            const templates = [
+                `Please spell the word "${word}" correctly.`,
+                `The word for this round is "${word}".`,
+                `"${word}" is an interesting word to spell.`,
+                `Can you spell "${word}" without any mistakes?`,
+                `Listen carefully to the word "${word}".`,
+                `Your next word to spell is "${word}".`
+            ];
             
-            return "🔤 Listen carefully to the sounds in this word. Try saying it slowly.";
-        }
-        
-        function getSyllableHint(word) {
-            // Count syllables (simplified)
-            const syllables = word.split(/[aeiou]+/i).length;
-            const parts = [];
-            
-            // Simple syllable splitting
-            let currentPart = '';
-            for (let i = 0; i < word.length; i++) {
-                currentPart += word[i];
-                if ('aeiou'.includes(word[i]) && i < word.length - 1) {
-                    parts.push(currentPart);
-                    currentPart = '';
-                }
-            }
-            if (currentPart) parts.push(currentPart);
-            
-            if (parts.length > 1) {
-                return `📣 This word has ${syllables} syllable${syllables > 1 ? 's' : ''}. Try breaking it into parts: ${parts.join(' - ')}`;
-            } else {
-                return `📣 This word has 1 syllable. Say it as one smooth sound.`;
-            }
-        }
-        
-        function getRhymeHint(word) {
-            const rhymes = {
-                'cat': ['bat', 'hat', 'mat', 'rat', 'sat'],
-                'dog': ['frog', 'log', 'cog', 'hog'],
-                'sun': ['fun', 'run', 'bun', 'gun'],
-                'ball': ['tall', 'fall', 'call', 'mall'],
-                'car': ['star', 'far', 'jar', 'bar'],
-                'book': ['look', 'took', 'cook', 'hook'],
-                'house': ['mouse', 'louse', 'spouse'],
-                'tree': ['bee', 'see', 'free', 'three'],
-                'blue': ['true', 'shoe', 'glue', 'flew'],
-                'red': ['bed', 'head', 'said', 'led'],
-                'big': ['pig', 'wig', 'fig', 'dig'],
-                'small': ['tall', 'call', 'ball', 'fall']
-            };
-            
-            if (rhymes[word]) {
-                const rhymeWords = rhymes[word].join(', ');
-                return `🎵 This word rhymes with words like: ${rhymeWords}. Can you hear the similar ending?`;
-            } else {
-                // Find words with same ending
-                const ending = word.slice(-3);
-                return `🎵 This word ends with "${ending}". Try to think of other words that sound similar at the end.`;
-            }
-        }
-        
-        function getLetterHint(word) {
-            const letters = word.split('');
-            const firstLetter = letters[0];
-            const lastLetter = letters[letters.length - 1];
-            const middleLetter = letters[Math.floor(letters.length / 2)];
-            
-            let hint = `🔤 This word has ${letters.length} letters. `;
-            hint += `It starts with '${firstLetter}' and ends with '${lastLetter}'. `;
-            
-            // Check for double letters
-            for (let i = 0; i < word.length - 1; i++) {
-                if (word[i] === word[i + 1]) {
-                    hint += `⚠️ Watch out! There are two '${word[i]}' letters together. `;
-                    break;
-                }
-            }
-            
-            // Vowel count
-            const vowels = word.match(/[aeiou]/gi) || [];
-            hint += `It has ${vowels.length} vowel${vowels.length !== 1 ? 's' : ''}. `;
-            
-            return hint;
+            return templates[Math.floor(Math.random() * templates.length)];
         }
 
         // ==================== DARK MODE TOGGLE ====================
@@ -571,7 +518,7 @@
                                 <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
                                     ✨ Spelling Adventure ✨
                                 </h1>
-                                <p class="text-xl md:text-2xl text-gray-600">South African English Edition 🇿🇦</p>
+                                <p class="text-xl md:text-2xl text-gray-600">South African Spelling Bee Edition 🇿🇦</p>
                             </div>
 
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
@@ -799,7 +746,7 @@
                                     Add Word
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 mt-3">✨ Any word works - we'll help you learn it!</p>
+                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll create a spelling bee sentence!</p>
                         </div>
 
                         ${state.words.length > 0 ? `
@@ -832,7 +779,7 @@
             const app = document.getElementById('app');
             const progress = ((state.currentIndex + 1) / state.words.length) * 100;
             const currentWord = state.words[state.currentIndex];
-            const currentHint = getHint(currentWord, state.hintLevel);
+            const sentence = getSpellingBeeSentence(currentWord);
 
             app.innerHTML = `
                 <div class="w-full max-w-2xl mx-auto">
@@ -840,7 +787,7 @@
                         <div class="flex justify-between items-center mb-6">
                             <div>
                                 <h2 class="text-3xl md:text-4xl font-bold">Hello, ${state.studentName}! ✨</h2>
-                                <p class="text-lg text-gray-600 mt-2">Listen and spell the word</p>
+                                <p class="text-lg text-gray-600 mt-2">South African Spelling Bee</p>
                             </div>
                             <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
                                 Exit
@@ -861,7 +808,8 @@
                         <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-8 mb-8">
                             <div class="text-center mb-6">
                                 <div class="text-6xl mb-4">🔊</div>
-                                <p class="text-xl font-bold mb-6">Click to hear the word:</p>
+                                <p class="text-xl font-bold mb-2">Spelling Bee Word:</p>
+                                <p class="text-gray-600">Click to hear the word in a sentence</p>
                             </div>
 
                             <button onclick="speakWord('${currentWord}')" 
@@ -870,31 +818,21 @@
                                 <span>SAY THE WORD</span>
                             </button>
                             
-                            <div class="grid grid-cols-2 gap-3 mt-4">
-                                <button onclick="changeHintLevel('basic')" 
-                                        class="px-4 py-3 ${state.hintLevel === 'basic' ? 'bg-purple-600 text-white' : 'bg-white text-purple-600'} border-2 border-purple-400 rounded-xl font-bold hover:bg-purple-100 transition-colors">
-                                    📝 Basic
-                                </button>
-                                <button onclick="changeHintLevel('syllable')" 
-                                        class="px-4 py-3 ${state.hintLevel === 'syllable' ? 'bg-purple-600 text-white' : 'bg-white text-purple-600'} border-2 border-purple-400 rounded-xl font-bold hover:bg-purple-100 transition-colors">
-                                    🔨 Syllables
-                                </button>
-                                <button onclick="changeHintLevel('rhyme')" 
-                                        class="px-4 py-3 ${state.hintLevel === 'rhyme' ? 'bg-purple-600 text-white' : 'bg-white text-purple-600'} border-2 border-purple-400 rounded-xl font-bold hover:bg-purple-100 transition-colors">
-                                    🎵 Rhymes
-                                </button>
-                                <button onclick="changeHintLevel('letter')" 
-                                        class="px-4 py-3 ${state.hintLevel === 'letter' ? 'bg-purple-600 text-white' : 'bg-white text-purple-600'} border-2 border-purple-400 rounded-xl font-bold hover:bg-purple-100 transition-colors">
-                                    🔤 Letters
-                                </button>
-                            </div>
+                            <button onclick="toggleHint('${currentWord}')"
+                                    class="w-full mt-4 bg-purple-500 text-white px-8 py-5 rounded-2xl font-bold hover:bg-purple-600 transform hover:scale-105 transition-all flex items-center justify-center gap-3 text-xl">
+                                💡 Hear it in a Sentence
+                            </button>
 
-                            <div class="hint-section mt-6">
-                                <p class="text-lg md:text-xl leading-relaxed">${currentHint}</p>
-                                <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
-                                    🔁 Hear This Hint
-                                </button>
-                            </div>
+                            ${state.showHint ? `
+                                <div class="hint-section mt-6">
+                                    <div class="spelling-bee-quote">
+                                        "${sentence}"
+                                    </div>
+                                    <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
+                                        🔁 Hear Sentence Again
+                                    </button>
+                                </div>
+                            ` : ''}
                         </div>
 
                         <div class="mb-6">
@@ -1084,7 +1022,6 @@
                 state.answered = false;
                 state.streak = 0;
                 state.showHint = false;
-                state.hintLevel = 'basic';
                 render();
             }
         }
@@ -1094,13 +1031,8 @@
         }
 
         function speakHint(word) {
-            const hint = getHint(word, state.hintLevel);
-            speakText(hint.replace(/[🔤📣🎵🔨⚠️✨🚫🕊️🐱🐕🐠🦁🐯🐘🍎🍌🍞🥛💧🎂🍕🍚🥣🥚🏃🤸🏊✈️🍽️🥤😴🎮📚✍️🔴🔵🟢🟡🟠🟣🟤⚫⚪🌸⚽🚗📖🖊️🪑🚪🪟🏠🏫]/g, ''));
-        }
-
-        function changeHintLevel(level) {
-            state.hintLevel = level;
-            render();
+            const sentence = getSpellingBeeSentence(word);
+            speakText(sentence);
         }
 
         function toggleHint(word) {
@@ -1143,7 +1075,6 @@
                 state.showAnswer = false;
                 state.answered = false;
                 state.showHint = false;
-                state.hintLevel = 'basic';
                 render();
             } else {
                 finishGame();
@@ -1176,7 +1107,6 @@
             state.answered = false;
             state.streak = 0;
             state.showHint = false;
-            state.hintLevel = 'basic';
             render();
         }
 
@@ -1208,7 +1138,6 @@
         window.startGame = startGame;
         window.speakWord = speakWord;
         window.speakHint = speakHint;
-        window.changeHintLevel = changeHintLevel;
         window.toggleHint = toggleHint;
         window.submitAnswer = submitAnswer;
         window.nextWord = nextWord;
