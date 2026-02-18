@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spelling Adventure</title>
+    <title>Spello - Master Your Spelling</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
@@ -18,15 +18,15 @@
             transition: background 0.3s ease;
         }
         
-        /* ==================== DARK MODE - FIXED CONTRAST ==================== */
+        /* ==================== DARK MODE - PERFECT CONTRAST ==================== */
         .dark-mode {
-            background: linear-gradient(135deg, #0f0c1f 0%, #1a1635 50%, #221e40 100%) !important;
+            background: linear-gradient(135deg, #0a0720 0%, #130f30 50%, #1c1740 100%) !important;
         }
         
         .dark-mode .game-card {
-            background: #161229 !important;
-            border: 1px solid #3f3868;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            background: #141028 !important;
+            border: 1px solid #4a3f7a;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
         }
         
         .dark-mode h1, 
@@ -35,26 +35,26 @@
         .dark-mode .font-bold {
             color: #ffffff !important;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         
         .dark-mode p, 
         .dark-mode span, 
         .dark-mode label,
         .dark-mode div {
-            color: #f0edff !important;
+            color: #f2ecff !important;
         }
         
         .dark-mode .text-gray-600,
         .dark-mode .text-gray-700,
         .dark-mode .text-gray-500 {
-            color: #e2d9ff !important;
+            color: #e6dcff !important;
         }
         
         .dark-mode .stat-card {
-            background: #2b2448 !important;
-            border: 1px solid #5f5598;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background: #2e2550 !important;
+            border: 1px solid #6b5ca8;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         
         .dark-mode .stat-card div {
@@ -63,71 +63,71 @@
         
         .dark-mode .stat-card .text-sm,
         .dark-mode .stat-card .text-base {
-            color: #d8ceff !important;
+            color: #dfd4ff !important;
         }
         
         .dark-mode input {
-            background: #221e3c !important;
-            border-color: #6a5fb0 !important;
+            background: #231e3f !important;
+            border-color: #7665c9 !important;
             color: #ffffff !important;
         }
         
         .dark-mode input::placeholder {
-            color: #a69cdb !important;
+            color: #afa2e6 !important;
         }
         
         .dark-mode .bg-gradient-to-br.from-yellow-50 {
-            background: #332b4a !important;
+            background: #362e52 !important;
         }
         
         .dark-mode .bg-yellow-100 {
-            background: #4d401f !important;
-            color: #ffe28a !important;
-            border: 1px solid #8b7355;
+            background: #544420 !important;
+            color: #ffe896 !important;
+            border: 1px solid #9e8b4a;
         }
         
         .dark-mode .bg-green-100 {
-            background: #1f4025 !important;
-            color: #a3f0b5 !important;
-            border: 1px solid #2d6a4f;
+            background: #22472a !important;
+            color: #b2f5c0 !important;
+            border: 1px solid #3c8b5e;
         }
         
         .dark-mode .bg-blue-100 {
-            background: #1f3150 !important;
-            color: #adccff !important;
-            border: 1px solid #3b5f8a;
+            background: #233a5e !important;
+            color: #bedaff !important;
+            border: 1px solid #4a7bb3;
         }
         
         .dark-mode .bg-purple-100 {
-            background: #332956 !important;
-            color: #d9c2ff !important;
-            border: 1px solid #6b4f9c;
+            background: #382e60 !important;
+            color: #e5d0ff !important;
+            border: 1px solid #7f64c2;
         }
         
         .dark-mode .bg-red-100 {
-            background: #4d2828 !important;
-            color: #ffb5b5 !important;
-            border: 1px solid #8f4f4f;
+            background: #542e2e !important;
+            color: #ffc9c9 !important;
+            border: 1px solid #b36060;
         }
         
         .dark-mode .bg-gray-50 {
-            background: #231f3d !important;
+            background: #262141 !important;
         }
         
         .dark-mode .bg-white {
-            background: #2d2550 !important;
-            border-color: #6f64b0 !important;
+            background: #302858 !important;
+            border-color: #7e6fd0 !important;
             color: #ffffff !important;
         }
         
         .dark-mode .border-2,
         .dark-mode .border-4 {
-            border-color: #6a5fb0 !important;
+            border-color: #7b6bd0 !important;
         }
         
         .dark-mode .word-chip {
-            background: #332956 !important;
-            border-color: #8a78d0 !important;
+            background: #382e60 !important;
+            border-color: #9d87e8 !important;
         }
         
         .dark-mode .word-chip span {
@@ -135,34 +135,34 @@
         }
         
         .dark-mode button.bg-purple-500 {
-            background: #6d5cb0 !important;
+            background: #7b67c4 !important;
         }
         
         .dark-mode button.bg-purple-600 {
-            background: #7d6ac9 !important;
+            background: #8c77dc !important;
         }
         
         .dark-mode button.bg-blue-500 {
-            background: #3b5faa !important;
+            background: #496bbf !important;
         }
         
         .dark-mode button.bg-green-500 {
-            background: #2d6a4a !important;
+            background: #388e5c !important;
         }
         
         .dark-mode .border-l-4.border-green-500 {
-            border-left-color: #4caf7a !important;
+            border-left-color: #5bc48b !important;
         }
         
         .dark-mode .border-l-4.border-yellow-500 {
-            border-left-color: #c9a04b !important;
+            border-left-color: #dbb05c !important;
         }
         
-        /* Theme toggle */
+        /* Theme toggle - bottom left */
         .theme-toggle {
             position: fixed;
-            bottom: 90px;
-            right: 20px;
+            bottom: 20px;
+            left: 20px;
             z-index: 1000;
             width: 56px;
             height: 56px;
@@ -172,13 +172,13 @@
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid #e2e8f0;
         }
         
-        /* Help button */
+        /* Help button - bottom right */
         .help-button {
             position: fixed;
             bottom: 20px;
@@ -192,7 +192,7 @@
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid white;
@@ -210,22 +210,31 @@
         }
         
         .dark-mode .theme-toggle {
-            background: #2d2550;
-            border-color: #8f7de0;
+            background: #302858;
+            border-color: #9d87e8;
             color: #ffffff;
         }
         
-        /* Main content area */
+        /* Main content area - adjusted padding for buttons */
         .main-content {
             min-height: 100vh;
             padding: 20px;
-            padding-bottom: 160px;
+            padding-bottom: 100px;
+            padding-left: 90px;
+            padding-right: 90px;
         }
         
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
             .main-content {
-                padding: 40px;
-                padding-bottom: 160px;
+                padding-left: 70px;
+                padding-right: 70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding-left: 60px;
+                padding-right: 60px;
             }
         }
         
@@ -256,7 +265,7 @@
         }
         
         .dark-mode .game-card {
-            background: #161229;
+            background: #141028;
         }
         
         .progress-bar {
@@ -272,8 +281,8 @@
         }
         
         .dark-mode .word-chip {
-            background: #332956;
-            border-color: #8a78d0;
+            background: #382e60;
+            border-color: #9d87e8;
         }
         
         .loading-spinner {
@@ -316,14 +325,14 @@
         }
         
         .dark-mode .modal-content {
-            background: #1e1a38;
-            border: 1px solid #5f5698;
+            background: #1f1b40;
+            border: 1px solid #7b6bd0;
             color: #ffffff;
         }
         
         .dark-mode .modal-content p,
         .dark-mode .modal-content li {
-            color: #e0d9ff;
+            color: #e6dcff;
         }
         
         .modal-close {
@@ -342,7 +351,7 @@
         }
         
         .dark-mode .modal-close {
-            background: #332956;
+            background: #382e60;
             color: white;
         }
         
@@ -357,29 +366,18 @@
         }
         
         .dark-mode .privacy-badge {
-            background: #3a3160;
-            color: #aac8ff;
-        }
-        
-        .voice-indicator {
-            display: inline-block;
-            padding: 2px 8px;
-            background: #ffd966;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-            color: #92400e;
-            margin-left: 8px;
+            background: #403673;
+            color: #baceff;
         }
     </style>
 </head>
 <body id="body" class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
-    <!-- Theme Toggle -->
+    <!-- Theme Toggle - Bottom Left -->
     <button onclick="window.toggleDarkMode()" class="theme-toggle">
         <span id="theme-icon">🌙</span>
     </button>
     
-    <!-- Help Button -->
+    <!-- Help Button - Bottom Right -->
     <button onclick="window.showHelp()" class="help-button">
         <span>❓</span>
     </button>
@@ -391,7 +389,7 @@
     <div id="helpModal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <div class="modal-close" onclick="window.hideHelp()">✕</div>
-            <h2 class="text-3xl font-bold mb-6">📖 How to Use Spelling Adventure</h2>
+            <h2 class="text-3xl font-bold mb-6">📖 How to Use Spello</h2>
             
             <div class="space-y-6">
                 <div>
@@ -407,7 +405,7 @@
                     <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
                         <span>🔊</span> During the Game
                     </h3>
-                    <p class="text-gray-700">• Click "SAY THE WORD" to hear the word pronounced</p>
+                    <p class="text-gray-700">• Click "SAY THE WORD" to hear the word pronounced (female voice)</p>
                     <p class="text-gray-700">• Click "Use the word in a sentence" to hear it in context (audio only)</p>
                     <p class="text-gray-700">• Type your answer and click "Check My Answer"</p>
                     <p class="text-gray-700">• Watch your streak grow with correct answers!</p>
@@ -499,7 +497,7 @@
             }
         };
 
-        // ==================== CLEAR BRITISH ACCENT ====================
+        // ==================== FEMALE VOICE - CRYSTAL CLEAR ====================
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -508,21 +506,33 @@
                     const utterance = new SpeechSynthesisUtterance(text);
                     const voices = window.speechSynthesis.getVoices();
                     
-                    // Try to find a clear British English voice (very clear pronunciation)
+                    // Priority: Find clear female voices
                     let selectedVoice = voices.find(voice => 
                         voice.lang.includes('en-GB') && 
-                        (voice.name.includes('Daniel') || 
-                         voice.name.includes('Kate') || 
+                        (voice.name.includes('Samantha') || 
+                         voice.name.includes('Karen') || 
+                         voice.name.includes('Moira') ||
+                         voice.name.includes('Tessa') ||
                          voice.name.includes('Serena') ||
-                         voice.name.includes('Moira'))
+                         voice.name.includes('Fiona'))
                     );
                     
-                    // Fallback to any British voice
+                    // Fallback to any female voice
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => 
+                            voice.name.includes('Female') || 
+                            voice.name.includes('Samantha') || 
+                            voice.name.includes('Google UK') ||
+                            voice.name.includes('Microsoft') && voice.name.includes('Female')
+                        );
+                    }
+                    
+                    // Final fallback to any British voice
                     if (!selectedVoice) {
                         selectedVoice = voices.find(voice => voice.lang.includes('en-GB'));
                     }
                     
-                    // Final fallback to any English voice
+                    // Absolute fallback to any English voice
                     if (!selectedVoice) {
                         selectedVoice = voices.find(voice => voice.lang.includes('en-'));
                     }
@@ -531,9 +541,9 @@
                         utterance.voice = selectedVoice;
                     }
                     
-                    // Slower, clearer speech
+                    // Clear, slow, deliberate speech for learning
                     utterance.rate = 0.7;
-                    utterance.pitch = 1.0;
+                    utterance.pitch = 1.1;
                     utterance.volume = 1.0;
                     
                     window.speechSynthesis.speak(utterance);
@@ -626,9 +636,9 @@
                         <div class="game-card p-6 md:p-10">
                             <div class="text-center mb-10">
                                 <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
-                                    ✨ Spelling Adventure ✨
+                                    ✨ Spello ✨
                                 </h1>
-                                <p class="text-xl md:text-2xl text-gray-600">Master your spelling skills!</p>
+                                <p class="text-xl md:text-2xl text-gray-600">Master your spelling skills</p>
                             </div>
 
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
@@ -702,9 +712,14 @@
                     <div class="game-card p-6 md:p-10">
                         <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                             <h1 class="text-3xl md:text-4xl font-bold">👨‍👩‍👧‍👦 Parent Dashboard</h1>
-                            <button onclick="goHome()" class="px-8 py-4 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors text-lg font-bold w-full md:w-auto">
-                                🏠 Back to Home
-                            </button>
+                            <div class="flex gap-3">
+                                <button onclick="exportData()" class="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors text-lg font-bold">
+                                    📥 Export CSV
+                                </button>
+                                <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors text-lg font-bold">
+                                    🏠 Home
+                                </button>
+                            </div>
                         </div>
 
                         ${totalTests === 0 ? `
@@ -843,7 +858,7 @@
                                     Add Word
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll show real dictionary examples</p>
+                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll find real dictionary examples</p>
                         </div>
 
                         ${state.words.length > 0 ? `
@@ -1109,9 +1124,20 @@
         }
 
         // ==================== EVENT HANDLERS ====================
-        function startLearning() { state.mode = 'student'; render(); }
-        function openParentDashboard() { state.mode = 'parent'; render(); }
-        function goHome() { state.mode = 'home'; render(); }
+        function startLearning() { 
+            state.mode = 'student'; 
+            render(); 
+        }
+        
+        function openParentDashboard() { 
+            state.mode = 'parent'; 
+            render(); 
+        }
+        
+        function goHome() { 
+            state.mode = 'home'; 
+            render(); 
+        }
 
         function updateStudentName(name) { state.studentName = name; }
         function updateUserAnswer(answer) { state.userAnswer = answer; }
