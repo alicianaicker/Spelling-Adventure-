@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spelling Adventure - South African English</title>
+    <title>Spelling Adventure</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
@@ -18,39 +18,39 @@
             transition: background 0.3s ease;
         }
         
-        /* ==================== DARK MODE - PERFECT CONTRAST ==================== */
+        /* ==================== DARK MODE - FIXED CONTRAST ==================== */
         .dark-mode {
-            background: linear-gradient(135deg, #0c0a1a 0%, #1a1630 50%, #231f3a 100%) !important;
+            background: linear-gradient(135deg, #0a0718 0%, #130f24 50%, #1a1530 100%) !important;
         }
         
         .dark-mode .game-card {
-            background: #16122b !important;
-            border: 1px solid #3f3870;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            background: #120e22 !important;
+            border: 1px solid #342e55;
         }
         
         .dark-mode h1, 
         .dark-mode h2, 
-        .dark-mode h3 {
+        .dark-mode h3,
+        .dark-mode .font-bold {
             color: #ffffff !important;
-            font-weight: 600;
+        }
+        
+        .dark-mode p, 
+        .dark-mode span, 
+        .dark-mode label,
+        .dark-mode div:not(.stat-card) {
+            color: #e9e4ff !important;
         }
         
         .dark-mode .text-gray-600,
         .dark-mode .text-gray-700,
         .dark-mode .text-gray-500 {
-            color: #d8d2ff !important;
-        }
-        
-        .dark-mode p, 
-        .dark-mode span, 
-        .dark-mode label {
-            color: #f0edff !important;
+            color: #cbc3ff !important;
         }
         
         .dark-mode .stat-card {
-            background: #2a2442 !important;
-            border: 1px solid #524b85;
+            background: #211d39 !important;
+            border: 1px solid #4a4373;
         }
         
         .dark-mode .stat-card div {
@@ -58,118 +58,63 @@
         }
         
         .dark-mode .stat-card .text-sm {
-            color: #c9c2ff !important;
+            color: #cec6ff !important;
         }
         
         .dark-mode input {
-            background: #1f1b38 !important;
-            border-color: #5f5698 !important;
+            background: #1e1a33 !important;
+            border-color: #554c8a !important;
             color: #ffffff !important;
         }
         
         .dark-mode input::placeholder {
-            color: #9b92cf !important;
+            color: #9188c7 !important;
         }
         
         .dark-mode .bg-gradient-to-br.from-yellow-50 {
-            background: #2f284a !important;
-            border: 1px solid #645a9e;
+            background: #2d2542 !important;
         }
         
         .dark-mode .bg-yellow-100 {
-            background: #3e351f !important;
-            color: #ffd966 !important;
+            background: #3f351f !important;
+            color: #ffe08c !important;
         }
         
         .dark-mode .bg-green-100 {
-            background: #1d3323 !important;
-            color: #8febb2 !important;
+            background: #1e3322 !important;
+            color: #a3f0b5 !important;
         }
         
         .dark-mode .bg-blue-100 {
-            background: #1c2d44 !important;
-            color: #9ac7ff !important;
+            background: #1c2b42 !important;
+            color: #adccff !important;
         }
         
         .dark-mode .bg-purple-100 {
-            background: #2d2547 !important;
-            color: #d2b7ff !important;
+            background: #2b2347 !important;
+            color: #d9c2ff !important;
         }
         
         .dark-mode .bg-red-100 {
-            background: #3d2424 !important;
-            color: #ffaaaa !important;
+            background: #3d2323 !important;
+            color: #ffb5b5 !important;
         }
         
         .dark-mode .bg-gray-50 {
-            background: #201c39 !important;
+            background: #1f1b34 !important;
         }
         
         .dark-mode .bg-white {
-            background: #2a2442 !important;
+            background: #262141 !important;
             border-color: #5f5698 !important;
             color: #ffffff !important;
         }
         
-        .dark-mode .border-2 {
-            border-color: #5f5698 !important;
-        }
-        
-        .dark-mode .border-4 {
-            border-color: #6b61b0 !important;
-        }
-        
-        .dark-mode .word-chip {
-            background: #2d2547 !important;
-            border-color: #7a6bc2 !important;
-        }
-        
-        .dark-mode .word-chip span {
-            color: #ffffff !important;
-        }
-        
-        .dark-mode .hint-section {
-            background: #1f1b3a !important;
-            border: 1px solid #6b61b0;
-        }
-        
-        .dark-mode .hint-section p {
-            color: #ffffff !important;
-            font-size: 1.2rem;
-        }
-        
-        .dark-mode .spelling-bee-quote {
-            color: #ffffff !important;
-            background: #2a2445 !important;
-            border-left: 4px solid #b79aff;
-        }
-        
-        .dark-mode .text-purple-800,
-        .dark-mode .text-purple-700,
-        .dark-mode .text-purple-600 {
-            color: #d9c9ff !important;
-        }
-        
-        .dark-mode button.bg-purple-500 {
-            background: #5b4c9a !important;
-        }
-        
-        .dark-mode button.bg-purple-600 {
-            background: #6b5bb0 !important;
-        }
-        
-        .dark-mode .bg-gradient-to-br.from-blue-100,
-        .dark-mode .bg-gradient-to-br.from-green-100,
-        .dark-mode .bg-gradient-to-br.from-purple-100,
-        .dark-mode .bg-gradient-to-br.from-yellow-100 {
-            background: #2d2547 !important;
-        }
-        
-        /* Theme toggle - properly positioned */
+        /* Theme toggle */
         .theme-toggle {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            bottom: 90px;
+            right: 20px;
             z-index: 1000;
             width: 56px;
             height: 56px;
@@ -185,6 +130,36 @@
             border: 2px solid #e2e8f0;
         }
         
+        /* Help button */
+        .help-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: #8b5cf6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .dark-mode .help-button {
+            background: #7c3aed;
+            border-color: #a78bfa;
+        }
+        
+        .help-button:hover {
+            transform: scale(1.1);
+        }
+        
         .dark-mode .theme-toggle {
             background: #2d2547;
             border-color: #8f7de0;
@@ -192,56 +167,62 @@
         }
         
         .theme-toggle:hover {
-            transform: scale(1.1) rotate(10deg);
+            transform: scale(1.1);
         }
         
-        /* Main content area - accounts for fixed elements */
+        /* Main content area */
         .main-content {
             min-height: 100vh;
             padding: 20px;
-            padding-bottom: 100px;
+            padding-bottom: 160px;
         }
         
         @media (min-width: 768px) {
             .main-content {
                 padding: 40px;
-                padding-bottom: 100px;
+                padding-bottom: 160px;
             }
         }
         
         .speak-button {
             transition: all 0.2s ease;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
         
-        .speak-button:active {
-            transform: scale(0.95);
-        }
-        
-        /* Hint section styles */
+        /* Hint section - NO WORD DISPLAYED */
         .hint-section {
-            background: #f8f4ff;
+            background: #f5f0ff;
             border-radius: 20px;
-            padding: 20px;
+            padding: 24px;
             margin-top: 20px;
-            border: 1px solid #d8b4ff;
+            border: 2px solid #8b5cf6;
         }
         
         .dark-mode .hint-section {
-            background: #1f1b3a;
-            border-color: #6b61b0;
+            background: #221e3a;
+            border-color: #9f8bef;
+        }
+        
+        .sentence-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #1f1a36;
+            font-style: italic;
+            padding: 8px 0;
+        }
+        
+        .dark-mode .sentence-text {
+            color: #ffffff;
         }
         
         .game-card {
-            backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             border-radius: 32px;
         }
         
         .dark-mode .game-card {
-            background: #16122b;
+            background: #120e22;
         }
         
         .progress-bar {
@@ -261,46 +242,178 @@
             border-color: #7a6bc2;
         }
         
-        .spelling-bee-quote {
-            font-size: 1.25rem;
-            font-style: italic;
-            color: #333333;
-            padding: 16px 20px;
-            border-left: 4px solid #8b5cf6;
-            line-height: 1.6;
-            background: #f5f0ff;
-            border-radius: 12px;
-        }
-        
-        .dark-mode .spelling-bee-quote {
-            color: #ffffff !important;
-            background: #2a2445;
-            border-left-color: #b79aff;
-        }
-        
         .loading-spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(139, 92, 246, 0.3);
             border-radius: 50%;
-            border-top-color: white;
+            border-top-color: #8b5cf6;
             animation: spin 1s ease-in-out infinite;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .dark-mode .modal-content {
+            background: #1a1630;
+            border: 1px solid #4a4373;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .dark-mode .modal-close {
+            background: #2d2547;
+            color: white;
+        }
+        
+        .privacy-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e8f0fe;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #2563eb;
+            margin-right: 8px;
+        }
+        
+        .dark-mode .privacy-badge {
+            background: #2d3748;
+            color: #90cdf4;
+        }
+        
+        /* South African voice indicator */
+        .voice-indicator {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #ffd966;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #92400e;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body id="body" class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
-    <!-- Theme Toggle - Fixed position -->
+    <!-- Theme Toggle -->
     <button onclick="window.toggleDarkMode()" class="theme-toggle">
         <span id="theme-icon">🌙</span>
     </button>
     
+    <!-- Help Button -->
+    <button onclick="window.showHelp()" class="help-button">
+        <span>❓</span>
+    </button>
+    
     <!-- Main Content Area -->
     <div id="app" class="main-content"></div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-close" onclick="window.hideHelp()">✕</div>
+            <h2 class="text-3xl font-bold mb-6">📖 How to Use Spelling Adventure</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>🎯</span> Getting Started
+                    </h3>
+                    <p class="text-gray-700">1. Enter your name on the setup screen</p>
+                    <p class="text-gray-700">2. Add words you want to practice</p>
+                    <p class="text-gray-700">3. Click "Start Adventure" to begin</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>🔊</span> During the Game
+                    </h3>
+                    <p class="text-gray-700">• Click "SAY THE WORD" to hear the word pronounced in a South African accent</p>
+                    <p class="text-gray-700">• Click "Use the word in a sentence" to hear it in context</p>
+                    <p class="text-gray-700">• Type your answer and click "Check My Answer"</p>
+                    <p class="text-gray-700">• Watch your streak grow with correct answers!</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>👨‍👩‍👧‍👦</span> Parent Dashboard
+                    </h3>
+                    <p class="text-gray-700">• View progress for all students</p>
+                    <p class="text-gray-700">• See test scores and improvement over time</p>
+                    <p class="text-gray-700">• Export data as CSV for record keeping</p>
+                    <p class="text-gray-700">• Clear all data if needed (use carefully!)</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>🔒</span> Privacy & Data Storage
+                    </h3>
+                    <div class="bg-blue-50 p-4 rounded-xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="privacy-badge">🔐 100% PRIVATE</span>
+                            <span class="privacy-badge">📱 LOCAL ONLY</span>
+                        </div>
+                        <p class="text-gray-700 mb-2"><strong>All data is stored ONLY on your device!</strong></p>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>No internet servers - everything stays on your phone/computer</li>
+                            <li>No accounts or sign-ups needed</li>
+                            <li>No tracking or analytics</li>
+                            <li>Data never leaves your device</li>
+                            <li>Clear data anytime from Parent Dashboard</li>
+                        </ul>
+                        <p class="mt-3 text-sm text-gray-600">⚠️ Clearing browser data will erase your progress</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>🌙</span> Dark Mode
+                    </h3>
+                    <p class="text-gray-700">Click the moon/sun button to toggle between light and dark themes</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // ==================== STATE MANAGEMENT ====================
@@ -322,7 +435,8 @@
             showHint: false,
             currentSentence: '',
             isLoadingHint: false,
-            darkMode: localStorage.getItem('darkMode') === 'true'
+            darkMode: localStorage.getItem('darkMode') === 'true',
+            hasSouthAfricanVoice: false
         };
 
         // Apply dark mode on load
@@ -330,6 +444,23 @@
             document.getElementById('body').classList.add('dark-mode');
             document.getElementById('theme-icon').textContent = '☀️';
         }
+
+        // ==================== HELP MODAL ====================
+        function showHelp() {
+            document.getElementById('helpModal').style.display = 'flex';
+        }
+        
+        function hideHelp() {
+            document.getElementById('helpModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('helpModal');
+            if (event.target === modal) {
+                hideHelp();
+            }
+        };
 
         // ==================== SOUTH AFRICAN SPEECH FUNCTIONS ====================
         function speakText(text) {
@@ -340,6 +471,7 @@
                     const utterance = new SpeechSynthesisUtterance(text);
                     const voices = window.speechSynthesis.getVoices();
                     
+                    // Try to find a South African English voice
                     let selectedVoice = voices.find(voice => 
                         voice.lang.includes('en-ZA') || 
                         voice.name.includes('South African') ||
@@ -347,12 +479,16 @@
                         voice.name.includes('Zola')
                     );
                     
-                    if (!selectedVoice) {
-                        selectedVoice = voices.find(voice => voice.lang.includes('en-'));
-                    }
-                    
                     if (selectedVoice) {
+                        state.hasSouthAfricanVoice = true;
                         utterance.voice = selectedVoice;
+                    } else {
+                        // Fallback to any English voice
+                        const englishVoice = voices.find(voice => voice.lang.includes('en-'));
+                        if (englishVoice) {
+                            utterance.voice = englishVoice;
+                        }
+                        state.hasSouthAfricanVoice = false;
                     }
                     
                     utterance.rate = 0.75;
@@ -372,27 +508,26 @@
             };
         }
 
-        // ==================== FREE DICTIONARY API ====================
-        // Using the free Dictionary API (https://dictionaryapi.dev/)
+        // ==================== DICTIONARY API FOR SENTENCES ====================
+        const sentenceCache = new Map();
+
         async function fetchSentenceFromDictionary(word) {
             try {
                 const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
                 
                 if (!response.ok) {
-                    throw new Error('Word not found in dictionary');
+                    throw new Error('Word not found');
                 }
                 
                 const data = await response.json();
                 
-                // Extract an example sentence from the API response
-                // The API returns multiple meanings and definitions
+                // Extract a proper example sentence
                 if (data && data[0] && data[0].meanings) {
-                    // Look through all meanings for an example
                     for (const meaning of data[0].meanings) {
                         if (meaning.definitions) {
                             for (const definition of meaning.definitions) {
-                                // If there's an example sentence, use it
                                 if (definition.example) {
+                                    // Return just the example sentence with the word in context
                                     return definition.example;
                                 }
                             }
@@ -400,31 +535,28 @@
                     }
                 }
                 
-                // If no example found, try to create a sentence from a definition
-                if (data && data[0] && data[0].meanings && data[0].meanings[0] && 
-                    data[0].meanings[0].definitions && data[0].meanings[0].definitions[0]) {
-                    const definition = data[0].meanings[0].definitions[0].definition;
-                    // Create a simple sentence using the definition
-                    return `The word "${word}" means: ${definition}`;
-                }
-                
-                throw new Error('No example found');
+                // If no example, create a neutral sentence
+                const neutralSentences = [
+                    "Listen carefully to how this word sounds.",
+                    "Take your time spelling this word.",
+                    "Focus on each letter as you spell.",
+                    "You can do this!",
+                    "Try your best with this word."
+                ];
+                return neutralSentences[Math.floor(Math.random() * neutralSentences.length)];
                 
             } catch (error) {
                 console.error('Dictionary API error:', error);
-                // Fallback to a simple sentence if API fails
-                const fallbackSentences = [
-                    `The word for this round is "${word}".`,
-                    `Please spell the word "${word}" correctly.`,
-                    `Listen carefully to the word "${word}".`,
-                    `Your next word to spell is "${word}".`
+                const fallback = [
+                    "Listen to the sounds in this word.",
+                    "Spell it one letter at a time.",
+                    "You've got this!",
+                    "Take a deep breath and try.",
+                    "Think about each sound you hear."
                 ];
-                return fallbackSentences[Math.floor(Math.random() * fallbackSentences.length)];
+                return fallback[Math.floor(Math.random() * fallback.length)];
             }
         }
-
-        // Cache for sentences to avoid repeated API calls
-        const sentenceCache = new Map();
 
         async function getSentenceForWord(word) {
             // Check cache first
@@ -469,7 +601,11 @@
                                 <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
                                     ✨ Spelling Adventure ✨
                                 </h1>
-                                <p class="text-xl md:text-2xl text-gray-600">South African Spelling Bee 🇿🇦</p>
+                                <p class="text-xl md:text-2xl text-gray-600">Master your spelling skills!</p>
+                                <p class="text-sm text-gray-500 mt-2">🔒 All data stored locally on your device</p>
+                                ${!state.hasSouthAfricanVoice ? `
+                                    <p class="text-xs text-gray-400 mt-1">Note: Using standard English voice (South African not available)</p>
+                                ` : ''}
                             </div>
 
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
@@ -647,7 +783,7 @@
                             <div class="mt-8 grid md:grid-cols-2 gap-4">
                                 <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
                                     <h3 class="text-xl font-bold text-red-800 mb-2">⚠️ Clear All Data</h3>
-                                    <p class="text-red-600 mb-4">This will delete all progress for all students.</p>
+                                    <p class="text-red-600 mb-4">This will delete all progress from your device.</p>
                                     <button onclick="clearAllData()" class="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors w-full md:w-auto">
                                         🗑️ Delete Everything
                                     </button>
@@ -697,7 +833,7 @@
                                     Add Word
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll find real dictionary examples</p>
+                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll show real dictionary examples</p>
                         </div>
 
                         ${state.words.length > 0 ? `
@@ -748,7 +884,7 @@
                         <div class="flex justify-between items-center mb-6">
                             <div>
                                 <h2 class="text-3xl md:text-4xl font-bold">Hello, ${state.studentName}! ✨</h2>
-                                <p class="text-lg text-gray-600 mt-2">South African Spelling Bee</p>
+                                <p class="text-lg text-gray-600 mt-2">Click the buttons to hear the word</p>
                             </div>
                             <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
                                 Exit
@@ -791,10 +927,10 @@
                                             <span class="ml-3 text-purple-600">Finding a sentence...</span>
                                         </div>
                                     ` : `
-                                        <div class="spelling-bee-quote">
-                                            "${state.currentSentence}"
+                                        <div class="sentence-text">
+                                            ${state.currentSentence}
                                         </div>
-                                        <button onclick="speakHint('${currentWord}')" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
+                                        <button onclick="speakHint()" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
                                             🔁 Hear Sentence Again
                                         </button>
                                     `}
@@ -998,7 +1134,7 @@
             speakText(word);
         }
 
-        function speakHint(word) {
+        function speakHint() {
             if (state.currentSentence) {
                 speakText(state.currentSentence);
             }
@@ -1088,13 +1224,15 @@
                 state.testResults = [];
                 state.totalWords = 0;
                 state.bestStreak = 0;
-                sentenceCache.clear(); // Clear the sentence cache
+                sentenceCache.clear();
                 render();
             }
         }
 
         // Make functions globally available
         window.toggleDarkMode = toggleDarkMode;
+        window.showHelp = showHelp;
+        window.hideHelp = hideHelp;
         window.startLearning = startLearning;
         window.openParentDashboard = openParentDashboard;
         window.goHome = goHome;
@@ -1117,4 +1255,4 @@
         render();
     </script>
 </body>
-</html> 
+</html>
