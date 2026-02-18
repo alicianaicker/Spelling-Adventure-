@@ -35,7 +35,6 @@
         .dark-mode .font-bold {
             color: #ffffff !important;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         
         .dark-mode p, 
@@ -54,7 +53,6 @@
         .dark-mode .stat-card {
             background: #2e2550 !important;
             border: 1px solid #6b5ca8;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         
         .dark-mode .stat-card div {
@@ -83,31 +81,26 @@
         .dark-mode .bg-yellow-100 {
             background: #544420 !important;
             color: #ffe896 !important;
-            border: 1px solid #9e8b4a;
         }
         
         .dark-mode .bg-green-100 {
             background: #22472a !important;
             color: #b2f5c0 !important;
-            border: 1px solid #3c8b5e;
         }
         
         .dark-mode .bg-blue-100 {
             background: #233a5e !important;
             color: #bedaff !important;
-            border: 1px solid #4a7bb3;
         }
         
         .dark-mode .bg-purple-100 {
             background: #382e60 !important;
             color: #e5d0ff !important;
-            border: 1px solid #7f64c2;
         }
         
         .dark-mode .bg-red-100 {
             background: #542e2e !important;
             color: #ffc9c9 !important;
-            border: 1px solid #b36060;
         }
         
         .dark-mode .bg-gray-50 {
@@ -158,16 +151,21 @@
             border-left-color: #dbb05c !important;
         }
         
-        /* Theme toggle - bottom left */
-        .theme-toggle {
+        /* Control buttons container - BOTH ICONS ON RIGHT SIDE */
+        .control-buttons {
             position: fixed;
             bottom: 20px;
-            left: 20px;
+            right: 20px;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .control-btn {
             width: 56px;
             height: 56px;
             border-radius: 28px;
-            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -175,67 +173,69 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid #e2e8f0;
+            border: 2px solid white;
         }
         
-        /* Help button - bottom right */
-        .help-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            width: 56px;
-            height: 56px;
-            border-radius: 28px;
+        .theme-btn {
+            background: white;
+        }
+        
+        .help-btn {
             background: #8b5cf6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid white;
             color: white;
         }
         
-        .dark-mode .help-button {
-            background: #7c3aed;
-            border-color: #a78bfa;
-        }
-        
-        .help-button:hover,
-        .theme-toggle:hover {
-            transform: scale(1.1);
-        }
-        
-        .dark-mode .theme-toggle {
+        .dark-mode .theme-btn {
             background: #302858;
             border-color: #9d87e8;
             color: #ffffff;
         }
         
-        /* Main content area - adjusted padding for buttons */
+        .dark-mode .help-btn {
+            background: #7c3aed;
+            border-color: #a78bfa;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Main content area - WIDER LAYOUT */
         .main-content {
             min-height: 100vh;
-            padding: 20px;
+            padding: 30px;
             padding-bottom: 100px;
-            padding-left: 90px;
-            padding-right: 90px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
-        @media (max-width: 768px) {
+        @media (min-width: 1024px) {
             .main-content {
-                padding-left: 70px;
-                padding-right: 70px;
+                padding: 40px 60px;
+                padding-bottom: 100px;
             }
         }
         
-        @media (max-width: 480px) {
-            .main-content {
-                padding-left: 60px;
-                padding-right: 60px;
-            }
+        /* Make cards wider */
+        .game-card {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 40px;
+            width: 100%;
+        }
+        
+        .dark-mode .game-card {
+            background: #141028;
+        }
+        
+        /* Wider stat cards */
+        .stat-card {
+            transition: all 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
         }
         
         .speak-button {
@@ -243,12 +243,12 @@
             background: linear-gradient(135deg, #3b82f6, #2563eb);
         }
         
-        /* Hint section - AUDIO ONLY - NO TEXT */
+        /* Hint section - AUDIO ONLY */
         .audio-only-hint {
             background: #f0eaff;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 30px;
-            margin-top: 20px;
+            margin-top: 24px;
             border: 3px solid #8b5cf6;
             text-align: center;
         }
@@ -256,16 +256,6 @@
         .dark-mode .audio-only-hint {
             background: #2a2445;
             border-color: #b79aff;
-        }
-        
-        .game-card {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border-radius: 32px;
-        }
-        
-        .dark-mode .game-card {
-            background: #141028;
         }
         
         .progress-bar {
@@ -276,8 +266,8 @@
         .word-chip {
             background: #f3e8ff;
             border: 1px solid #c084fc;
-            border-radius: 16px;
-            padding: 12px;
+            border-radius: 20px;
+            padding: 14px;
         }
         
         .dark-mode .word-chip {
@@ -316,11 +306,11 @@
         
         .modal-content {
             background: white;
-            border-radius: 32px;
+            border-radius: 40px;
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
-            padding: 30px;
+            padding: 35px;
             position: relative;
         }
         
@@ -369,20 +359,54 @@
             background: #403673;
             color: #baceff;
         }
+        
+        /* Fix for grid layout */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 20px;
+                padding-bottom: 100px;
+            }
+        }
+        
+        /* Wider buttons */
+        .action-button {
+            padding: 1.5rem 2rem;
+            font-size: 1.5rem;
+            border-radius: 1.5rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .action-button {
+                padding: 1.75rem 2.5rem;
+                font-size: 1.75rem;
+            }
+        }
     </style>
 </head>
 <body id="body" class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
-    <!-- Theme Toggle - Bottom Left -->
-    <button onclick="window.toggleDarkMode()" class="theme-toggle">
-        <span id="theme-icon">🌙</span>
-    </button>
+    <!-- Control Buttons - BOTH ON RIGHT SIDE -->
+    <div class="control-buttons">
+        <button onclick="window.toggleDarkMode()" class="control-btn theme-btn">
+            <span id="theme-icon">🌙</span>
+        </button>
+        <button onclick="window.showHelp()" class="control-btn help-btn">
+            <span>❓</span>
+        </button>
+    </div>
     
-    <!-- Help Button - Bottom Right -->
-    <button onclick="window.showHelp()" class="help-button">
-        <span>❓</span>
-    </button>
-    
-    <!-- Main Content Area -->
+    <!-- Main Content Area - WIDER -->
     <div id="app" class="main-content"></div>
 
     <!-- Help Modal -->
@@ -393,18 +417,14 @@
             
             <div class="space-y-6">
                 <div>
-                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
-                        <span>🎯</span> Getting Started
-                    </h3>
+                    <h3 class="text-xl font-bold mb-2">🎯 Getting Started</h3>
                     <p class="text-gray-700">1. Enter your name on the setup screen</p>
                     <p class="text-gray-700">2. Add words you want to practice</p>
                     <p class="text-gray-700">3. Click "Start Adventure" to begin</p>
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
-                        <span>🔊</span> During the Game
-                    </h3>
+                    <h3 class="text-xl font-bold mb-2">🔊 During the Game</h3>
                     <p class="text-gray-700">• Click "SAY THE WORD" to hear the word pronounced (female voice)</p>
                     <p class="text-gray-700">• Click "Use the word in a sentence" to hear it in context (audio only)</p>
                     <p class="text-gray-700">• Type your answer and click "Check My Answer"</p>
@@ -412,9 +432,7 @@
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
-                        <span>👨‍👩‍👧‍👦</span> Parent Dashboard
-                    </h3>
+                    <h3 class="text-xl font-bold mb-2">👨‍👩‍👧‍👦 Parent Dashboard</h3>
                     <p class="text-gray-700">• View progress for all students</p>
                     <p class="text-gray-700">• See test scores and improvement over time</p>
                     <p class="text-gray-700">• Export data as CSV for record keeping</p>
@@ -422,9 +440,7 @@
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
-                        <span>🔒</span> Privacy & Data Storage
-                    </h3>
+                    <h3 class="text-xl font-bold mb-2">🔒 Privacy & Data Storage</h3>
                     <div class="bg-blue-50 p-4 rounded-xl">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="privacy-badge">🔐 100% PRIVATE</span>
@@ -438,14 +454,11 @@
                             <li>Data never leaves your device</li>
                             <li>Clear data anytime from Parent Dashboard</li>
                         </ul>
-                        <p class="mt-3 text-sm text-gray-600">⚠️ Clearing browser data will erase your progress</p>
                     </div>
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
-                        <span>🌙</span> Dark Mode
-                    </h3>
+                    <h3 class="text-xl font-bold mb-2">🌙 Dark Mode</h3>
                     <p class="text-gray-700">Click the moon/sun button to toggle between light and dark themes</p>
                 </div>
             </div>
@@ -497,7 +510,7 @@
             }
         };
 
-        // ==================== FEMALE VOICE - CRYSTAL CLEAR ====================
+        // ==================== FEMALE VOICE ====================
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -506,7 +519,7 @@
                     const utterance = new SpeechSynthesisUtterance(text);
                     const voices = window.speechSynthesis.getVoices();
                     
-                    // Priority: Find clear female voices
+                    // Find clear female voices
                     let selectedVoice = voices.find(voice => 
                         voice.lang.includes('en-GB') && 
                         (voice.name.includes('Samantha') || 
@@ -517,22 +530,19 @@
                          voice.name.includes('Fiona'))
                     );
                     
-                    // Fallback to any female voice
                     if (!selectedVoice) {
                         selectedVoice = voices.find(voice => 
                             voice.name.includes('Female') || 
                             voice.name.includes('Samantha') || 
                             voice.name.includes('Google UK') ||
-                            voice.name.includes('Microsoft') && voice.name.includes('Female')
+                            (voice.name.includes('Microsoft') && voice.name.includes('Female'))
                         );
                     }
                     
-                    // Final fallback to any British voice
                     if (!selectedVoice) {
                         selectedVoice = voices.find(voice => voice.lang.includes('en-GB'));
                     }
                     
-                    // Absolute fallback to any English voice
                     if (!selectedVoice) {
                         selectedVoice = voices.find(voice => voice.lang.includes('en-'));
                     }
@@ -541,7 +551,6 @@
                         utterance.voice = selectedVoice;
                     }
                     
-                    // Clear, slow, deliberate speech for learning
                     utterance.rate = 0.7;
                     utterance.pitch = 1.1;
                     utterance.volume = 1.0;
@@ -559,7 +568,7 @@
             };
         }
 
-        // ==================== DICTIONARY API FOR SENTENCES ====================
+        // ==================== DICTIONARY API ====================
         const sentenceCache = new Map();
 
         async function fetchSentenceFromDictionary(word) {
@@ -572,7 +581,6 @@
                 
                 const data = await response.json();
                 
-                // Extract a proper example sentence
                 if (data && data[0] && data[0].meanings) {
                     for (const meaning of data[0].meanings) {
                         if (meaning.definitions) {
@@ -585,23 +593,19 @@
                     }
                 }
                 
-                // If no example, create a neutral sentence that uses the word in context
                 return `The word ${word} is used in many different ways.`;
                 
             } catch (error) {
                 console.error('Dictionary API error:', error);
-                // Fallback sentence that uses the word
                 return `Listen carefully to how ${word} is used in a sentence.`;
             }
         }
 
         async function getSentenceForWord(word) {
-            // Check cache first
             if (sentenceCache.has(word)) {
                 return sentenceCache.get(word);
             }
             
-            // Fetch from API
             const sentence = await fetchSentenceFromDictionary(word);
             sentenceCache.set(word, sentence);
             return sentence;
@@ -632,41 +636,41 @@
             
             if (state.mode === 'home') {
                 app.innerHTML = `
-                    <div class="w-full max-w-6xl mx-auto">
-                        <div class="game-card p-6 md:p-10">
-                            <div class="text-center mb-10">
-                                <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+                    <div class="w-full">
+                        <div class="game-card p-8 md:p-12">
+                            <div class="text-center mb-12">
+                                <h1 class="text-6xl md:text-8xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
                                     ✨ Spello ✨
                                 </h1>
-                                <p class="text-xl md:text-2xl text-gray-600">Master your spelling skills</p>
+                                <p class="text-2xl md:text-3xl text-gray-600">Master your spelling skills</p>
                             </div>
 
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
-                                <div class="stat-card bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 text-center">
+                            <div class="stats-grid">
+                                <div class="stat-card bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl md:text-5xl font-bold text-yellow-800">${state.bestStreak}</div>
                                     <div class="text-sm md:text-base text-yellow-700 font-medium">Best Streak 🔥</div>
                                 </div>
-                                <div class="stat-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 text-center">
+                                <div class="stat-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl md:text-5xl font-bold text-green-800">${state.totalWords}</div>
                                     <div class="text-sm md:text-base text-green-700 font-medium">Words Mastered 📚</div>
                                 </div>
-                                <div class="stat-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 text-center">
+                                <div class="stat-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl md:text-5xl font-bold text-blue-800">${state.testResults.length}</div>
                                     <div class="text-sm md:text-base text-blue-700 font-medium">Tests Done 📝</div>
                                 </div>
-                                <div class="stat-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 text-center">
+                                <div class="stat-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl md:text-5xl font-bold text-purple-800">${state.words.length}</div>
                                     <div class="text-sm md:text-base text-purple-700 font-medium">Words Ready 🎯</div>
                                 </div>
                             </div>
 
-                            <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                            <div class="flex flex-col md:flex-row gap-6">
                                 <button onclick="startLearning()" 
-                                        class="flex-1 py-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-2xl font-bold rounded-2xl hover:from-green-600 hover:to-emerald-700 transform hover:scale-105 transition-all shadow-xl">
+                                        class="flex-1 py-8 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-2xl md:text-3xl font-bold rounded-2xl hover:from-green-600 hover:to-emerald-700 transform hover:scale-105 transition-all shadow-xl">
                                     🚀 Start Learning
                                 </button>
                                 <button onclick="openParentDashboard()" 
-                                        class="flex-1 py-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-2xl font-bold rounded-2xl hover:from-blue-600 hover:to-indigo-700 transform hover:scale-105 transition-all shadow-xl">
+                                        class="flex-1 py-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-2xl md:text-3xl font-bold rounded-2xl hover:from-blue-600 hover:to-indigo-700 transform hover:scale-105 transition-all shadow-xl">
                                     👨‍👩‍👧‍👦 Parent Dashboard
                                 </button>
                             </div>
@@ -708,15 +712,15 @@
             });
 
             app.innerHTML = `
-                <div class="w-full max-w-7xl mx-auto">
-                    <div class="game-card p-6 md:p-10">
+                <div class="w-full">
+                    <div class="game-card p-8 md:p-12">
                         <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                             <h1 class="text-3xl md:text-4xl font-bold">👨‍👩‍👧‍👦 Parent Dashboard</h1>
                             <div class="flex gap-3">
-                                <button onclick="exportData()" class="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors text-lg font-bold">
+                                <button onclick="exportData()" class="px-8 py-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors text-lg font-bold">
                                     📥 Export CSV
                                 </button>
-                                <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors text-lg font-bold">
+                                <button onclick="goHome()" class="px-8 py-4 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors text-lg font-bold">
                                     🏠 Home
                                 </button>
                             </div>
@@ -732,20 +736,20 @@
                                 </button>
                             </div>
                         ` : `
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                                <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 text-center">
+                            <div class="stats-grid">
+                                <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl font-bold text-blue-800">${totalTests}</div>
                                     <div class="text-sm text-blue-600">Total Tests</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 text-center">
+                                <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl font-bold text-green-800">${averageScore}%</div>
                                     <div class="text-sm text-green-600">Average Score</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 text-center">
+                                <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl font-bold text-purple-800">${state.totalWords}</div>
                                     <div class="text-sm text-purple-600">Words Mastered</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 text-center">
+                                <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 md:p-8 text-center">
                                     <div class="text-4xl font-bold text-yellow-800">${state.bestStreak}</div>
                                     <div class="text-sm text-yellow-600">Best Streak</div>
                                 </div>
@@ -831,8 +835,8 @@
         function renderSetup() {
             const app = document.getElementById('app');
             app.innerHTML = `
-                <div class="w-full max-w-2xl mx-auto">
-                    <div class="game-card p-6 md:p-10">
+                <div class="w-full max-w-4xl mx-auto">
+                    <div class="game-card p-8 md:p-12">
                         <div class="flex justify-between items-center mb-8">
                             <h1 class="text-3xl md:text-4xl font-bold">📚 Let's Get Started</h1>
                             <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
@@ -896,7 +900,6 @@
             state.currentSentence = sentence;
             state.isLoadingHint = false;
             
-            // Automatically play the sentence when hint is shown
             setTimeout(() => {
                 speakText(sentence);
             }, 200);
@@ -910,8 +913,8 @@
             const currentWord = state.words[state.currentIndex];
 
             app.innerHTML = `
-                <div class="w-full max-w-2xl mx-auto">
-                    <div class="game-card p-6 md:p-10">
+                <div class="w-full max-w-3xl mx-auto">
+                    <div class="game-card p-8 md:p-12">
                         <div class="flex justify-between items-center mb-6">
                             <div>
                                 <h2 class="text-3xl md:text-4xl font-bold">Hello, ${state.studentName}! ✨</h2>
@@ -1047,8 +1050,8 @@
             }
 
             app.innerHTML = `
-                <div class="w-full max-w-2xl mx-auto">
-                    <div class="game-card p-6 md:p-10">
+                <div class="w-full max-w-3xl mx-auto">
+                    <div class="game-card p-8 md:p-12">
                         <div class="flex justify-end mb-4">
                             <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
                                 🏠 Home
