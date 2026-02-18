@@ -18,15 +18,14 @@
             transition: background 0.3s ease;
         }
         
-        /* ==================== DARK MODE - PERFECT CONTRAST ==================== */
+        /* ==================== DARK MODE - COMPLETELY REWORKED ==================== */
         .dark-mode {
-            background: linear-gradient(135deg, #0a0720 0%, #130f30 50%, #1c1740 100%) !important;
+            background: linear-gradient(135deg, #0d0b1a 0%, #151225 50%, #1d1930 100%) !important;
         }
         
         .dark-mode .game-card {
-            background: #141028 !important;
-            border: 1px solid #4a3f7a;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+            background: #1a162e !important;
+            border: 1px solid #3f3868;
         }
         
         .dark-mode h1, 
@@ -34,124 +33,131 @@
         .dark-mode h3,
         .dark-mode .font-bold {
             color: #ffffff !important;
-            font-weight: 700;
         }
         
         .dark-mode p, 
         .dark-mode span, 
         .dark-mode label,
-        .dark-mode div {
-            color: #f2ecff !important;
+        .dark-mode div:not(.stat-value) {
+            color: #e0d9ff !important;
         }
         
         .dark-mode .text-gray-600,
         .dark-mode .text-gray-700,
         .dark-mode .text-gray-500 {
-            color: #e6dcff !important;
+            color: #ccc2ff !important;
         }
         
+        /* Stats Cards - Fixed */
         .dark-mode .stat-card {
-            background: #2e2550 !important;
-            border: 1px solid #6b5ca8;
+            background: #272141 !important;
+            border: 1px solid #5f5398;
         }
         
-        .dark-mode .stat-card div {
+        .dark-mode .stat-card .stat-value {
             color: #ffffff !important;
         }
         
-        .dark-mode .stat-card .text-sm,
-        .dark-mode .stat-card .text-base {
-            color: #dfd4ff !important;
+        .dark-mode .stat-card .stat-label {
+            color: #c4b8ff !important;
         }
         
-        .dark-mode input {
-            background: #231e3f !important;
-            border-color: #7665c9 !important;
+        /* Parent Dashboard Stats - Fixed */
+        .dark-mode .parent-stat-card {
+            background: #2a2348 !important;
+            border: 1px solid #675ba8;
+        }
+        
+        .dark-mode .parent-stat-card .stat-number {
             color: #ffffff !important;
         }
         
-        .dark-mode input::placeholder {
-            color: #afa2e6 !important;
+        .dark-mode .parent-stat-card .stat-desc {
+            color: #cfc4ff !important;
         }
         
-        .dark-mode .bg-gradient-to-br.from-yellow-50 {
-            background: #362e52 !important;
+        /* Student Sections - Fixed */
+        .dark-mode .student-section {
+            background: #221e3a !important;
+            border: 1px solid #524b85;
         }
         
-        .dark-mode .bg-yellow-100 {
-            background: #544420 !important;
-            color: #ffe896 !important;
-        }
-        
-        .dark-mode .bg-green-100 {
-            background: #22472a !important;
-            color: #b2f5c0 !important;
-        }
-        
-        .dark-mode .bg-blue-100 {
-            background: #233a5e !important;
-            color: #bedaff !important;
-        }
-        
-        .dark-mode .bg-purple-100 {
-            background: #382e60 !important;
-            color: #e5d0ff !important;
-        }
-        
-        .dark-mode .bg-red-100 {
-            background: #542e2e !important;
-            color: #ffc9c9 !important;
-        }
-        
-        .dark-mode .bg-gray-50 {
-            background: #262141 !important;
-        }
-        
-        .dark-mode .bg-white {
-            background: #302858 !important;
-            border-color: #7e6fd0 !important;
+        .dark-mode .student-section h2 {
             color: #ffffff !important;
         }
         
-        .dark-mode .border-2,
-        .dark-mode .border-4 {
-            border-color: #7b6bd0 !important;
+        .dark-mode .student-section .text-gray-600 {
+            color: #c7bcff !important;
         }
         
-        .dark-mode .word-chip {
-            background: #382e60 !important;
-            border-color: #9d87e8 !important;
+        /* Test Cards - Fixed */
+        .dark-mode .test-card {
+            background: #2d2550 !important;
+            border: 1px solid #6f63b0;
         }
         
-        .dark-mode .word-chip span {
+        .dark-mode .test-card .text-gray-500,
+        .dark-mode .test-card .text-gray-600 {
+            color: #c4b8ff !important;
+        }
+        
+        .dark-mode .test-card .font-bold {
             color: #ffffff !important;
         }
         
-        .dark-mode button.bg-purple-500 {
-            background: #7b67c4 !important;
+        /* Data Management Cards - Fixed */
+        .dark-mode .bg-red-50 {
+            background: #3d2a2a !important;
+            border-color: #a15555 !important;
         }
         
-        .dark-mode button.bg-purple-600 {
-            background: #8c77dc !important;
+        .dark-mode .bg-red-50 h3 {
+            color: #ffb5b5 !important;
         }
         
-        .dark-mode button.bg-blue-500 {
-            background: #496bbf !important;
+        .dark-mode .bg-red-50 p {
+            color: #ffcdcd !important;
         }
         
-        .dark-mode button.bg-green-500 {
-            background: #388e5c !important;
+        .dark-mode .bg-blue-50 {
+            background: #232d4a !important;
+            border-color: #4f77b3 !important;
         }
         
-        .dark-mode .border-l-4.border-green-500 {
-            border-left-color: #5bc48b !important;
+        .dark-mode .bg-blue-50 h3 {
+            color: #b8d4ff !important;
         }
         
-        .dark-mode .border-l-4.border-yellow-500 {
-            border-left-color: #dbb05c !important;
+        .dark-mode .bg-blue-50 p {
+            color: #c6dbff !important;
         }
         
-        /* Control buttons container - BOTH ICONS ON RIGHT SIDE */
+        /* Help Modal Dark Mode */
+        .dark-mode .modal-content {
+            background: #1f1b38 !important;
+            border: 2px solid #6f63b0;
+        }
+        
+        .dark-mode .modal-content h2,
+        .dark-mode .modal-content h3 {
+            color: #ffffff !important;
+        }
+        
+        .dark-mode .modal-content p,
+        .dark-mode .modal-content li {
+            color: #d9ceff !important;
+        }
+        
+        .dark-mode .modal-content .bg-blue-50 {
+            background: #252147 !important;
+        }
+        
+        .dark-mode .modal-close {
+            background: #332b58;
+            color: white;
+        }
+        
+        /* Control buttons */
         .control-buttons {
             position: fixed;
             bottom: 20px;
@@ -186,7 +192,7 @@
         }
         
         .dark-mode .theme-btn {
-            background: #302858;
+            background: #2d2550;
             border-color: #9d87e8;
             color: #ffffff;
         }
@@ -200,7 +206,7 @@
             transform: scale(1.1);
         }
         
-        /* Main content area - WIDER LAYOUT */
+        /* Main content */
         .main-content {
             min-height: 100vh;
             padding: 30px;
@@ -216,7 +222,6 @@
             }
         }
         
-        /* Make cards wider */
         .game-card {
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -225,17 +230,67 @@
         }
         
         .dark-mode .game-card {
-            background: #141028;
+            background: #1a162e;
         }
         
-        /* Wider stat cards */
-        .stat-card {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 20px;
+                padding-bottom: 100px;
+            }
+        }
+        
+        /* Child selector */
+        .child-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        
+        .child-chip {
+            padding: 12px 24px;
+            background: #f3e8ff;
+            border: 2px solid #c084fc;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
         
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
+        .child-chip:hover {
+            transform: scale(1.05);
+            background: #e9d5ff;
+        }
+        
+        .child-chip.selected {
+            background: #8b5cf6;
+            border-color: #6d28d9;
+            color: white;
+        }
+        
+        .dark-mode .child-chip {
+            background: #382e60;
+            border-color: #9d87e8;
+            color: white;
+        }
+        
+        .dark-mode .child-chip.selected {
+            background: #7c3aed;
+            border-color: #a78bfa;
         }
         
         .speak-button {
@@ -243,7 +298,6 @@
             background: linear-gradient(135deg, #3b82f6, #2563eb);
         }
         
-        /* Hint section - AUDIO ONLY */
         .audio-only-hint {
             background: #f0eaff;
             border-radius: 24px;
@@ -313,90 +367,10 @@
             padding: 35px;
             position: relative;
         }
-        
-        .dark-mode .modal-content {
-            background: #1f1b40;
-            border: 1px solid #7b6bd0;
-            color: #ffffff;
-        }
-        
-        .dark-mode .modal-content p,
-        .dark-mode .modal-content li {
-            color: #e6dcff;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            background: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-        }
-        
-        .dark-mode .modal-close {
-            background: #382e60;
-            color: white;
-        }
-        
-        .privacy-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #e8f0fe;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #2563eb;
-            margin-right: 8px;
-        }
-        
-        .dark-mode .privacy-badge {
-            background: #403673;
-            color: #baceff;
-        }
-        
-        /* Fix for grid layout */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-        
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-            
-            .main-content {
-                padding: 20px;
-                padding-bottom: 100px;
-            }
-        }
-        
-        /* Wider buttons */
-        .action-button {
-            padding: 1.5rem 2rem;
-            font-size: 1.5rem;
-            border-radius: 1.5rem;
-        }
-        
-        @media (min-width: 1024px) {
-            .action-button {
-                padding: 1.75rem 2.5rem;
-                font-size: 1.75rem;
-            }
-        }
     </style>
 </head>
 <body id="body" class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
-    <!-- Control Buttons - BOTH ON RIGHT SIDE -->
+    <!-- Control Buttons -->
     <div class="control-buttons">
         <button onclick="window.toggleDarkMode()" class="control-btn theme-btn">
             <span id="theme-icon">🌙</span>
@@ -406,7 +380,7 @@
         </button>
     </div>
     
-    <!-- Main Content Area - WIDER -->
+    <!-- Main Content -->
     <div id="app" class="main-content"></div>
 
     <!-- Help Modal -->
@@ -418,48 +392,34 @@
             <div class="space-y-6">
                 <div>
                     <h3 class="text-xl font-bold mb-2">🎯 Getting Started</h3>
-                    <p class="text-gray-700">1. Enter your name on the setup screen</p>
-                    <p class="text-gray-700">2. Add words you want to practice</p>
-                    <p class="text-gray-700">3. Click "Start Adventure" to begin</p>
+                    <p>1. Select your name or add a new one</p>
+                    <p>2. Add words you want to practice</p>
+                    <p>3. Click "Start Adventure" to begin</p>
                 </div>
                 
                 <div>
                     <h3 class="text-xl font-bold mb-2">🔊 During the Game</h3>
-                    <p class="text-gray-700">• Click "SAY THE WORD" to hear the word pronounced (female voice)</p>
-                    <p class="text-gray-700">• Click "Use the word in a sentence" to hear it in context (audio only)</p>
-                    <p class="text-gray-700">• Type your answer and click "Check My Answer"</p>
-                    <p class="text-gray-700">• Watch your streak grow with correct answers!</p>
+                    <p>• Click "SAY THE WORD" to hear the word (South African accent)</p>
+                    <p>• Click "Use the word in a sentence" to hear it in context</p>
+                    <p>• Type your answer and click "Check My Answer"</p>
+                    <p>• Watch your streak grow with correct answers!</p>
                 </div>
                 
                 <div>
                     <h3 class="text-xl font-bold mb-2">👨‍👩‍👧‍👦 Parent Dashboard</h3>
-                    <p class="text-gray-700">• View progress for all students</p>
-                    <p class="text-gray-700">• See test scores and improvement over time</p>
-                    <p class="text-gray-700">• Export data as CSV for record keeping</p>
-                    <p class="text-gray-700">• Clear all data if needed (use carefully!)</p>
+                    <p>• View progress for all students</p>
+                    <p>• See test scores and improvement over time</p>
+                    <p>• Export data as CSV for record keeping</p>
+                    <p>• Clear all data if needed</p>
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-bold mb-2">🔒 Privacy & Data Storage</h3>
+                    <h3 class="text-xl font-bold mb-2">🔒 Privacy</h3>
                     <div class="bg-blue-50 p-4 rounded-xl">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="privacy-badge">🔐 100% PRIVATE</span>
-                            <span class="privacy-badge">📱 LOCAL ONLY</span>
-                        </div>
-                        <p class="text-gray-700 mb-2"><strong>All data is stored ONLY on your device!</strong></p>
-                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
-                            <li>No internet servers - everything stays on your phone/computer</li>
-                            <li>No accounts or sign-ups needed</li>
-                            <li>No tracking or analytics</li>
-                            <li>Data never leaves your device</li>
-                            <li>Clear data anytime from Parent Dashboard</li>
-                        </ul>
+                        <p>✅ All data stored locally on your device only</p>
+                        <p>✅ No accounts or sign-ups needed</p>
+                        <p>✅ No tracking or analytics</p>
                     </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-2">🌙 Dark Mode</h3>
-                    <p class="text-gray-700">Click the moon/sun button to toggle between light and dark themes</p>
                 </div>
             </div>
         </div>
@@ -470,7 +430,8 @@
         let state = {
             mode: 'home',
             gameState: 'setup',
-            studentName: '',
+            students: [],
+            currentStudent: '',
             words: [],
             currentIndex: 0,
             userAnswer: '',
@@ -479,20 +440,100 @@
             answered: false,
             correctAnswers: [],
             streak: 0,
-            bestStreak: parseInt(localStorage.getItem('bestStreak') || '0'),
-            totalWords: parseInt(localStorage.getItem('totalWords') || '0'),
-            testResults: JSON.parse(localStorage.getItem('testResults') || '[]'),
+            bestStreak: 0,
+            totalWords: 0,
+            testResults: [],
             showHint: false,
             currentSentence: '',
             isLoadingHint: false,
-            darkMode: localStorage.getItem('darkMode') === 'true'
+            darkMode: false
         };
 
-        // Apply dark mode on load
-        if (state.darkMode) {
-            document.getElementById('body').classList.add('dark-mode');
-            document.getElementById('theme-icon').textContent = '☀️';
+        // Load initial data from localStorage
+        function loadFromStorage() {
+            try {
+                // Load dark mode
+                const savedDarkMode = localStorage.getItem('spello_darkMode');
+                if (savedDarkMode !== null) {
+                    state.darkMode = savedDarkMode === 'true';
+                }
+                
+                // Load students
+                const savedStudents = localStorage.getItem('spello_students');
+                if (savedStudents) {
+                    state.students = JSON.parse(savedStudents);
+                } else {
+                    state.students = [];
+                }
+                
+                // Load current student
+                const savedCurrentStudent = localStorage.getItem('spello_currentStudent');
+                if (savedCurrentStudent) {
+                    state.currentStudent = savedCurrentStudent;
+                    loadStudentData(savedCurrentStudent);
+                }
+                
+                // Apply dark mode
+                if (state.darkMode) {
+                    document.getElementById('body').classList.add('dark-mode');
+                    document.getElementById('theme-icon').textContent = '☀️';
+                }
+            } catch (e) {
+                console.error('Error loading from storage:', e);
+                // Reset to defaults if there's an error
+                state.students = [];
+                state.currentStudent = '';
+            }
         }
+
+        // Save all data to localStorage
+        function saveToStorage() {
+            try {
+                localStorage.setItem('spello_darkMode', state.darkMode);
+                localStorage.setItem('spello_students', JSON.stringify(state.students));
+                localStorage.setItem('spello_currentStudent', state.currentStudent || '');
+            } catch (e) {
+                console.error('Error saving to storage:', e);
+            }
+        }
+
+        // Load student-specific data
+        function loadStudentData(studentName) {
+            const student = state.students.find(s => s.name === studentName);
+            if (student) {
+                state.bestStreak = student.bestStreak || 0;
+                state.totalWords = student.totalWords || 0;
+                state.testResults = student.testResults || [];
+            } else {
+                state.bestStreak = 0;
+                state.totalWords = 0;
+                state.testResults = [];
+            }
+        }
+
+        // Save student data
+        function saveStudentData() {
+            const studentIndex = state.students.findIndex(s => s.name === state.currentStudent);
+            
+            const studentData = {
+                name: state.currentStudent,
+                bestStreak: state.bestStreak,
+                totalWords: state.totalWords,
+                testResults: state.testResults,
+                lastActive: new Date().toISOString()
+            };
+            
+            if (studentIndex >= 0) {
+                state.students[studentIndex] = studentData;
+            } else if (state.currentStudent) {
+                state.students.push(studentData);
+            }
+            
+            saveToStorage();
+        }
+
+        // Initialize
+        loadFromStorage();
 
         // ==================== HELP MODAL ====================
         function showHelp() {
@@ -510,7 +551,7 @@
             }
         };
 
-        // ==================== FEMALE VOICE ====================
+        // ==================== SOUTH AFRICAN VOICE ====================
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -519,28 +560,21 @@
                     const utterance = new SpeechSynthesisUtterance(text);
                     const voices = window.speechSynthesis.getVoices();
                     
-                    // Find clear female voices
+                    // Priority: Find South African voices
                     let selectedVoice = voices.find(voice => 
-                        voice.lang.includes('en-GB') && 
-                        (voice.name.includes('Samantha') || 
-                         voice.name.includes('Karen') || 
-                         voice.name.includes('Moira') ||
-                         voice.name.includes('Tessa') ||
-                         voice.name.includes('Serena') ||
-                         voice.name.includes('Fiona'))
+                        voice.lang.includes('en-ZA') || 
+                        voice.name.includes('South African') ||
+                        voice.name.includes('Tessa') ||
+                        voice.name.includes('Zola')
                     );
                     
+                    // Fallback to clear British voices
                     if (!selectedVoice) {
                         selectedVoice = voices.find(voice => 
-                            voice.name.includes('Female') || 
-                            voice.name.includes('Samantha') || 
-                            voice.name.includes('Google UK') ||
-                            (voice.name.includes('Microsoft') && voice.name.includes('Female'))
+                            voice.lang.includes('en-GB') && 
+                            (voice.name.includes('Daniel') || 
+                             voice.name.includes('Kate'))
                         );
-                    }
-                    
-                    if (!selectedVoice) {
-                        selectedVoice = voices.find(voice => voice.lang.includes('en-GB'));
                     }
                     
                     if (!selectedVoice) {
@@ -552,7 +586,7 @@
                     }
                     
                     utterance.rate = 0.7;
-                    utterance.pitch = 1.1;
+                    utterance.pitch = 1.0;
                     utterance.volume = 1.0;
                     
                     window.speechSynthesis.speak(utterance);
@@ -568,37 +602,99 @@
             };
         }
 
-        // ==================== DICTIONARY API ====================
+        // ==================== SENTENCE API ====================
         const sentenceCache = new Map();
 
-        async function fetchSentenceFromDictionary(word) {
-            try {
-                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-                
-                if (!response.ok) {
-                    throw new Error('Word not found');
-                }
-                
-                const data = await response.json();
-                
-                if (data && data[0] && data[0].meanings) {
-                    for (const meaning of data[0].meanings) {
-                        if (meaning.definitions) {
-                            for (const definition of meaning.definitions) {
-                                if (definition.example) {
-                                    return definition.example;
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                return `The word ${word} is used in many different ways.`;
-                
-            } catch (error) {
-                console.error('Dictionary API error:', error);
-                return `Listen carefully to how ${word} is used in a sentence.`;
+        function getLocalSentence(word) {
+            const sentences = {
+                'cat': 'The cat sat on the windowsill, watching the birds outside.',
+                'dog': 'My dog loves to play fetch in the park every afternoon.',
+                'fish': 'The colourful fish swam gracefully in the aquarium.',
+                'bird': 'A beautiful bird sang sweetly in the old oak tree.',
+                'rabbit': 'The fluffy rabbit hopped quickly through the garden.',
+                'horse': 'The majestic horse galloped across the open field.',
+                'cow': 'The spotted cow grazed peacefully in the meadow.',
+                'lion': 'The mighty lion rested under the shade of the acacia tree.',
+                'tiger': 'The striped tiger prowled silently through the jungle.',
+                'elephant': 'The enormous elephant sprayed water with its long trunk.',
+                'apple': 'She bit into the crisp, red apple and smiled.',
+                'banana': 'Monkeys love to eat ripe, yellow bananas.',
+                'bread': 'The smell of fresh bread filled the kitchen.',
+                'milk': 'Please pour a glass of cold milk for the children.',
+                'water': 'Remember to drink plenty of clean water every day.',
+                'cake': 'Grandma baked a delicious chocolate cake for my birthday.',
+                'pizza': 'We ordered a large pepperoni pizza for dinner.',
+                'rice': 'Rice is a staple food in many countries around the world.',
+                'soup': 'Hot chicken soup is perfect when you are feeling sick.',
+                'egg': 'She fried an egg for breakfast this morning.',
+                'run': 'The children love to run and play in the playground.',
+                'jump': 'Can you jump over the small puddle on the path?',
+                'swim': 'We learned how to swim at the community pool.',
+                'fly': 'Pilots must train for many years before they can fly planes.',
+                'eat': 'It is important to eat healthy foods to grow strong.',
+                'drink': 'You should drink eight glasses of water each day.',
+                'sleep': 'Young children need plenty of sleep to grow properly.',
+                'play': 'After finishing homework, we can play outside.',
+                'read': 'I love to read adventure stories before bedtime.',
+                'write': 'Please write your name clearly at the top of the page.',
+                'red': 'She wore a bright red dress to the party.',
+                'blue': 'The clear blue sky stretched endlessly above us.',
+                'green': 'Fresh green grass covered the hillside after the rain.',
+                'yellow': 'Daffodils are beautiful yellow flowers that bloom in spring.',
+                'orange': 'He peeled the juicy orange and shared it with his sister.',
+                'purple': 'The royal purple robe was adorned with gold trim.',
+                'brown': 'The brown bear searched for salmon in the river.',
+                'black': 'A black cat crossed the path on Halloween night.',
+                'white': 'Pure white snow covered the mountain peaks.',
+                'pink': 'The garden was full of pretty pink roses.',
+                'ball': 'He kicked the ball straight into the goal.',
+                'car': 'The red sports car zoomed down the highway.',
+                'book': 'She borrowed an interesting book from the library.',
+                'pen': 'Please use a blue pen to complete the test.',
+                'chair': 'Pull up a chair and join us at the table.',
+                'table': 'We gathered around the table for Sunday dinner.',
+                'door': 'Please close the door gently when you leave.',
+                'window': 'Open the window to let in some fresh air.',
+                'house': 'Their house has a beautiful garden in front.',
+                'school': 'School starts at eight o\'clock every morning.',
+                'mom': 'My mom makes the best pancakes on Saturday mornings.',
+                'dad': 'Dad taught me how to ride a bicycle.',
+                'baby': 'The baby slept peacefully in its crib.',
+                'girl': 'A little girl skipped happily down the street.',
+                'boy': 'The young boy helped his grandmother carry groceries.',
+                'teacher': 'Our teacher explained the maths problem clearly.',
+                'doctor': 'The doctor prescribed medicine for the cough.',
+                'friend': 'My best friend moved to a different city last year.',
+                'park': 'We had a picnic at the park on Sunday afternoon.',
+                'beach': 'Building sandcastles at the beach is lots of fun.',
+                'store': 'I need to stop at the store to buy milk.',
+                'home': 'After a long day, I was happy to be home.',
+                'zoo': 'The zoo has a new exhibit for the penguins.',
+                'rain': 'Do not forget your umbrella when it starts to rain.',
+                'snow': 'The first snow of winter fell during the night.',
+                'wind': 'Strong wind blew the leaves across the yard.',
+                'cloud': 'A single white cloud floated across the blue sky.',
+                'sun': 'The warm sun felt good on our faces.',
+                'one': 'I would like one scoop of ice cream please.',
+                'two': 'She has two cats and one dog at home.',
+                'three': 'A triangle has three sides of equal length.',
+                'four': 'There are four seasons in the calendar year.',
+                'five': 'I have five fingers on my left hand.'
+            };
+            
+            if (sentences[word]) {
+                return sentences[word];
             }
+            
+            const templates = [
+                `The word ${word} is used in many different ways.`,
+                `Can you spell the word ${word} correctly?`,
+                `Listen carefully to the word ${word}.`,
+                `Now try to spell the word ${word}.`,
+                `The word for this round is ${word}.`
+            ];
+            
+            return templates[Math.floor(Math.random() * templates.length)];
         }
 
         async function getSentenceForWord(word) {
@@ -606,15 +702,38 @@
                 return sentenceCache.get(word);
             }
             
-            const sentence = await fetchSentenceFromDictionary(word);
-            sentenceCache.set(word, sentence);
-            return sentence;
+            // Try API first
+            try {
+                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && data[0] && data[0].meanings) {
+                        for (const meaning of data[0].meanings) {
+                            if (meaning.definitions) {
+                                for (const definition of meaning.definitions) {
+                                    if (definition.example) {
+                                        sentenceCache.set(word, definition.example);
+                                        return definition.example;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                console.log('API failed, using local sentence');
+            }
+            
+            // Fallback to local sentences
+            const localSentence = getLocalSentence(word);
+            sentenceCache.set(word, localSentence);
+            return localSentence;
         }
 
         // ==================== DARK MODE TOGGLE ====================
         function toggleDarkMode() {
             state.darkMode = !state.darkMode;
-            localStorage.setItem('darkMode', state.darkMode);
+            saveToStorage();
             
             const body = document.getElementById('body');
             const icon = document.getElementById('theme-icon');
@@ -646,21 +765,21 @@
                             </div>
 
                             <div class="stats-grid">
-                                <div class="stat-card bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl md:text-5xl font-bold text-yellow-800">${state.bestStreak}</div>
-                                    <div class="text-sm md:text-base text-yellow-700 font-medium">Best Streak 🔥</div>
+                                <div class="stat-card rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-value text-4xl md:text-5xl font-bold text-yellow-800">${state.bestStreak}</div>
+                                    <div class="stat-label text-sm md:text-base text-yellow-700 font-medium">Best Streak 🔥</div>
                                 </div>
-                                <div class="stat-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl md:text-5xl font-bold text-green-800">${state.totalWords}</div>
-                                    <div class="text-sm md:text-base text-green-700 font-medium">Words Mastered 📚</div>
+                                <div class="stat-card rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-value text-4xl md:text-5xl font-bold text-green-800">${state.totalWords}</div>
+                                    <div class="stat-label text-sm md:text-base text-green-700 font-medium">Words Mastered 📚</div>
                                 </div>
-                                <div class="stat-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl md:text-5xl font-bold text-blue-800">${state.testResults.length}</div>
-                                    <div class="text-sm md:text-base text-blue-700 font-medium">Tests Done 📝</div>
+                                <div class="stat-card rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-value text-4xl md:text-5xl font-bold text-blue-800">${state.testResults.length}</div>
+                                    <div class="stat-label text-sm md:text-base text-blue-700 font-medium">Tests Done 📝</div>
                                 </div>
-                                <div class="stat-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl md:text-5xl font-bold text-purple-800">${state.words.length}</div>
-                                    <div class="text-sm md:text-base text-purple-700 font-medium">Words Ready 🎯</div>
+                                <div class="stat-card rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-value text-4xl md:text-5xl font-bold text-purple-800">${state.words.length}</div>
+                                    <div class="stat-label text-sm md:text-base text-purple-700 font-medium">Words Ready 🎯</div>
                                 </div>
                             </div>
 
@@ -689,28 +808,14 @@
         }
 
         function renderParent() {
+            const students = state.students || [];
+            
+            const totalStudents = students.length;
+            const totalWords = students.reduce((acc, s) => acc + (s.totalWords || 0), 0);
+            const totalTests = students.reduce((acc, s) => acc + (s.testResults?.length || 0), 0);
+            const bestStreakOverall = Math.max(...students.map(s => s.bestStreak || 0), 0);
+            
             const app = document.getElementById('app');
-            
-            const totalTests = state.testResults.length;
-            const averageScore = totalTests > 0 
-                ? Math.round(state.testResults.reduce((acc, t) => acc + t.percentage, 0) / totalTests) 
-                : 0;
-            
-            const studentMap = new Map();
-            state.testResults.forEach(test => {
-                if (!studentMap.has(test.studentName)) {
-                    studentMap.set(test.studentName, {
-                        tests: [],
-                        totalCorrect: 0,
-                        totalWords: 0
-                    });
-                }
-                const student = studentMap.get(test.studentName);
-                student.tests.push(test);
-                student.totalCorrect += test.score;
-                student.totalWords += test.total;
-            });
-
             app.innerHTML = `
                 <div class="w-full">
                     <div class="game-card p-8 md:p-12">
@@ -726,63 +831,67 @@
                             </div>
                         </div>
 
-                        ${totalTests === 0 ? `
+                        ${students.length === 0 ? `
                             <div class="text-center py-20 bg-gray-50 rounded-3xl">
                                 <div class="text-8xl mb-6">📊</div>
-                                <h3 class="text-3xl font-bold text-gray-700 mb-3">No Data Yet</h3>
-                                <p class="text-xl text-gray-500 mb-8">Complete some spelling tests to see progress here!</p>
+                                <h3 class="text-3xl font-bold text-gray-700 mb-3">No Students Yet</h3>
+                                <p class="text-xl text-gray-500 mb-8">Go to Start Learning and add your first student!</p>
                                 <button onclick="startLearning()" class="px-10 py-5 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600 text-xl">
-                                    🚀 Start Your First Test
+                                    🚀 Add a Student
                                 </button>
                             </div>
                         ` : `
-                            <div class="stats-grid">
-                                <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl font-bold text-blue-800">${totalTests}</div>
-                                    <div class="text-sm text-blue-600">Total Tests</div>
+                            <div class="stats-grid mb-10">
+                                <div class="parent-stat-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-number text-4xl font-bold text-blue-800">${totalStudents}</div>
+                                    <div class="stat-desc text-sm text-blue-600">Total Students</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl font-bold text-green-800">${averageScore}%</div>
-                                    <div class="text-sm text-green-600">Average Score</div>
+                                <div class="parent-stat-card bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-number text-4xl font-bold text-green-800">${totalWords}</div>
+                                    <div class="stat-desc text-sm text-green-600">Total Words</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl font-bold text-purple-800">${state.totalWords}</div>
-                                    <div class="text-sm text-purple-600">Words Mastered</div>
+                                <div class="parent-stat-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-number text-4xl font-bold text-purple-800">${totalTests}</div>
+                                    <div class="stat-desc text-sm text-purple-600">Total Tests</div>
                                 </div>
-                                <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 md:p-8 text-center">
-                                    <div class="text-4xl font-bold text-yellow-800">${state.bestStreak}</div>
-                                    <div class="text-sm text-yellow-600">Best Streak</div>
+                                <div class="parent-stat-card bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 md:p-8 text-center">
+                                    <div class="stat-number text-4xl font-bold text-yellow-800">${bestStreakOverall}</div>
+                                    <div class="stat-desc text-sm text-yellow-600">Best Streak</div>
                                 </div>
                             </div>
 
                             <div class="space-y-8">
-                                ${Array.from(studentMap.entries()).map(([name, data]) => {
-                                    const studentAvg = Math.round((data.totalCorrect / data.totalWords) * 100);
-                                    const recentTests = data.tests.slice(-5).reverse();
+                                ${students.map(student => {
+                                    const studentTests = student.testResults || [];
+                                    const studentAvg = studentTests.length > 0 
+                                        ? Math.round(studentTests.reduce((acc, t) => acc + t.percentage, 0) / studentTests.length)
+                                        : 0;
+                                    const recentTests = studentTests.slice(-5).reverse();
+                                    const totalCorrect = studentTests.reduce((acc, t) => acc + t.score, 0);
                                     
                                     return `
-                                        <div class="bg-gray-50 rounded-2xl p-6 md:p-8">
+                                        <div class="student-section bg-gray-50 rounded-2xl p-6 md:p-8">
                                             <div class="flex items-center gap-4 mb-6">
                                                 <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
-                                                    ${name.charAt(0).toUpperCase()}
+                                                    ${student.name.charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <h2 class="text-3xl font-bold">${name}</h2>
-                                                    <p class="text-gray-600 text-lg">${data.tests.length} tests completed</p>
+                                                    <h2 class="text-3xl font-bold">${student.name}</h2>
+                                                    <p class="text-gray-600 text-lg">${studentTests.length} tests completed</p>
                                                 </div>
                                             </div>
                                             
                                             <div class="grid grid-cols-3 gap-4 mb-6">
-                                                <div class="bg-white rounded-xl p-4 text-center">
+                                                <div class="test-card bg-white rounded-xl p-4 text-center">
                                                     <div class="text-3xl font-bold text-blue-600">${studentAvg}%</div>
                                                     <div class="text-sm text-gray-500">Average</div>
                                                 </div>
-                                                <div class="bg-white rounded-xl p-4 text-center">
-                                                    <div class="text-3xl font-bold text-green-600">${data.totalCorrect}</div>
+                                                <div class="test-card bg-white rounded-xl p-4 text-center">
+                                                    <div class="text-3xl font-bold text-green-600">${totalCorrect}</div>
                                                     <div class="text-sm text-gray-500">Correct</div>
                                                 </div>
-                                                <div class="bg-white rounded-xl p-4 text-center">
-                                                    <div class="text-3xl font-bold text-purple-600">${data.totalWords}</div>
+                                                <div class="test-card bg-white rounded-xl p-4 text-center">
+                                                    <div class="text-3xl font-bold text-purple-600">${student.totalWords || 0}</div>
                                                     <div class="text-sm text-gray-500">Total Words</div>
                                                 </div>
                                             </div>
@@ -790,7 +899,7 @@
                                             <h3 class="font-bold text-xl mb-4">📋 Recent Tests</h3>
                                             <div class="space-y-4">
                                                 ${recentTests.map(test => `
-                                                    <div class="bg-white rounded-xl p-5 border-l-4 ${test.percentage >= 80 ? 'border-green-500' : 'border-yellow-500'}">
+                                                    <div class="test-card bg-white rounded-xl p-5 border-l-4 ${test.percentage >= 80 ? 'border-green-500' : 'border-yellow-500'}">
                                                         <div class="flex justify-between items-center mb-3">
                                                             <span class="font-bold text-lg">${test.score}/${test.total} words correct</span>
                                                             <span class="text-gray-500">${new Date(test.date).toLocaleDateString()}</span>
@@ -812,7 +921,7 @@
                             <div class="mt-8 grid md:grid-cols-2 gap-4">
                                 <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
                                     <h3 class="text-xl font-bold text-red-800 mb-2">⚠️ Clear All Data</h3>
-                                    <p class="text-red-600 mb-4">This will delete all progress from your device.</p>
+                                    <p class="text-red-600 mb-4">This will delete all students and progress.</p>
                                     <button onclick="clearAllData()" class="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors w-full md:w-auto">
                                         🗑️ Delete Everything
                                     </button>
@@ -820,7 +929,7 @@
                                 
                                 <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6">
                                     <h3 class="text-xl font-bold text-blue-800 mb-2">📊 Export Data</h3>
-                                    <p class="text-blue-600 mb-4">Download progress as a CSV file.</p>
+                                    <p class="text-blue-600 mb-4">Download all progress as CSV.</p>
                                     <button onclick="exportData()" class="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors w-full md:w-auto">
                                         ⬇️ Download CSV
                                     </button>
@@ -833,6 +942,8 @@
         }
 
         function renderSetup() {
+            const studentNames = state.students.map(s => s.name);
+            
             const app = document.getElementById('app');
             app.innerHTML = `
                 <div class="w-full max-w-4xl mx-auto">
@@ -845,11 +956,23 @@
                         </div>
 
                         <div class="mb-8">
-                            <label class="block text-xl font-bold mb-3">What's your name? 🌟</label>
-                            <input type="text" id="studentNameInput" value="${state.studentName}" 
-                                   oninput="updateStudentName(this.value)"
-                                   class="w-full px-6 py-5 border-2 border-purple-300 rounded-2xl text-xl focus:border-purple-500 focus:outline-none"
-                                   placeholder="Enter your name...">
+                            <label class="block text-xl font-bold mb-3">Select or add a student 👤</label>
+                            
+                            <div class="child-selector">
+                                ${studentNames.map(name => `
+                                    <div class="child-chip ${state.currentStudent === name ? 'selected' : ''}" 
+                                         onclick="selectStudent('${name}')">
+                                        ${name}
+                                    </div>
+                                `).join('')}
+                                <div class="child-chip" onclick="addNewStudent()">
+                                    ➕ New Student
+                                </div>
+                            </div>
+                            
+                            ${!state.currentStudent && studentNames.length > 0 ? `
+                                <p class="text-sm text-orange-600 mt-2">⚠️ Please select a student or add a new one</p>
+                            ` : ''}
                         </div>
 
                         <div class="mb-8">
@@ -862,7 +985,6 @@
                                     Add Word
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 mt-3">✨ Add any word - we'll find real dictionary examples</p>
                         </div>
 
                         ${state.words.length > 0 ? `
@@ -882,7 +1004,7 @@
                         ` : ''}
 
                         <button onclick="startGame()" 
-                                ${state.words.length === 0 || !state.studentName.trim() ? 'disabled' : ''}
+                                ${state.words.length === 0 || !state.currentStudent ? 'disabled' : ''}
                                 class="w-full py-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-2xl font-bold rounded-2xl hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl">
                             🚀 Start Spelling Adventure!
                         </button>
@@ -917,7 +1039,7 @@
                     <div class="game-card p-8 md:p-12">
                         <div class="flex justify-between items-center mb-6">
                             <div>
-                                <h2 class="text-3xl md:text-4xl font-bold">Hello, ${state.studentName}! ✨</h2>
+                                <h2 class="text-3xl md:text-4xl font-bold">Hello, ${state.currentStudent}! ✨</h2>
                                 <p class="text-lg text-gray-600 mt-2">Click the buttons to hear the word</p>
                             </div>
                             <button onclick="goHome()" class="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 text-lg">
@@ -1060,7 +1182,7 @@
 
                         <div class="text-center mb-8">
                             <div class="text-8xl mb-6 animate-bounce">${emoji}</div>
-                            <h2 class="text-4xl md:text-5xl font-bold mb-4">Great job, ${state.studentName}!</h2>
+                            <h2 class="text-4xl md:text-5xl font-bold mb-4">Great job, ${state.currentStudent}!</h2>
                             <p class="text-2xl text-gray-600">${message}</p>
                         </div>
 
@@ -1097,31 +1219,74 @@
             `;
         }
 
+        // ==================== STUDENT FUNCTIONS ====================
+        function selectStudent(name) {
+            state.currentStudent = name;
+            loadStudentData(name);
+            saveToStorage();
+            render();
+        }
+
+        function addNewStudent() {
+            const name = prompt("Enter student's name:");
+            if (name && name.trim()) {
+                const trimmedName = name.trim();
+                
+                if (!state.students.find(s => s.name === trimmedName)) {
+                    const newStudent = { 
+                        name: trimmedName, 
+                        bestStreak: 0, 
+                        totalWords: 0, 
+                        testResults: [] 
+                    };
+                    state.students.push(newStudent);
+                }
+                
+                state.currentStudent = trimmedName;
+                loadStudentData(trimmedName);
+                saveToStorage();
+                render();
+            }
+        }
+
         // ==================== HELPER FUNCTIONS ====================
         function exportData() {
-            const data = state.testResults.map(r => ({
-                Student: r.studentName,
-                Date: new Date(r.date).toLocaleDateString(),
-                Score: `${r.score}/${r.total}`,
-                Percentage: `${r.percentage}%`,
-                Words: r.words.join('; ')
-            }));
+            const data = [];
+            
+            state.students.forEach(student => {
+                (student.testResults || []).forEach(test => {
+                    data.push({
+                        Student: student.name,
+                        Date: new Date(test.date).toLocaleDateString(),
+                        Score: `${test.score}/${test.total}`,
+                        Percentage: `${test.percentage}%`,
+                        Words: test.words.join('; ')
+                    });
+                });
+            });
+            
+            if (data.length === 0) {
+                alert('No data to export');
+                return;
+            }
             
             const csv = convertToCSV(data);
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `spelling-progress-${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `spello-progress-${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
+            window.URL.revokeObjectURL(url);
         }
 
         function convertToCSV(objArray) {
             if (objArray.length === 0) return '';
             const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
-            let str = Object.keys(array[0]).join(',') + '\r\n';
+            const headers = Object.keys(array[0]);
+            let str = headers.join(',') + '\r\n';
             return array.reduce((str, next) => {
-                str += Object.values(next).map(value => `"${value}"`).join(',') + '\r\n';
+                str += headers.map(header => `"${next[header] || ''}"`).join(',') + '\r\n';
                 return str;
             }, str);
         }
@@ -1129,6 +1294,7 @@
         // ==================== EVENT HANDLERS ====================
         function startLearning() { 
             state.mode = 'student'; 
+            state.gameState = 'setup';
             render(); 
         }
         
@@ -1161,7 +1327,7 @@
         }
 
         function startGame() {
-            if (state.words.length > 0 && state.studentName.trim()) {
+            if (state.words.length > 0 && state.currentStudent) {
                 state.gameState = 'playing';
                 state.currentIndex = 0;
                 state.score = 0;
@@ -1203,10 +1369,8 @@
                 state.streak++;
                 if (state.streak > state.bestStreak) {
                     state.bestStreak = state.streak;
-                    localStorage.setItem('bestStreak', state.bestStreak);
                 }
                 state.totalWords++;
-                localStorage.setItem('totalWords', state.totalWords);
             } else {
                 state.streak = 0;
             }
@@ -1230,7 +1394,7 @@
 
         function finishGame() {
             const result = {
-                studentName: state.studentName,
+                studentName: state.currentStudent,
                 date: new Date().toISOString(),
                 words: [...state.words],
                 score: state.score,
@@ -1238,8 +1402,20 @@
                 percentage: Math.round((state.score / state.words.length) * 100),
                 correctAnswers: [...state.correctAnswers]
             };
+            
             state.testResults.push(result);
-            localStorage.setItem('testResults', JSON.stringify(state.testResults));
+            
+            // Update student data
+            const studentIndex = state.students.findIndex(s => s.name === state.currentStudent);
+            if (studentIndex >= 0) {
+                state.students[studentIndex].bestStreak = Math.max(state.students[studentIndex].bestStreak || 0, state.bestStreak);
+                state.students[studentIndex].totalWords = (state.students[studentIndex].totalWords || 0) + state.score;
+                state.students[studentIndex].testResults = state.students[studentIndex].testResults || [];
+                state.students[studentIndex].testResults.push(result);
+            }
+            
+            saveToStorage();
+            
             state.gameState = 'results';
             render();
         }
@@ -1265,11 +1441,15 @@
         }
 
         function clearAllData() {
-            if (confirm('⚠️ Delete ALL progress? This cannot be undone!')) {
+            if (confirm('⚠️ Delete ALL students and progress? This cannot be undone!')) {
                 localStorage.clear();
+                state.students = [];
+                state.currentStudent = '';
                 state.testResults = [];
                 state.totalWords = 0;
                 state.bestStreak = 0;
+                state.words = [];
+                state.gameState = 'setup';
                 sentenceCache.clear();
                 render();
             }
@@ -1296,9 +1476,11 @@
         window.newWords = newWords;
         window.clearAllData = clearAllData;
         window.exportData = exportData;
+        window.selectStudent = selectStudent;
+        window.addNewStudent = addNewStudent;
 
         // Initial render
         render();
     </script>
 </body>
-</html> 
+</html>
