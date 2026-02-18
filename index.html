@@ -20,12 +20,13 @@
         
         /* ==================== DARK MODE - FIXED CONTRAST ==================== */
         .dark-mode {
-            background: linear-gradient(135deg, #0a0718 0%, #130f24 50%, #1a1530 100%) !important;
+            background: linear-gradient(135deg, #0f0c1f 0%, #1a1635 50%, #221e40 100%) !important;
         }
         
         .dark-mode .game-card {
-            background: #120e22 !important;
-            border: 1px solid #342e55;
+            background: #161229 !important;
+            border: 1px solid #3f3868;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
         
         .dark-mode h1, 
@@ -33,81 +34,128 @@
         .dark-mode h3,
         .dark-mode .font-bold {
             color: #ffffff !important;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
         
         .dark-mode p, 
         .dark-mode span, 
         .dark-mode label,
-        .dark-mode div:not(.stat-card) {
-            color: #e9e4ff !important;
+        .dark-mode div {
+            color: #f0edff !important;
         }
         
         .dark-mode .text-gray-600,
         .dark-mode .text-gray-700,
         .dark-mode .text-gray-500 {
-            color: #cbc3ff !important;
+            color: #e2d9ff !important;
         }
         
         .dark-mode .stat-card {
-            background: #211d39 !important;
-            border: 1px solid #4a4373;
+            background: #2b2448 !important;
+            border: 1px solid #5f5598;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
         .dark-mode .stat-card div {
             color: #ffffff !important;
         }
         
-        .dark-mode .stat-card .text-sm {
-            color: #cec6ff !important;
+        .dark-mode .stat-card .text-sm,
+        .dark-mode .stat-card .text-base {
+            color: #d8ceff !important;
         }
         
         .dark-mode input {
-            background: #1e1a33 !important;
-            border-color: #554c8a !important;
+            background: #221e3c !important;
+            border-color: #6a5fb0 !important;
             color: #ffffff !important;
         }
         
         .dark-mode input::placeholder {
-            color: #9188c7 !important;
+            color: #a69cdb !important;
         }
         
         .dark-mode .bg-gradient-to-br.from-yellow-50 {
-            background: #2d2542 !important;
+            background: #332b4a !important;
         }
         
         .dark-mode .bg-yellow-100 {
-            background: #3f351f !important;
-            color: #ffe08c !important;
+            background: #4d401f !important;
+            color: #ffe28a !important;
+            border: 1px solid #8b7355;
         }
         
         .dark-mode .bg-green-100 {
-            background: #1e3322 !important;
+            background: #1f4025 !important;
             color: #a3f0b5 !important;
+            border: 1px solid #2d6a4f;
         }
         
         .dark-mode .bg-blue-100 {
-            background: #1c2b42 !important;
+            background: #1f3150 !important;
             color: #adccff !important;
+            border: 1px solid #3b5f8a;
         }
         
         .dark-mode .bg-purple-100 {
-            background: #2b2347 !important;
+            background: #332956 !important;
             color: #d9c2ff !important;
+            border: 1px solid #6b4f9c;
         }
         
         .dark-mode .bg-red-100 {
-            background: #3d2323 !important;
+            background: #4d2828 !important;
             color: #ffb5b5 !important;
+            border: 1px solid #8f4f4f;
         }
         
         .dark-mode .bg-gray-50 {
-            background: #1f1b34 !important;
+            background: #231f3d !important;
         }
         
         .dark-mode .bg-white {
-            background: #262141 !important;
-            border-color: #5f5698 !important;
+            background: #2d2550 !important;
+            border-color: #6f64b0 !important;
             color: #ffffff !important;
+        }
+        
+        .dark-mode .border-2,
+        .dark-mode .border-4 {
+            border-color: #6a5fb0 !important;
+        }
+        
+        .dark-mode .word-chip {
+            background: #332956 !important;
+            border-color: #8a78d0 !important;
+        }
+        
+        .dark-mode .word-chip span {
+            color: #ffffff !important;
+        }
+        
+        .dark-mode button.bg-purple-500 {
+            background: #6d5cb0 !important;
+        }
+        
+        .dark-mode button.bg-purple-600 {
+            background: #7d6ac9 !important;
+        }
+        
+        .dark-mode button.bg-blue-500 {
+            background: #3b5faa !important;
+        }
+        
+        .dark-mode button.bg-green-500 {
+            background: #2d6a4a !important;
+        }
+        
+        .dark-mode .border-l-4.border-green-500 {
+            border-left-color: #4caf7a !important;
+        }
+        
+        .dark-mode .border-l-4.border-yellow-500 {
+            border-left-color: #c9a04b !important;
         }
         
         /* Theme toggle */
@@ -156,18 +204,15 @@
             border-color: #a78bfa;
         }
         
-        .help-button:hover {
+        .help-button:hover,
+        .theme-toggle:hover {
             transform: scale(1.1);
         }
         
         .dark-mode .theme-toggle {
-            background: #2d2547;
+            background: #2d2550;
             border-color: #8f7de0;
             color: #ffffff;
-        }
-        
-        .theme-toggle:hover {
-            transform: scale(1.1);
         }
         
         /* Main content area */
@@ -189,30 +234,19 @@
             background: linear-gradient(135deg, #3b82f6, #2563eb);
         }
         
-        /* Hint section - NO WORD DISPLAYED */
-        .hint-section {
-            background: #f5f0ff;
+        /* Hint section - AUDIO ONLY - NO TEXT */
+        .audio-only-hint {
+            background: #f0eaff;
             border-radius: 20px;
-            padding: 24px;
+            padding: 30px;
             margin-top: 20px;
-            border: 2px solid #8b5cf6;
+            border: 3px solid #8b5cf6;
+            text-align: center;
         }
         
-        .dark-mode .hint-section {
-            background: #221e3a;
-            border-color: #9f8bef;
-        }
-        
-        .sentence-text {
-            font-size: 1.25rem;
-            line-height: 1.8;
-            color: #1f1a36;
-            font-style: italic;
-            padding: 8px 0;
-        }
-        
-        .dark-mode .sentence-text {
-            color: #ffffff;
+        .dark-mode .audio-only-hint {
+            background: #2a2445;
+            border-color: #b79aff;
         }
         
         .game-card {
@@ -222,7 +256,7 @@
         }
         
         .dark-mode .game-card {
-            background: #120e22;
+            background: #161229;
         }
         
         .progress-bar {
@@ -238,15 +272,15 @@
         }
         
         .dark-mode .word-chip {
-            background: #2d2547;
-            border-color: #7a6bc2;
+            background: #332956;
+            border-color: #8a78d0;
         }
         
         .loading-spinner {
             display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(139, 92, 246, 0.3);
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(139, 92, 246, 0.3);
             border-radius: 50%;
             border-top-color: #8b5cf6;
             animation: spin 1s ease-in-out infinite;
@@ -282,8 +316,14 @@
         }
         
         .dark-mode .modal-content {
-            background: #1a1630;
-            border: 1px solid #4a4373;
+            background: #1e1a38;
+            border: 1px solid #5f5698;
+            color: #ffffff;
+        }
+        
+        .dark-mode .modal-content p,
+        .dark-mode .modal-content li {
+            color: #e0d9ff;
         }
         
         .modal-close {
@@ -302,7 +342,7 @@
         }
         
         .dark-mode .modal-close {
-            background: #2d2547;
+            background: #332956;
             color: white;
         }
         
@@ -317,11 +357,10 @@
         }
         
         .dark-mode .privacy-badge {
-            background: #2d3748;
-            color: #90cdf4;
+            background: #3a3160;
+            color: #aac8ff;
         }
         
-        /* South African voice indicator */
         .voice-indicator {
             display: inline-block;
             padding: 2px 8px;
@@ -368,8 +407,8 @@
                     <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
                         <span>🔊</span> During the Game
                     </h3>
-                    <p class="text-gray-700">• Click "SAY THE WORD" to hear the word pronounced in a South African accent</p>
-                    <p class="text-gray-700">• Click "Use the word in a sentence" to hear it in context</p>
+                    <p class="text-gray-700">• Click "SAY THE WORD" to hear the word pronounced</p>
+                    <p class="text-gray-700">• Click "Use the word in a sentence" to hear it in context (audio only)</p>
                     <p class="text-gray-700">• Type your answer and click "Check My Answer"</p>
                     <p class="text-gray-700">• Watch your streak grow with correct answers!</p>
                 </div>
@@ -435,8 +474,7 @@
             showHint: false,
             currentSentence: '',
             isLoadingHint: false,
-            darkMode: localStorage.getItem('darkMode') === 'true',
-            hasSouthAfricanVoice: false
+            darkMode: localStorage.getItem('darkMode') === 'true'
         };
 
         // Apply dark mode on load
@@ -454,7 +492,6 @@
             document.getElementById('helpModal').style.display = 'none';
         }
         
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('helpModal');
             if (event.target === modal) {
@@ -462,7 +499,7 @@
             }
         };
 
-        // ==================== SOUTH AFRICAN SPEECH FUNCTIONS ====================
+        // ==================== CLEAR BRITISH ACCENT ====================
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -471,27 +508,31 @@
                     const utterance = new SpeechSynthesisUtterance(text);
                     const voices = window.speechSynthesis.getVoices();
                     
-                    // Try to find a South African English voice
+                    // Try to find a clear British English voice (very clear pronunciation)
                     let selectedVoice = voices.find(voice => 
-                        voice.lang.includes('en-ZA') || 
-                        voice.name.includes('South African') ||
-                        voice.name.includes('Tessa') ||
-                        voice.name.includes('Zola')
+                        voice.lang.includes('en-GB') && 
+                        (voice.name.includes('Daniel') || 
+                         voice.name.includes('Kate') || 
+                         voice.name.includes('Serena') ||
+                         voice.name.includes('Moira'))
                     );
                     
-                    if (selectedVoice) {
-                        state.hasSouthAfricanVoice = true;
-                        utterance.voice = selectedVoice;
-                    } else {
-                        // Fallback to any English voice
-                        const englishVoice = voices.find(voice => voice.lang.includes('en-'));
-                        if (englishVoice) {
-                            utterance.voice = englishVoice;
-                        }
-                        state.hasSouthAfricanVoice = false;
+                    // Fallback to any British voice
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => voice.lang.includes('en-GB'));
                     }
                     
-                    utterance.rate = 0.75;
+                    // Final fallback to any English voice
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => voice.lang.includes('en-'));
+                    }
+                    
+                    if (selectedVoice) {
+                        utterance.voice = selectedVoice;
+                    }
+                    
+                    // Slower, clearer speech
+                    utterance.rate = 0.7;
                     utterance.pitch = 1.0;
                     utterance.volume = 1.0;
                     
@@ -527,7 +568,6 @@
                         if (meaning.definitions) {
                             for (const definition of meaning.definitions) {
                                 if (definition.example) {
-                                    // Return just the example sentence with the word in context
                                     return definition.example;
                                 }
                             }
@@ -535,26 +575,13 @@
                     }
                 }
                 
-                // If no example, create a neutral sentence
-                const neutralSentences = [
-                    "Listen carefully to how this word sounds.",
-                    "Take your time spelling this word.",
-                    "Focus on each letter as you spell.",
-                    "You can do this!",
-                    "Try your best with this word."
-                ];
-                return neutralSentences[Math.floor(Math.random() * neutralSentences.length)];
+                // If no example, create a neutral sentence that uses the word in context
+                return `The word ${word} is used in many different ways.`;
                 
             } catch (error) {
                 console.error('Dictionary API error:', error);
-                const fallback = [
-                    "Listen to the sounds in this word.",
-                    "Spell it one letter at a time.",
-                    "You've got this!",
-                    "Take a deep breath and try.",
-                    "Think about each sound you hear."
-                ];
-                return fallback[Math.floor(Math.random() * fallback.length)];
+                // Fallback sentence that uses the word
+                return `Listen carefully to how ${word} is used in a sentence.`;
             }
         }
 
@@ -602,10 +629,6 @@
                                     ✨ Spelling Adventure ✨
                                 </h1>
                                 <p class="text-xl md:text-2xl text-gray-600">Master your spelling skills!</p>
-                                <p class="text-sm text-gray-500 mt-2">🔒 All data stored locally on your device</p>
-                                ${!state.hasSouthAfricanVoice ? `
-                                    <p class="text-xs text-gray-400 mt-1">Note: Using standard English voice (South African not available)</p>
-                                ` : ''}
                             </div>
 
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
@@ -767,19 +790,6 @@
                                 }).join('')}
                             </div>
 
-                            <div class="mt-8 bg-gray-50 rounded-2xl p-6">
-                                <h3 class="text-xl font-bold mb-4">📈 Progress Over Time</h3>
-                                <div class="h-48 flex items-end justify-between gap-2">
-                                    ${state.testResults.slice(-10).map((test, i) => `
-                                        <div class="flex-1 flex flex-col items-center">
-                                            <div class="w-full bg-gradient-to-t from-blue-500 to-purple-500 rounded-t-lg transition-all hover:from-blue-600 hover:to-purple-600" 
-                                                 style="height: ${test.percentage * 1.5}%"></div>
-                                            <span class="text-xs text-gray-600 mt-2">Test ${i+1}</span>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-
                             <div class="mt-8 grid md:grid-cols-2 gap-4">
                                 <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
                                     <h3 class="text-xl font-bold text-red-800 mb-2">⚠️ Clear All Data</h3>
@@ -870,6 +880,12 @@
             const sentence = await getSentenceForWord(word);
             state.currentSentence = sentence;
             state.isLoadingHint = false;
+            
+            // Automatically play the sentence when hint is shown
+            setTimeout(() => {
+                speakText(sentence);
+            }, 200);
+            
             render();
         }
 
@@ -920,19 +936,20 @@
                             </button>
 
                             ${state.showHint ? `
-                                <div class="hint-section mt-6">
+                                <div class="audio-only-hint mt-6">
                                     ${state.isLoadingHint ? `
-                                        <div class="flex items-center justify-center py-8">
+                                        <div class="flex flex-col items-center justify-center py-6">
                                             <div class="loading-spinner"></div>
-                                            <span class="ml-3 text-purple-600">Finding a sentence...</span>
+                                            <p class="mt-4 text-purple-600 font-medium">Finding a sentence...</p>
                                         </div>
                                     ` : `
-                                        <div class="sentence-text">
-                                            ${state.currentSentence}
+                                        <div class="flex flex-col items-center">
+                                            <div class="text-5xl mb-4 animate-pulse">🎧</div>
+                                            <p class="text-lg font-medium text-purple-700 mb-3">Listening to sentence...</p>
+                                            <button onclick="speakHint()" class="mt-2 px-6 py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
+                                                🔁 Play Sentence Again
+                                            </button>
                                         </div>
-                                        <button onclick="speakHint()" class="mt-4 w-full px-6 py-4 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors text-lg flex items-center justify-center gap-2">
-                                            🔁 Hear Sentence Again
-                                        </button>
                                     `}
                                 </div>
                             ` : ''}
