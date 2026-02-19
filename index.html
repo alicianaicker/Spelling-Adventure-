@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spello – Master Your Spelling (with Dictionary)</title>
+    <title>Spello – My Word Lists</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ——— [styles are identical to original, keep them exactly as provided] ——— */
         :root {
             --bg-start: #1a0533;
             --bg-mid: #2d0b5e;
@@ -15,7 +14,7 @@
             --card-bg: #ffffff;
             --card-border: rgba(255,255,255,0.15);
             --text-primary: #1e1b4b;
-            --text-secondary: #6b7280;
+            --text-secondary: #2c3e50;        /* darker, readable on light card */
             --accent: #7c3aed;
             --accent2: #ec4899;
             --accent3: #f59e0b;
@@ -26,18 +25,20 @@
             --input-bg: #ffffff;
             --input-border: #a78bfa;
             --shadow: 0 20px 60px rgba(0,0,0,0.35);
+            --placeholder-light: #5b6f82;      /* darker placeholder */
         }
 
         .dark {
             --card-bg: #16103a;
             --card-border: rgba(139,92,246,0.3);
             --text-primary: #f0eaff;
-            --text-secondary: #b0a0d8;
+            --text-secondary: #cfc0f0;          /* lighter for dark mode */
             --chip-bg: #2a2060;
             --chip-border: #7c5ccc;
             --input-bg: #1e1750;
             --input-border: #7c5ccc;
             --shadow: 0 20px 60px rgba(0,0,0,0.7);
+            --placeholder-light: #a28fc0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -222,7 +223,7 @@
             letter-spacing: 0.05em;
         }
         .answer-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(124,58,237,0.15); }
-        .answer-input::placeholder { color: var(--text-secondary); opacity: 0.6; }
+        .answer-input::placeholder { color: var(--placeholder-light); opacity: 0.8; } /* much darker */
 
         .word-input {
             flex: 1;
@@ -238,7 +239,7 @@
             transition: border-color 0.2s;
         }
         .word-input:focus { border-color: var(--accent); }
-        .word-input::placeholder { color: var(--text-secondary); opacity: 0.6; }
+        .word-input::placeholder { color: var(--placeholder-light); opacity: 0.8; }
 
         .word-chip {
             background: var(--chip-bg);
@@ -305,7 +306,6 @@
             border-color: #ef4444;
         }
 
-        /* dictionary hint box (replaces old hint-box) */
         .dict-box {
             background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(236,72,153,0.08));
             border: 2px solid rgba(124,58,237,0.3);
@@ -494,7 +494,23 @@
         .dark .fab-theme { background: #2d2060; color: white; }
         .fab-help { background: linear-gradient(135deg, #7c3aed, #ec4899); color: white; }
 
-        .student-section {
+        /* list management */
+        .list-tab {
+            display: inline-block;
+            padding: 10px 22px;
+            background: var(--chip-bg);
+            border: 2px solid var(--chip-border);
+            border-radius: 40px;
+            font-weight: 800;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        .list-tab.active {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            border-color: transparent;
+            color: white;
+        }
+        .student-section { /* repurpose for single user */
             background: rgba(124,58,237,0.05);
             border: 1px solid rgba(124,58,237,0.2);
             border-radius: 24px;
@@ -518,14 +534,6 @@
             font-family: 'Fredoka One', cursive;
             font-size: 1.8rem;
             flex-shrink: 0;
-        }
-
-        .test-row {
-            background: var(--card-bg);
-            border-radius: 14px;
-            padding: 14px 18px;
-            border-left: 5px solid;
-            margin-bottom: 10px;
         }
 
         .modal-bg {
@@ -562,7 +570,6 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes bounce { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-16px); } }
         .bounce { animation: bounce 0.8s ease 3; }
-        /* end of styles (identical to original) */
     </style>
 </head>
 <body id="body">
@@ -572,506 +579,583 @@
     </div>
     <div class="main-wrap" id="app"></div>
 
-    <!-- Help modal (unchanged) -->
+    <!-- Help modal (shortened for brevity, same content) -->
     <div class="modal-bg" id="helpModal" style="display:none" onclick="closeHelp(event)">
         <div class="modal-card">
             <button style="position:absolute;top:18px;right:18px;background:rgba(124,58,237,0.1);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--accent)" onclick="closeHelp()">✕</button>
             <h2 style="font-size:1.8rem;margin-bottom:20px">📖 How to Use Spello</h2>
-            <div style="line-height:1.9"> … </div>
+            <div style="line-height:1.9">
+                <p>• Create multiple word lists for yourself</p>
+                <p>• Click definition to see meaning from dictionary API</p>
+                <p>• Toggle dark mode for comfort</p>
+            </div>
         </div>
     </div>
 
 <script>
-// ===================== STATE =====================
-const state = {
-    page: 'home',       // home | setup | playing | results | parent
-    students: [],
-    currentStudent: '',
-    words: [],
-    // game session
-    idx: 0,
-    score: 0,
-    streak: 0,
-    correctSet: new Set(),
-    userAnswer: '',
-    answered: false,
-    showFeedback: false,
-    showHint: false,          // renamed semantically: now means "show definition"
-    hintLoading: false,
-    currentDefinition: null,  // { word, definition, example? } or null
-    // meta
-    bestStreak: 0,
-    totalWords: 0,
-    testResults: [],
-    dark: false
-};
+(function() {
+    // ========== STATE (single user, multiple lists) ==========
+    const state = {
+        page: 'home',                // home | manage | playing | results
+        lists: [],                   // array of { name: "List1", words: ["cat", "dog"] }
+        activeListIndex: 0,           // index of currently selected list
+        // game session
+        idx: 0,
+        score: 0,
+        streak: 0,
+        correctSet: new Set(),
+        userAnswer: '',
+        answered: false,
+        showFeedback: false,
+        showHint: false,
+        hintLoading: false,
+        currentDefinition: null,
+        // stats (global for user)
+        bestStreak: 0,
+        totalWords: 0,
+        testResults: [],
+        dark: false
+    };
 
-// ===================== STORAGE =====================
-function load() {
-    try {
-        const d = localStorage.getItem('spello_dark');
-        if (d !== null) state.dark = d === 'true';
+    // ========== LOAD/SAVE ==========
+    function load() {
+        try {
+            const d = localStorage.getItem('spello_dark');
+            if (d !== null) state.dark = d === 'true';
 
-        const sts = localStorage.getItem('spello_students');
-        if (sts) state.students = JSON.parse(sts);
+            const lists = localStorage.getItem('spello_lists');
+            if (lists) {
+                state.lists = JSON.parse(lists);
+            } else {
+                // default list
+                state.lists = [{ name: 'My Words', words: [] }];
+            }
 
-        const cs = localStorage.getItem('spello_currentStudent');
-        if (cs) setCurrentStudent(cs, false);
+            const activeIdx = localStorage.getItem('spello_activeList');
+            if (activeIdx !== null) state.activeListIndex = parseInt(activeIdx, 10) || 0;
 
-        const ws = localStorage.getItem('spello_words');
-        if (ws) state.words = JSON.parse(ws);
+            const best = localStorage.getItem('spello_bestStreak');
+            if (best) state.bestStreak = parseInt(best, 10);
+            const total = localStorage.getItem('spello_totalWords');
+            if (total) state.totalWords = parseInt(total, 10);
+            const results = localStorage.getItem('spello_testResults');
+            if (results) state.testResults = JSON.parse(results);
 
-        state.page = 'home';  // Always land on home
+            if (state.dark) {
+                document.body.classList.add('dark');
+                document.getElementById('themeBtn').textContent = '☀️';
+            }
+        } catch(e) { console.error(e); }
+    }
 
-        if (state.dark) {
-            document.body.classList.add('dark');
-            document.getElementById('themeBtn').textContent = '☀️';
+    function save() {
+        try {
+            localStorage.setItem('spello_dark', state.dark);
+            localStorage.setItem('spello_lists', JSON.stringify(state.lists));
+            localStorage.setItem('spello_activeList', state.activeListIndex);
+            localStorage.setItem('spello_bestStreak', state.bestStreak);
+            localStorage.setItem('spello_totalWords', state.totalWords);
+            localStorage.setItem('spello_testResults', JSON.stringify(state.testResults));
+        } catch(e) { console.error(e); }
+    }
+
+    // ========== VOICE (with forced accent) ==========
+    let selectedVoice = null;
+
+    function setVoiceForAccent() {
+        if (!window.speechSynthesis) return;
+        const voices = window.speechSynthesis.getVoices();
+        // prioritize South African English, then British, then any English
+        selectedVoice = voices.find(v => v.lang === 'en-ZA') ||
+                        voices.find(v => v.lang.startsWith('en-ZA')) ||
+                        voices.find(v => v.lang === 'en-GB' && (v.name.includes('Daniel') || v.name.includes('Serena'))) ||
+                        voices.find(v => v.lang === 'en-GB') ||
+                        voices.find(v => v.lang.startsWith('en-GB')) ||
+                        voices.find(v => v.lang.startsWith('en-')) ||
+                        null;
+    }
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = setVoiceForAccent;
+        setVoiceForAccent(); // immediate attempt
+    }
+
+    function speak(text, rate = 0.75) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        if (selectedVoice) utter.voice = selectedVoice;
+        utter.rate = rate;
+        utter.pitch = 1.0;
+        utter.volume = 1.0;
+        // ensure voice is set before speaking
+        setTimeout(() => window.speechSynthesis.speak(utter), 50);
+    }
+
+    // ========== DICTIONARY API ==========
+    async function fetchDefinition(word) {
+        try {
+            const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+            if (!res.ok) throw new Error('not found');
+            const data = await res.json();
+            const meaning = data[0]?.meanings[0];
+            const definition = meaning?.definitions[0]?.definition || 'No definition found.';
+            const example = meaning?.definitions[0]?.example || '';
+            return { word, definition, example };
+        } catch (e) {
+            return { word, definition: `No dictionary entry for "${word}".`, example: '' };
         }
-    } catch(e) { console.error(e); }
-}
-
-function save() {
-    try {
-        localStorage.setItem('spello_dark', state.dark);
-        localStorage.setItem('spello_students', JSON.stringify(state.students));
-        localStorage.setItem('spello_currentStudent', state.currentStudent || '');
-        localStorage.setItem('spello_words', JSON.stringify(state.words));
-    } catch(e) { console.error(e); }
-}
-
-function setCurrentStudent(name, doSave) {
-    state.currentStudent = name;
-    const s = state.students.find(x => x.name === name);
-    if (s) {
-        state.bestStreak = s.bestStreak || 0;
-        state.totalWords = s.totalWords || 0;
-        state.testResults = s.testResults || [];
     }
-    if (doSave) save();
-}
 
-// ===================== VOICE =====================
-let cachedVoice = null;
-let voiceReady = false;
+    async function requestDefinition() {
+        const w = currentWords()[state.idx];
+        state.showHint = true;
+        state.hintLoading = true;
+        state.currentDefinition = null;
+        render();
 
-function initVoices() {
-    const all = window.speechSynthesis.getVoices();
-    if (all.length === 0) return;
-    voiceReady = true;
-    cachedVoice =
-        all.find(v => v.lang === 'en-ZA') ||
-        all.find(v => v.lang.startsWith('en-ZA')) ||
-        all.find(v => /Tessa|Zola/i.test(v.name)) ||
-        all.find(v => v.lang === 'en-GB' && /Daniel|Serena|Martha|Oliver/i.test(v.name)) ||
-        all.find(v => v.lang === 'en-GB') ||
-        all.find(v => v.lang === 'en-AU') ||
-        all.find(v => v.lang.startsWith('en-')) ||
-        null;
-}
-if ('speechSynthesis' in window) {
-    window.speechSynthesis.onvoiceschanged = initVoices;
-    initVoices();
-}
-
-function speak(text, rate) {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    if (!voiceReady) initVoices();
-    if (cachedVoice) utter.voice = cachedVoice;
-    utter.rate = rate || 0.75;
-    utter.pitch = 1.0;
-    utter.volume = 1.0;
-    setTimeout(() => window.speechSynthesis.speak(utter), 80);
-}
-
-// ===================== DICTIONARY API =====================
-async function fetchDefinition(word) {
-    try {
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-        if (!response.ok) throw new Error('Not found');
-        const data = await response.json();
-        // Extract first definition & example if available
-        const meaning = data[0]?.meanings[0];
-        const definition = meaning?.definitions[0]?.definition || 'No definition found.';
-        const example = meaning?.definitions[0]?.example || '';
-        return { word, definition, example };
-    } catch (e) {
-        console.warn('Dictionary fetch failed, fallback to generic', e);
-        return { word, definition: `We couldn't find a definition for "${word}".`, example: '' };
+        const defData = await fetchDefinition(w);
+        state.currentDefinition = defData;
+        state.hintLoading = false;
+        render();
+        speak(defData.definition, 0.8);
     }
-}
 
-// Modified hint function: now fetches definition, button text changed to "Definition"
-async function requestDefinition() {
-    const w = state.words[state.idx];
-    state.showHint = true;
-    state.hintLoading = true;
-    state.currentDefinition = null;
-    render();
-
-    const defData = await fetchDefinition(w);
-    // after API returns
-    state.currentDefinition = defData;
-    state.hintLoading = false;
-    render();
-    // speak the definition (cleanly)
-    setTimeout(() => speak(defData.definition, 0.8), 150);
-}
-
-function replayDefinition() {
-    if (state.currentDefinition?.definition) {
-        speak(state.currentDefinition.definition, 0.8);
+    function replayDefinition() {
+        if (state.currentDefinition?.definition) {
+            speak(state.currentDefinition.definition, 0.8);
+        }
     }
-}
 
-// ===================== DARK MODE / HELP =====================
-function toggleDark() {
-    state.dark = !state.dark;
-    document.body.classList.toggle('dark', state.dark);
-    document.getElementById('themeBtn').textContent = state.dark ? '☀️' : '🌙';
-    save();
-    render();
-}
-function openHelp() { document.getElementById('helpModal').style.display = 'flex'; }
-function closeHelp(e) {
-    if (!e || e.target === document.getElementById('helpModal')) {
-        document.getElementById('helpModal').style.display = 'none';
+    // ========== UTILS ==========
+    function currentWords() {
+        return state.lists[state.activeListIndex]?.words || [];
     }
-}
 
-// ===================== NAVIGATION =====================
-function goHome() { state.page = 'home'; save(); render(); }
-function goSetup() { state.page = 'setup'; save(); render(); }
-function goParent() { state.page = 'parent'; save(); render(); }
-
-// ===================== STUDENT =====================
-function selectStudent(name) { setCurrentStudent(name, true); render(); }
-function addStudent() {
-    const name = prompt("Enter the student's name:");
-    if (!name || !name.trim()) return;
-    const clean = name.trim();
-    if (!state.students.find(s => s.name === clean)) {
-        state.students.push({ name: clean, bestStreak: 0, totalWords: 0, testResults: [] });
+    function setActiveList(index) {
+        if (state.lists[index]) {
+            state.activeListIndex = index;
+            save();
+            render();
+        }
     }
-    setCurrentStudent(clean, true);
-    render();
-}
 
-// ===================== WORDS =====================
-function addWord() {
-    const inp = document.getElementById('wordInput');
-    if (!inp) return;
-    const w = inp.value.trim().toLowerCase().replace(/[^a-z\-']/g, '');
-    if (!w || state.words.includes(w)) { inp.value = ''; return; }
-    state.words.push(w);
-    inp.value = '';
-    save();
-    render();
-    inp.focus();
-}
-function removeWord(idx) {
-    state.words.splice(idx, 1);
-    save();
-    render();
-}
+    function addList() {
+        const name = prompt('New list name:');
+        if (!name) return;
+        state.lists.push({ name: name.trim(), words: [] });
+        state.activeListIndex = state.lists.length - 1;
+        save();
+        render();
+    }
 
-// ===================== GAME FLOW =====================
-function startGame() {
-    if (!state.words.length || !state.currentStudent) return;
-    state.page = 'playing';
-    state.idx = 0;
-    state.score = 0;
-    state.streak = 0;
-    state.correctSet = new Set();
-    state.userAnswer = '';
-    state.answered = false;
-    state.showFeedback = false;
-    state.showHint = false;
-    state.currentDefinition = null;
-    state.hintLoading = false;
-    render();
-}
+    function deleteList(index) {
+        if (state.lists.length <= 1) {
+            alert('Keep at least one list.');
+            return;
+        }
+        if (!confirm(`Delete list "${state.lists[index].name}"?`)) return;
+        state.lists.splice(index, 1);
+        if (state.activeListIndex >= state.lists.length) state.activeListIndex = state.lists.length - 1;
+        save();
+        render();
+    }
 
-function speakCurrentWord() {
-    const w = state.words[state.idx];
-    speak(w, 0.65);
-}
+    function addWord() {
+        const inp = document.getElementById('wordInput');
+        if (!inp) return;
+        const w = inp.value.trim().toLowerCase().replace(/[^a-z\-']/g, '');
+        if (!w) { inp.value = ''; return; }
+        const words = state.lists[state.activeListIndex].words;
+        if (!words.includes(w)) {
+            words.push(w);
+        }
+        inp.value = '';
+        save();
+        render();
+        inp.focus();
+    }
 
-function submitAnswer() {
-    const inp = document.getElementById('answerInput');
-    const val = inp ? inp.value.trim().toLowerCase() : state.userAnswer.trim().toLowerCase();
-    state.userAnswer = val;
-    const correct = val === state.words[state.idx];
-    if (correct) {
-        state.score++;
-        state.correctSet.add(state.idx);
-        state.streak++;
-        if (state.streak > state.bestStreak) state.bestStreak = state.streak;
-        state.totalWords++;
-    } else {
+    function removeWord(idx) {
+        state.lists[state.activeListIndex].words.splice(idx, 1);
+        save();
+        render();
+    }
+
+    // ========== GAME FLOW ==========
+    function startGame() {
+        const words = currentWords();
+        if (!words.length) return;
+        state.page = 'playing';
+        state.idx = 0;
+        state.score = 0;
         state.streak = 0;
-    }
-    state.answered = true;
-    state.showFeedback = true;
-    render();
-}
-
-function nextWord() {
-    if (state.idx < state.words.length - 1) {
-        state.idx++;
+        state.correctSet = new Set();
         state.userAnswer = '';
         state.answered = false;
         state.showFeedback = false;
         state.showHint = false;
         state.currentDefinition = null;
         render();
-    } else {
-        endGame();
     }
-}
 
-function endGame() {
-    const pct = Math.round((state.score / state.words.length) * 100);
-    const result = {
-        date: new Date().toISOString(),
-        words: [...state.words],
-        score: state.score,
-        total: state.words.length,
-        percentage: pct,
-        correctIndices: [...state.correctSet]
-    };
-    state.testResults.push(result);
-
-    const si = state.students.findIndex(s => s.name === state.currentStudent);
-    if (si >= 0) {
-        const st = state.students[si];
-        st.bestStreak = Math.max(st.bestStreak || 0, state.bestStreak);
-        st.totalWords = (st.totalWords || 0) + state.score;
-        st.testResults = st.testResults || [];
-        st.testResults.push(result);
+    function speakCurrentWord() {
+        const w = currentWords()[state.idx];
+        speak(w, 0.65);
     }
-    save();
-    state.page = 'results';
-    render();
-}
 
-function practiceAgain() {
-    state.page = 'playing';
-    state.idx = 0;
-    state.score = 0;
-    state.streak = 0;
-    state.correctSet = new Set();
-    state.userAnswer = '';
-    state.answered = false;
-    state.showFeedback = false;
-    state.showHint = false;
-    state.currentDefinition = null;
-    render();
-}
+    function submitAnswer() {
+        const inp = document.getElementById('answerInput');
+        const val = inp ? inp.value.trim().toLowerCase() : state.userAnswer.trim().toLowerCase();
+        state.userAnswer = val;
+        const correct = val === currentWords()[state.idx];
+        if (correct) {
+            state.score++;
+            state.correctSet.add(state.idx);
+            state.streak++;
+            if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+            state.totalWords++;
+        } else {
+            state.streak = 0;
+        }
+        state.answered = true;
+        state.showFeedback = true;
+        render();
+    }
 
-function newWords() {
-    state.words = [];
-    state.page = 'setup';
-    save();
-    render();
-}
+    function nextWord() {
+        if (state.idx < currentWords().length - 1) {
+            state.idx++;
+            state.userAnswer = '';
+            state.answered = false;
+            state.showFeedback = false;
+            state.showHint = false;
+            state.currentDefinition = null;
+            render();
+        } else {
+            endGame();
+        }
+    }
 
-// ===================== EXPORT / CLEAR =====================
-function exportCSV() { /* identical to original */ 
-    const rows = [['Student','Date','Score','Percentage','Words']];
-    state.students.forEach(st => {
-        (st.testResults || []).forEach(t => {
+    function endGame() {
+        const words = currentWords();
+        const pct = Math.round((state.score / words.length) * 100);
+        const result = {
+            date: new Date().toISOString(),
+            listName: state.lists[state.activeListIndex].name,
+            words: [...words],
+            score: state.score,
+            total: words.length,
+            percentage: pct,
+            correctIndices: [...state.correctSet]
+        };
+        state.testResults.push(result);
+        save();
+        state.page = 'results';
+        render();
+    }
+
+    function practiceAgain() {
+        state.page = 'playing';
+        state.idx = 0;
+        state.score = 0;
+        state.streak = 0;
+        state.correctSet = new Set();
+        state.userAnswer = '';
+        state.answered = false;
+        state.showFeedback = false;
+        state.showHint = false;
+        state.currentDefinition = null;
+        render();
+    }
+
+    function newWords() {
+        state.page = 'manage';
+        save();
+        render();
+    }
+
+    function exportCSV() {
+        const rows = [['Date','List','Score','Percentage','Words']];
+        state.testResults.forEach(t => {
             rows.push([
-                st.name,
                 new Date(t.date).toLocaleDateString(),
+                t.listName,
                 `${t.score}/${t.total}`,
                 `${t.percentage}%`,
                 t.words.join('; ')
             ]);
         });
-    });
-    if (rows.length <= 1) { alert('No data to export yet.'); return; }
-    const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n');
-    const a = document.createElement('a');
-    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-    a.download = `spello-${new Date().toISOString().slice(0,10)}.csv`;
-    a.click();
-}
-function clearAll() {
-    if (!confirm('⚠️ Delete ALL students and progress? This CANNOT be undone!')) return;
-    localStorage.clear();
-    Object.assign(state, {
-        students: [], currentStudent: '', words: [], testResults: [],
-        bestStreak: 0, totalWords: 0, page: 'home'
-    });
-    save();
-    render();
-}
-
-// ===================== RENDER =====================
-function render() {
-    const app = document.getElementById('app');
-    switch(state.page) {
-        case 'home':    app.innerHTML = homeHTML(); break;
-        case 'setup':   app.innerHTML = setupHTML(); break;
-        case 'playing': app.innerHTML = playHTML(); afterPlay(); break;
-        case 'results': app.innerHTML = resultsHTML(); break;
-        case 'parent':  app.innerHTML = parentHTML(); break;
+        if (rows.length <= 1) { alert('No data to export.'); return; }
+        const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+        const a = document.createElement('a');
+        a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+        a.download = `spello-${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
     }
-}
 
-// --- home (unchanged) ---
-function homeHTML() {
-    const tests = state.testResults.length;
-    const wReady = state.words.length;
-    return ` <div class="card"> ... </div>`; // (identical to original – keeping brevity, but must copy from original)
-    // (I will keep the exact original html for home; but for space I'll keep placeholder – in real answer it's full)
-    // Actually for correctness, we include the full original homeHTML but it's lengthy. 
-    // To keep answer manageable, assume it's unchanged. In code execution it will be replaced.
-}
-// For the sake of this exercise, I'm going to paste the essential changed part only (playing section) because home/setup etc are identical to original.
+    function clearAll() {
+        if (!confirm('⚠️ Delete ALL lists and progress?')) return;
+        localStorage.clear();
+        state.lists = [{ name: 'My Words', words: [] }];
+        state.activeListIndex = 0;
+        state.bestStreak = 0;
+        state.totalWords = 0;
+        state.testResults = [];
+        state.dark = false;
+        document.body.classList.remove('dark');
+        document.getElementById('themeBtn').textContent = '🌙';
+        save();
+        render();
+    }
 
-// --- SETUP (unchanged) ---
-function setupHTML() { /* same as original */ return `<div>...</div>`; }
+    // ========== NAVIGATION ==========
+    function goHome() { state.page = 'home'; render(); }
+    function goManage() { state.page = 'manage'; render(); }
 
-// --- PLAYING (modified: hint → definition, button text changed) ---
-function playHTML() {
-    const w = state.words[state.idx];
-    const pct = Math.round(((state.idx + (state.answered ? 1 : 0)) / state.words.length) * 100);
-    const isCorrect = state.answered && state.userAnswer === w;
-    const def = state.currentDefinition;
-
-    return `
-    <div class="card">
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h2 style="font-size:1.6rem">Hello, ${state.currentStudent}! ✨</h2>
-                <p style="font-size:0.95rem">Listen carefully and spell the word</p>
-            </div>
-            <button class="btn btn-ghost btn-sm" onclick="goHome()">Exit</button>
-        </div>
-
-        <div class="mb-6">
-            <div class="flex justify-between mb-2" style="font-size:0.9rem;font-weight:700;color:var(--text-secondary)">
-                <span>Word ${state.idx + 1} / ${state.words.length}</span>
-                <span>Score: ${state.score} ⭐</span>
-                <span>Streak: ${state.streak} 🔥</span>
-            </div>
-            <div class="progress-bar-wrap">
-                <div class="progress-bar-fill" style="width:${pct}%"></div>
-            </div>
-        </div>
-
-        <div class="listen-section mb-4">
-            <div class="text-center mb-4">
-                <div style="font-size:3rem">🔊</div>
-                <p style="font-weight:700;font-size:1rem;color:var(--text-secondary)">Listen to the word, then spell it below</p>
-            </div>
-            <button class="speak-btn mb-3" onclick="speakCurrentWord()">
-                <span class="pulse-ring">🔊</span>
-                <span>SAY THE WORD</span>
-            </button>
-            <!-- button text changed to "📘 Definition" and calls requestDefinition -->
-            <button class="btn btn-primary w-full" style="font-size:1.1rem;padding:16px"
-                    onclick="requestDefinition()">
-                📘 Definition
-            </button>
-
-            ${state.showHint ? `
-            <div class="dict-box mt-4">
-                ${state.hintLoading
-                    ? `<div class="spinner"></div><p style="text-align:center;margin-top:12px;color:var(--text-secondary)">Looking up definition…</p>`
-                    : def ? `
-                        <div class="word-title">${def.word}</div>
-                        <div class="definition">📖 ${def.definition}</div>
-                        ${def.example ? `<div class="example">💬 "${def.example}"</div>` : ''}
-                        <button class="btn btn-ghost btn-sm mt-3" onclick="replayDefinition()">🔁 Read definition</button>
-                      ` : `<p>No definition available.</p>`
-                }
-            </div>` : ''}
-        </div>
-
-        <div class="mb-4">
-            <input id="answerInput" class="answer-input"
-                   value="${state.answered ? state.userAnswer : ''}"
-                   placeholder="✏️ Spell the word…"
-                   autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                   ${state.answered ? 'disabled' : ''}
-                   onkeydown="if(event.key==='Enter'&&!state.answered)submitAnswer()">
-        </div>
-
-        ${state.showFeedback ? `
-        <div class="feedback-box ${isCorrect ? 'correct' : 'incorrect'} mb-4">
-            <div style="font-size:3.5rem;margin-bottom:8px">${isCorrect ? '🎉' : '💪'}</div>
-            <h3 style="font-size:1.5rem;color:${isCorrect ? '#065f46' : '#7f1d1d'}">
-                ${isCorrect ? 'Lekker! Spot on!' : `The correct spelling is: <em>${w}</em>`}
-            </h3>
-            <p style="margin-top:6px;color:${isCorrect ? '#059669' : '#b91c1c'}">
-                ${isCorrect ? 'Brilliant work! 🌟' : "Keep practising – you'll get it! 📚"}
-            </p>
-        </div>` : ''}
-
-        ${!state.answered
-            ? `<button class="btn btn-primary w-full" style="font-size:1.2rem;padding:20px" onclick="submitAnswer()">
-                   ✅ Check My Answer
-               </button>`
-            : `<button class="btn btn-success w-full" style="font-size:1.2rem;padding:20px" onclick="nextWord()">
-                   ${state.idx < state.words.length - 1 ? '🚀 Next Word' : '🎉 See My Results'}
-               </button>`
+    // ========== DARK MODE / HELP ==========
+    function toggleDark() {
+        state.dark = !state.dark;
+        document.body.classList.toggle('dark', state.dark);
+        document.getElementById('themeBtn').textContent = state.dark ? '☀️' : '🌙';
+        save();
+        render();
+    }
+    function openHelp() { document.getElementById('helpModal').style.display = 'flex'; }
+    function closeHelp(e) {
+        if (!e || e.target === document.getElementById('helpModal')) {
+            document.getElementById('helpModal').style.display = 'none';
         }
-    </div>`;
-}
-
-function afterPlay() {
-    if (!state.answered) {
-        setTimeout(() => {
-            const inp = document.getElementById('answerInput');
-            if (inp) inp.focus();
-        }, 80);
     }
-}
 
-// --- results & parent unchanged ---
-function resultsHTML() { /* original */ return `<div>...</div>`; }
-function parentHTML() { /* original */ return `<div>...</div>`; }
+    // ========== RENDER ==========
+    function render() {
+        const app = document.getElementById('app');
+        switch(state.page) {
+            case 'home':    app.innerHTML = homeHTML(); break;
+            case 'manage':  app.innerHTML = manageHTML(); break;
+            case 'playing': app.innerHTML = playHTML(); afterPlay(); break;
+            case 'results': app.innerHTML = resultsHTML(); break;
+        }
+    }
 
-// homeHTML, setupHTML etc need to be fully copied; but for brevity in this answer I'm only showing the essential changes.
-// In the actual delivered code, all original HTML strings (home, setup, results, parent) must be included exactly as they were.
-// I will now re-assign the missing functions with their original implementations (available in the user's code). 
+    function homeHTML() {
+        const tests = state.testResults.length;
+        const wCount = currentWords().length;
+        return `
+        <div class="card">
+            <div class="text-center mb-8">
+                <div class="logo">✨ Spello ✨</div>
+                <p style="font-size:1.2rem;margin-top:8px">Master your spelling, one list at a time</p>
+            </div>
+            <div class="stats-grid mb-8">
+                <div class="stat-card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#f59e0b">
+                    <span class="stat-num" style="color:#92400e">${state.bestStreak}</span>
+                    <span class="stat-label" style="color:#b45309">Best Streak 🔥</span>
+                </div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-color:#10b981">
+                    <span class="stat-num" style="color:#065f46">${state.totalWords}</span>
+                    <span class="stat-label" style="color:#047857">Words Mastered 📚</span>
+                </div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#3b82f6">
+                    <span class="stat-num" style="color:#1e3a8a">${tests}</span>
+                    <span class="stat-label" style="color:#1d4ed8">Tests Done 📝</span>
+                </div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-color:#8b5cf6">
+                    <span class="stat-num" style="color:#4c1d95">${wCount}</span>
+                    <span class="stat-label" style="color:#6d28d9">Words Ready 🎯</span>
+                </div>
+            </div>
+            <div class="flex gap-4" style="flex-direction:column">
+                <button class="btn btn-success w-full" onclick="goManage()" style="font-size:1.4rem;padding:22px">
+                    📋 Manage Lists
+                </button>
+                <button class="btn btn-primary w-full" onclick="startGame()" style="font-size:1.3rem;padding:20px" ${!wCount ? 'disabled' : ''}>
+                    🚀 Start Spelling
+                </button>
+            </div>
+        </div>`;
+    }
 
-// --- paste original homeHTML, setupHTML, resultsHTML, parentHTML from user prompt (exactly) ---
-// (I'm omitting the duplication here for final answer length, but in the real output they will be included fully)
+    function manageHTML() {
+        const activeList = state.lists[state.activeListIndex];
+        return `
+        <div class="card">
+            <div class="flex justify-between items-center mb-6">
+                <h1 style="font-size:2rem">📚 My Word Lists</h1>
+                <button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button>
+            </div>
+            <div class="mb-6">
+                <label class="bold mb-2" style="display:block;">Select list:</label>
+                <div class="chip-row">
+                    ${state.lists.map((lst, i) => `
+                        <span class="list-tab ${i === state.activeListIndex ? 'active' : ''}" 
+                              onclick="setActiveList(${i})">${lst.name} (${lst.words.length})</span>
+                    `).join('')}
+                    <span class="list-tab" onclick="addList()">➕ New List</span>
+                </div>
+                ${state.lists.length > 1 ? `
+                <button class="btn btn-danger btn-sm mt-2" onclick="deleteList(${state.activeListIndex})">
+                    🗑️ Delete "${activeList.name}"
+                </button>` : ''}
+            </div>
 
-// ===================== INIT =====================
-load();
-render();
+            <div class="mb-6">
+                <label class="bold mb-2">Add words to "${activeList.name}" 📝</label>
+                <div class="flex gap-3">
+                    <input id="wordInput" class="word-input" placeholder="Type word and press Enter…"
+                           onkeydown="if(event.key==='Enter')addWord()" autocomplete="off">
+                    <button class="btn btn-blue" onclick="addWord()">Add</button>
+                </div>
+            </div>
 
-// attach global functions needed by onclick (some were missing, add them)
-window.toggleDark = toggleDark;
-window.openHelp = openHelp;
-window.closeHelp = closeHelp;
-window.goHome = goHome;
-window.goSetup = goSetup;
-window.goParent = goParent;
-window.selectStudent = selectStudent;
-window.addStudent = addStudent;
-window.addWord = addWord;
-window.removeWord = removeWord;
-window.startGame = startGame;
-window.speakCurrentWord = speakCurrentWord;
-window.requestDefinition = requestDefinition;
-window.replayDefinition = replayDefinition;
-window.submitAnswer = submitAnswer;
-window.nextWord = nextWord;
-window.practiceAgain = practiceAgain;
-window.newWords = newWords;
-window.exportCSV = exportCSV;
-window.clearAll = clearAll;
-// ensure sentenceFor fallback isn't used but keep for safety? No, we removed it. Keep fetch.
+            ${activeList.words.length ? `
+            <div class="mb-6">
+                <h3 style="font-size:1.1rem;margin-bottom:12px;">Words (${activeList.words.length})</h3>
+                <div class="grid2">
+                    ${activeList.words.map((w,i) => `
+                        <div class="word-chip">
+                            <span class="wname">${w}</span>
+                            <button class="wdel" onclick="removeWord(${i})">✕</button>
+                        </div>`).join('')}
+                </div>
+            </div>` : '<p>Add some words to get started.</p>'}
 
-// also keep old helper for any leftover references (though not used)
-window.sentenceFor = (w)=>''; 
+            <button class="btn btn-success w-full" style="font-size:1.3rem;padding:20px"
+                    onclick="startGame()" ${!activeList.words.length ? 'disabled' : ''}>
+                🚀 Start Spelling Adventure!
+            </button>
+        </div>`;
+    }
+
+    function playHTML() {
+        const words = currentWords();
+        const w = words[state.idx];
+        const pct = Math.round(((state.idx + (state.answered ? 1 : 0)) / words.length) * 100);
+        const isCorrect = state.answered && state.userAnswer === w;
+        const def = state.currentDefinition;
+        return `
+        <div class="card">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 style="font-size:1.6rem">List: ${state.lists[state.activeListIndex].name}</h2>
+                    <p style="font-size:0.95rem">Listen and spell</p>
+                </div>
+                <button class="btn btn-ghost btn-sm" onclick="goHome()">Exit</button>
+            </div>
+            <div class="mb-6">
+                <div class="flex justify-between mb-2" style="font-size:0.9rem;font-weight:700;">
+                    <span>Word ${state.idx + 1} / ${words.length}</span>
+                    <span>Score: ${state.score} ⭐</span>
+                    <span>Streak: ${state.streak} 🔥</span>
+                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+            </div>
+            <div class="listen-section mb-4">
+                <div class="text-center mb-4">
+                    <div style="font-size:3rem">🔊</div>
+                </div>
+                <button class="speak-btn mb-3" onclick="speakCurrentWord()">
+                    <span class="pulse-ring">🔊</span><span>SAY THE WORD</span>
+                </button>
+                <button class="btn btn-primary w-full" style="font-size:1.1rem;padding:16px" onclick="requestDefinition()">
+                    📘 Definition
+                </button>
+                ${state.showHint ? `
+                <div class="dict-box mt-4">
+                    ${state.hintLoading
+                        ? `<div class="spinner"></div><p style="text-align:center;">Looking up definition…</p>`
+                        : def ? `
+                            <div class="word-title">${def.word}</div>
+                            <div class="definition">📖 ${def.definition}</div>
+                            ${def.example ? `<div class="example">💬 "${def.example}"</div>` : ''}
+                            <button class="btn btn-ghost btn-sm mt-3" onclick="replayDefinition()">🔁 Read definition</button>
+                          ` : '<p>No definition.</p>'}
+                </div>` : ''}
+            </div>
+            <div class="mb-4">
+                <input id="answerInput" class="answer-input"
+                       value="${state.answered ? state.userAnswer : ''}"
+                       placeholder="✏️ Spell the word…"
+                       autocomplete="off" spellcheck="false"
+                       ${state.answered ? 'disabled' : ''}
+                       onkeydown="if(event.key==='Enter'&&!state.answered)submitAnswer()">
+            </div>
+            ${state.showFeedback ? `
+            <div class="feedback-box ${isCorrect ? 'correct' : 'incorrect'} mb-4">
+                <div style="font-size:3.5rem;">${isCorrect ? '🎉' : '💪'}</div>
+                <h3 style="font-size:1.5rem;color:${isCorrect ? '#065f46' : '#7f1d1d'}">
+                    ${isCorrect ? 'Perfect!' : `Correct spelling: <em>${w}</em>`}
+                </h3>
+            </div>` : ''}
+            ${!state.answered
+                ? `<button class="btn btn-primary w-full" onclick="submitAnswer()">✅ Check Answer</button>`
+                : `<button class="btn btn-success w-full" onclick="nextWord()">
+                       ${state.idx < words.length - 1 ? '🚀 Next Word' : '🎉 See Results'}
+                   </button>`}
+        </div>`;
+    }
+
+    function afterPlay() {
+        if (!state.answered) document.getElementById('answerInput')?.focus();
+    }
+
+    function resultsHTML() {
+        const words = currentWords();
+        const pct = Math.round((state.score / words.length) * 100);
+        return `
+        <div class="card">
+            <div class="flex justify-between items-center mb-6">
+                <h2 style="font-size:1.8rem">🏁 Results</h2>
+                <button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button>
+            </div>
+            <div class="text-center mb-6">
+                <div style="font-size:4rem;animation:bounce 0.8s ease 3">${pct===100?'🏆':pct>=80?'🎉':'👍'}</div>
+                <h2 style="font-size:2rem;">Great job!</h2>
+            </div>
+            <div class="score-banner mb-6" style="background:linear-gradient(135deg,#7c3aed,#ec4899)">
+                <div class="big-score">${state.score}/${words.length}</div>
+                <div class="pct">${pct}%</div>
+            </div>
+            <div class="grid2 mb-6">
+                ${words.map((w,i) => `
+                    <div class="result-word ${state.correctSet.has(i)?'ok':'bad'}">
+                        <span>${w}</span><span>${state.correctSet.has(i)?'✓':'✗'}</span>
+                    </div>`).join('')}
+            </div>
+            <div class="grid2">
+                <button class="btn btn-primary" onclick="practiceAgain()">🔄 Practice Again</button>
+                <button class="btn btn-blue" onclick="newWords()">📋 Lists</button>
+            </div>
+        </div>`;
+    }
+
+    // Expose globals
+    window.toggleDark = toggleDark;
+    window.openHelp = openHelp;
+    window.closeHelp = closeHelp;
+    window.goHome = goHome;
+    window.goManage = goManage;
+    window.startGame = startGame;
+    window.speakCurrentWord = speakCurrentWord;
+    window.requestDefinition = requestDefinition;
+    window.replayDefinition = replayDefinition;
+    window.submitAnswer = submitAnswer;
+    window.nextWord = nextWord;
+    window.practiceAgain = practiceAgain;
+    window.newWords = newWords;
+    window.exportCSV = exportCSV;
+    window.clearAll = clearAll;
+    window.setActiveList = setActiveList;
+    window.addList = addList;
+    window.deleteList = deleteList;
+    window.addWord = addWord;
+    window.removeWord = removeWord;
+
+    // init
+    load();
+    render();
+})();
 </script>
 </body>
 </html> 
