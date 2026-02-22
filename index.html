@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spello – Master Spelling (multi‑language, parent dashboard restored)</title>
+    <title>Spello – Smart Start & List Manager</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -162,6 +162,7 @@
                 <p>• Select language for each list (EN, AF, ZU)</p>
                 <p>• Definitions come from that language (word hidden)</p>
                 <p>• Parent dashboard shows all progress</p>
+                <p>• On home, choose to continue existing list or clear it to start fresh</p>
             </div>
         </div>
     </div>
@@ -360,7 +361,10 @@
 
     // ========== GAME FLOW ==========
     function startGame() {
-        if (!currentWords().length) return;
+        if (!currentWords().length) {
+            alert('This list has no words. Please add words first.');
+            return;
+        }
         state.page = 'playing';
         state.idx = 0;
         state.score = 0;
@@ -451,6 +455,14 @@
         render();
     }
 
+    // ========== NEW: CLEAR CURRENT LIST & START FRESH ==========
+    function clearCurrentList() {
+        if (!confirm(`Clear all words from "${state.lists[state.activeListIndex].name}" and start fresh?`)) return;
+        state.lists[state.activeListIndex].words = [];
+        save();
+        render();
+    }
+
     // ========== PARENT DASHBOARD (fully restored) ==========
     function goParent() {
         state.page = 'parent';
@@ -526,7 +538,8 @@
     function homeHTML() {
         const tests = state.testResults.length;
         const wCount = currentWords().length;
-        // "Manage Lists" button removed from home – only Start and Parent remain
+        const activeList = state.lists[state.activeListIndex];
+        // "Manage Lists" button removed – now we show options to continue or clear
         return `
         <div class="card">
             <div class="text-center mb-8">
@@ -551,12 +564,30 @@
                     <span class="stat-label">Words Ready 🎯</span>
                 </div>
             </div>
+
+            <!-- Active list info -->
+            <div class="student-section mb-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="avatar">${activeList.name.charAt(0).toUpperCase()}</div>
+                    <div>
+                        <h2 style="font-size:1.5rem;">${activeList.name} (${activeList.lang})</h2>
+                        <p>${activeList.words.length} words in list</p>
+                    </div>
+                </div>
+                <div class="grid2 gap-3">
+                    <button class="btn btn-success" onclick="startGame()" ${!wCount ? 'disabled' : ''}>
+                        🚀 Continue with this list
+                    </button>
+                    <button class="btn btn-danger" onclick="clearCurrentList()">
+                        🗑️ Clear list & start fresh
+                    </button>
+                </div>
+                <p class="text-sm mt-3">Or <button class="btn btn-ghost btn-sm" onclick="goManage()">📋 manage all lists</button></p>
+            </div>
+
             <div class="flex gap-4" style="flex-direction:column">
-                <!-- Manage Lists button removed as requested -->
-                <button class="btn btn-primary w-full" onclick="startGame()" style="font-size:1.3rem;padding:22px;" ${!wCount ? 'disabled' : ''}>🚀 Start Spelling</button>
                 <button class="btn btn-blue w-full" onclick="goParent()" style="font-size:1.3rem;padding:22px;">👪 Parent Dashboard</button>
             </div>
-            <p class="text-center mt-4 text-sm">To edit lists, use the Parent Dashboard → Export or clear data, or directly via URL (manage not shown on home).</p>
         </div>`;
     }
 
@@ -693,6 +724,7 @@
     window.exportCSV = exportCSV; window.clearAll = clearAll;
     window.setActiveList = setActiveList; window.addList = addList; window.deleteList = deleteList;
     window.addWord = addWord; window.removeWord = removeWord;
+    window.clearCurrentList = clearCurrentList; // newly exposed
 
     load();
     render();
