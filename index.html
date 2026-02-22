@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spello – Multi‑language spelling</title>
+    <title>Spello – Master Spelling (multi‑language, parent dashboard restored)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- (styles identical to previous working version, keep as is) --- */
+        /* --- complete style block (identical to previous working version) --- */
         :root {
             --bg-start: #1a0533;
             --bg-mid: #2d0b5e;
@@ -49,7 +49,7 @@
             position: relative;
             overflow-x: hidden;
         }
-        body::before { /* starfield unchanged */ content: ''; position: fixed; inset: 0; background-image: radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 60% 10%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 80% 50%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1px 1px at 10% 90%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.5) 0%, transparent 100%); pointer-events: none; z-index: 0; }
+        body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 60% 10%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 80% 50%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1px 1px at 10% 90%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.5) 0%, transparent 100%); pointer-events: none; z-index: 0; }
         .main-wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 24px 16px 120px; }
         .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 32px; padding: 36px; box-shadow: var(--shadow); transition: background 0.3s, border 0.3s; }
         @media (max-width: 600px) { .card { padding: 24px 20px; border-radius: 24px; } .main-wrap { padding: 16px 12px 120px; } }
@@ -160,7 +160,7 @@
             <h2 style="font-size:1.8rem;margin-bottom:20px">📘 How to Use</h2>
             <div style="line-height:1.9">
                 <p>• Select language for each list (EN, AF, ZU)</p>
-                <p>• Definitions come from that language's dictionary (word hidden)</p>
+                <p>• Definitions come from that language (word hidden)</p>
                 <p>• Parent dashboard shows all progress</p>
             </div>
         </div>
@@ -201,6 +201,7 @@
             if (lists) {
                 state.lists = JSON.parse(lists);
             } else {
+                // default list
                 state.lists = [{ name: 'My Words', lang: 'en', words: [] }];
             }
 
@@ -258,15 +259,11 @@
         setTimeout(() => window.speechSynthesis.speak(utter), 50);
     }
 
-    // ========== LANGUAGE‑AWARE DICTIONARY ==========
+    // ========== LANGUAGE‑AWARE DICTIONARY (word never shown) ==========
     const langCodes = { en: 'en', af: 'af', zu: 'zu' };
 
     async function fetchDefinition(word, lang) {
-        // No word shown – we return only definition & example
-        const apiLang = langCodes[lang] || 'en';
-        // Use Free Dictionary API (supports en only) – for af/zu we simulate or could use alternative.
-        // For af & zu we fallback to a note + maybe a future API. But we keep structure.
-        // In a real app you'd call appropriate API. Here we simulate meaningful response.
+        // Returns only definition & example, word is omitted from display
         try {
             if (lang === 'en') {
                 const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
@@ -277,16 +274,15 @@
                 const example = meaning?.definitions[0]?.example || '';
                 return { definition, example };
             } else if (lang === 'af') {
-                // Simulated Afrikaans dictionary (no public api)
-                // In practice you might integrate with a dictionary API for Afrikaans.
-                return { definition: `(Afrikaans) Betekenis van "${word}" – 'n voorbeeld sin sal hier verskyn.`, example: `Die woord "${word}" kan in sinne gebruik word.` };
+                // Simulated Afrikaans – in real app integrate with Afrikaans dictionary API
+                return { definition: `(Afrikaans) Betekenis van die woord.`, example: `Voorbeeldsin met die woord.` };
             } else if (lang === 'zu') {
-                return { definition: `(IsiZulu) Incazelo yegama elithi "${word}" – isibonelo singavela lapha.`, example: `Igama elithi "${word}" lingasetshenziswa emshweni.` };
+                return { definition: `(IsiZulu) Incazelo yegama.`, example: `Isibonelo somusho.` };
             }
         } catch (e) {
-            return { definition: `No definition available for "${word}" in ${lang}.`, example: '' };
+            return { definition: `No definition available for this word.`, example: '' };
         }
-        return { definition: `Definition for "${word}" not found.`, example: '' };
+        return { definition: `Definition not found.`, example: '' };
     }
 
     async function requestDefinition() {
@@ -298,7 +294,7 @@
         render();
 
         const defData = await fetchDefinition(w, list.lang);
-        state.currentDefinition = defData;   // contains only definition & example, no word
+        state.currentDefinition = defData;   // only definition & example
         state.hintLoading = false;
         render();
         speak(defData.definition, 0.8);
@@ -455,7 +451,7 @@
         render();
     }
 
-    // ========== PARENT DASHBOARD (restored) ==========
+    // ========== PARENT DASHBOARD (fully restored) ==========
     function goParent() {
         state.page = 'parent';
         render();
@@ -530,6 +526,7 @@
     function homeHTML() {
         const tests = state.testResults.length;
         const wCount = currentWords().length;
+        // "Manage Lists" button removed from home – only Start and Parent remain
         return `
         <div class="card">
             <div class="text-center mb-8">
@@ -555,10 +552,11 @@
                 </div>
             </div>
             <div class="flex gap-4" style="flex-direction:column">
-                <button class="btn btn-success w-full" onclick="goManage()" style="font-size:1.4rem;">📋 Manage Lists</button>
-                <button class="btn btn-primary w-full" onclick="startGame()" style="font-size:1.3rem;" ${!wCount ? 'disabled' : ''}>🚀 Start Spelling</button>
-                <button class="btn btn-blue w-full" onclick="goParent()" style="font-size:1.3rem;">👪 Parent Dashboard</button>
+                <!-- Manage Lists button removed as requested -->
+                <button class="btn btn-primary w-full" onclick="startGame()" style="font-size:1.3rem;padding:22px;" ${!wCount ? 'disabled' : ''}>🚀 Start Spelling</button>
+                <button class="btn btn-blue w-full" onclick="goParent()" style="font-size:1.3rem;padding:22px;">👪 Parent Dashboard</button>
             </div>
+            <p class="text-center mt-4 text-sm">To edit lists, use the Parent Dashboard → Export or clear data, or directly via URL (manage not shown on home).</p>
         </div>`;
     }
 
@@ -672,7 +670,7 @@
                 <div class="stat-card" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);"><span class="stat-num">${totalTests}</span><span class="stat-label">Total Tests</span></div>
                 <div class="stat-card" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);"><span class="stat-num">${state.totalWords}</span><span class="stat-label">Words Mastered</span></div>
                 <div class="stat-card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);"><span class="stat-num">${state.bestStreak}</span><span class="stat-label">Best Streak</span></div>
-                <div class="stat-card" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);"><span class="stat-num">${Math.round(totalCorrect/(totalTests||1))}</span><span class="stat-label">Avg Correct</span></div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);"><span class="stat-num">${totalTests ? Math.round(totalCorrect/totalTests) : 0}</span><span class="stat-label">Avg Correct</span></div>
             </div>
             ${state.testResults.slice(-5).reverse().map(t => `
                 <div class="test-row" style="border-color:${t.percentage>=80?'#10b981':'#f59e0b'}">
