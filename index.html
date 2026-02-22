@@ -1,611 +1,906 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spello – Clean Home, Full Language Support</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=split" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spello – Spelling Made Fun</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700;800&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        /* --- complete style block with improved layout & sizing --- */
         :root {
-            --bg-start: #1a0533;
-            --bg-mid: #2d0b5e;
-            --bg-end: #0f172a;
-            --card-bg: #ffffff;
-            --card-border: rgba(255,255,255,0.15);
-            --text-primary: #1e1b4b;
-            --text-secondary: #2c3e50;
-            --accent: #7c3aed;
-            --accent2: #ec4899;
-            --accent3: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --chip-bg: #f3e8ff;
-            --chip-border: #c084fc;
-            --input-bg: #ffffff;
-            --input-border: #a78bfa;
-            --shadow: 0 20px 60px rgba(0,0,0,0.35);
-            --placeholder-light: #5b6f82;
-            --start-gradient: linear-gradient(135deg, #8b5cf6, #a78bfa);
-            --start-hover: linear-gradient(135deg, #7c3aed, #8b5cf6);
+            --bg: #0d0d18;
+            --surface: rgba(255,255,255,0.04);
+            --surface2: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.09);
+            --border-hi: rgba(255,255,255,0.18);
+            --text: #f0eeff;
+            --soft: rgba(240,238,255,0.6);
+            --muted: rgba(240,238,255,0.35);
+            --lime: #c8ff00;
+            --lime-dim: rgba(200,255,0,0.12);
+            --violet: #a678f0;
+            --amber: #ffb347;
+            --red: #ff4f6a;
+            --green: #3dffa0;
+            --teal: #00d4b4;
         }
-        .dark {
-            --card-bg: #16103a;
-            --card-border: rgba(139,92,246,0.3);
-            --text-primary: #f0eaff;
-            --text-secondary: #cfc0f0;
-            --chip-bg: #2a2060;
-            --chip-border: #7c5ccc;
-            --input-bg: #1e1750;
-            --input-border: #7c5ccc;
-            --shadow: 0 20px 60px rgba(0,0,0,0.7);
-            --placeholder-light: #a28fc0;
-            --start-gradient: linear-gradient(135deg, #9f7aea, #b794f4);
-            --start-hover: linear-gradient(135deg, #8b5cf6, #9f7aea);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
-            transition: background 0.4s;
-            position: relative;
             overflow-x: hidden;
         }
-        body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 60% 10%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 80% 50%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1px 1px at 10% 90%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.5) 0%, transparent 100%); pointer-events: none; z-index: 0; }
-        .main-wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 24px 16px 120px; }
-        .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 32px; padding: 36px; box-shadow: var(--shadow); transition: background 0.3s, border 0.3s; }
-        @media (max-width: 600px) { .card { padding: 24px 20px; border-radius: 24px; } .main-wrap { padding: 16px 12px 120px; } }
-        .logo { font-family: 'Fredoka One', cursive; font-size: clamp(3.5rem, 10vw, 6rem); background: linear-gradient(135deg, #f59e0b, #ec4899, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; display: inline-block; }
-        h1, h2, h3, h4 { color: var(--text-primary); font-family: 'Fredoka One', cursive; letter-spacing: 0.01em; }
-        p, span, label, li { color: var(--text-secondary); }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 28px; border-radius: 16px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.05rem; border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s; text-decoration: none; }
-        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-        .btn:active:not(:disabled) { transform: translateY(0); }
-        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-        .btn-primary { background: linear-gradient(135deg, #7c3aed, #ec4899); color: #fff; font-size: 1.2rem; padding: 18px 36px; }
-        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-size: 1.2rem; padding: 18px 36px; }
-        .btn-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; }
-        .btn-orange { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; font-size: 1.3rem; padding: 20px 36px; }
-        .btn-ghost { background: rgba(124,58,237,0.1); color: var(--accent); border: 2px solid var(--chip-border); }
-        .btn-danger { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
-        .btn-sm { padding: 10px 20px; font-size: 0.95rem; border-radius: 12px; }
-        .btn-start {
-            background: var(--start-gradient);
-            color: white;
-            font-size: 1.4rem;
-            padding: 22px;
-            border: none;
-            box-shadow: 0 8px 20px rgba(139,92,246,0.5);
+        body::before {
+            content:''; position:fixed; inset:0;
+            background:
+                radial-gradient(ellipse 60% 50% at 20% 10%, rgba(123,94,167,0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 60% at 80% 80%, rgba(200,255,0,0.05) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 60% 30%, rgba(240,85,163,0.07) 0%, transparent 70%);
+            pointer-events:none; z-index:0;
         }
-        .btn-start:hover:not(:disabled) {
-            background: var(--start-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(139,92,246,0.7);
+        .wrap { position:relative; z-index:1; max-width:800px; margin:0 auto; padding:20px 16px 100px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            animation: fadeUp 0.25s ease;
         }
-        .btn-start:disabled { opacity: 0.5; background: #a0a0a0; }
-        /* new compact button for "My Words" */
-        .btn-mywords {
-            background: var(--chip-bg);
-            color: var(--accent);
-            border: 2px solid var(--chip-border);
-            font-size: 1.3rem;
-            padding: 16px 24px;
-            width: 100%;
-            justify-content: center;
-        }
-        .btn-mywords:hover {
-            background: var(--chip-border);
-            color: white;
-        }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-        @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-        .stat-card { border-radius: 20px; padding: 20px 16px; text-align: center; border: 2px solid rgba(255,255,255,0.3); }
-        .stat-num { font-family: 'Fredoka One', cursive; font-size: 2.4rem; line-height: 1; display: block; }
-        .stat-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.03em; margin-top: 4px; display: block; }
-        .chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
-        .chip { padding: 10px 20px; background: var(--chip-bg); border: 2px solid var(--chip-border); border-radius: 100px; font-weight: 800; font-size: 1rem; cursor: pointer; color: var(--accent); transition: all 0.15s; }
-        .chip:hover { transform: scale(1.04); }
-        .chip.active { background: linear-gradient(135deg, #7c3aed, #ec4899); border-color: transparent; color: white; }
-        .answer-input { width: 100%; padding: 20px 24px; font-size: 1.6rem; font-family: 'Fredoka One', cursive; text-align: center; border: 3px solid var(--input-border); border-radius: 20px; background: var(--input-bg); color: var(--text-primary); outline: none; transition: border-color 0.2s, box-shadow 0.2s; letter-spacing: 0.05em; }
-        .answer-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(124,58,237,0.15); }
-        .answer-input::placeholder { color: var(--placeholder-light); opacity: 0.8; }
-        .word-input { flex: 1; padding: 14px 20px; font-size: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 700; border: 2px solid var(--input-border); border-radius: 14px; background: var(--input-bg); color: var(--text-primary); outline: none; transition: border-color 0.2s; }
-        .word-input:focus { border-color: var(--accent); }
-        .word-input::placeholder { color: var(--placeholder-light); opacity: 0.8; }
-        .word-chip { background: var(--chip-bg); border: 2px solid var(--chip-border); border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .word-chip .wname { font-weight: 800; color: var(--text-primary); font-size: 1rem; text-transform: capitalize; }
-        .word-chip .wdel { background: none; border: none; cursor: pointer; font-size: 1rem; opacity: 0; transition: opacity 0.15s; color: #ef4444; padding: 2px 6px; border-radius: 6px; }
-        .word-chip:hover .wdel { opacity: 1; }
-        .progress-bar-wrap { height: 12px; background: rgba(124,58,237,0.15); border-radius: 100px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #10b981, #059669); transition: width 0.4s ease; }
-        .feedback-box { border-radius: 20px; padding: 28px; text-align: center; margin-top: 16px; }
-        .feedback-box.correct { background: linear-gradient(135deg, #d1fae5, #a7f3d0); border: 3px solid #10b981; }
-        .feedback-box.incorrect { background: linear-gradient(135deg, #fee2e2, #fecaca); border: 3px solid #ef4444; }
-        .dark .feedback-box.correct { background: linear-gradient(135deg, #064e3b, #065f46); border-color: #10b981; }
-        .dark .feedback-box.incorrect { background: linear-gradient(135deg, #7f1d1d, #991b1b); border-color: #ef4444; }
-        .dict-box { background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(236,72,153,0.08)); border: 2px solid rgba(124,58,237,0.3); border-radius: 20px; padding: 24px; margin-top: 16px; text-align: left; }
-        .dict-box .definition { font-size: 1.2rem; line-height: 1.6; color: var(--text-primary); margin-bottom: 12px; padding-left: 12px; border-left: 5px solid var(--accent2); }
-        .dict-box .example { font-style: italic; color: var(--text-secondary); background: rgba(124,58,237,0.05); padding: 14px; border-radius: 12px; font-size: 1.1rem; }
-        .speak-btn { width: 100%; padding: 22px; background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; border: none; border-radius: 20px; font-family: 'Fredoka One', cursive; font-size: 1.6rem; letter-spacing: 0.05em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 14px; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
-        .speak-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,99,235,0.5); }
-        .speak-btn:active { transform: translateY(0); }
-        .speak-btn .pulse-ring { display: inline-block; font-size: 1.8rem; animation: speakPulse 2s infinite; }
-        @keyframes speakPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        .wave-bars { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 8px; }
-        .wave-bar { width: 5px; border-radius: 3px; background: linear-gradient(to top, #7c3aed, #ec4899); animation: wave 1.2s ease-in-out infinite; }
-        .wave-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
-        .wave-bar:nth-child(2) { height: 22px; animation-delay: 0.1s; }
-        .wave-bar:nth-child(3) { height: 32px; animation-delay: 0.2s; }
-        .wave-bar:nth-child(4) { height: 22px; animation-delay: 0.3s; }
-        .wave-bar:nth-child(5) { height: 12px; animation-delay: 0.4s; }
-        @keyframes wave { 0%,100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
-        .flex { display: flex; } .gap-3 { gap: 12px; } .gap-4 { gap: 16px; } .items-center { align-items: center; } .justify-between { justify-content: space-between; } .flex-1 { flex: 1; } .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-        @media (max-width: 480px) { .grid2 { grid-template-columns: 1fr; } .grid3 { grid-template-columns: 1fr 1fr; } }
-        .mb-2 { margin-bottom: 8px; } .mb-4 { margin-bottom: 16px; } .mb-6 { margin-bottom: 24px; } .mb-8 { margin-bottom: 32px; } .mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; } .text-center { text-align: center; } .text-sm { font-size: 0.85rem; } .bold { font-weight: 800; } .w-full { width: 100%; } .sep { height: 1px; background: rgba(124,58,237,0.15); margin: 20px 0; }
-        .score-banner { border-radius: 24px; padding: 32px; text-align: center; color: white; margin-bottom: 24px; }
-        .score-banner .big-score { font-family: 'Fredoka One', cursive; font-size: 5rem; line-height: 1; }
-        .score-banner .pct { font-family: 'Fredoka One', cursive; font-size: 2.5rem; opacity: 0.9; }
-        .info-box { border-radius: 16px; padding: 20px; border: 2px solid; }
-        .info-box.danger { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
-        .info-box.info { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.3); }
-        .dark .info-box.danger { background: rgba(239,68,68,0.15); }
-        .dark .info-box.info { background: rgba(59,130,246,0.15); }
-        .listen-section { background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(236,72,153,0.08)); border: 2px solid rgba(245,158,11,0.25); border-radius: 24px; padding: 28px; margin-bottom: 20px; }
-        .dark .listen-section { background: linear-gradient(135deg, rgba(245,158,11,0.07), rgba(236,72,153,0.05)); }
-        .result-word { padding: 14px 18px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: 800; font-size: 1.05rem; text-transform: capitalize; }
-        .result-word.ok { background: #d1fae5; border: 2px solid #10b981; color: #065f46; }
-        .result-word.bad { background: #fee2e2; border: 2px solid #ef4444; color: #7f1d1d; }
-        .dark .result-word.ok { background: #064e3b; color: #6ee7b7; }
-        .dark .result-word.bad { background: #7f1d1d; color: #fca5a5; }
-        .fab-row { position: fixed; bottom: 24px; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 1000; }
-        .fab { width: 54px; height: 54px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
-        .fab:hover { transform: scale(1.1); }
-        .fab-theme { background: white; }
-        .dark .fab-theme { background: #2d2060; color: white; }
-        .fab-help { background: linear-gradient(135deg, #7c3aed, #ec4899); color: white; }
-        .list-tab { display: inline-block; padding: 10px 22px; background: var(--chip-bg); border: 2px solid var(--chip-border); border-radius: 40px; font-weight: 800; cursor: pointer; color: var(--accent); font-size: 1rem; }
-        .list-tab.active { background: linear-gradient(135deg, #7c3aed, #ec4899); border-color: transparent; color: white; }
-        .student-section { background: rgba(124,58,237,0.05); border: 1px solid rgba(124,58,237,0.2); border-radius: 24px; padding: 28px; margin-bottom: 20px; }
-        .dark .student-section { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.35); }
-        .avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed, #ec4899); display: flex; align-items: center; justify-content: center; color: white; font-family: 'Fredoka One', cursive; font-size: 1.8rem; flex-shrink: 0; }
-        .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-card { background: var(--card-bg); border-radius: 28px; max-width: 560px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 36px; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
-        .spinner { width: 36px; height: 36px; border: 4px solid rgba(124,58,237,0.2); border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes bounce { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-16px); } }
-        .bounce { animation: bounce 0.8s ease 3; }
-        .language-badge { display: inline-block; padding: 4px 10px; border-radius: 30px; background: var(--accent); color: white; font-size: 0.8rem; font-weight: 800; margin-left: 8px; text-transform: uppercase; }
-    </style>
-</head>
-<body id="body">
-    <div class="fab-row">
-        <button class="fab fab-theme" onclick="toggleDark()" id="themeBtn" title="Toggle dark mode">🌙</button>
-        <button class="fab fab-help" onclick="openHelp()" title="Help">❓</button>
-    </div>
-    <div class="main-wrap" id="app"></div>
+        @media(max-width:600px){ .card{padding:20px 16px;} .wrap{padding:14px 10px 100px;} }
 
-    <!-- Help modal -->
-    <div class="modal-bg" id="helpModal" style="display:none" onclick="closeHelp(event)">
-        <div class="modal-card">
-            <button style="position:absolute;top:18px;right:18px;background:rgba(124,58,237,0.1);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--accent)" onclick="closeHelp()">✕</button>
-            <h2 style="font-size:1.8rem;margin-bottom:20px">📘 How to Use</h2>
-            <div style="line-height:1.9">
-                <p>• Click <strong>My Words</strong> button to manage lists & languages</p>
-                <p>• Choose language (EN, AF, ZU) when creating a list</p>
-                <p>• Definitions come from that language's dictionary (word hidden)</p>
-                <p>• Parent dashboard shows all progress</p>
-            </div>
+```
+    .logo {
+        font-family: 'Unbounded', sans-serif; font-weight:900;
+        font-size: clamp(3rem,10vw,5rem);
+        color: var(--lime);
+        text-shadow: 0 0 40px rgba(200,255,0,0.4);
+        letter-spacing: -0.02em; line-height:1;
+    }
+    h2 { font-family:'Unbounded',sans-serif; font-weight:700; color:var(--text); letter-spacing:-0.01em; }
+
+    /* Buttons */
+    .btn {
+        display:inline-flex; align-items:center; justify-content:center; gap:8px;
+        padding:13px 22px; border-radius:12px;
+        font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem;
+        border:none; cursor:pointer; transition:all 0.15s ease;
+    }
+    .btn:hover:not([disabled]){ transform:translateY(-2px); }
+    .btn:active:not([disabled]){ transform:translateY(0); }
+    .btn[disabled]{ opacity:0.35; cursor:not-allowed; }
+    .btn-lime { background:var(--lime); color:#0d0d18; font-weight:800; box-shadow:0 4px 20px rgba(200,255,0,0.3); }
+    .btn-lime:hover:not([disabled]){ box-shadow:0 8px 32px rgba(200,255,0,0.5); }
+    .btn-ghost { background:var(--surface2); color:var(--soft); border:1px solid var(--border-hi); }
+    .btn-ghost:hover:not([disabled]){ color:var(--text); border-color:rgba(255,255,255,0.3); }
+    .btn-violet { background:linear-gradient(135deg,#7b5ea7,var(--violet)); color:white; box-shadow:0 4px 20px rgba(123,94,167,0.35); }
+    .btn-danger { background:linear-gradient(135deg,#ff4f6a,#c0284a); color:white; }
+    .btn-lg { padding:18px 28px; font-size:1.05rem; border-radius:14px; }
+    .btn-sm { padding:8px 16px; font-size:0.84rem; border-radius:9px; }
+    .w-full { width:100%; }
+
+    /* Stats */
+    .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    @media(max-width:580px){ .stats-row{ grid-template-columns:repeat(2,1fr); } }
+    .stat { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px 10px; text-align:center; }
+    .stat-n { font-family:'Unbounded',sans-serif; font-size:1.9rem; font-weight:700; line-height:1; display:block; }
+    .stat-l { font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-top:5px; display:block; }
+
+    /* Tabs */
+    .tab-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .tab { padding:7px 16px; border-radius:100px; background:var(--surface2); border:1px solid var(--border); color:var(--soft); font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.15s; display:inline-flex; align-items:center; gap:6px; }
+    .tab:hover{ border-color:var(--border-hi); color:var(--text); }
+    .tab.on { background:var(--lime); border-color:var(--lime); color:#0d0d18; }
+    .lbadge { padding:2px 8px; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; background:rgba(0,0,0,0.15); color:inherit; }
+
+    /* Words */
+    .word-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; }
+    .wchip { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:9px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .wchip:hover{ border-color:var(--border-hi); }
+    .wchip:hover .wdel{ opacity:1; }
+    .wname { font-weight:700; font-size:0.9rem; text-transform:capitalize; color:var(--text); }
+    .wdel { background:none; border:none; cursor:pointer; color:var(--red); opacity:0; font-size:0.8rem; transition:opacity 0.15s; padding:2px 4px; border-radius:4px; }
+
+    /* Inputs */
+    .word-inp { flex:1; padding:12px 16px; font-family:'Syne',sans-serif; font-size:0.97rem; font-weight:600; border:1px solid var(--border-hi); border-radius:11px; background:var(--surface2); color:var(--text); outline:none; }
+    .word-inp:focus{ border-color:var(--lime); box-shadow:0 0 0 3px rgba(200,255,0,0.1); }
+    .word-inp::placeholder{ color:var(--muted); }
+    .ans-inp { width:100%; padding:20px 22px; font-family:'Syne Mono',monospace; font-size:1.7rem; text-align:center; border:2px solid var(--border-hi); border-radius:16px; background:var(--surface2); color:var(--lime); outline:none; transition:all 0.2s; letter-spacing:0.05em; }
+    .ans-inp:focus{ border-color:var(--lime); box-shadow:0 0 0 4px rgba(200,255,0,0.08); }
+    .ans-inp::placeholder{ color:var(--muted); font-size:1.1rem; letter-spacing:0; }
+    .ans-inp:disabled{ opacity:0.7; }
+
+    /* Progress */
+    .prog-wrap { height:5px; background:var(--surface2); border-radius:100px; overflow:hidden; }
+    .prog-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--teal),var(--lime)); transition:width 0.4s ease; }
+
+    /* Speak */
+    .speak-btn { width:100%; padding:26px 20px; background:var(--surface2); border:2px dashed var(--border-hi); border-radius:18px; color:var(--text); font-family:'Unbounded',sans-serif; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; transition:all 0.2s; letter-spacing:0.02em; }
+    .speak-btn:hover{ background:var(--lime-dim); border-color:var(--lime); color:var(--lime); }
+    .speak-icon { font-size:1.6rem; animation:pulse-icon 2.5s ease-in-out infinite; }
+    @keyframes pulse-icon{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
+
+    /* Feedback */
+    .fb-box { border-radius:16px; padding:22px; text-align:center; }
+    .fb-ok { background:rgba(61,255,160,0.08); border:2px solid rgba(61,255,160,0.35); }
+    .fb-bad { background:rgba(255,79,106,0.08); border:2px solid rgba(255,79,106,0.35); }
+    .fb-emoji { font-size:2.8rem; display:block; margin-bottom:8px; }
+    .fb-word { font-family:'Syne Mono',monospace; font-size:1.5rem; color:#ff8fa1; font-weight:700; }
+
+    /* Dict */
+    .dict-box { background:var(--surface); border:1px solid rgba(166,120,240,0.3); border-radius:14px; padding:18px; margin-top:12px; }
+    .dict-def { font-size:1rem; line-height:1.65; color:var(--text); padding-left:12px; border-left:3px solid var(--violet); margin-bottom:10px; }
+    .dict-ex { font-style:italic; color:var(--soft); font-size:0.9rem; padding:10px 12px; border-radius:9px; background:var(--surface2); }
+
+    /* Results */
+    .score-hero { text-align:center; padding:28px 20px; border-radius:16px; border:1px solid var(--border); background:var(--surface); margin-bottom:20px; }
+    .score-big { font-family:'Unbounded',sans-serif; font-size:4rem; font-weight:900; color:var(--lime); text-shadow:0 0 30px rgba(200,255,0,0.4); line-height:1; }
+    .score-pct { font-family:'Unbounded',sans-serif; font-size:1.6rem; color:var(--soft); margin-top:6px; }
+    .rword { padding:10px 14px; border-radius:10px; display:flex; align-items:center; justify-content:space-between; font-weight:700; font-size:0.9rem; text-transform:capitalize; }
+    .rw-ok { background:rgba(61,255,160,0.1); border:1px solid rgba(61,255,160,0.3); color:var(--green); }
+    .rw-bad { background:rgba(255,79,106,0.1); border:1px solid rgba(255,79,106,0.3); color:#ff8fa1; }
+
+    /* Test row */
+    .test-row { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px; margin-bottom:8px; }
+
+    /* Info box */
+    .info-box { border-radius:12px; padding:16px; border:1px solid; }
+    .info-danger { background:rgba(255,79,106,0.07); border-color:rgba(255,79,106,0.25); }
+    .info-teal { background:rgba(0,212,180,0.07); border-color:rgba(0,212,180,0.25); }
+
+    /* Spinner */
+    .spinner { width:26px; height:26px; border:3px solid var(--surface2); border-top-color:var(--lime); border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block; vertical-align:middle; margin-right:10px; }
+    @keyframes spin{ to{transform:rotate(360deg);} }
+
+    /* FAB */
+    .fab-row { position:fixed; bottom:22px; right:18px; z-index:1000; }
+    .fab { width:48px; height:48px; border-radius:50%; border:1px solid var(--border-hi); background:#17172a; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.5); color:var(--text); transition:transform 0.2s; font-family:'Syne',sans-serif; font-weight:700; }
+    .fab:hover{ transform:scale(1.1); }
+
+    /* Modal */
+    .modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:2000; padding:20px; backdrop-filter:blur(4px); }
+    .modal-card { background:#17172a; border:1px solid var(--border-hi); border-radius:22px; max-width:520px; width:100%; max-height:85vh; overflow-y:auto; padding:30px; position:relative; box-shadow:0 40px 100px rgba(0,0,0,0.7); }
+
+    /* Animations */
+    @keyframes fadeUp{ from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes pop{ 0%{transform:scale(0.85);opacity:0;} 60%{transform:scale(1.05);} 100%{transform:scale(1);opacity:1;} }
+    .pop { animation:pop 0.35s ease; }
+    @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+
+    /* Helpers */
+    .row { display:flex; align-items:center; }
+    .col { display:flex; flex-direction:column; }
+    .jb { justify-content:space-between; }
+    .jc { justify-content:center; }
+    .gap2 { gap:8px; }
+    .gap3 { gap:12px; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media(max-width:460px){ .grid2{grid-template-columns:1fr;} }
+    .mb1{margin-bottom:4px;} .mb2{margin-bottom:8px;} .mb3{margin-bottom:12px;} .mb4{margin-bottom:16px;} .mb6{margin-bottom:24px;} .mb8{margin-bottom:32px;}
+    .mt2{margin-top:8px;} .mt3{margin-top:12px;} .mt4{margin-top:16px;}
+    .tc{text-align:center;}
+    .sep{height:1px;background:var(--border);margin:18px 0;}
+    .f700{font-weight:700;}
+    .fs-sm{font-size:0.82rem;} .fs-xs{font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;}
+    .soft{color:var(--soft);} .muted{color:var(--muted);}
+
+    /* Home */
+    .badge { display:inline-flex; align-items:center; gap:8px; background:var(--lime-dim); border:1px solid rgba(200,255,0,0.22); border-radius:100px; padding:5px 14px; font-size:0.75rem; font-weight:700; color:var(--lime); letter-spacing:0.07em; text-transform:uppercase; margin-bottom:20px; }
+    .badge .dot { width:6px; height:6px; border-radius:50%; background:var(--lime); animation:blink 1.8s ease-in-out infinite; }
+    .list-banner { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:var(--lime-dim); border:1px solid rgba(200,255,0,0.2); border-radius:13px; cursor:pointer; transition:border-color 0.2s, background 0.2s; gap:10px; }
+    .list-banner:hover { border-color:rgba(200,255,0,0.4); background:rgba(200,255,0,0.14); }
+
+    /* Game */
+    .game-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:8px; }
+    .chip { padding:5px 12px; border-radius:100px; font-size:0.8rem; font-weight:700; background:var(--surface2); border:1px solid var(--border); }
+    .chip-lime { background:var(--lime-dim); border-color:rgba(200,255,0,0.3); color:var(--lime); }
+    .chip-amber { background:rgba(255,179,71,0.12); border-color:rgba(255,179,71,0.3); color:var(--amber); }
+    .listen-area { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; }
+</style>
+```
+
+</head>
+<body>
+
+<div class="fab-row">
+    <button class="fab" id="fabHelp" title="Help">?</button>
+</div>
+
+<div class="wrap" id="app"></div>
+
+<div class="modal-bg" id="helpModal" style="display:none">
+    <div class="modal-card">
+        <button id="helpClose" style="position:absolute;top:14px;right:14px;background:var(--surface2);border:1px solid var(--border);color:var(--soft);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;font-family:sans-serif;">&#x2715;</button>
+        <h2 style="font-size:1.3rem;margin-bottom:18px;color:var(--lime);">How to Use Spello</h2>
+        <div style="line-height:2.1;color:var(--soft);">
+            <p>&#128203; <strong style="color:var(--text)">Add words</strong> to your list in My Words</p>
+            <p>&#127757; <strong style="color:var(--text)">Choose a language</strong> when creating a list (en / af / zu)</p>
+            <p>&#128266; <strong style="color:var(--text)">Listen</strong> to the word, then spell it</p>
+            <p>&#128218; <strong style="color:var(--text)">Get a hint</strong> &#8212; see the definition without the word shown</p>
+            <p>&#128106; <strong style="color:var(--text)">Parent dashboard</strong> tracks all progress and history</p>
+            <p>&#128229; <strong style="color:var(--text)">Export CSV</strong> to share results</p>
         </div>
     </div>
+</div>
 
 <script>
-(function() {
-    // ========== STATE ==========
-    const state = {
-        page: 'home',                // home | manage | playing | results | parent
-        lists: [],                   // each: { name, lang: 'en'|'af'|'zu', words: [] }
-        activeListIndex: 0,
-        idx: 0,
-        score: 0,
-        streak: 0,
-        correctSet: new Set(),
-        userAnswer: '',
-        answered: false,
-        showFeedback: false,
-        showHint: false,
-        hintLoading: false,
-        currentDefinition: null,
-        bestStreak: 0,
-        totalWords: 0,
-        testResults: [],
-        dark: false
+// ── State ──────────────────────────────────────────────────────────────────────
+var S = {
+    page: 'home',
+    lists: [],
+    listIdx: 0,
+    wordIdx: 0,
+    score: 0,
+    streak: 0,
+    correctSet: [],
+    userAnswer: '',
+    answered: false,
+    showHint: false,
+    hintLoading: false,
+    def: null,
+    bestStreak: 0,
+    totalWords: 0,
+    results: []
+};
+
+// ── Persist ────────────────────────────────────────────────────────────────────
+function load() {
+    try {
+        var d;
+        d = localStorage.getItem('sp_lists');
+        S.lists = d ? JSON.parse(d) : [{name:'My Words', lang:'en', words:[]}];
+        if (!S.lists.length) S.lists = [{name:'My Words', lang:'en', words:[]}];
+        d = localStorage.getItem('sp_li');
+        S.listIdx = d ? Math.min(parseInt(d,10)||0, S.lists.length-1) : 0;
+        d = localStorage.getItem('sp_best'); if (d) S.bestStreak = parseInt(d,10)||0;
+        d = localStorage.getItem('sp_total'); if (d) S.totalWords = parseInt(d,10)||0;
+        d = localStorage.getItem('sp_results'); if (d) S.results = JSON.parse(d);
+    } catch(e){ console.warn('load error',e); }
+}
+function save() {
+    try {
+        localStorage.setItem('sp_lists', JSON.stringify(S.lists));
+        localStorage.setItem('sp_li', S.listIdx);
+        localStorage.setItem('sp_best', S.bestStreak);
+        localStorage.setItem('sp_total', S.totalWords);
+        localStorage.setItem('sp_results', JSON.stringify(S.results));
+    } catch(e){ console.warn('save error',e); }
+}
+
+// ── Speech ─────────────────────────────────────────────────────────────────────
+var voice = null;
+function pickVoice(lang) {
+    if (!window.speechSynthesis) return;
+    var voices = window.speechSynthesis.getVoices();
+    if (!voices.length) return;
+    if (lang === 'af') {
+        voice = voices.find(function(v){return v.lang.startsWith('af');}) ||
+                voices.find(function(v){return v.lang === 'en-ZA';}) || null;
+    } else if (lang === 'zu') {
+        voice = voices.find(function(v){return v.lang.startsWith('zu');}) ||
+                voices.find(function(v){return v.lang === 'en-ZA';}) || null;
+    } else {
+        voice = voices.find(function(v){return v.lang === 'en-ZA';}) ||
+                voices.find(function(v){return v.lang === 'en-GB';}) ||
+                voices.find(function(v){return v.lang.startsWith('en');}) || null;
+    }
+}
+if (window.speechSynthesis) {
+    window.speechSynthesis.onvoiceschanged = function() {
+        pickVoice(S.lists[S.listIdx] ? S.lists[S.listIdx].lang : 'en');
     };
+}
+function speak(text, rate) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    if (voice) u.voice = voice;
+    u.rate = rate || 0.75; u.pitch = 1; u.volume = 1;
+    setTimeout(function(){ window.speechSynthesis.speak(u); }, 60);
+}
 
-    // ========== LOAD/SAVE ==========
-    function load() {
-        try {
-            const d = localStorage.getItem('spello_dark');
-            if (d !== null) state.dark = d === 'true';
-
-            const lists = localStorage.getItem('spello_lists');
-            if (lists) {
-                state.lists = JSON.parse(lists);
-            } else {
-                state.lists = [{ name: 'My Words', lang: 'en', words: [] }];
-            }
-
-            const activeIdx = localStorage.getItem('spello_activeList');
-            if (activeIdx !== null) state.activeListIndex = parseInt(activeIdx, 10) || 0;
-
-            const best = localStorage.getItem('spello_bestStreak');
-            if (best) state.bestStreak = parseInt(best, 10);
-            const total = localStorage.getItem('spello_totalWords');
-            if (total) state.totalWords = parseInt(total, 10);
-            const results = localStorage.getItem('spello_testResults');
-            if (results) state.testResults = JSON.parse(results);
-
-            if (state.dark) {
-                document.body.classList.add('dark');
-                document.getElementById('themeBtn').textContent = '☀️';
-            }
-        } catch(e) { console.error(e); }
+// ── Dictionary ─────────────────────────────────────────────────────────────────
+function fetchDef(word, lang, cb) {
+    if (lang === 'en') {
+        fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word))
+            .then(function(r) {
+                if (!r.ok) throw new Error('not found');
+                return r.json();
+            })
+            .then(function(data) {
+                var m = data[0] && data[0].meanings && data[0].meanings[0];
+                var d = m && m.definitions && m.definitions[0];
+                cb({
+                    definition: d ? d.definition : 'No definition found.',
+                    example: (d && d.example) ? d.example : ''
+                });
+            })
+            .catch(function() {
+                cb({ definition: 'Definition not available. Check your internet connection.', example: '' });
+            });
+    } else if (lang === 'af') {
+        cb({
+            definition: "Afrikaans: Hierdie woord word gebruik in alledaagse kommunikasie. Probeer om dit in 'n sin te gebruik.",
+            example: "Die leerder het die woord korrek gespel."
+        });
+    } else {
+        cb({
+            definition: "IsiZulu: Leli gama lisetshenziswa ekuxhumaneni nsuku zonke. Zama ukulisebenzisa emusho.",
+            example: "Umfundi ubhale igama ngendlela efanele."
+        });
     }
+}
 
-    function save() {
-        try {
-            localStorage.setItem('spello_dark', state.dark);
-            localStorage.setItem('spello_lists', JSON.stringify(state.lists));
-            localStorage.setItem('spello_activeList', state.activeListIndex);
-            localStorage.setItem('spello_bestStreak', state.bestStreak);
-            localStorage.setItem('spello_totalWords', state.totalWords);
-            localStorage.setItem('spello_testResults', JSON.stringify(state.testResults));
-        } catch(e) { console.error(e); }
-    }
+// ── List helpers ───────────────────────────────────────────────────────────────
+function curList() { return S.lists[S.listIdx] || {name:'', lang:'en', words:[]}; }
+function curWords() { return curList().words; }
 
-    // ========== VOICE ==========
-    let selectedVoice = null;
-    function setVoiceForAccent() {
-        if (!window.speechSynthesis) return;
-        const voices = window.speechSynthesis.getVoices();
-        selectedVoice = voices.find(v => v.lang === 'en-ZA') ||
-                        voices.find(v => v.lang.startsWith('en-ZA')) ||
-                        voices.find(v => v.lang === 'en-GB') ||
-                        voices.find(v => v.lang.startsWith('en-')) ||
-                        null;
-    }
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.onvoiceschanged = setVoiceForAccent;
-        setVoiceForAccent();
-    }
-    function speak(text, rate = 0.75) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        if (selectedVoice) utter.voice = selectedVoice;
-        utter.rate = rate;
-        utter.pitch = 1.0;
-        utter.volume = 1.0;
-        setTimeout(() => window.speechSynthesis.speak(utter), 50);
-    }
+function setListIdx(i) {
+    S.listIdx = i;
+    pickVoice(S.lists[i].lang);
+    save(); render();
+}
 
-    // ========== LANGUAGE DICTIONARIES with robust fallbacks ==========
-    async function fetchDefinition(word, lang) {
-        try {
-            if (lang === 'en') {
-                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-                if (!res.ok) throw new Error('not found');
-                const data = await res.json();
-                const meaning = data[0]?.meanings[0];
-                const definition = meaning?.definitions[0]?.definition || 'No definition found.';
-                const example = meaning?.definitions[0]?.example || '';
-                return { definition, example };
-            } else if (lang === 'af') {
-                // Afrikaans: rich placeholder with word integration
-                return { 
-                    definition: `🇿🇦 Afrikaans: Die woord "${word}" beteken: 'n betekenis in Afrikaans. (Voorbeeld: Dit is 'n wonderlike woord.)`,
-                    example: `💬 Voorbeeldsin: "Die ${word} is baie mooi."`
-                };
-            } else if (lang === 'zu') {
-                // Zulu: rich placeholder
-                return { 
-                    definition: `🇿🇦 IsiZulu: Igama elithi "${word}" lisho: incazelo yalo ngesiZulu. (Isibonelo: Leli gama liyajabulisa.)`,
-                    example: `💬 Isibonelo somusho: "Ngiyathanda i-${word}."`
-                };
-            }
-        } catch (e) {
-            return { definition: `No definition available for this word in ${lang}.`, example: '' };
-        }
-        return { definition: `Definition not found.`, example: '' };
-    }
+function addList() {
+    var name = prompt('List name:');
+    if (!name || !name.trim()) return;
+    var lang = (prompt('Language (en / af / zu):', 'en') || 'en').toLowerCase().trim();
+    if (['en','af','zu'].indexOf(lang) === -1) lang = 'en';
+    S.lists.push({name: name.trim(), lang: lang, words: []});
+    S.listIdx = S.lists.length - 1;
+    save(); render();
+}
 
-    async function requestDefinition() {
-        const list = state.lists[state.activeListIndex];
-        const w = list.words[state.idx];
-        state.showHint = true;
-        state.hintLoading = true;
-        state.currentDefinition = null;
-        render();
+function deleteList(i) {
+    if (S.lists.length <= 1) { alert('Keep at least one list.'); return; }
+    if (!confirm('Delete list "' + S.lists[i].name + '"?')) return;
+    S.lists.splice(i, 1);
+    if (S.listIdx >= S.lists.length) S.listIdx = S.lists.length - 1;
+    save(); render();
+}
 
-        const defData = await fetchDefinition(w, list.lang);
-        state.currentDefinition = defData;
-        state.hintLoading = false;
-        render();
-        speak(defData.definition, 0.8);
-    }
-
-    function replayDefinition() {
-        if (state.currentDefinition?.definition) {
-            speak(state.currentDefinition.definition, 0.8);
-        }
-    }
-
-    // ========== LIST MANAGEMENT ==========
-    function currentWords() { return state.lists[state.activeListIndex]?.words || []; }
-    function setActiveList(index) { if (state.lists[index]) { state.activeListIndex = index; save(); render(); } }
-    function addList() {
-        const name = prompt('New list name:');
-        if (!name) return;
-        const lang = prompt('Choose language: en (English), af (Afrikaans), zu (Zulu)', 'en') || 'en';
-        const validLang = ['en','af','zu'].includes(lang) ? lang : 'en';
-        state.lists.push({ name: name.trim(), lang: validLang, words: [] });
-        state.activeListIndex = state.lists.length - 1;
+function addWord() {
+    var inp = document.getElementById('wordinp');
+    if (!inp) return;
+    var w = inp.value.trim().toLowerCase().replace(/[^a-z\-']/g, '');
+    if (!w) { inp.value = ''; return; }
+    var words = S.lists[S.listIdx].words;
+    if (words.indexOf(w) === -1) {
+        words.push(w);
         save(); render();
+    } else {
+        inp.value = '';
     }
-    function deleteList(index) {
-        if (state.lists.length <= 1) { alert('Keep at least one list.'); return; }
-        if (!confirm(`Delete list "${state.lists[index].name}"?`)) return;
-        state.lists.splice(index, 1);
-        if (state.activeListIndex >= state.lists.length) state.activeListIndex = state.lists.length - 1;
-        save(); render();
-    }
-    function addWord() {
-        const inp = document.getElementById('wordInput');
-        if (!inp) return;
-        const w = inp.value.trim().toLowerCase().replace(/[^a-z\-']/g, '');
-        if (!w) { inp.value = ''; return; }
-        const words = state.lists[state.activeListIndex].words;
-        if (!words.includes(w)) words.push(w);
-        inp.value = ''; save(); render(); inp.focus();
-    }
-    function removeWord(idx) { state.lists[state.activeListIndex].words.splice(idx, 1); save(); render(); }
+    var fresh = document.getElementById('wordinp');
+    if (fresh) fresh.focus();
+}
 
-    // ========== GAME FLOW ==========
-    function startGame() {
-        if (!currentWords().length) { alert('This list has no words. Please add words first.'); return; }
-        state.page = 'playing';
-        state.idx = 0; state.score = 0; state.streak = 0; state.correctSet = new Set();
-        state.userAnswer = ''; state.answered = false; state.showFeedback = false;
-        state.showHint = false; state.currentDefinition = null; render();
-    }
-    function speakCurrentWord() { speak(currentWords()[state.idx], 0.65); }
-    function submitAnswer() {
-        const inp = document.getElementById('answerInput');
-        const val = inp ? inp.value.trim().toLowerCase() : state.userAnswer.trim().toLowerCase();
-        state.userAnswer = val;
-        const correct = val === currentWords()[state.idx];
-        if (correct) { state.score++; state.correctSet.add(state.idx); state.streak++; if (state.streak > state.bestStreak) state.bestStreak = state.streak; state.totalWords++; }
-        else { state.streak = 0; }
-        state.answered = true; state.showFeedback = true; render();
-    }
-    function nextWord() {
-        if (state.idx < currentWords().length - 1) { state.idx++; state.userAnswer = ''; state.answered = false; state.showFeedback = false; state.showHint = false; state.currentDefinition = null; render(); }
-        else { endGame(); }
-    }
-    function endGame() {
-        const words = currentWords(); const pct = Math.round((state.score / words.length) * 100);
-        const result = { date: new Date().toISOString(), listName: state.lists[state.activeListIndex].name, lang: state.lists[state.activeListIndex].lang, words: [...words], score: state.score, total: words.length, percentage: pct, correctIndices: [...state.correctSet] };
-        state.testResults.push(result); save(); state.page = 'results'; render();
-    }
-    function practiceAgain() { state.page = 'playing'; state.idx = 0; state.score = 0; state.streak = 0; state.correctSet = new Set(); state.userAnswer = ''; state.answered = false; state.showFeedback = false; state.showHint = false; state.currentDefinition = null; render(); }
-    function newWords() { state.page = 'manage'; save(); render(); }
-    function clearCurrentList() { if (!confirm(`Clear all words from "${state.lists[state.activeListIndex].name}"?`)) return; state.lists[state.activeListIndex].words = []; save(); render(); }
+function removeWord(i) {
+    S.lists[S.listIdx].words.splice(i, 1);
+    save(); render();
+}
 
-    // ========== PARENT DASHBOARD ==========
-    function goParent() { state.page = 'parent'; render(); }
-    function exportCSV() {
-        const rows = [['Date','List','Lang','Score','Percentage','Words']];
-        state.testResults.forEach(t => rows.push([new Date(t.date).toLocaleDateString(), t.listName, t.lang, `${t.score}/${t.total}`, `${t.percentage}%`, t.words.join('; ')]));
-        if (rows.length <= 1) { alert('No data to export.'); return; }
-        const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n');
-        const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv); a.download = `spello-${new Date().toISOString().slice(0,10)}.csv`; a.click();
-    }
-    function clearAll() {
-        if (!confirm('⚠️ Delete ALL lists and progress?')) return;
-        localStorage.clear();
-        state.lists = [{ name: 'My Words', lang: 'en', words: [] }]; state.activeListIndex = 0; state.bestStreak = 0; state.totalWords = 0; state.testResults = []; state.dark = false;
-        document.body.classList.remove('dark'); document.getElementById('themeBtn').textContent = '🌙'; save(); render();
-    }
-
-    // ========== NAVIGATION ==========
-    function goHome() { state.page = 'home'; render(); }
-    function goManage() { state.page = 'manage'; render(); }
-
-    // ========== DARK MODE / HELP ==========
-    function toggleDark() { state.dark = !state.dark; document.body.classList.toggle('dark', state.dark); document.getElementById('themeBtn').textContent = state.dark ? '☀️' : '🌙'; save(); render(); }
-    function openHelp() { document.getElementById('helpModal').style.display = 'flex'; }
-    function closeHelp(e) { if (!e || e.target === document.getElementById('helpModal')) document.getElementById('helpModal').style.display = 'none'; }
-
-    // ========== RENDER ==========
-    function render() {
-        const app = document.getElementById('app');
-        switch(state.page) {
-            case 'home':    app.innerHTML = homeHTML(); break;
-            case 'manage':  app.innerHTML = manageHTML(); break;
-            case 'playing': app.innerHTML = playHTML(); afterPlay(); break;
-            case 'results': app.innerHTML = resultsHTML(); break;
-            case 'parent':  app.innerHTML = parentHTML(); break;
-        }
-    }
-
-    function homeHTML() {
-        const tests = state.testResults.length;
-        const wCount = currentWords().length;
-        const activeList = state.lists[state.activeListIndex];
-        // "My Words" is now a BUTTON, not a section
-        return `
-        <div class="card">
-            <div class="text-center mb-8">
-                <div class="logo">✨ Spello ✨</div>
-                <p style="font-size:1.2rem;">Multi‑language spelling</p>
-            </div>
-            <div class="stats-grid mb-8">
-                <div class="stat-card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#f59e0b">
-                    <span class="stat-num">${state.bestStreak}</span>
-                    <span class="stat-label">Best Streak 🔥</span>
-                </div>
-                <div class="stat-card" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-color:#10b981">
-                    <span class="stat-num">${state.totalWords}</span>
-                    <span class="stat-label">Words Mastered 📚</span>
-                </div>
-                <div class="stat-card" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#3b82f6">
-                    <span class="stat-num">${tests}</span>
-                    <span class="stat-label">Tests Done 📝</span>
-                </div>
-                <div class="stat-card" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-color:#8b5cf6">
-                    <span class="stat-num">${wCount}</span>
-                    <span class="stat-label">Words Ready 🎯</span>
-                </div>
-            </div>
-
-            <!-- MY WORDS BUTTON (clean, single button) -->
-            <button class="btn btn-mywords w-full mb-4" onclick="goManage()">
-                📋 My Words · ${activeList.name} (${activeList.lang}) · ${activeList.words.length} words
-            </button>
-
-            <!-- START & PARENT buttons -->
-            <div class="flex gap-4" style="flex-direction:column">
-                <button class="btn btn-start w-full" onclick="startGame()" ${!wCount ? 'disabled' : ''}>🚀 Continue with this list</button>
-                <button class="btn btn-blue w-full" onclick="goParent()">👪 Parent Dashboard</button>
-            </div>
-        </div>`;
-    }
-
-    function manageHTML() {
-        const activeList = state.lists[state.activeListIndex];
-        return `
-        <div class="card">
-            <div class="flex justify-between items-center mb-6">
-                <h1 style="font-size:2rem;">📚 My Word Lists</h1>
-                <button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button>
-            </div>
-            <div class="mb-6">
-                <label class="bold mb-2">Select a list:</label>
-                <div class="chip-row">
-                    ${state.lists.map((lst, i) => `
-                        <span class="list-tab ${i === state.activeListIndex ? 'active' : ''}" onclick="setActiveList(${i})">
-                            ${lst.name} <span class="language-badge">${lst.lang}</span> ${lst.words.length}
-                        </span>`).join('')}
-                    <span class="list-tab" onclick="addList()">➕ New List</span>
-                </div>
-                ${state.lists.length > 1 ? `<button class="btn btn-danger btn-sm mt-2" onclick="deleteList(${state.activeListIndex})">🗑️ Delete "${activeList.name}"</button>` : ''}
-            </div>
-            <div class="mb-6">
-                <label class="bold mb-2">Add words to "${activeList.name}" (${activeList.lang})</label>
-                <div class="flex gap-3">
-                    <input id="wordInput" class="word-input" placeholder="e.g. hello" onkeydown="if(event.key==='Enter')addWord()">
-                    <button class="btn btn-blue" onclick="addWord()">Add</button>
-                </div>
-            </div>
-            ${activeList.words.length ? `
-            <div class="mb-6">
-                <h3 style="font-size:1.1rem;">Words (${activeList.words.length})</h3>
-                <div class="grid2">
-                    ${activeList.words.map((w,i) => `
-                        <div class="word-chip"><span class="wname">${w}</span><button class="wdel" onclick="removeWord(${i})">✕</button></div>
-                    `).join('')}
-                </div>
-            </div>` : '<p class="mb-4">This list is empty. Add words above.</p>'}
-            <button class="btn btn-success w-full" onclick="startGame()" ${!activeList.words.length ? 'disabled' : ''}>🚀 Start Spelling</button>
-        </div>`;
-    }
-
-    function playHTML() {
-        const words = currentWords(); const w = words[state.idx]; const pct = Math.round(((state.idx + (state.answered ? 1 : 0)) / words.length) * 100);
-        const isCorrect = state.answered && state.userAnswer === w; const def = state.currentDefinition; const list = state.lists[state.activeListIndex];
-        return `
-        <div class="card">
-            <div class="flex justify-between items-center mb-6">
-                <div><h2 style="font-size:1.6rem;">${list.name} <span class="language-badge">${list.lang}</span></h2></div>
-                <button class="btn btn-ghost btn-sm" onclick="goHome()">Exit</button>
-            </div>
-            <div class="mb-6">
-                <div class="flex justify-between mb-2"><span>Word ${state.idx+1}/${words.length}</span><span>Score: ${state.score} ⭐</span><span>Streak: ${state.streak} 🔥</span></div>
-                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
-            </div>
-            <div class="listen-section">
-                <button class="speak-btn mb-3" onclick="speakCurrentWord()"><span class="pulse-ring">🔊</span> SAY THE WORD</button>
-                <button class="btn btn-primary w-full" onclick="requestDefinition()">📘 Definition (word hidden)</button>
-                ${state.showHint ? `
-                <div class="dict-box mt-4">
-                    ${state.hintLoading ? '<div class="spinner"></div><p>Loading definition…</p>' : def ? `
-                        <div class="definition">📖 ${def.definition}</div>
-                        ${def.example ? `<div class="example">${def.example}</div>` : ''}
-                        <button class="btn btn-ghost btn-sm mt-3" onclick="replayDefinition()">🔁 Read definition</button>
-                    ` : '<p>No definition.</p>'}
-                </div>` : ''}
-            </div>
-            <div class="mb-4"><input id="answerInput" class="answer-input" value="${state.answered ? state.userAnswer : ''}" placeholder="✏️ Spell the word…" autocomplete="off" ${state.answered ? 'disabled' : ''} onkeydown="if(event.key==='Enter'&&!state.answered)submitAnswer()"></div>
-            ${state.showFeedback ? `<div class="feedback-box ${isCorrect ? 'correct' : 'incorrect'} mb-4"><div style="font-size:3.5rem;">${isCorrect ? '🎉' : '💪'}</div><h3 style="font-size:1.5rem;">${isCorrect ? 'Perfect!' : `Correct spelling: <em>${w}</em>`}</h3></div>` : ''}
-            ${!state.answered ? `<button class="btn btn-primary w-full" onclick="submitAnswer()">✅ Check Answer</button>` : `<button class="btn btn-success w-full" onclick="nextWord()">${state.idx < words.length-1 ? '🚀 Next Word' : '🎉 See Results'}</button>`}
-        </div>`;
-    }
-    function afterPlay() { if (!state.answered) document.getElementById('answerInput')?.focus(); }
-
-    function resultsHTML() {
-        const words = currentWords(); const pct = Math.round((state.score / words.length) * 100);
-        return `
-        <div class="card">
-            <div class="flex justify-between items-center mb-6"><h2>🏁 Results</h2><button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button></div>
-            <div class="text-center mb-6"><div style="font-size:4rem;animation:bounce 0.8s ease 3">${pct===100?'🏆':pct>=80?'🎉':'👍'}</div><h2>Great job!</h2></div>
-            <div class="score-banner mb-6" style="background:linear-gradient(135deg,#7c3aed,#ec4899)"><div class="big-score">${state.score}/${words.length}</div><div class="pct">${pct}%</div></div>
-            <div class="grid2 mb-6">${words.map((w,i)=>`<div class="result-word ${state.correctSet.has(i)?'ok':'bad'}"><span>${w}</span><span>${state.correctSet.has(i)?'✓':'✗'}</span></div>`).join('')}</div>
-            <div class="grid2"><button class="btn btn-primary" onclick="practiceAgain()">🔄 Practice Again</button><button class="btn btn-blue" onclick="newWords()">📋 Lists</button></div>
-        </div>`;
-    }
-
-    function parentHTML() {
-        const totalTests = state.testResults.length; const totalCorrect = state.testResults.reduce((acc, t) => acc + t.score, 0);
-        return `
-        <div class="card">
-            <div class="flex justify-between items-center mb-6">
-                <h1 style="font-size:1.8rem;">👪 Parent Dashboard</h1>
-                <div><button class="btn btn-blue btn-sm" onclick="exportCSV()">📥 Export CSV</button><button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button></div>
-            </div>
-            ${state.testResults.length === 0 ? '<p class="text-center">No tests taken yet.</p>' : `
-            <div class="stats-grid mb-6">
-                <div class="stat-card" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);"><span class="stat-num">${totalTests}</span><span class="stat-label">Total Tests</span></div>
-                <div class="stat-card" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);"><span class="stat-num">${state.totalWords}</span><span class="stat-label">Words Mastered</span></div>
-                <div class="stat-card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);"><span class="stat-num">${state.bestStreak}</span><span class="stat-label">Best Streak</span></div>
-                <div class="stat-card" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);"><span class="stat-num">${totalTests ? Math.round(totalCorrect/totalTests) : 0}</span><span class="stat-label">Avg Correct</span></div>
-            </div>
-            ${state.testResults.slice(-5).reverse().map(t => `
-                <div class="test-row" style="border-color:${t.percentage>=80?'#10b981':'#f59e0b'}">
-                    <div class="flex justify-between"><span><strong>${t.listName} (${t.lang})</strong> ${t.score}/${t.total}</span><span>${new Date(t.date).toLocaleDateString()}</span></div>
-                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${t.percentage}%"></div></div>
-                    <div class="text-sm">${t.words.join(', ')}</div>
-                </div>`).join('')}
-            `}
-            <div class="info-box danger mt-6"><h3>⚠️ Clear All Data</h3><button class="btn btn-danger btn-sm" onclick="clearAll()">🗑️ Delete Everything</button></div>
-        </div>`;
-    }
-
-    // Expose globals
-    window.toggleDark = toggleDark; window.openHelp = openHelp; window.closeHelp = closeHelp;
-    window.goHome = goHome; window.goManage = goManage; window.goParent = goParent;
-    window.startGame = startGame; window.speakCurrentWord = speakCurrentWord;
-    window.requestDefinition = requestDefinition; window.replayDefinition = replayDefinition;
-    window.submitAnswer = submitAnswer; window.nextWord = nextWord;
-    window.practiceAgain = practiceAgain; window.newWords = newWords;
-    window.exportCSV = exportCSV; window.clearAll = clearAll;
-    window.setActiveList = setActiveList; window.addList = addList; window.deleteList = deleteList;
-    window.addWord = addWord; window.removeWord = removeWord;
-    window.clearCurrentList = clearCurrentList;
-
-    load();
+// ── Game ───────────────────────────────────────────────────────────────────────
+function startGame() {
+    if (!curWords().length) { alert('Add some words to this list first!'); return; }
+    pickVoice(curList().lang);
+    S.page = 'playing'; S.wordIdx = 0; S.score = 0; S.streak = 0;
+    S.correctSet = []; S.userAnswer = ''; S.answered = false;
+    S.showHint = false; S.hintLoading = false; S.def = null;
     render();
-})();
+    setTimeout(speakWord, 400);
+}
+
+function speakWord() { speak(curWords()[S.wordIdx], 0.65); }
+
+function showDefinition() {
+    S.showHint = true; S.hintLoading = true; S.def = null;
+    render();
+    fetchDef(curWords()[S.wordIdx], curList().lang, function(data) {
+        S.def = data; S.hintLoading = false;
+        render();
+        speak(data.definition, 0.82);
+    });
+}
+
+function replayDef() {
+    if (S.def && S.def.definition) speak(S.def.definition, 0.82);
+}
+
+function checkAnswer() {
+    var inp = document.getElementById('ansinp');
+    var val = inp ? inp.value.trim().toLowerCase() : '';
+    S.userAnswer = val;
+    var correct = (val === curWords()[S.wordIdx]);
+    if (correct) {
+        S.score++;
+        S.correctSet.push(S.wordIdx);
+        S.streak++;
+        if (S.streak > S.bestStreak) S.bestStreak = S.streak;
+        S.totalWords++;
+    } else {
+        S.streak = 0;
+    }
+    S.answered = true;
+    save();
+    render();
+}
+
+function nextWord() {
+    if (S.wordIdx < curWords().length - 1) {
+        S.wordIdx++;
+        S.userAnswer = ''; S.answered = false;
+        S.showHint = false; S.hintLoading = false; S.def = null;
+        render();
+        setTimeout(speakWord, 200);
+    } else {
+        endGame();
+    }
+}
+
+function endGame() {
+    var words = curWords();
+    var pct = Math.round((S.score / words.length) * 100);
+    S.results.push({
+        date: new Date().toISOString(),
+        listName: curList().name,
+        lang: curList().lang,
+        words: words.slice(),
+        score: S.score,
+        total: words.length,
+        pct: pct,
+        correct: S.correctSet.slice()
+    });
+    save();
+    S.page = 'results';
+    render();
+}
+
+function practiceAgain() {
+    S.page = 'playing'; S.wordIdx = 0; S.score = 0; S.streak = 0;
+    S.correctSet = []; S.userAnswer = ''; S.answered = false;
+    S.showHint = false; S.hintLoading = false; S.def = null;
+    render();
+    setTimeout(speakWord, 400);
+}
+
+// ── Nav ────────────────────────────────────────────────────────────────────────
+function goHome()   { S.page = 'home';   render(); }
+function goManage() { S.page = 'manage'; render(); }
+function goParent() { S.page = 'parent'; render(); }
+
+function clearAll() {
+    if (!confirm('Delete ALL lists and test history? This cannot be undone.')) return;
+    localStorage.clear();
+    S.lists = [{name:'My Words', lang:'en', words:[]}];
+    S.listIdx = 0; S.bestStreak = 0; S.totalWords = 0; S.results = [];
+    save(); render();
+}
+
+function exportCSV() {
+    if (!S.results.length) { alert('No results to export yet.'); return; }
+    var rows = [['Date','List','Lang','Score','Percent','Words']];
+    S.results.forEach(function(r) {
+        rows.push([
+            new Date(r.date).toLocaleDateString(),
+            r.listName, r.lang,
+            r.score + '/' + r.total,
+            r.pct + '%',
+            r.words.join('; ')
+        ]);
+    });
+    var csv = rows.map(function(row) {
+        return row.map(function(c) { return '"' + String(c).replace(/"/g,'""') + '"'; }).join(',');
+    }).join('\r\n');
+    var a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'spello-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+}
+
+// ── HTML builders (no template literals to avoid nesting issues) ───────────────
+
+function renderHome() {
+    var al = curList();
+    var wc = al.words.length;
+    var last = S.results.length ? S.results[S.results.length-1] : null;
+
+    var lastHtml = '';
+    if (last) {
+        var col = last.pct >= 80 ? 'var(--green)' : last.pct >= 60 ? 'var(--amber)' : 'var(--red)';
+        lastHtml = '<div class="info-box info-teal mb4">' +
+            '<div class="fs-xs muted mb1">Last Test</div>' +
+            '<div class="f700">' + esc(last.listName) + ' &mdash; ' + last.score + '/' + last.total +
+            ' <span style="color:' + col + '">(' + last.pct + '%)</span></div>' +
+            '</div>';
+    }
+
+    var startDis = wc ? '' : 'disabled';
+
+    return '<div style="padding-top:4px;">' +
+        '<div class="tc mb8">' +
+            '<div class="badge"><span class="dot"></span>Spelling Practice</div>' +
+            '<div class="logo">Spello.</div>' +
+            '<p class="soft" style="font-size:1.05rem;margin-top:14px;line-height:1.65;max-width:420px;margin-left:auto;margin-right:auto;">' +
+                'Master spelling by listening &mdash; not just memorising. Supports English, Afrikaans &amp; Zulu.' +
+            '</p>' +
+        '</div>' +
+        '<div class="stats-row mb6">' +
+            '<div class="stat"><span class="stat-n" style="color:var(--amber)">' + S.bestStreak + '</span><span class="stat-l">Best Streak &#x1F525;</span></div>' +
+            '<div class="stat"><span class="stat-n" style="color:var(--green)">' + S.totalWords + '</span><span class="stat-l">Mastered &#x1F4DA;</span></div>' +
+            '<div class="stat"><span class="stat-n" style="color:var(--violet)">' + S.results.length + '</span><span class="stat-l">Tests Done</span></div>' +
+            '<div class="stat"><span class="stat-n" style="color:var(--lime)">' + wc + '</span><span class="stat-l">Ready &#x1F3AF;</span></div>' +
+        '</div>' +
+        '<div class="list-banner mb3" id="listBannerBtn">' +
+            '<div>' +
+                '<div class="fs-xs muted mb1">Active List</div>' +
+                '<div class="f700" style="font-size:1rem;">' + esc(al.name) +
+                    ' <span style="font-size:0.65rem;padding:2px 8px;border-radius:100px;background:var(--lime-dim);color:var(--lime);border:1px solid rgba(200,255,0,0.25);text-transform:uppercase;letter-spacing:0.06em;margin-left:6px;">' + esc(al.lang) + '</span>' +
+                '</div>' +
+                '<div class="muted fs-sm" style="margin-top:2px;">' + wc + ' word' + (wc!==1?'s':'') + ' &mdash; tap to manage</div>' +
+            '</div>' +
+            '<span style="font-size:1.4rem;color:var(--muted);">&rsaquo;</span>' +
+        '</div>' +
+        lastHtml +
+        '<div class="col gap3">' +
+            '<button class="btn btn-lime btn-lg w-full" id="startBtn" ' + startDis + '>' +
+                (wc ? '&#x1F680; Start Spelling Test' : '&#x270F;&#xFE0F; Add Words to Start') +
+            '</button>' +
+            '<button class="btn btn-ghost w-full" id="manageBtn">&#x1F4CB; Manage Word Lists</button>' +
+            '<button class="btn btn-ghost w-full" id="parentBtn">&#x1F46A; Parent Dashboard</button>' +
+        '</div>' +
+    '</div>';
+}
+
+function renderManage() {
+    var al = curList();
+    var tabsHtml = '';
+    for (var i = 0; i < S.lists.length; i++) {
+        tabsHtml += '<div class="tab ' + (i === S.listIdx ? 'on' : '') + '" data-li="' + i + '">' +
+            esc(S.lists[i].name) + ' <span class="lbadge">' + esc(S.lists[i].lang) + '</span> <span style="opacity:0.6">' + S.lists[i].words.length + '</span>' +
+        '</div>';
+    }
+    tabsHtml += '<div class="tab" id="addListBtn">+ New</div>';
+
+    var delBtn = S.lists.length > 1
+        ? '<button class="btn btn-danger btn-sm mt2" id="delListBtn">Delete &ldquo;' + esc(al.name) + '&rdquo;</button>'
+        : '';
+
+    var wordsHtml = '';
+    if (al.words.length) {
+        var chips = '';
+        for (var j = 0; j < al.words.length; j++) {
+            chips += '<div class="wchip"><span class="wname">' + esc(al.words[j]) + '</span>' +
+                '<button class="wdel" data-wi="' + j + '">&#x2715;</button></div>';
+        }
+        wordsHtml = '<div class="mb6">' +
+            '<div class="fs-xs muted mb3">' + al.words.length + ' Words</div>' +
+            '<div class="word-grid">' + chips + '</div>' +
+        '</div>';
+    } else {
+        wordsHtml = '<div class="tc mb6" style="padding:24px 0;">' +
+            '<div style="font-size:2.2rem;margin-bottom:10px;">&#x270F;&#xFE0F;</div>' +
+            '<p class="muted">No words yet. Add some above.</p>' +
+        '</div>';
+    }
+
+    return '<div class="card">' +
+        '<div class="row jb mb6">' +
+            '<h2 style="font-size:1.3rem;">&#x1F4CB; Word Lists</h2>' +
+            '<button class="btn btn-ghost btn-sm" id="homeBtn2">&#x2190; Home</button>' +
+        '</div>' +
+        '<div class="mb6">' +
+            '<div class="fs-xs muted mb3">Your Lists</div>' +
+            '<div class="tab-row mb3" id="tabRow">' + tabsHtml + '</div>' +
+            delBtn +
+        '</div>' +
+        '<div class="sep"></div>' +
+        '<div class="mb4">' +
+            '<div class="fs-xs muted mb3">Add Word to &ldquo;' + esc(al.name) + '&rdquo; (' + al.lang.toUpperCase() + ')</div>' +
+            '<div class="row gap3">' +
+                '<input id="wordinp" class="word-inp" placeholder="Type a word&hellip;" />' +
+                '<button class="btn btn-lime" id="addWordBtn">Add</button>' +
+            '</div>' +
+        '</div>' +
+        wordsHtml +
+        '<button class="btn btn-lime btn-lg w-full" id="startBtn2" ' + (al.words.length ? '' : 'disabled') + '>&#x1F680; Start Spelling Test</button>' +
+    '</div>';
+}
+
+function renderPlay() {
+    var words = curWords();
+    var w = words[S.wordIdx];
+    var total = words.length;
+    var pct = Math.round(((S.wordIdx + (S.answered ? 1 : 0)) / total) * 100);
+    var list = curList();
+    var isCorrect = S.answered && (S.userAnswer === w);
+
+    var hintHtml = '';
+    if (S.showHint) {
+        if (S.hintLoading) {
+            hintHtml = '<div class="dict-box"><span class="spinner"></span><span class="muted">Loading definition&hellip;</span></div>';
+        } else if (S.def) {
+            hintHtml = '<div class="dict-box">' +
+                '<div class="dict-def">' + esc(S.def.definition) + '</div>' +
+                (S.def.example ? '<div class="dict-ex">&ldquo;' + esc(S.def.example) + '&rdquo;</div>' : '') +
+                '<button class="btn btn-ghost btn-sm mt3" id="replayBtn">&#x21BB; Read aloud</button>' +
+            '</div>';
+        } else {
+            hintHtml = '<div class="dict-box"><p class="muted">No definition available.</p></div>';
+        }
+    }
+
+    var defBtnHtml = (!S.showHint || S.hintLoading)
+        ? '<button class="btn btn-violet w-full mt3" id="defBtn">&#x1F4D6; Show Definition (word hidden)</button>'
+        : '';
+
+    var fbHtml = '';
+    if (S.answered) {
+        if (isCorrect) {
+            fbHtml = '<div class="fb-box fb-ok mb4 pop"><span class="fb-emoji">&#x1F389;</span><div style="font-weight:800;font-size:1.1rem;color:var(--green)">Perfect!</div></div>';
+        } else {
+            fbHtml = '<div class="fb-box fb-bad mb4 pop">' +
+                '<span class="fb-emoji">&#x1F4AA;</span>' +
+                '<div class="soft f700 mb2">Correct spelling:</div>' +
+                '<div class="fb-word">' + esc(w) + '</div>' +
+            '</div>';
+        }
+    }
+
+    var actionHtml = '';
+    if (!S.answered) {
+        actionHtml = '<button class="btn btn-lime btn-lg w-full" id="checkBtn">&#x2705; Check Answer</button>';
+    } else if (S.wordIdx < total - 1) {
+        actionHtml = '<button class="btn btn-lime btn-lg w-full" id="nextBtn">&rarr; Next Word</button>';
+    } else {
+        actionHtml = '<button class="btn btn-lime btn-lg w-full" id="nextBtn">&#x1F3C1; See Results</button>';
+    }
+
+    return '<div class="card">' +
+        '<div class="game-hdr">' +
+            '<div class="f700" style="font-size:0.9rem;">' + esc(list.name) + ' <span class="lbadge" style="background:var(--lime-dim);color:var(--lime);">' + esc(list.lang) + '</span></div>' +
+            '<div class="row gap2">' +
+                '<div class="chip chip-lime">&#x2B50; ' + S.score + '</div>' +
+                '<div class="chip chip-amber">&#x1F525; ' + S.streak + '</div>' +
+            '</div>' +
+            '<button class="btn btn-ghost btn-sm" id="exitBtn">Exit</button>' +
+        '</div>' +
+        '<div class="mb6">' +
+            '<div class="row jb mb2">' +
+                '<span class="muted fs-sm">Word ' + (S.wordIdx+1) + ' of ' + total + '</span>' +
+                '<span class="muted fs-sm">' + pct + '%</span>' +
+            '</div>' +
+            '<div class="prog-wrap"><div class="prog-fill" style="width:' + pct + '%"></div></div>' +
+        '</div>' +
+        '<div class="listen-area mb4">' +
+            '<button class="speak-btn" id="speakBtn"><span class="speak-icon">&#x1F50A;</span> HEAR THE WORD</button>' +
+            defBtnHtml +
+            hintHtml +
+        '</div>' +
+        '<div class="mb4">' +
+            '<input id="ansinp" class="ans-inp" value="' + esc(S.answered ? S.userAnswer : '') + '" placeholder="Type the word here&hellip;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" ' + (S.answered ? 'disabled' : '') + ' />' +
+        '</div>' +
+        fbHtml +
+        actionHtml +
+    '</div>';
+}
+
+function renderResults() {
+    var words = curWords();
+    var pct = Math.round((S.score / words.length) * 100);
+    var emoji = pct === 100 ? '&#x1F3C6;' : pct >= 80 ? '&#x1F389;' : pct >= 60 ? '&#x1F44D;' : '&#x1F4AA;';
+
+    var rowsHtml = '';
+    for (var i = 0; i < words.length; i++) {
+        var ok = S.correctSet.indexOf(i) !== -1;
+        rowsHtml += '<div class="rword ' + (ok ? 'rw-ok' : 'rw-bad') + '"><span>' + esc(words[i]) + '</span><span>' + (ok ? '&#x2713;' : '&#x2717;') + '</span></div>';
+    }
+
+    return '<div class="card">' +
+        '<div class="row jb mb6">' +
+            '<h2 style="font-size:1.3rem;">&#x1F3C1; Results</h2>' +
+            '<button class="btn btn-ghost btn-sm" id="homeBtn3">Home</button>' +
+        '</div>' +
+        '<div class="score-hero mb6 pop">' +
+            '<div style="font-size:3rem;margin-bottom:8px">' + emoji + '</div>' +
+            '<div class="score-big">' + S.score + '<span style="color:var(--muted);font-size:2rem;">/' + words.length + '</span></div>' +
+            '<div class="score-pct">' + pct + '% correct</div>' +
+        '</div>' +
+        '<div class="word-grid mb6">' + rowsHtml + '</div>' +
+        '<div class="grid2">' +
+            '<button class="btn btn-lime" id="againBtn">&#x1F504; Try Again</button>' +
+            '<button class="btn btn-ghost" id="listsBtn">&#x1F4CB; My Lists</button>' +
+        '</div>' +
+    '</div>';
+}
+
+function renderParent() {
+    var total = S.results.length;
+    var avgPct = total ? Math.round(S.results.reduce(function(a,r){return a+r.pct;},0)/total) : 0;
+
+    var bodyHtml = '';
+    if (!total) {
+        bodyHtml = '<div class="tc" style="padding:36px 0;">' +
+            '<div style="font-size:2.8rem;margin-bottom:12px">&#x1F4CA;</div>' +
+            '<p class="muted">No tests completed yet.</p>' +
+        '</div>';
+    } else {
+        bodyHtml = '<div class="stats-row mb6">' +
+            '<div class="stat"><span class="stat-n" style="color:var(--violet)">' + total + '</span><span class="stat-l">Tests</span></div>' +
+            '<div class="stat"><span class="stat-n" style="color:var(--green)">' + S.totalWords + '</span><span class="stat-l">Mastered</span></div>' +
+            '<div class="stat"><span class="stat-n" style="color:var(--amber)">' + S.bestStreak + '</span><span class="stat-l">Best Streak</span></div>' +
+            '<div class="stat"><span class="stat-n" style="color:var(--lime)">' + avgPct + '%</span><span class="stat-l">Avg Score</span></div>' +
+        '</div>';
+
+        var slice = S.results.slice(-8).reverse();
+        bodyHtml += '<div class="fs-xs muted mb3">Recent Tests</div>';
+        for (var i = 0; i < slice.length; i++) {
+            var r = slice[i];
+            var col = r.pct >= 80 ? 'var(--green)' : r.pct >= 60 ? 'var(--amber)' : 'var(--red)';
+            var barCol = r.pct >= 80
+                ? 'linear-gradient(90deg,var(--teal),var(--green))'
+                : r.pct >= 60 ? 'linear-gradient(90deg,var(--amber),#ffd070)'
+                : 'linear-gradient(90deg,var(--red),#ff8fa1)';
+            bodyHtml += '<div class="test-row">' +
+                '<div class="row jb mb2">' +
+                    '<div class="f700">' + esc(r.listName) + ' <span class="lbadge">' + esc(r.lang) + '</span></div>' +
+                    '<div class="row gap2"><span style="font-weight:800;color:' + col + '">' + r.pct + '%</span>' +
+                    '<span class="muted fs-sm">' + new Date(r.date).toLocaleDateString() + '</span></div>' +
+                '</div>' +
+                '<div class="prog-wrap mb2"><div class="prog-fill" style="width:' + r.pct + '%;background:' + barCol + '"></div></div>' +
+                '<div class="muted fs-sm">' + r.score + '/' + r.total + ' correct &mdash; ' + r.words.map(esc).join(', ') + '</div>' +
+            '</div>';
+        }
+    }
+
+    return '<div class="card">' +
+        '<div class="row jb mb6">' +
+            '<h2 style="font-size:1.3rem;">&#x1F46A; Parent Dashboard</h2>' +
+            '<div class="row gap2">' +
+                '<button class="btn btn-ghost btn-sm" id="csvBtn">&#x1F4E5; CSV</button>' +
+                '<button class="btn btn-ghost btn-sm" id="homeBtn4">Home</button>' +
+            '</div>' +
+        '</div>' +
+        bodyHtml +
+        '<div class="sep"></div>' +
+        '<div class="info-box info-danger">' +
+            '<div class="f700 mb2">&#x26A0;&#xFE0F; Danger Zone</div>' +
+            '<p class="muted fs-sm mb3">Permanently deletes all lists and test history.</p>' +
+            '<button class="btn btn-danger btn-sm" id="clearBtn">&#x1F5D1;&#xFE0F; Delete All Data</button>' +
+        '</div>' +
+    '</div>';
+}
+
+// ── Render + wire events ───────────────────────────────────────────────────────
+function render() {
+    var app = document.getElementById('app');
+    if      (S.page === 'home')    app.innerHTML = renderHome();
+    else if (S.page === 'manage')  app.innerHTML = renderManage();
+    else if (S.page === 'playing') app.innerHTML = renderPlay();
+    else if (S.page === 'results') app.innerHTML = renderResults();
+    else if (S.page === 'parent')  app.innerHTML = renderParent();
+    wireEvents();
+}
+
+function wireEvents() {
+    var el = function(id){ return document.getElementById(id); };
+
+    // Home
+    if (S.page === 'home') {
+        var sb = el('startBtn');
+        if (sb) sb.addEventListener('click', startGame);
+        var lb = el('listBannerBtn');
+        if (lb) lb.addEventListener('click', goManage);
+        var mb = el('manageBtn');
+        if (mb) mb.addEventListener('click', goManage);
+        var pb = el('parentBtn');
+        if (pb) pb.addEventListener('click', goParent);
+    }
+
+    // Manage
+    if (S.page === 'manage') {
+        var h2 = el('homeBtn2');
+        if (h2) h2.addEventListener('click', goHome);
+        var alb = el('addListBtn');
+        if (alb) alb.addEventListener('click', addList);
+        var dlb = el('delListBtn');
+        if (dlb) dlb.addEventListener('click', function(){ deleteList(S.listIdx); });
+        var awb = el('addWordBtn');
+        if (awb) awb.addEventListener('click', addWord);
+        var wi = el('wordinp');
+        if (wi) {
+            wi.addEventListener('keydown', function(e){ if(e.key==='Enter') addWord(); });
+            wi.focus();
+        }
+        var sb2 = el('startBtn2');
+        if (sb2) sb2.addEventListener('click', startGame);
+        // Tab clicks
+        var tabRow = el('tabRow');
+        if (tabRow) {
+            tabRow.addEventListener('click', function(e){
+                var t = e.target.closest('[data-li]');
+                if (t) setListIdx(parseInt(t.getAttribute('data-li'),10));
+            });
+        }
+        // Word delete clicks
+        var wg = document.querySelector('.word-grid');
+        if (wg) {
+            wg.addEventListener('click', function(e){
+                var d = e.target.closest('[data-wi]');
+                if (d) removeWord(parseInt(d.getAttribute('data-wi'),10));
+            });
+        }
+    }
+
+    // Playing
+    if (S.page === 'playing') {
+        var spk = el('speakBtn');
+        if (spk) spk.addEventListener('click', speakWord);
+        var def = el('defBtn');
+        if (def) def.addEventListener('click', showDefinition);
+        var rep = el('replayBtn');
+        if (rep) rep.addEventListener('click', replayDef);
+        var chk = el('checkBtn');
+        if (chk) chk.addEventListener('click', checkAnswer);
+        var nxt = el('nextBtn');
+        if (nxt) nxt.addEventListener('click', nextWord);
+        var ext = el('exitBtn');
+        if (ext) ext.addEventListener('click', goHome);
+        var ai = el('ansinp');
+        if (ai && !S.answered) {
+            ai.focus();
+            ai.addEventListener('keydown', function(e){ if(e.key==='Enter') checkAnswer(); });
+        }
+    }
+
+    // Results
+    if (S.page === 'results') {
+        var h3 = el('homeBtn3');
+        if (h3) h3.addEventListener('click', goHome);
+        var ag = el('againBtn');
+        if (ag) ag.addEventListener('click', practiceAgain);
+        var ls = el('listsBtn');
+        if (ls) ls.addEventListener('click', goManage);
+    }
+
+    // Parent
+    if (S.page === 'parent') {
+        var h4 = el('homeBtn4');
+        if (h4) h4.addEventListener('click', goHome);
+        var csv = el('csvBtn');
+        if (csv) csv.addEventListener('click', exportCSV);
+        var clr = el('clearBtn');
+        if (clr) clr.addEventListener('click', clearAll);
+    }
+}
+
+// ── Utility ────────────────────────────────────────────────────────────────────
+function esc(str) {
+    return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+}
+
+// ── Modal events ───────────────────────────────────────────────────────────────
+document.getElementById('fabHelp').addEventListener('click', function(){
+    document.getElementById('helpModal').style.display = 'flex';
+});
+document.getElementById('helpClose').addEventListener('click', function(){
+    document.getElementById('helpModal').style.display = 'none';
+});
+document.getElementById('helpModal').addEventListener('click', function(e){
+    if (e.target === this) this.style.display = 'none';
+});
+
+// ── Boot ───────────────────────────────────────────────────────────────────────
+load();
+render();
 </script>
+
 </body>
-</html>
+</html> 
