@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spello – Smart Start & List Manager</title>
+    <title>Spello – Fixed Start & Vibrant Colors</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- complete style block (identical to previous working version) --- */
+        /* --- complete style block with vibrant button colors --- */
         :root {
             --bg-start: #1a0533;
             --bg-mid: #2d0b5e;
@@ -27,6 +27,8 @@
             --input-border: #a78bfa;
             --shadow: 0 20px 60px rgba(0,0,0,0.35);
             --placeholder-light: #5b6f82;
+            --start-gradient: linear-gradient(135deg, #8b5cf6, #a78bfa); /* vibrant purple */
+            --start-hover: linear-gradient(135deg, #7c3aed, #8b5cf6);
         }
         .dark {
             --card-bg: #16103a;
@@ -39,6 +41,8 @@
             --input-border: #7c5ccc;
             --shadow: 0 20px 60px rgba(0,0,0,0.7);
             --placeholder-light: #a28fc0;
+            --start-gradient: linear-gradient(135deg, #9f7aea, #b794f4);
+            --start-hover: linear-gradient(135deg, #8b5cf6, #9f7aea);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -67,6 +71,24 @@
         .btn-ghost { background: rgba(124,58,237,0.1); color: var(--accent); border: 2px solid var(--chip-border); }
         .btn-danger { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
         .btn-sm { padding: 10px 20px; font-size: 0.95rem; border-radius: 12px; }
+        /* vibrant start button */
+        .btn-start {
+            background: var(--start-gradient);
+            color: white;
+            font-size: 1.4rem;
+            padding: 22px;
+            border: none;
+            box-shadow: 0 8px 20px rgba(139,92,246,0.5);
+        }
+        .btn-start:hover:not(:disabled) {
+            background: var(--start-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(139,92,246,0.7);
+        }
+        .btn-start:disabled {
+            opacity: 0.5;
+            background: #a0a0a0; /* grey when disabled, but we ensure it's rarely disabled */
+        }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
         @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
         .stat-card { border-radius: 20px; padding: 20px 16px; text-align: center; border: 2px solid rgba(255,255,255,0.3); }
@@ -361,6 +383,7 @@
 
     // ========== GAME FLOW ==========
     function startGame() {
+        console.log('startGame called, words count:', currentWords().length);
         if (!currentWords().length) {
             alert('This list has no words. Please add words first.');
             return;
@@ -455,7 +478,7 @@
         render();
     }
 
-    // ========== NEW: CLEAR CURRENT LIST & START FRESH ==========
+    // ========== CLEAR CURRENT LIST & START FRESH ==========
     function clearCurrentList() {
         if (!confirm(`Clear all words from "${state.lists[state.activeListIndex].name}" and start fresh?`)) return;
         state.lists[state.activeListIndex].words = [];
@@ -463,7 +486,7 @@
         render();
     }
 
-    // ========== PARENT DASHBOARD (fully restored) ==========
+    // ========== PARENT DASHBOARD ==========
     function goParent() {
         state.page = 'parent';
         render();
@@ -539,7 +562,7 @@
         const tests = state.testResults.length;
         const wCount = currentWords().length;
         const activeList = state.lists[state.activeListIndex];
-        // "Manage Lists" button removed – now we show options to continue or clear
+        // "Manage Lists" removed – now we show options to continue or clear with vibrant start button
         return `
         <div class="card">
             <div class="text-center mb-8">
@@ -565,7 +588,7 @@
                 </div>
             </div>
 
-            <!-- Active list info -->
+            <!-- Active list info with vibrant start button -->
             <div class="student-section mb-6">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="avatar">${activeList.name.charAt(0).toUpperCase()}</div>
@@ -575,10 +598,10 @@
                     </div>
                 </div>
                 <div class="grid2 gap-3">
-                    <button class="btn btn-success" onclick="startGame()" ${!wCount ? 'disabled' : ''}>
+                    <button class="btn btn-start w-full" onclick="startGame()">
                         🚀 Continue with this list
                     </button>
-                    <button class="btn btn-danger" onclick="clearCurrentList()">
+                    <button class="btn btn-danger w-full" onclick="clearCurrentList()">
                         🗑️ Clear list & start fresh
                     </button>
                 </div>
@@ -724,11 +747,11 @@
     window.exportCSV = exportCSV; window.clearAll = clearAll;
     window.setActiveList = setActiveList; window.addList = addList; window.deleteList = deleteList;
     window.addWord = addWord; window.removeWord = removeWord;
-    window.clearCurrentList = clearCurrentList; // newly exposed
+    window.clearCurrentList = clearCurrentList;
 
     load();
     render();
 })();
 </script>
 </body>
-</html> 
+</html>
