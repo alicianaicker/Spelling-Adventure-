@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Spello Pro – Master Your Spelling</title>
+    <title>Spello – Spelling Practice</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Syne+Mono&display=swap" rel="stylesheet">
     <style>
 /* ── Themes ─────────────────────────────────────────────────────────────── */
@@ -120,17 +120,6 @@ body {
                 radial-gradient(ellipse 40% 40% at 55% 50%, rgba(0,184,212,0.07) 0%, transparent 65%);
 }
 
-[data-theme="dark"] body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background: radial-gradient(ellipse 60% 50% at 15% 10%, rgba(123,94,167,0.18) 0%, transparent 70%),
-                radial-gradient(ellipse 50% 60% at 85% 80%, rgba(200,255,0,0.06) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 40% at 60% 30%, rgba(240,85,163,0.08) 0%, transparent 70%);
-}
-
 /* ── Layout ─────────────────────────────────────────────────────────────── */
 .wrap { 
     position: relative; 
@@ -176,34 +165,104 @@ body {
 }
 
 /* ── Typography ─────────────────────────────────────────────────────────── */
-h2 { 
-    font-family: 'Fredoka', sans-serif; 
-    font-weight: 700; 
-    color: var(--text); 
-}
-
 .logo {
     font-family: 'Fredoka', sans-serif;
     font-weight: 700;
-    font-size: clamp(4.5rem, 17vw, 8.5rem);
+    font-size: clamp(3.5rem, 12vw, 6rem);
     color: var(--logo-color);
-    text-shadow: 0 6px 0 var(--logo-shadow), 0 0 50px var(--action-glow);
+    text-shadow: 0 4px 0 var(--logo-shadow), 0 0 30px var(--action-glow);
     letter-spacing: -0.02em;
     line-height: 0.9;
     display: block;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 .logo-sub {
     font-family: 'Fredoka', sans-serif;
     font-weight: 500;
-    font-size: clamp(0.75rem, 2.5vw, 1rem);
-    letter-spacing: 0.18em;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-top: 10px;
     display: block;
     text-align: center;
+    margin-bottom: 30px;
+}
+
+/* ── Simple Home Menu ───────────────────────────────────────────────────── */
+.home-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.home-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.home-menu-item:hover {
+    transform: translateX(5px);
+    border-color: var(--action);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.home-menu-icon {
+    font-size: 2rem;
+    min-width: 48px;
+    text-align: center;
+}
+
+.home-menu-content {
+    flex: 1;
+}
+
+.home-menu-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.home-menu-desc {
+    font-size: 0.85rem;
+    color: var(--soft);
+}
+
+.home-menu-badge {
+    font-size: 1.2rem;
+    color: var(--muted);
+}
+
+.active-list-preview {
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.active-list-name {
+    font-weight: 700;
+    color: var(--action);
+    font-size: 1.1rem;
+}
+
+.active-list-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--soft);
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────── */
@@ -245,116 +304,41 @@ h2 {
     box-shadow: 0 4px 18px var(--action-shadow), 0 2px 0 rgba(0,0,0,0.1); 
 }
 
-.btn-action:hover:not(:disabled) { 
-    box-shadow: 0 8px 28px var(--action-glow); 
-}
-
 .btn-ghost { 
     background: var(--surface2); 
     color: var(--soft); 
     border: 2px solid var(--border-hi); 
 }
 
-.btn-ghost:hover:not(:disabled) { 
-    color: var(--text); 
-    border-color: var(--action); 
-}
-
-.btn-pink { 
-    background: var(--pink); 
-    color: #fff; 
-    box-shadow: 0 4px 16px rgba(255,79,163,0.35); 
-}
-
-.btn-teal { 
-    background: var(--teal); 
-    color: #fff; 
-    box-shadow: 0 4px 16px rgba(0,184,212,0.35); 
-}
-
-.btn-violet { 
-    background: var(--violet); 
-    color: #fff; 
-    box-shadow: 0 4px 16px rgba(139,92,246,0.35); 
-}
-
-.btn-danger { 
-    background: var(--red); 
-    color: #fff; 
-    box-shadow: 0 4px 16px rgba(255,61,90,0.3); 
-}
-
-.btn-icon { 
-    background: var(--surface2); 
-    border: 2px solid var(--border-hi); 
-    color: var(--soft); 
-    padding: 7px 10px; 
-    border-radius: 12px; 
-    line-height: 1; 
-}
-
-.btn-icon:hover:not(:disabled) { 
-    color: var(--text); 
-    border-color: var(--action); 
-}
-
-.btn-lg { 
-    padding: 17px 28px; 
-    font-size: 1.1rem; 
-}
-
-.btn-sm { 
-    padding: 7px 16px; 
-    font-size: 0.88rem; 
-}
-
 .w-full { 
     width: 100%; 
 }
 
-/* ── Stats ──────────────────────────────────────────────────────────────── */
+/* ── Stats Row (simplified) ────────────────────────────────────────────── */
 .stats-row { 
-    display: grid; 
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px; 
+    display: flex; 
+    justify-content: space-around;
+    gap: 8px; 
+    margin: 20px 0;
 }
 
-@media(max-width:560px) { 
-    .stats-row { 
-        grid-template-columns: repeat(2, 1fr); 
-    } 
-}
-
-.stat {
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: 18px;
-    padding: 16px 8px;
+.stat-item {
     text-align: center;
-    box-shadow: 0 2px 12px var(--shadow);
-    transition: transform 0.2s;
+    flex: 1;
 }
 
-.stat:hover { 
-    transform: translateY(-2px); 
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--action);
 }
 
-.stat-n { 
-    font-family: 'Fredoka', sans-serif; 
-    font-size: 2rem; 
-    font-weight: 700; 
-    line-height: 1; 
-    display: block; 
-}
-
-.stat-l { 
-    font-size: 0.7rem; 
-    font-weight: 600; 
-    letter-spacing: 0.06em; 
-    text-transform: uppercase; 
-    color: var(--muted); 
-    margin-top: 4px; 
-    display: block; 
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.05em;
 }
 
 /* ── Inputs ─────────────────────────────────────────────────────────────── */
@@ -377,10 +361,6 @@ h2 {
     box-shadow: 0 0 0 3px var(--action-shadow); 
 }
 
-.word-inp::placeholder { 
-    color: var(--muted); 
-}
-
 .ans-inp {
     width: 100%;
     padding: 20px 24px;
@@ -401,43 +381,10 @@ h2 {
     box-shadow: 0 0 0 5px var(--action-shadow); 
 }
 
-.ans-inp::placeholder { 
-    color: var(--muted); 
-    font-size: 1.1rem; 
-    font-family: 'Fredoka', sans-serif; 
-    letter-spacing: 0; 
-}
-
-.ans-inp:disabled { 
-    opacity: 0.7; 
-}
-
-.inp-field {
-    width: 100%;
-    padding: 13px 18px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    border: 2px solid var(--border-hi);
-    border-radius: 14px;
-    background: var(--surface2);
-    color: var(--text);
-    outline: none;
-}
-
-.inp-field:focus { 
-    border-color: var(--action); 
-    box-shadow: 0 0 0 3px var(--action-shadow); 
-}
-
-.inp-field::placeholder { 
-    color: var(--muted); 
-}
-
 /* ── Word chips ─────────────────────────────────────────────────────────── */
 .word-grid { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
     gap: 8px; 
 }
 
@@ -445,17 +392,11 @@ h2 {
     background: var(--surface2);
     border: 2px solid var(--border);
     border-radius: 50px;
-    padding: 8px 14px;
+    padding: 8px 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    transition: border-color 0.15s, transform 0.15s;
-}
-
-.wchip:hover { 
-    border-color: var(--action); 
-    transform: scale(1.04); 
 }
 
 .wname { 
@@ -473,22 +414,16 @@ h2 {
     font-size: 0.85rem;
     padding: 1px 3px;
     border-radius: 50%;
-    line-height: 1;
-    transition: transform 0.15s;
-}
-
-.wdel:hover { 
-    transform: scale(1.3); 
 }
 
 /* ── List cards ─────────────────────────────────────────────────────────── */
 .list-card {
     background: var(--surface2);
     border: 2px solid var(--border);
-    border-radius: 18px;
+    border-radius: 16px;
     padding: 14px 16px;
     cursor: pointer;
-    transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
+    transition: border-color 0.18s;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -496,8 +431,6 @@ h2 {
 
 .list-card:hover { 
     border-color: var(--action); 
-    transform: translateY(-1px); 
-    box-shadow: 0 4px 16px var(--shadow); 
 }
 
 .list-card.active { 
@@ -526,7 +459,7 @@ h2 {
 
 .list-card-meta { 
     color: var(--muted); 
-    font-size: 0.82rem; 
+    font-size: 0.8rem; 
     margin-top: 2px; 
 }
 
@@ -537,13 +470,9 @@ h2 {
     flex-shrink: 0; 
 }
 
-.list-card-actions .btn { 
-    pointer-events: auto; 
-}
-
 /* ── Progress ───────────────────────────────────────────────────────────── */
 .prog-wrap { 
-    height: 10px; 
+    height: 8px; 
     background: var(--prog-track); 
     border-radius: 100px; 
     overflow: hidden; 
@@ -553,17 +482,13 @@ h2 {
     height: 100%;
     border-radius: 100px;
     background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow));
-    transition: width 0.5s cubic-bezier(0.22,1,0.36,1);
-}
-
-[data-theme="dark"] .prog-fill { 
-    background: linear-gradient(90deg, var(--teal), var(--lime)); 
+    transition: width 0.5s;
 }
 
 /* ── Speak button ───────────────────────────────────────────────────────── */
 .speak-btn {
     width: 100%;
-    padding: 28px 20px;
+    padding: 24px 20px;
     background: linear-gradient(135deg, var(--teal-dim), var(--violet-dim));
     border: 3px dashed var(--teal);
     border-radius: 22px;
@@ -577,31 +502,27 @@ h2 {
     justify-content: center;
     gap: 14px;
     transition: all 0.22s;
-    letter-spacing: 0.02em;
 }
 
 .speak-btn:hover {
     background: linear-gradient(135deg, rgba(0,184,212,0.25), rgba(139,92,246,0.2));
     border-color: var(--violet);
-    transform: scale(1.01);
-    box-shadow: 0 6px 24px rgba(0,184,212,0.2);
 }
 
 .speak-icon { 
     font-size: 2rem; 
     animation: pulse-icon 2.5s ease-in-out infinite; 
-    display: inline-block; 
 }
 
 @keyframes pulse-icon { 
     0%, 100% { transform: scale(1); } 
-    50% { transform: scale(1.22); } 
+    50% { transform: scale(1.15); } 
 }
 
 /* ── Feedback ───────────────────────────────────────────────────────────── */
 .fb-box { 
     border-radius: 20px; 
-    padding: 22px; 
+    padding: 20px; 
     text-align: center; 
 }
 
@@ -619,23 +540,41 @@ h2 {
     font-size: 3rem; 
     display: block; 
     margin-bottom: 8px; 
-    animation: bounceIn 0.5s cubic-bezier(0.36,0.07,0.19,0.97); 
 }
 
 .fb-word { 
     font-family: 'Syne Mono', monospace; 
-    font-size: 1.6rem; 
+    font-size: 1.5rem; 
     color: var(--red); 
     font-weight: 700; 
     margin-top: 6px; 
-    letter-spacing: 0.04em; 
 }
 
-@keyframes bounceIn { 
-    0% { transform: scale(0); } 
-    60% { transform: scale(1.28); } 
-    80% { transform: scale(0.9); } 
-    100% { transform: scale(1); } 
+/* ── Dictionary ─────────────────────────────────────────────────────────── */
+.dict-box {
+    background: var(--violet-dim);
+    border: 2px solid rgba(139,92,246,0.25);
+    border-radius: 18px;
+    padding: 16px;
+    margin-top: 12px;
+}
+
+.dict-def { 
+    font-size: 1rem; 
+    line-height: 1.5; 
+    color: var(--text); 
+    padding-left: 12px; 
+    border-left: 4px solid var(--violet); 
+    margin-bottom: 8px; 
+}
+
+.dict-ex { 
+    font-style: italic; 
+    color: var(--soft); 
+    font-size: 0.9rem; 
+    padding: 8px 12px; 
+    border-radius: 8px; 
+    background: rgba(139,92,246,0.08); 
 }
 
 /* ── Game header ────────────────────────────────────────────────────────── */
@@ -644,20 +583,19 @@ h2 {
     align-items: center; 
     justify-content: space-between; 
     margin-bottom: 18px; 
-    padding-bottom: 14px; 
+    padding-bottom: 12px; 
     border-bottom: 2px solid var(--border); 
     flex-wrap: wrap; 
     gap: 8px; 
 }
 
 .chip { 
-    padding: 6px 14px; 
+    padding: 4px 12px; 
     border-radius: 50px; 
     font-size: 0.85rem; 
-    font-weight: 700; 
+    font-weight: 600; 
     background: var(--surface2); 
     border: 2px solid var(--border); 
-    font-family: 'Fredoka', sans-serif; 
 }
 
 .chip-score { 
@@ -670,67 +608,6 @@ h2 {
     background: var(--pink-dim); 
     border-color: rgba(255,79,163,0.35); 
     color: var(--pink); 
-}
-
-[data-theme="dark"] .chip-score { 
-    background: var(--lime-dim); 
-    border-color: rgba(200,255,0,0.3); 
-    color: var(--lime); 
-}
-
-[data-theme="dark"] .chip-streak { 
-    background: var(--orange-dim); 
-    border-color: rgba(255,179,71,0.3); 
-    color: var(--orange); 
-}
-
-.listen-area { 
-    background: var(--surface2); 
-    border: 2px solid var(--border); 
-    border-radius: 20px; 
-    padding: 20px; 
-}
-
-/* ── Info boxes ─────────────────────────────────────────────────────────── */
-.info-box { 
-    border-radius: 18px; 
-    padding: 16px; 
-    border: 2px solid; 
-}
-
-.info-danger { 
-    background: var(--red-dim); 
-    border-color: rgba(255,61,90,0.3); 
-}
-
-.info-teal { 
-    background: var(--teal-dim); 
-    border-color: rgba(0,184,212,0.3); 
-}
-
-.info-yellow { 
-    background: var(--yellow-dim); 
-    border-color: rgba(255,200,0,0.35); 
-}
-
-.info-violet { 
-    background: var(--violet-dim); 
-    border-color: rgba(139,92,246,0.3); 
-}
-
-.info-green { 
-    background: var(--green-dim); 
-    border-color: rgba(0,201,110,0.3); 
-}
-
-[data-theme="light"] .info-action { 
-    background: var(--orange-dim); 
-    border-color: rgba(255,123,31,0.3); 
-}
-
-[data-theme="dark"] .info-action { 
-    background: var(--lime-dim); 
-    border-color: rgba(200,255,0,0.25); 
 }
 
 /* ── FABs ───────────────────────────────────────────────────────────────── */
@@ -758,18 +635,11 @@ h2 {
     justify-content: center; 
     box-shadow: 0 4px 16px var(--shadow2); 
     color: var(--text); 
-    transition: transform 0.2s, box-shadow 0.2s; 
-    font-family: 'Fredoka', sans-serif; 
-    font-weight: 700; 
+    transition: transform 0.2s; 
 }
 
 .fab:hover { 
-    transform: scale(1.12); 
-    box-shadow: 0 6px 22px var(--shadow2); 
-}
-
-.fab-theme { 
-    font-size: 1.3rem; 
+    transform: scale(1.1); 
 }
 
 /* ── Modals ─────────────────────────────────────────────────────────────── */
@@ -790,13 +660,13 @@ h2 {
     border: 2px solid var(--modal-border); 
     border-radius: 28px; 
     width: 100%; 
-    max-width: 500px;
+    max-width: 420px;
     max-height: 90vh; 
     overflow-y: auto; 
     padding: 30px; 
     position: relative; 
     box-shadow: 0 40px 100px rgba(0,0,0,0.4); 
-    animation: popIn 0.3s cubic-bezier(0.22,1,0.36,1); 
+    animation: popIn 0.3s; 
 }
 
 .modal-card::before { 
@@ -821,17 +691,14 @@ h2 {
     border: 2px solid var(--border); 
     color: var(--soft); 
     cursor: pointer; 
-    font-size: 1rem; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    transition: background 0.15s, color 0.15s; 
 }
 
 .modal-close:hover { 
     background: var(--red-dim); 
     color: var(--red); 
-    border-color: var(--red); 
 }
 
 /* ── Lang picker ────────────────────────────────────────────────────────── */
@@ -842,20 +709,18 @@ h2 {
 }
 
 .lang-opt { 
-    padding: 14px 8px; 
+    padding: 12px 8px; 
     border-radius: 16px; 
     border: 2px solid var(--border-hi); 
     background: var(--surface2); 
     cursor: pointer; 
     text-align: center; 
     transition: all 0.18s; 
-    user-select: none; 
 }
 
 .lang-opt:hover { 
     border-color: var(--action); 
     background: var(--orange-dim); 
-    transform: translateY(-2px); 
 }
 
 .lang-opt.sel { 
@@ -864,15 +729,9 @@ h2 {
     box-shadow: 0 0 0 3px var(--action-shadow); 
 }
 
-[data-theme="dark"] .lang-opt:hover { 
-    border-color: var(--lime); 
-    background: var(--lime-dim); 
-}
-
 [data-theme="dark"] .lang-opt.sel { 
     border-color: var(--lime); 
     background: var(--lime-dim); 
-    box-shadow: 0 0 0 3px rgba(200,255,0,0.12); 
 }
 
 .lang-flag { 
@@ -882,500 +741,10 @@ h2 {
 }
 
 .lang-name { 
-    font-weight: 700; 
-    font-size: 0.88rem; 
+    font-weight: 600; 
+    font-size: 0.85rem; 
     color: var(--text); 
     display: block; 
-}
-
-.lang-code { 
-    font-size: 0.66rem; 
-    text-transform: uppercase; 
-    letter-spacing: 0.07em; 
-    color: var(--muted); 
-    display: block; 
-    margin-top: 2px; 
-}
-
-/* ── Active badge ───────────────────────────────────────────────────────── */
-.active-badge { 
-    font-size: 0.62rem; 
-    padding: 3px 10px; 
-    border-radius: 50px; 
-    background: var(--action); 
-    color: var(--action-text); 
-    font-weight: 700; 
-    letter-spacing: 0.06em; 
-    text-transform: uppercase; 
-}
-
-/* ── Word pill ──────────────────────────────────────────────────────────── */
-.word-pill { 
-    display: inline-flex; 
-    align-items: center; 
-    gap: 5px; 
-    padding: 4px 14px; 
-    border-radius: 50px; 
-    background: var(--green-dim); 
-    border: 2px solid rgba(0,201,110,0.35); 
-    font-size: 0.8rem; 
-    font-weight: 700; 
-    color: var(--green); 
-    letter-spacing: 0.03em; 
-}
-
-[data-theme="dark"] .word-pill { 
-    background: var(--lime-dim); 
-    border-color: rgba(200,255,0,0.3); 
-    color: var(--lime); 
-}
-
-/* ── Test row ───────────────────────────────────────────────────────────── */
-.test-row { 
-    background: var(--surface2); 
-    border: 2px solid var(--border); 
-    border-radius: 16px; 
-    padding: 14px; 
-    margin-bottom: 8px; 
-}
-
-/* ── Spinner ────────────────────────────────────────────────────────────── */
-.spinner { 
-    width: 22px; 
-    height: 22px; 
-    border: 3px solid var(--border); 
-    border-top-color: var(--action); 
-    border-radius: 50%; 
-    animation: spin 0.8s linear infinite; 
-    display: inline-block; 
-    vertical-align: middle; 
-    margin-right: 8px; 
-}
-
-@keyframes spin { 
-    to { transform: rotate(360deg); } 
-}
-
-/* ── Confetti ───────────────────────────────────────────────────────────── */
-#confettiCanvas { 
-    position: fixed; 
-    inset: 0; 
-    pointer-events: none; 
-    z-index: 1500; 
-}
-
-/* ── Streak pop ─────────────────────────────────────────────────────────── */
-@keyframes streakPop { 
-    0% { transform: scale(1); } 
-    40% { transform: scale(1.7); } 
-    70% { transform: scale(0.88); } 
-    100% { transform: scale(1); } 
-}
-
-.streak-pop { 
-    animation: streakPop 0.5s cubic-bezier(0.36,0.07,0.19,0.97); 
-}
-
-/* ── Empty states ───────────────────────────────────────────────────────── */
-.empty-state { 
-    text-align: center; 
-    padding: 36px 20px; 
-}
-
-.empty-state-icon { 
-    font-size: 3.8rem; 
-    display: block; 
-    margin-bottom: 12px; 
-    animation: wobble 3s ease-in-out infinite; 
-}
-
-@keyframes wobble { 
-    0%, 100% { transform: rotate(-5deg); } 
-    50% { transform: rotate(5deg); } 
-}
-
-.empty-state-title { 
-    font-weight: 700; 
-    font-size: 1.1rem; 
-    margin-bottom: 6px; 
-}
-
-.empty-state-msg { 
-    color: var(--muted); 
-    font-size: 0.92rem; 
-    line-height: 1.6; 
-}
-
-/* ── Rainbow separator ──────────────────────────────────────────────────── */
-.sep { 
-    height: 3px; 
-    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow), var(--green), var(--teal), var(--violet)); 
-    margin: 20px 0; 
-    border-radius: 3px; 
-    opacity: 0.4; 
-}
-
-/* ── Animations ─────────────────────────────────────────────────────────── */
-@keyframes fadeUp { 
-    from { opacity: 0; transform: translateY(18px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
-
-@keyframes pop { 
-    0% { transform: scale(0.82); opacity: 0; } 
-    60% { transform: scale(1.06); } 
-    100% { transform: scale(1); opacity: 1; } 
-}
-
-@keyframes popIn { 
-    0% { transform: scale(0.88) translateY(20px); opacity: 0; } 
-    100% { transform: scale(1) translateY(0); opacity: 1; } 
-}
-
-.pop { 
-    animation: pop 0.38s cubic-bezier(0.22,1,0.36,1); 
-}
-
-/* ── Enhanced Landing Page Styles ───────────────────────────────────────── */
-.landing-hero {
-    text-align: center;
-    padding: 30px 0 40px;
-    animation: fadeIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.landing-features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin: 30px 0;
-}
-
-@media (max-width: 560px) {
-    .landing-features {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-}
-
-.feature-card {
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: 20px;
-    padding: 20px 15px;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-    animation: slideUp 0.5s ease-out;
-    animation-fill-mode: both;
-}
-
-.feature-card:nth-child(1) { animation-delay: 0.1s; }
-.feature-card:nth-child(2) { animation-delay: 0.2s; }
-.feature-card:nth-child(3) { animation-delay: 0.3s; }
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--shadow);
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    display: block;
-}
-
-.feature-title {
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: var(--action);
-}
-
-.feature-desc {
-    font-size: 0.85rem;
-    color: var(--soft);
-    line-height: 1.4;
-}
-
-.cta-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 30px;
-}
-
-.cta-primary {
-    background: var(--action);
-    color: var(--action-text);
-    border: none;
-    border-radius: 60px;
-    padding: 18px 24px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 8px 20px var(--action-shadow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-}
-
-.cta-primary:hover:not(:disabled) {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px var(--action-glow);
-}
-
-.cta-primary:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.cta-secondary {
-    background: var(--surface2);
-    color: var(--text);
-    border: 2px solid var(--border-hi);
-    border-radius: 60px;
-    padding: 14px 20px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-}
-
-.cta-secondary:hover {
-    border-color: var(--action);
-    transform: translateY(-2px);
-}
-
-.testimonial {
-    margin-top: 30px;
-    padding: 20px;
-    background: var(--surface2);
-    border-radius: 16px;
-    border: 2px solid var(--border);
-    font-style: italic;
-    color: var(--soft);
-    position: relative;
-}
-
-.testimonial::before {
-    content: '"';
-    font-size: 4rem;
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    color: var(--action);
-    opacity: 0.3;
-    font-family: serif;
-}
-
-/* ── Navigation Bar ─────────────────────────────────────────────────────── */
-.nav-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 0;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--border);
-}
-
-.nav-logo {
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: var(--action);
-}
-
-.nav-links {
-    display: flex;
-    gap: 10px;
-}
-
-.nav-link {
-    padding: 8px 12px;
-    border-radius: 30px;
-    background: var(--surface2);
-    border: 2px solid var(--border);
-    color: var(--text);
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.nav-link:hover {
-    border-color: var(--action);
-    background: var(--orange-dim);
-}
-
-[data-theme="dark"] .nav-link:hover {
-    background: var(--lime-dim);
-}
-
-.nav-link.exit-link {
-    background: var(--red-dim);
-    border-color: var(--red);
-    color: var(--red);
-}
-
-.nav-link.exit-link:hover {
-    background: var(--red);
-    color: white;
-}
-
-/* ── Exit Button Fixed Position ─────────────────────────────────────────── */
-.exit-fab {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2px solid var(--border-hi);
-    color: var(--soft);
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px var(--shadow);
-}
-
-.exit-fab:hover {
-    background: var(--red-dim);
-    color: var(--red);
-    border-color: var(--red);
-    transform: scale(1.1);
-}
-
-/* ── Enhanced Dictionary Styles ─────────────────────────────────────────── */
-.dict-box {
-    background: var(--violet-dim);
-    border: 2px solid rgba(139,92,246,0.25);
-    border-radius: 18px;
-    padding: 18px;
-    margin-top: 12px;
-}
-
-.dict-pos { 
-    font-size: 0.72rem; 
-    font-weight: 700; 
-    letter-spacing: 0.07em; 
-    text-transform: uppercase; 
-    color: var(--violet); 
-    margin-bottom: 6px; 
-}
-
-.dict-def { 
-    font-size: 1rem; 
-    line-height: 1.65; 
-    color: var(--text); 
-    padding-left: 14px; 
-    border-left: 4px solid var(--violet); 
-    margin-bottom: 10px; 
-    font-weight: 500; 
-}
-
-.dict-ex { 
-    font-style: italic; 
-    color: var(--soft); 
-    font-size: 0.92rem; 
-    padding: 10px 14px; 
-    border-radius: 12px; 
-    background: rgba(139,92,246,0.08); 
-}
-
-.dict-error { 
-    background: var(--red-dim); 
-    border-color: rgba(255,61,90,0.3); 
-}
-
-.dict-enhanced {
-    background: var(--violet-dim);
-    border: 3px solid var(--violet);
-    border-radius: 20px;
-    padding: 20px;
-    margin-top: 15px;
-    animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.dict-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    color: var(--violet);
-    font-weight: 700;
-}
-
-.dict-pronunciation {
-    background: var(--surface);
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    color: var(--soft);
-    margin-bottom: 10px;
-    display: inline-block;
-}
-
-.dict-synonyms {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 2px dashed var(--violet);
-}
-
-.dict-synonym-tag {
-    display: inline-block;
-    background: var(--surface);
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin: 3px;
-    font-size: 0.8rem;
-    color: var(--violet);
-}
-
-.dict-loading {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 15px;
-    background: var(--surface);
-    border-radius: 12px;
 }
 
 /* ── Timer Styles ───────────────────────────────────────────────────────── */
@@ -1395,7 +764,7 @@ h2 {
 
 .timer-option {
     flex: 1;
-    padding: 12px;
+    padding: 10px;
     border-radius: 30px;
     border: 2px solid var(--border-hi);
     background: var(--surface2);
@@ -1403,6 +772,7 @@ h2 {
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
+    font-size: 0.9rem;
 }
 
 .timer-option:hover {
@@ -1446,7 +816,7 @@ h2 {
 
 .timer-display {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: var(--action);
     margin: 15px 0;
@@ -1465,158 +835,38 @@ h2 {
     50% { opacity: 0.5; }
 }
 
-/* ── Save Indicator ─────────────────────────────────────────────────────── */
-.save-indicator {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    background: var(--green);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    z-index: 1000;
-    animation: slideInRight 0.3s ease-out;
-    box-shadow: 0 4px 12px var(--shadow);
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* ── Empty State Enhanced ───────────────────────────────────────────────── */
-.empty-state-enhanced {
-    text-align: center;
-    padding: 40px 20px;
-    background: var(--surface2);
-    border-radius: 24px;
-    border: 3px dashed var(--border-hi);
-    margin: 20px 0;
-}
-
-.empty-state-icon-large {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.empty-state-title-large {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--text);
-}
-
-.empty-state-message {
-    color: var(--soft);
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-/* ── Quick Actions ──────────────────────────────────────────────────────── */
-.quick-actions {
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
-    flex-wrap: wrap;
-}
-
-.quick-action-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 12px;
-    border-radius: 16px;
-    background: var(--surface2);
-    border: 2px solid var(--border);
-    color: var(--text);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-.quick-action-btn:hover {
-    border-color: var(--action);
-    transform: translateY(-2px);
-}
-
-.quick-action-btn.danger:hover {
-    border-color: var(--red);
-    background: var(--red-dim);
-}
-
 /* ── Results Page ───────────────────────────────────────────────────────── */
 .score-hero {
     text-align: center;
-    padding: 36px 20px;
+    padding: 30px 20px;
     border-radius: 22px;
     border: 2px solid var(--border);
     background: var(--surface);
     margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 24px var(--shadow);
-}
-
-.score-hero::before { 
-    content: ''; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    height: 5px; 
-    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow), var(--green), var(--teal), var(--violet)); 
 }
 
 .score-big { 
-    font-family: 'Fredoka', sans-serif; 
-    font-size: 5rem; 
+    font-size: 4rem; 
     font-weight: 700; 
     color: var(--action); 
     line-height: 1; 
-    text-shadow: 0 0 30px var(--action-shadow); 
 }
 
 .score-pct { 
-    font-family: 'Fredoka', sans-serif; 
-    font-size: 1.6rem; 
+    font-size: 1.3rem; 
     color: var(--soft); 
     margin-top: 4px; 
 }
 
 .rword { 
-    padding: 10px 16px; 
+    padding: 8px 14px; 
     border-radius: 50px; 
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
     font-weight: 600; 
-    font-size: 0.92rem; 
+    font-size: 0.9rem; 
     text-transform: capitalize; 
-    transition: transform 0.15s; 
-}
-
-.rword:hover { 
-    transform: scale(1.02); 
 }
 
 .rw-ok { 
@@ -1635,11 +885,7 @@ h2 {
 .row { 
     display: flex; 
     align-items: center; 
-}
-
-.col { 
-    display: flex; 
-    flex-direction: column; 
+    gap: 10px;
 }
 
 .jb { 
@@ -1660,16 +906,6 @@ h2 {
     gap: 10px; 
 }
 
-@media(max-width:440px) { 
-    .grid2 { 
-        grid-template-columns: 1fr; 
-    } 
-}
-
-.mb1 { 
-    margin-bottom: 4px; 
-}
-
 .mb2 { 
     margin-bottom: 8px; 
 }
@@ -1686,56 +922,149 @@ h2 {
     margin-bottom: 24px; 
 }
 
-.mt2 { 
-    margin-top: 8px; 
-}
-
 .mt3 { 
     margin-top: 12px; 
-}
-
-.mt4 { 
-    margin-top: 16px; 
 }
 
 .tc { 
     text-align: center; 
 }
 
-.f700 { 
-    font-weight: 700; 
-}
-
 .fs-sm { 
-    font-size: 0.84rem; 
+    font-size: 0.85rem; 
 }
 
 .fs-xs { 
-    font-size: 0.72rem; 
-    letter-spacing: 0.06em; 
+    font-size: 0.75rem; 
     text-transform: uppercase; 
-    font-weight: 600; 
+    color: var(--muted); 
 }
 
 .soft { 
     color: var(--soft); 
 }
 
-.muted { 
-    color: var(--muted); 
-}
-
 .lbadge { 
-    padding: 2px 9px; 
+    padding: 2px 8px; 
     border-radius: 50px; 
     font-size: 0.65rem; 
-    font-weight: 700; 
-    text-transform: uppercase; 
+    font-weight: 600; 
     background: rgba(0,0,0,0.1); 
 }
 
-[data-theme="dark"] .lbadge { 
-    background: rgba(255,255,255,0.1); 
+.sep { 
+    height: 2px; 
+    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow)); 
+    margin: 20px 0; 
+    opacity: 0.3; 
+}
+
+/* ── Animations ─────────────────────────────────────────────────────────── */
+@keyframes fadeUp { 
+    from { opacity: 0; transform: translateY(18px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+@keyframes popIn { 
+    0% { transform: scale(0.9); opacity: 0; } 
+    100% { transform: scale(1); opacity: 1; } 
+}
+
+.pop { 
+    animation: popIn 0.3s; 
+}
+
+/* ── Navigation Bar ─────────────────────────────────────────────────────── */
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+}
+
+.nav-logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--action);
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-link {
+    padding: 6px 12px;
+    border-radius: 30px;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    border-color: var(--action);
+}
+
+.nav-link.exit-link {
+    background: var(--red-dim);
+    border-color: var(--red);
+    color: var(--red);
+}
+
+/* ── Exit Button ────────────────────────────────────────────────────────── */
+.exit-fab {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--border-hi);
+    color: var(--soft);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.exit-fab:hover {
+    background: var(--red-dim);
+    color: var(--red);
+    border-color: var(--red);
+}
+
+/* ── Save Indicator ─────────────────────────────────────────────────────── */
+.save-indicator {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: var(--green);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 1000;
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
 }
 </style>
 </head>
@@ -1745,7 +1074,7 @@ h2 {
 
 <div class="fab-row">
     <button class="fab" id="fabHelp" title="Help">?</button>
-    <button class="fab fab-theme" id="fabTheme" title="Toggle dark/light mode">🌙</button>
+    <button class="fab fab-theme" id="fabTheme" title="Toggle theme">🌙</button>
 </div>
 
 <!-- Save Indicator -->
@@ -1767,11 +1096,11 @@ h2 {
         <div class="mb6">
             <div class="fs-xs muted mb3">Dictionary Language</div>
             <div class="lang-picker" id="langPicker">
-                <div class="lang-opt sel" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span><span class="lang-code">EN</span></div>
-                <div class="lang-opt" data-lang="af"><span class="lang-flag">🇿🇦</span><span class="lang-name">Afrikaans</span><span class="lang-code">AF</span></div>
-                <div class="lang-opt" data-lang="zu"><span class="lang-flag">🇿🇦</span><span class="lang-name">IsiZulu</span><span class="lang-code">ZU</span></div>
-                <div class="lang-opt" data-lang="es"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span><span class="lang-code">ES</span></div>
-                <div class="lang-opt" data-lang="fr"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span><span class="lang-code">FR</span></div>
+                <div class="lang-opt sel" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span></div>
+                <div class="lang-opt" data-lang="af"><span class="lang-flag">🇿🇦</span><span class="lang-name">Afrikaans</span></div>
+                <div class="lang-opt" data-lang="zu"><span class="lang-flag">🇿🇦</span><span class="lang-name">IsiZulu</span></div>
+                <div class="lang-opt" data-lang="es"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span></div>
+                <div class="lang-opt" data-lang="fr"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span></div>
             </div>
         </div>
         <button class="btn btn-action btn-lg w-full" id="confirmAddList">Create List 🎉</button>
@@ -1790,11 +1119,11 @@ h2 {
         <div class="mb6">
             <div class="fs-xs muted mb3">Dictionary Language</div>
             <div class="lang-picker" id="editLangPicker">
-                <div class="lang-opt" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span><span class="lang-code">EN</span></div>
-                <div class="lang-opt" data-lang="af"><span class="lang-flag">🇿🇦</span><span class="lang-name">Afrikaans</span><span class="lang-code">AF</span></div>
-                <div class="lang-opt" data-lang="zu"><span class="lang-flag">🇿🇦</span><span class="lang-name">IsiZulu</span><span class="lang-code">ZU</span></div>
-                <div class="lang-opt" data-lang="es"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span><span class="lang-code">ES</span></div>
-                <div class="lang-opt" data-lang="fr"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span><span class="lang-code">FR</span></div>
+                <div class="lang-opt" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span></div>
+                <div class="lang-opt" data-lang="af"><span class="lang-flag">🇿🇦</span><span class="lang-name">Afrikaans</span></div>
+                <div class="lang-opt" data-lang="zu"><span class="lang-flag">🇿🇦</span><span class="lang-name">IsiZulu</span></div>
+                <div class="lang-opt" data-lang="es"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span></div>
+                <div class="lang-opt" data-lang="fr"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span></div>
             </div>
         </div>
         <button class="btn btn-violet btn-lg w-full" id="confirmEditList">Save Changes ✅</button>
@@ -1805,7 +1134,7 @@ h2 {
 <div class="modal-bg" id="timerModal" style="display:none">
     <div class="modal-card">
         <button class="modal-close" id="timerModalClose">✕</button>
-        <h2 style="font-size:1.3rem;margin-bottom:20px;color:var(--teal)">⏱️ Test Timer Settings</h2>
+        <h2 style="font-size:1.3rem;margin-bottom:20px;color:var(--teal)">⏱️ Timer Settings</h2>
         
         <div class="timer-section">
             <div class="timer-toggle" id="timerToggle">
@@ -1826,12 +1155,11 @@ h2 {
             </div>
             
             <div id="timerDisplay" class="timer-display">00:30</div>
-            <div id="timerWarning" class="timer-warning" style="display: none;">⚠️ Time is running out!</div>
         </div>
         
-        <div class="grid2 mt4">
+        <div class="grid2 mt3">
             <button class="btn btn-ghost" id="cancelTimerBtn">Cancel</button>
-            <button class="btn btn-action" id="applyTimerBtn">Apply Settings</button>
+            <button class="btn btn-action" id="applyTimerBtn">Apply</button>
         </div>
     </div>
 </div>
@@ -1840,37 +1168,12 @@ h2 {
 <div class="modal-bg" id="helpModal" style="display:none">
     <div class="modal-card">
         <button class="modal-close" id="helpClose">✕</button>
-        <h2 style="font-size:1.3rem;margin-bottom:20px;color:var(--teal)">🌟 Welcome to Spello Pro!</h2>
-        
-        <div class="mb4">
-            <div class="feature-card" style="margin-bottom:15px;">
-                <span class="feature-icon">📝</span>
-                <div class="feature-title">1. Create a List</div>
-                <div class="feature-desc">Tap "New List" and choose your language</div>
-            </div>
-            
-            <div class="feature-card" style="margin-bottom:15px;">
-                <span class="feature-icon">➕</span>
-                <div class="feature-title">2. Add Words</div>
-                <div class="feature-desc">Type words you want to practice</div>
-            </div>
-            
-            <div class="feature-card" style="margin-bottom:15px;">
-                <span class="feature-icon">🎯</span>
-                <div class="feature-title">3. Start Test</div>
-                <div class="feature-desc">Choose timed or untimed practice</div>
-            </div>
-            
-            <div class="feature-card" style="margin-bottom:15px;">
-                <span class="feature-icon">📖</span>
-                <div class="feature-title">4. Use Dictionary</div>
-                <div class="feature-desc">Get definitions in multiple languages</div>
-            </div>
-            
-            <div class="info-box info-teal mt4">
-                <strong>💡 Pro Tip:</strong> Use timed tests to challenge yourself and track your progress in the Parent Dashboard!
-            </div>
-        </div>
+        <h2 style="font-size:1.3rem;margin-bottom:20px;color:var(--teal)">🌟 How to Use</h2>
+        <div class="mb3">• Create lists with different languages</div>
+        <div class="mb3">• Add words you want to practice</div>
+        <div class="mb3">• Start a test and listen to each word</div>
+        <div class="mb3">• Use dictionary for hints</div>
+        <div class="mb3">• Track progress in Parent Dashboard</div>
     </div>
 </div>
 
@@ -1922,7 +1225,7 @@ function esc(s) {
 }
 
 function curList() { 
-    return S.lists[S.listIdx] || { name: '', lang: 'en', words: [] }; 
+    return S.lists[S.listIdx] || { name: 'My First Words', lang: 'en', words: [] }; 
 }
 
 function curWords() { 
@@ -1931,10 +1234,6 @@ function curWords() {
 
 var LANG_LABEL = { en: 'English', af: 'Afrikaans', zu: 'IsiZulu', es: 'Spanish', fr: 'French' };
 var LANG_FLAG = { en: '🇬🇧', af: '🇿🇦', zu: '🇿🇦', es: '🇪🇸', fr: '🇫🇷' };
-
-var CHIP_BG = ['rgba(255,123,31,0.13)', 'rgba(255,79,163,0.12)', 'rgba(0,184,212,0.12)', 'rgba(139,92,246,0.12)', 'rgba(0,201,110,0.12)', 'rgba(255,200,0,0.15)'];
-var CHIP_BD = ['rgba(255,123,31,0.35)', 'rgba(255,79,163,0.3)', 'rgba(0,184,212,0.3)', 'rgba(139,92,246,0.3)', 'rgba(0,201,110,0.3)', 'rgba(255,200,0,0.38)'];
-var CHIP_TEXT = ['var(--orange)', 'var(--pink)', 'var(--teal)', 'var(--violet)', 'var(--green)', 'var(--yellow)'];
 
 // ── Theme Management ───────────────────────────────────────────────────────
 var currentTheme = localStorage.getItem('sp_theme') || 'light';
@@ -1959,7 +1258,7 @@ function showSaveIndicator() {
     indicator.style.display = 'flex';
     setTimeout(function() {
         indicator.style.display = 'none';
-    }, 2000);
+    }, 1500);
 }
 
 // ── Persistence ────────────────────────────────────────────────────────────
@@ -2008,13 +1307,9 @@ function save() {
         localStorage.setItem('sp_best', S.bestStreak);
         localStorage.setItem('sp_total', S.totalWords);
         localStorage.setItem('sp_res', JSON.stringify(S.results));
-        
-        // Save timer settings
         localStorage.setItem('sp_timer_mode', S.timerMode);
         localStorage.setItem('sp_timer_sec', S.timerSecondsPerWord);
         localStorage.setItem('sp_timer_min', S.timerTotalMinutes);
-        
-        // Save dictionary cache
         localStorage.setItem('sp_dict_cache', JSON.stringify(S.dictCache));
         
         showSaveIndicator();
@@ -2032,11 +1327,11 @@ function pickVoice(lang) {
     if (!vv.length) return;
     
     var langMap = {
-        'en': ['en-US', 'en-GB', 'en-ZA', 'en-AU', 'en'],
-        'af': ['af-ZA', 'af'],
-        'zu': ['zu-ZA', 'zu'],
-        'es': ['es-ES', 'es-MX', 'es'],
-        'fr': ['fr-FR', 'fr-CA', 'fr']
+        'en': ['en-US', 'en-GB', 'en-ZA'],
+        'af': ['af-ZA'],
+        'zu': ['zu-ZA'],
+        'es': ['es-ES'],
+        'fr': ['fr-FR']
     };
     
     var possibleLangs = langMap[lang] || [lang];
@@ -2060,24 +1355,15 @@ if (window.speechSynthesis) {
     };
 }
 
-function speak(text, rate) {
+function speak(text) {
     if (!window.speechSynthesis) return;
-    
     window.speechSynthesis.cancel();
-    
     var u = new SpeechSynthesisUtterance(text);
     if (voice) u.voice = voice;
-    u.rate = rate || 0.75;
-    u.pitch = 1;
-    u.volume = 1;
-    
+    u.rate = 0.75;
     setTimeout(function() { 
-        try {
-            window.speechSynthesis.speak(u); 
-        } catch (e) {
-            console.warn('Speech error:', e);
-        }
-    }, 60);
+        try { window.speechSynthesis.speak(u); } catch (e) {} 
+    }, 50);
 }
 
 // ── Dictionary Functions ───────────────────────────────────────────────────
@@ -2099,64 +1385,31 @@ function fetchDef(word, lang, cb) {
     if (url) {
         fetch(url + encodeURIComponent(word.toLowerCase()))
             .then(function(r) { 
-                if (!r.ok) throw new Error('HTTP ' + r.status); 
+                if (!r.ok) throw new Error(); 
                 return r.json(); 
             })
             .then(function(data) {
                 var entry = data[0];
-                if (!entry || !entry.meanings || !entry.meanings.length) {
-                    var result = { 
-                        definition: 'No definition found for "' + word + '".', 
-                        example: '', 
-                        partOfSpeech: '', 
-                        pronunciation: '',
-                        synonyms: [],
-                        ok: true 
-                    };
-                    S.dictCache[cacheKey] = result;
-                    cb(result);
-                    return;
-                }
+                var def = '', example = '';
                 
-                var def = '', example = '', pos = '', pronunciation = '', synonyms = [];
-                
-                if (entry.phonetic) {
-                    pronunciation = entry.phonetic;
-                } else if (entry.phonetics && entry.phonetics.length) {
-                    pronunciation = entry.phonetics[0].text || '';
-                }
-                
-                for (var m = 0; m < entry.meanings.length; m++) {
-                    var meaning = entry.meanings[m];
-                    
-                    if (meaning.synonyms && meaning.synonyms.length) {
-                        synonyms = synonyms.concat(meaning.synonyms.slice(0, 3));
-                    }
-                    
-                    for (var d = 0; d < meaning.definitions.length; d++) {
-                        var item = meaning.definitions[d];
-                        if (item.definition) {
-                            if (!def) { 
-                                def = item.definition; 
-                                pos = meaning.partOfSpeech || ''; 
+                if (entry && entry.meanings && entry.meanings.length) {
+                    for (var m = 0; m < entry.meanings.length; m++) {
+                        var meaning = entry.meanings[m];
+                        for (var d = 0; d < meaning.definitions.length; d++) {
+                            var item = meaning.definitions[d];
+                            if (item.definition) {
+                                def = item.definition;
                                 example = item.example || '';
-                            }
-                            if (item.example) { 
-                                def = item.definition; 
-                                pos = meaning.partOfSpeech || ''; 
-                                example = item.example; 
-                                break; 
+                                break;
                             }
                         }
+                        if (def) break;
                     }
                 }
                 
                 var result = {
                     definition: def || 'No definition found.',
                     example: example,
-                    partOfSpeech: pos,
-                    pronunciation: pronunciation,
-                    synonyms: synonyms.slice(0, 5),
                     ok: true
                 };
                 
@@ -2164,43 +1417,16 @@ function fetchDef(word, lang, cb) {
                 cb(result);
                 save();
             })
-            .catch(function(err) {
-                console.warn('Dictionary API error:', err);
-                var result = {
-                    definition: 'Could not load definition. Please check your internet connection.',
-                    example: '',
-                    partOfSpeech: '',
-                    pronunciation: '',
-                    synonyms: [],
-                    ok: false
-                };
-                cb(result);
+            .catch(function() {
+                cb({ definition: 'Could not load definition.', example: '', ok: false });
             });
     } else {
         var offlineDict = {
-            'af': { 
-                definition: "Afrikaans woordeboek is nie aanlyn beskikbaar nie. Gebruik die woord in 'n sin om te oefen.", 
-                example: "Die leerder het die woord korrek gespel.", 
-                partOfSpeech: '', 
-                ok: true 
-            },
-            'zu': { 
-                definition: "Isichazamazwi se-IsiZulu asitholakali ku-inthanethi. Zama ukulisebenzisa igama emusho.", 
-                example: "Umfundi ubhale igama ngendlela efanele.", 
-                partOfSpeech: '', 
-                ok: true 
-            }
+            'af': { definition: "Afrikaans woord", example: "", ok: true },
+            'zu': { definition: "IsiZulu word", example: "", ok: true }
         };
         
-        var result = offlineDict[lang] || {
-            definition: 'Dictionary not available for this language.',
-            example: '',
-            partOfSpeech: '',
-            ok: true
-        };
-        
-        S.dictCache[cacheKey] = result;
-        cb(result);
+        cb(offlineDict[lang] || { definition: 'Dictionary not available.', example: '', ok: true });
     }
 }
 
@@ -2212,12 +1438,11 @@ function startTimer() {
     
     if (S.timerMode === 'timed') {
         S.timerRemaining = S.timerTotalMinutes * 60;
-    } else if (S.timerMode === 'countdown') {
+    } else {
         S.timerRemaining = S.timerSecondsPerWord;
     }
     
     S.timerWarningShown = false;
-    updateTimerDisplay();
     
     S.timerInterval = setInterval(function() {
         if (S.page !== 'playing') {
@@ -2226,14 +1451,6 @@ function startTimer() {
         }
         
         S.timerRemaining--;
-        updateTimerDisplay();
-        
-        if (S.timerRemaining <= 10 && !S.timerWarningShown) {
-            S.timerWarningShown = true;
-            var warning = g('timerWarning');
-            if (warning) warning.style.display = 'block';
-            speak('Hurry up! Time is running out!');
-        }
         
         if (S.timerRemaining <= 0) {
             if (S.timerMode === 'countdown') {
@@ -2243,11 +1460,9 @@ function startTimer() {
                     S.streak = 0;
                     render();
                 }
-            } else if (S.timerMode === 'timed') {
+            } else {
                 stopTimer();
-                if (S.page === 'playing') {
-                    endGame();
-                }
+                if (S.page === 'playing') endGame();
             }
         }
         
@@ -2262,26 +1477,26 @@ function stopTimer() {
     }
 }
 
-function updateTimerDisplay() {
-    var display = g('timerDisplay');
-    if (!display) return;
-    
-    var minutes = Math.floor(S.timerRemaining / 60);
-    var seconds = S.timerRemaining % 60;
-    display.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-}
-
 function openTimerModal() {
     var options = document.querySelectorAll('#timerToggle .timer-option');
     options.forEach(function(opt) {
         opt.classList.toggle('active', opt.getAttribute('data-mode') === S.timerMode);
     });
     
-    g('secondsPerWord').value = S.timerSecondsPerWord;
-    g('totalMinutes').value = S.timerTotalMinutes;
+    var secInput = g('secondsPerWord');
+    var minInput = g('totalMinutes');
+    if (secInput) secInput.value = S.timerSecondsPerWord;
+    if (minInput) minInput.value = S.timerTotalMinutes;
     
-    updateTimerDisplay();
-    g('timerModal').style.display = 'flex';
+    var display = g('timerDisplay');
+    if (display) {
+        var mins = Math.floor(S.timerSecondsPerWord / 60);
+        var secs = S.timerSecondsPerWord % 60;
+        display.textContent = mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
+    }
+    
+    var modal = g('timerModal');
+    if (modal) modal.style.display = 'flex';
 }
 
 function applyTimerSettings() {
@@ -2290,15 +1505,19 @@ function applyTimerSettings() {
         S.timerMode = activeOption.getAttribute('data-mode');
     }
     
-    S.timerSecondsPerWord = parseInt(g('secondsPerWord').value, 10) || 30;
-    S.timerTotalMinutes = parseInt(g('totalMinutes').value, 10) || 5;
+    var secInput = g('secondsPerWord');
+    var minInput = g('totalMinutes');
+    
+    if (secInput) S.timerSecondsPerWord = parseInt(secInput.value, 10) || 30;
+    if (minInput) S.timerTotalMinutes = parseInt(minInput.value, 10) || 5;
     
     save();
     closeTimerModal();
 }
 
 function closeTimerModal() {
-    g('timerModal').style.display = 'none';
+    var modal = g('timerModal');
+    if (modal) modal.style.display = 'none';
 }
 
 // ── List Management ────────────────────────────────────────────────────────
@@ -2312,25 +1531,35 @@ function setListIdx(i) {
 
 function openAddListModal() {
     pendingLang = 'en';
-    g('newListName').value = '';
+    var input = g('newListName');
+    if (input) input.value = '';
     setLangPicker('langPicker', 'en');
-    g('addListModal').style.display = 'flex';
-    setTimeout(function() { 
-        var n = g('newListName'); 
-        if (n) n.focus(); 
-    }, 60);
+    
+    var modal = g('addListModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(function() { 
+            var n = g('newListName'); 
+            if (n) n.focus(); 
+        }, 50);
+    }
 }
 
 function closeAddListModal() { 
-    g('addListModal').style.display = 'none'; 
+    var modal = g('addListModal');
+    if (modal) modal.style.display = 'none'; 
 }
 
 function confirmAddList() {
-    var name = (g('newListName').value || '').trim();
+    var input = g('newListName');
+    if (!input) return;
+    
+    var name = input.value.trim();
     if (!name) { 
-        g('newListName').focus(); 
+        input.focus(); 
         return; 
     }
+    
     S.lists.push({ name: name, lang: pendingLang, words: [] });
     S.listIdx = S.lists.length - 1;
     save();
@@ -2342,29 +1571,42 @@ function openEditListModal(i) {
     editingListIdx = i;
     var lst = S.lists[i];
     editPendingLang = lst.lang;
-    g('editListName').value = lst.name;
+    
+    var input = g('editListName');
+    if (input) input.value = lst.name;
+    
     setLangPicker('editLangPicker', lst.lang);
-    g('editListModal').style.display = 'flex';
-    setTimeout(function() { 
-        var n = g('editListName'); 
-        if (n) { 
-            n.focus(); 
-            n.select(); 
-        } 
-    }, 60);
+    
+    var modal = g('editListModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(function() { 
+            var n = g('editListName'); 
+            if (n) { 
+                n.focus(); 
+                n.select(); 
+            } 
+        }, 50);
+    }
 }
 
 function closeEditListModal() { 
-    g('editListModal').style.display = 'none'; 
+    var modal = g('editListModal');
+    if (modal) modal.style.display = 'none'; 
     editingListIdx = -1; 
 }
 
 function confirmEditList() {
-    var name = (g('editListName').value || '').trim();
+    var input = g('editListName');
+    if (!input) return;
+    
+    var name = input.value.trim();
     if (!name || editingListIdx < 0) return;
+    
     S.lists[editingListIdx].name = name;
     S.lists[editingListIdx].lang = editPendingLang;
     if (editingListIdx === S.listIdx) pickVoice(editPendingLang);
+    
     save();
     closeEditListModal();
     render();
@@ -2373,16 +1615,18 @@ function confirmEditList() {
 function setLangPicker(pickerId, lang) {
     var opts = document.querySelectorAll('#' + pickerId + ' .lang-opt');
     for (var i = 0; i < opts.length; i++) {
-        opts[i].classList.toggle('sel', opts[i].getAttribute('data-lang') === lang);
+        var isSel = opts[i].getAttribute('data-lang') === lang;
+        opts[i].classList.toggle('sel', isSel);
     }
 }
 
 function deleteList(i) {
     if (S.lists.length <= 1) {
-        alert('You need at least one list!\nCreate another list first if you want to delete this one. 😊');
+        alert('You need at least one list!');
         return;
     }
-    if (!confirm('Delete "' + S.lists[i].name + '"?\n\nAll words in this list will be removed. You can\'t undo this!')) return;
+    if (!confirm('Delete "' + S.lists[i].name + '"?')) return;
+    
     S.lists.splice(i, 1);
     if (S.listIdx >= S.lists.length) S.listIdx = S.lists.length - 1;
     save();
@@ -2392,11 +1636,13 @@ function deleteList(i) {
 function addWord() {
     var inp = g('wordinp');
     if (!inp) return;
+    
     var w = inp.value.trim().toLowerCase().replace(/[^a-z\-']/g, '');
     if (!w) { 
         inp.value = ''; 
         return; 
     }
+    
     var words = S.lists[S.listIdx].words;
     if (words.indexOf(w) === -1) { 
         words.push(w); 
@@ -2417,7 +1663,7 @@ function removeWord(i) {
 // ── Game Functions ─────────────────────────────────────────────────────────
 function startGame() {
     if (!curWords().length) { 
-        alert('Add some words to this list first! 📝'); 
+        alert('Add some words first!'); 
         return; 
     }
     
@@ -2442,7 +1688,7 @@ function startGame() {
     setTimeout(function() { 
         speakWord();
         startTimer();
-    }, 400);
+    }, 300);
 }
 
 function speakWord() { 
@@ -2461,15 +1707,12 @@ function showDefinition() {
         S.hintLoading = false;
         S.defError = !data.ok;
         render();
-        if (data.ok && data.definition) {
-            speak(data.definition);
-        }
+        if (data.ok && data.definition) speak(data.definition);
     });
 }
 
 function replayDef() { 
-    if (S.def && S.def.ok && S.def.definition) 
-        speak(S.def.definition); 
+    if (S.def && S.def.definition) speak(S.def.definition); 
 }
 
 function checkAnswer() {
@@ -2506,8 +1749,6 @@ function nextWord() {
         if (S.timerMode === 'countdown') {
             S.timerRemaining = S.timerSecondsPerWord;
             S.timerWarningShown = false;
-            var warning = g('timerWarning');
-            if (warning) warning.style.display = 'none';
         }
         
         render();
@@ -2530,8 +1771,7 @@ function endGame() {
         score: S.score, 
         total: words.length, 
         pct: pct, 
-        correct: S.correctSet.slice(),
-        timerMode: S.timerMode
+        correct: S.correctSet.slice()
     };
     
     S.results.push(result);
@@ -2559,7 +1799,7 @@ function practiceAgain() {
     setTimeout(function() { 
         speakWord();
         startTimer();
-    }, 400);
+    }, 300);
 }
 
 // ── Navigation ─────────────────────────────────────────────────────────────
@@ -2582,7 +1822,7 @@ function goParent() {
 }
 
 function clearAll() {
-    if (!confirm('Delete ALL lists and test history?\n\nThis cannot be undone! 🚨')) return;
+    if (!confirm('Delete ALL lists and test history?')) return;
     
     ['sp_lists', 'sp_li', 'sp_best', 'sp_total', 'sp_res', 'sp_dict_cache'].forEach(function(k) { 
         localStorage.removeItem(k); 
@@ -2602,19 +1842,16 @@ function clearAll() {
 
 function exportCSV() {
     if (!S.results.length) { 
-        alert('No results to export yet! 📊'); 
+        alert('No results to export!'); 
         return; 
     }
     
-    var rows = [['Date', 'List', 'Lang', 'Score', 'Percent', 'Timer Mode', 'Words']];
+    var rows = [['Date', 'List', 'Score', 'Words']];
     S.results.forEach(function(r) { 
         rows.push([
             new Date(r.date).toLocaleDateString(), 
             r.listName, 
-            r.lang, 
-            r.score + '/' + r.total, 
-            r.pct + '%',
-            r.timerMode || 'untimed',
+            r.score + '/' + r.total,
             r.words.join('; ')
         ]); 
     });
@@ -2627,7 +1864,7 @@ function exportCSV() {
     
     var a = document.createElement('a');
     a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-    a.download = 'spello-results-' + new Date().toISOString().slice(0, 10) + '.csv';
+    a.download = 'spello-results.csv';
     a.click();
 }
 
@@ -2639,19 +1876,18 @@ function launchConfetti() {
     canvas.height = window.innerHeight;
     var ctx = canvas.getContext('2d');
     var pieces = [];
-    var colors = ['#ff7b1f', '#ff4fa3', '#ffc800', '#00c96e', '#00b8d4', '#8b5cf6', '#ff3d5a', '#fff'];
+    var colors = ['#ff7b1f', '#ff4fa3', '#ffc800', '#00c96e', '#00b8d4', '#8b5cf6'];
     
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < 100; i++) {
         pieces.push({
             x: Math.random() * canvas.width,
-            y: -10 - Math.random() * 300,
-            r: 5 + Math.random() * 8,
+            y: -10,
+            r: 4 + Math.random() * 6,
             color: colors[Math.floor(Math.random() * colors.length)],
-            vx: (Math.random() - 0.5) * 8,
-            vy: 2 + Math.random() * 6,
+            vx: (Math.random() - 0.5) * 6,
+            vy: 2 + Math.random() * 5,
             rot: Math.random() * 360,
-            rotV: (Math.random() - 0.5) * 12,
-            shape: Math.random() > 0.4 ? 'rect' : 'circle'
+            rotV: (Math.random() - 0.5) * 10
         });
     }
     
@@ -2672,26 +1908,17 @@ function launchConfetti() {
             ctx.save();
             ctx.translate(p.x, p.y);
             ctx.rotate(p.rot * Math.PI / 180);
-            ctx.globalAlpha = Math.max(0, 1 - frame / 145);
+            ctx.globalAlpha = Math.max(0, 1 - frame / 100);
             ctx.fillStyle = p.color;
-            
-            if (p.shape === 'rect') {
-                ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.7);
-            } else {
-                ctx.beginPath();
-                ctx.arc(0, 0, p.r / 2, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            
+            ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r);
             ctx.restore();
         });
         
         frame++;
         
-        if (alive && frame < 160) {
+        if (alive && frame < 120) {
             requestAnimationFrame(draw);
         } else {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
             canvas.style.display = 'none';
         }
     }
@@ -2701,99 +1928,73 @@ function launchConfetti() {
 
 // ── Page Renderers ─────────────────────────────────────────────────────────
 function renderHome() {
-    var al = curList(), wc = al.words.length;
-    var last = S.results.length ? S.results[S.results.length - 1] : null;
+    var al = curList();
+    var wc = al.words.length;
     var langName = LANG_LABEL[al.lang] || al.lang;
     
     return `
-        <div class="landing-hero">
-            <span class="logo">Spello</span>
-            <span class="logo-sub">Master Your Spelling Skills</span>
-        </div>
+        <div class="logo">Spello</div>
+        <div class="logo-sub">Spelling Practice</div>
         
-        <div class="landing-features">
-            <div class="feature-card">
-                <span class="feature-icon">📚</span>
-                <div class="feature-title">Multiple Languages</div>
-                <div class="feature-desc">English, Afrikaans, Zulu, Spanish & French</div>
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-value">${S.bestStreak}</div>
+                <div class="stat-label">Best Streak</div>
             </div>
-            <div class="feature-card">
-                <span class="feature-icon">⏱️</span>
-                <div class="feature-title">Timed Tests</div>
-                <div class="feature-desc">Practice with or without time pressure</div>
+            <div class="stat-item">
+                <div class="stat-value">${S.totalWords}</div>
+                <div class="stat-label">Mastered</div>
             </div>
-            <div class="feature-card">
-                <span class="feature-icon">📖</span>
-                <div class="feature-title">Live Dictionary</div>
-                <div class="feature-desc">Definitions and pronunciations</div>
+            <div class="stat-item">
+                <div class="stat-value">${wc}</div>
+                <div class="stat-label">Ready</div>
             </div>
         </div>
         
-        <div class="stats-row mb4">
-            <div class="stat">
-                <span class="stat-n" style="color:var(--pink)">${S.bestStreak}</span>
-                <span class="stat-l">Best Streak 🔥</span>
-            </div>
-            <div class="stat">
-                <span class="stat-n" style="color:var(--green)">${S.totalWords}</span>
-                <span class="stat-l">Mastered 📚</span>
-            </div>
-            <div class="stat">
-                <span class="stat-n" style="color:var(--violet)">${S.results.length}</span>
-                <span class="stat-l">Tests Done</span>
-            </div>
-            <div class="stat">
-                <span class="stat-n" style="color:var(--teal)">${wc}</span>
-                <span class="stat-l">Words Ready 🎯</span>
+        <div class="active-list-preview">
+            <div class="active-list-name">${esc(al.name)}</div>
+            <div class="active-list-meta">
+                <span>${LANG_FLAG[al.lang] || '🇬🇧'} ${langName}</span>
+                <span>•</span>
+                <span>${wc} word${wc !== 1 ? 's' : ''}</span>
             </div>
         </div>
         
-        <div class="card">
-            <div class="info-box info-action mb4" style="cursor:pointer" id="activeListBanner">
-                <div class="row jb">
-                    <div>
-                        <div class="fs-xs muted mb1">Active List — ${langName}</div>
-                        <div style="font-weight:700;font-size:1.05rem;margin-bottom:7px;">${esc(al.name)}</div>
-                        <span class="word-pill">🎯 ${wc} word${wc !== 1 ? 's' : ''} ready</span>
-                    </div>
-                    <span style="font-size:1.6rem;color:var(--muted)">›</span>
+        <div class="home-menu">
+            <div class="home-menu-item" id="startBtn">
+                <span class="home-menu-icon">🚀</span>
+                <div class="home-menu-content">
+                    <div class="home-menu-title">Start Test</div>
+                    <div class="home-menu-desc">Practice your words</div>
                 </div>
+                <span class="home-menu-badge">→</span>
             </div>
             
-            ${wc === 0 ? `
-                <div class="empty-state-enhanced">
-                    <span class="empty-state-icon-large">✏️</span>
-                    <div class="empty-state-title-large">No Words Yet!</div>
-                    <p class="empty-state-message">Get started by adding words to your list in the Manage section.</p>
+            <div class="home-menu-item" id="manageBtn">
+                <span class="home-menu-icon">📋</span>
+                <div class="home-menu-content">
+                    <div class="home-menu-title">Manage Lists</div>
+                    <div class="home-menu-desc">Add, edit, or create lists</div>
                 </div>
-            ` : ''}
-            
-            ${last ? `
-                <div class="info-box info-teal mb4">
-                    <div class="fs-xs muted mb1">Last Test ✨</div>
-                    <div style="font-weight:700">${esc(last.listName)} — ${last.score}/${last.total} 
-                        <span style="color:${last.pct >= 80 ? 'var(--green)' : last.pct >= 60 ? 'var(--orange)' : 'var(--red)'};">(${last.pct}%)</span>
-                    </div>
-                </div>
-            ` : ''}
-            
-            <div class="cta-buttons">
-                <button class="cta-primary" id="startBtn" ${wc === 0 ? 'disabled' : ''}>
-                    <span>🚀</span> Start Spelling Test!
-                </button>
-                <button class="cta-secondary" id="manageBtn">
-                    <span>📋</span> Manage Word Lists
-                </button>
-                <button class="cta-secondary" id="timerSettingsBtn">
-                    <span>⏱️</span> Timer Settings
-                </button>
-                <button class="cta-secondary" id="parentBtn">
-                    <span>👨‍👩‍👧</span> Parent Dashboard
-                </button>
+                <span class="home-menu-badge">→</span>
             </div>
             
-            <div class="testimonial">
-                "The best way to practice spelling with multiple language support!"
+            <div class="home-menu-item" id="timerSettingsBtn">
+                <span class="home-menu-icon">⏱️</span>
+                <div class="home-menu-content">
+                    <div class="home-menu-title">Timer Settings</div>
+                    <div class="home-menu-desc">Set timed or untimed tests</div>
+                </div>
+                <span class="home-menu-badge">→</span>
+            </div>
+            
+            <div class="home-menu-item" id="parentBtn">
+                <span class="home-menu-icon">📊</span>
+                <div class="home-menu-content">
+                    <div class="home-menu-title">Parent Dashboard</div>
+                    <div class="home-menu-desc">View progress and results</div>
+                </div>
+                <span class="home-menu-badge">→</span>
             </div>
         </div>
     `;
@@ -2804,21 +2005,21 @@ function renderManage() {
     var listCardsHtml = '';
     
     for (var i = 0; i < S.lists.length; i++) {
-        var lst = S.lists[i], isActive = (i === S.listIdx), ci = i % CHIP_BG.length;
-        var cardStyle = isActive ? '' : 'background:' + CHIP_BG[ci] + ';border-color:' + CHIP_BD[ci] + ';';
+        var lst = S.lists[i];
+        var isActive = (i === S.listIdx);
         var badge = isActive ? '<span class="active-badge">ACTIVE</span>' : '';
-        var editBtn = '<button class="btn btn-icon btn-sm list-edit" data-li="' + i + '" title="Edit list" type="button" style="font-size:1.05rem;">✏️</button>';
-        var delBtn = S.lists.length > 1
-            ? '<button class="btn btn-danger btn-sm list-del" data-li="' + i + '" title="Delete list" type="button" style="padding:7px 11px;font-size:1rem;">🗑️</button>'
-            : '';
         
         listCardsHtml += `
-            <div class="list-card${isActive ? ' active' : ''}" data-li="${i}" style="${cardStyle}">
+            <div class="list-card${isActive ? ' active' : ''}" data-li="${i}">
                 <div class="list-card-body">
                     <div class="list-card-name">${esc(lst.name)}</div>
-                    <div class="list-card-meta">${LANG_FLAG[lst.lang] || ''} ${LANG_LABEL[lst.lang] || lst.lang} · ${lst.words.length} word${lst.words.length !== 1 ? 's' : ''}</div>
+                    <div class="list-card-meta">${LANG_FLAG[lst.lang] || ''} ${LANG_LABEL[lst.lang] || lst.lang} · ${lst.words.length} words</div>
                 </div>
-                <div class="list-card-actions">${badge}${editBtn}${delBtn}</div>
+                <div class="list-card-actions">
+                    ${badge}
+                    <button class="btn btn-icon btn-sm list-edit" data-li="${i}" style="padding:5px 10px;">✏️</button>
+                    ${S.lists.length > 1 ? '<button class="btn btn-danger btn-sm list-del" data-li="' + i + '" style="padding:5px 10px;">🗑️</button>' : ''}
+                </div>
             </div>
         `;
     }
@@ -2827,43 +2028,36 @@ function renderManage() {
     if (al.words.length) {
         var chips = '';
         for (var j = 0; j < al.words.length; j++) {
-            var ci2 = j % CHIP_BG.length;
             chips += `
-                <div class="wchip" style="background:${CHIP_BG[ci2]};border-color:${CHIP_BD[ci2]};">
-                    <span class="wname" style="color:${CHIP_TEXT[ci2]}">${esc(al.words[j])}</span>
-                    <button class="wdel" data-wi="${j}" title="Remove word">✕</button>
+                <div class="wchip">
+                    <span class="wname">${esc(al.words[j])}</span>
+                    <button class="wdel" data-wi="${j}">✕</button>
                 </div>
             `;
         }
         wordsHtml = `
-            <div class="mb6">
-                <div class="fs-xs muted mb3">${al.words.length} Word${al.words.length !== 1 ? 's' : ''} in "${esc(al.name)}"</div>
+            <div class="mb4">
+                <div class="fs-xs muted mb2">Words in "${esc(al.name)}"</div>
                 <div class="word-grid">${chips}</div>
             </div>
         `;
     } else {
-        wordsHtml = `
-            <div class="empty-state mb6">
-                <span class="empty-state-icon">✏️</span>
-                <div class="empty-state-title">No words yet!</div>
-                <p class="empty-state-msg">Type a word above and tap <strong>Add</strong> to build your list.</p>
-            </div>
-        `;
+        wordsHtml = '<div class="tc soft mb4">No words yet. Add some below!</div>';
     }
     
     return `
         <div class="nav-bar">
-            <div class="nav-logo">📋 Manage Lists</div>
+            <div class="nav-logo">📋 Lists</div>
             <div class="nav-links">
                 <button class="nav-link" id="homeBtn2">← Home</button>
-                <button class="nav-link exit-link" id="exitManageBtn">✕ Exit</button>
+                <button class="nav-link exit-link" id="exitManageBtn">✕</button>
             </div>
         </div>
         
         <div class="card">
-            <div class="row jb mb4">
-                <h2 style="font-size:1.2rem;">Your Word Lists</h2>
-                <button class="btn btn-action btn-sm" id="addListBtn">✨ New List</button>
+            <div class="row jb mb3">
+                <h2 style="font-size:1.2rem;">Your Lists</h2>
+                <button class="btn btn-action btn-sm" id="addListBtn">+ New</button>
             </div>
             
             <div class="col gap2 mb4" id="listCardContainer">
@@ -2872,121 +2066,83 @@ function renderManage() {
             
             <div class="sep"></div>
             
-            <div class="mb4">
-                <div class="fs-xs muted mb3">Add Word to "${esc(al.name)}" (${al.lang.toUpperCase()})</div>
-                <div class="row gap3">
-                    <input id="wordinp" class="word-inp" placeholder="Type a word…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-                    <button class="btn btn-action" id="addWordBtn">Add ➕</button>
+            <div class="mb3">
+                <div class="fs-xs muted mb2">Add Word to "${esc(al.name)}"</div>
+                <div class="row gap2">
+                    <input id="wordinp" class="word-inp" placeholder="Type a word…" />
+                    <button class="btn btn-action" id="addWordBtn">Add</button>
                 </div>
             </div>
             
             ${wordsHtml}
             
-            <div class="quick-actions">
-                <button class="quick-action-btn" id="startBtn2" ${al.words.length ? '' : 'disabled'}>
-                    <span>🚀</span> Start Test
-                </button>
-                <button class="quick-action-btn" id="timerSettingsBtn2">
-                    <span>⏱️</span> Timer
-                </button>
-            </div>
+            <button class="btn btn-action w-full" id="startBtn2" ${al.words.length ? '' : 'disabled'}>
+                🚀 Start Test
+            </button>
         </div>
     `;
 }
 
 function renderPlay() {
-    var words = curWords(), w = words[S.wordIdx], total = words.length;
+    var words = curWords();
+    var w = words[S.wordIdx];
+    var total = words.length;
     var pct = Math.round(((S.wordIdx + (S.answered ? 1 : 0)) / total) * 100);
-    var list = curList(), correct = S.answered && (S.userAnswer === w);
+    var list = curList();
     
     var timerHtml = '';
     if (S.timerMode !== 'untimed') {
-        var minutes = Math.floor(S.timerRemaining / 60);
-        var seconds = S.timerRemaining % 60;
-        var timeDisplay = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-        
-        timerHtml = `
-            <div class="chip chip-score" style="font-size:1.1rem;">
-                ⏱️ ${timeDisplay}
-            </div>
-        `;
+        var mins = Math.floor(S.timerRemaining / 60);
+        var secs = S.timerRemaining % 60;
+        timerHtml = `<div class="chip">⏱️ ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}</div>`;
     }
     
     var hintHtml = '';
     if (S.showHint) {
         if (S.hintLoading) {
+            hintHtml = '<div class="dict-box tc soft">Loading definition...</div>';
+        } else if (S.def) {
             hintHtml = `
                 <div class="dict-box">
-                    <div class="dict-loading">
-                        <span class="spinner"></span>
-                        <span class="muted">Looking up definition…</span>
-                    </div>
-                </div>
-            `;
-        } else if (S.def) {
-            var posHtml = S.def.partOfSpeech ? '<div class="dict-pos">' + esc(S.def.partOfSpeech) + '</div>' : '';
-            var pronHtml = S.def.pronunciation ? '<div class="dict-pronunciation">/' + esc(S.def.pronunciation) + '/</div>' : '';
-            var synHtml = S.def.synonyms && S.def.synonyms.length ? 
-                '<div class="dict-synonyms">' + S.def.synonyms.map(function(s) { 
-                    return '<span class="dict-synonym-tag">' + esc(s) + '</span>'; 
-                }).join('') + '</div>' : '';
-            
-            hintHtml = `
-                <div class="dict-enhanced${S.defError ? ' dict-error' : ''}">
-                    <div class="dict-header">
-                        <span>📖 Dictionary</span>
-                        ${pronHtml}
-                    </div>
-                    ${posHtml}
                     <div class="dict-def">${esc(S.def.definition)}</div>
                     ${S.def.example ? '<div class="dict-ex">"' + esc(S.def.example) + '"</div>' : ''}
-                    ${synHtml}
-                    ${!S.defError ? '<button class="btn btn-ghost btn-sm mt3" id="replayBtn">🔊 Read aloud</button>' : ''}
+                    <button class="btn btn-ghost btn-sm mt2" id="replayBtn">🔊 Read</button>
                 </div>
             `;
         }
     }
     
-    var defBtnHtml = (!S.showHint || S.hintLoading)
-        ? '<button class="btn btn-violet w-full mt3" id="defBtn">📖 Show Definition</button>'
-        : '';
-    
     var fbHtml = '';
     if (S.answered) {
-        if (correct) {
-            var streakMsg = S.streak > 1 ? '<div class="muted fs-sm mt2">Streak: <span style="color:var(--pink);font-weight:700;display:inline-block;" id="streakNum">🔥 ' + S.streak + '</span></div>' : '';
+        if (S.userAnswer === w) {
             fbHtml = `
-                <div class="fb-box fb-ok mb4 pop">
+                <div class="fb-box fb-ok mb3 pop">
                     <span class="fb-emoji">🎉</span>
-                    <div style="font-weight:700;font-size:1.15rem;color:var(--green)">Perfect!</div>
-                    ${streakMsg}
+                    <div>Correct! ${S.streak > 1 ? '🔥 ' + S.streak : ''}</div>
                 </div>
             `;
         } else {
             fbHtml = `
-                <div class="fb-box fb-bad mb4 pop">
+                <div class="fb-box fb-bad mb3 pop">
                     <span class="fb-emoji">💪</span>
-                    <div class="soft f700 mb1">Keep going! Correct spelling:</div>
-                    <div class="fb-word">${esc(w)}</div>
+                    <div>Correct spelling: <span class="fb-word">${esc(w)}</span></div>
                 </div>
             `;
         }
     }
     
     var actionHtml = !S.answered
-        ? '<button class="btn btn-action btn-lg w-full" id="checkBtn">✅ Check Answer</button>'
+        ? '<button class="btn btn-action btn-lg w-full" id="checkBtn">✅ Check</button>'
         : S.wordIdx < total - 1
-            ? '<button class="btn btn-action btn-lg w-full" id="nextBtn">→ Next Word</button>'
-            : '<button class="btn btn-action btn-lg w-full" id="nextBtn">🏁 See Results!</button>';
+            ? '<button class="btn btn-action btn-lg w-full" id="nextBtn">→ Next</button>'
+            : '<button class="btn btn-action btn-lg w-full" id="nextBtn">🏁 Finish</button>';
     
     return `
-        <div class="exit-fab" id="exitGameBtn" title="Exit Test">✕</div>
+        <div class="exit-fab" id="exitGameBtn">✕</div>
         
         <div class="card">
             <div class="game-hdr">
-                <div style="font-weight:700;font-size:0.95rem;">
-                    ${esc(list.name)} <span class="lbadge">${esc(list.lang)}</span>
-                </div>
+                <div>${esc(list.name)} <span class="lbadge">${esc(list.lang)}</span></div>
                 <div class="row gap2">
                     <div class="chip chip-score">⭐ ${S.score}</div>
                     <div class="chip chip-streak">🔥 ${S.streak}</div>
@@ -2994,34 +2150,26 @@ function renderPlay() {
                 </div>
             </div>
             
-            <div class="mb6">
-                <div class="row jb mb2">
-                    <span class="muted fs-sm">Word ${S.wordIdx + 1} of ${total}</span>
-                    <span class="muted fs-sm">${pct}%</span>
+            <div class="mb3">
+                <div class="row jb mb1">
+                    <span class="fs-sm soft">${S.wordIdx + 1}/${total}</span>
+                    <span class="fs-sm soft">${pct}%</span>
                 </div>
                 <div class="prog-wrap">
                     <div class="prog-fill" style="width:${pct}%"></div>
                 </div>
             </div>
             
-            <div class="listen-area mb4">
-                <button class="speak-btn" id="speakBtn">
-                    <span class="speak-icon">🔊</span>
-                    TAP TO HEAR THE WORD
-                </button>
-                ${defBtnHtml}
-                ${hintHtml}
-            </div>
+            <button class="speak-btn mb3" id="speakBtn">
+                <span class="speak-icon">🔊</span>
+                HEAR THE WORD
+            </button>
             
-            <div class="mb4">
-                <input id="ansinp" class="ans-inp" value="${esc(S.answered ? S.userAnswer : '')}" 
-                       placeholder="Type the word here…" autocomplete="off" autocorrect="off" 
-                       autocapitalize="off" spellcheck="false" ${S.answered ? 'disabled' : ''} />
-            </div>
+            ${!S.showHint ? '<button class="btn btn-violet w-full mb3" id="defBtn">📖 Show Hint</button>' : ''}
+            ${hintHtml}
             
-            <div id="timerWarning" class="timer-warning" style="display: ${S.timerWarningShown ? 'block' : 'none'};">
-                ⚠️ Time is running out!
-            </div>
+            <input id="ansinp" class="ans-inp mb3" value="${esc(S.answered ? S.userAnswer : '')}" 
+                   placeholder="Type here…" ${S.answered ? 'disabled' : ''} />
             
             ${fbHtml}
             ${actionHtml}
@@ -3031,44 +2179,41 @@ function renderPlay() {
 
 function renderResults() {
     var r = S.lastResult || (S.results.length ? S.results[S.results.length - 1] : null);
-    if (!r) { 
-        goHome(); 
-        return ''; 
-    }
+    if (!r) { goHome(); return ''; }
     
-    var words = r.words, correct = r.correct, pct = r.pct;
-    var emoji = pct === 100 ? '🏆' : pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '💪';
-    var perfMsg = pct === 100 ? '<div style="color:var(--action);font-size:1rem;margin-top:14px;font-weight:700;">✨ Perfect score! You earned confetti! ✨</div>' : '';
+    var words = r.words;
+    var correct = r.correct;
+    var pct = r.pct;
+    var emoji = pct === 100 ? '🏆' : pct >= 80 ? '🎉' : '👍';
     
     var rowsHtml = '';
     for (var i = 0; i < words.length; i++) {
         var ok = correct.indexOf(i) !== -1;
-        rowsHtml += '<div class="rword ' + (ok ? 'rw-ok' : 'rw-bad') + '"><span>' + esc(words[i]) + '</span><span style="font-size:1.1rem">' + (ok ? '✓' : '✗') + '</span></div>';
+        rowsHtml += '<div class="rword ' + (ok ? 'rw-ok' : 'rw-bad') + '"><span>' + esc(words[i]) + '</span><span>' + (ok ? '✓' : '✗') + '</span></div>';
     }
     
     return `
         <div class="nav-bar">
-            <div class="nav-logo">🏁 Test Results</div>
+            <div class="nav-logo">🏁 Results</div>
             <div class="nav-links">
                 <button class="nav-link" id="homeBtn3">Home</button>
-                <button class="nav-link exit-link" id="exitResultsBtn">✕ Close</button>
+                <button class="nav-link exit-link" id="exitResultsBtn">✕</button>
             </div>
         </div>
         
         <div class="card">
-            <div class="score-hero mb6 pop">
-                <div style="font-size:3.5rem;margin-bottom:8px">${emoji}</div>
-                <div class="score-big">${r.score}<span style="color:var(--muted);font-size:2.2rem;">/ ${words.length}</span></div>
-                <div class="score-pct">${pct}% correct</div>
-                <div class="muted fs-sm mt2">${esc(r.listName)} · ${LANG_LABEL[r.lang] || r.lang}</div>
-                ${perfMsg}
+            <div class="score-hero pop">
+                <div style="font-size:3rem;">${emoji}</div>
+                <div class="score-big">${r.score}<span style="font-size:2rem;">/${words.length}</span></div>
+                <div class="score-pct">${pct}%</div>
+                <div class="soft fs-sm mt2">${esc(r.listName)}</div>
             </div>
             
-            <div class="word-grid mb6">${rowsHtml}</div>
+            <div class="word-grid mb4">${rowsHtml}</div>
             
             <div class="grid2">
                 <button class="btn btn-action" id="againBtn">🔄 Try Again</button>
-                <button class="btn btn-teal" id="listsBtn">📋 My Lists</button>
+                <button class="btn btn-ghost" id="listsBtn">📋 Lists</button>
             </div>
         </div>
     `;
@@ -3076,48 +2221,21 @@ function renderResults() {
 
 function renderParent() {
     var total = S.results.length;
-    var avgPct = total ? Math.round(S.results.reduce(function(a, r) { return a + r.pct; }, 0) / total) : 0;
     
     var bodyHtml = '';
     if (!total) {
-        bodyHtml = `
-            <div class="empty-state-enhanced">
-                <span class="empty-state-icon-large">📊</span>
-                <div class="empty-state-title-large">No Tests Yet!</div>
-                <p class="empty-state-message">Complete a spelling test and the results will appear here.</p>
-            </div>
-        `;
+        bodyHtml = '<div class="tc soft">No tests yet.</div>';
     } else {
-        bodyHtml = `
-            <div class="stats-row mb6">
-                <div class="stat"><span class="stat-n" style="color:var(--violet)">${total}</span><span class="stat-l">Tests</span></div>
-                <div class="stat"><span class="stat-n" style="color:var(--green)">${S.totalWords}</span><span class="stat-l">Mastered</span></div>
-                <div class="stat"><span class="stat-n" style="color:var(--pink)">${S.bestStreak}</span><span class="stat-l">Best Streak</span></div>
-                <div class="stat"><span class="stat-n" style="color:var(--teal)">${avgPct}%</span><span class="stat-l">Avg Score</span></div>
-            </div>
-            
-            <div class="fs-xs muted mb3">Recent Tests</div>
-        `;
-        
-        var slice = S.results.slice(-8).reverse();
+        var slice = S.results.slice(-5).reverse();
         for (var i = 0; i < slice.length; i++) {
-            var rr = slice[i];
-            var col = rr.pct >= 80 ? 'var(--green)' : rr.pct >= 60 ? 'var(--orange)' : 'var(--red)';
-            var barBg = rr.pct >= 80 ? 'linear-gradient(90deg,var(--teal),var(--green))' : rr.pct >= 60 ? 'linear-gradient(90deg,var(--orange),var(--yellow))' : 'linear-gradient(90deg,var(--red),var(--pink))';
-            
+            var r = slice[i];
             bodyHtml += `
                 <div class="test-row">
-                    <div class="row jb mb2">
-                        <div style="font-weight:700;">${esc(rr.listName)} <span class="lbadge">${esc(rr.lang)}</span></div>
-                        <div class="row gap2">
-                            <span style="font-weight:800;color:${col}">${rr.pct}%</span>
-                            <span class="muted fs-sm">${new Date(rr.date).toLocaleDateString()}</span>
-                        </div>
+                    <div class="row jb mb1">
+                        <span style="font-weight:600;">${esc(r.listName)}</span>
+                        <span>${r.score}/${r.total} (${r.pct}%)</span>
                     </div>
-                    <div class="prog-wrap mb2">
-                        <div class="prog-fill" style="width:${rr.pct}%;background:${barBg}"></div>
-                    </div>
-                    <div class="muted fs-sm">${rr.score}/${rr.total} correct — ${rr.words.map(esc).join(', ')}</div>
+                    <div class="soft fs-sm">${new Date(r.date).toLocaleDateString()}</div>
                 </div>
             `;
         }
@@ -3125,7 +2243,7 @@ function renderParent() {
     
     return `
         <div class="nav-bar">
-            <div class="nav-logo">👨‍👩‍👧 Parent Dashboard</div>
+            <div class="nav-logo">📊 Dashboard</div>
             <div class="nav-links">
                 <button class="nav-link" id="csvBtn">📥 CSV</button>
                 <button class="nav-link" id="homeBtn4">Home</button>
@@ -3134,22 +2252,27 @@ function renderParent() {
         </div>
         
         <div class="card">
+            <div class="stats-row mb4">
+                <div class="stat-item">
+                    <div class="stat-value">${total}</div>
+                    <div class="stat-label">Tests</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${S.totalWords}</div>
+                    <div class="stat-label">Words</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${S.bestStreak}</div>
+                    <div class="stat-label">Best</div>
+                </div>
+            </div>
+            
+            <div class="fs-xs muted mb2">Recent Tests</div>
             ${bodyHtml}
             
             <div class="sep"></div>
             
-            <div class="info-box info-danger">
-                <div style="font-weight:700;margin-bottom:6px;">⚠️ Danger Zone</div>
-                <p class="muted fs-sm mb3">Permanently deletes all lists and test history.</p>
-                <div class="quick-actions">
-                    <button class="quick-action-btn danger" id="clearBtn">
-                        <span>🗑️</span> Delete All Data
-                    </button>
-                    <button class="quick-action-btn" id="exportAllBtn">
-                        <span>📤</span> Export All
-                    </button>
-                </div>
-            </div>
+            <button class="btn btn-danger w-full" id="clearBtn">🗑️ Delete All Data</button>
         </div>
     `;
 }
@@ -3169,7 +2292,7 @@ function render() {
 }
 
 function wireEvents() {
-    // Home page events
+    // Home page
     if (S.page === 'home') {
         var startBtn = g('startBtn');
         if (startBtn) startBtn.addEventListener('click', startGame);
@@ -3182,12 +2305,9 @@ function wireEvents() {
         
         var timerBtn = g('timerSettingsBtn');
         if (timerBtn) timerBtn.addEventListener('click', openTimerModal);
-        
-        var banner = g('activeListBanner');
-        if (banner) banner.addEventListener('click', goManage);
     }
     
-    // Manage page events
+    // Manage page
     if (S.page === 'manage') {
         var homeBtn = g('homeBtn2');
         if (homeBtn) homeBtn.addEventListener('click', goHome);
@@ -3204,15 +2324,11 @@ function wireEvents() {
         var startBtn = g('startBtn2');
         if (startBtn) startBtn.addEventListener('click', startGame);
         
-        var timerBtn = g('timerSettingsBtn2');
-        if (timerBtn) timerBtn.addEventListener('click', openTimerModal);
-        
         var wi = g('wordinp');
         if (wi) {
             wi.addEventListener('keydown', function(e) { 
                 if (e.key === 'Enter') addWord(); 
             });
-            wi.focus();
         }
         
         var lcc = g('listCardContainer');
@@ -3248,7 +2364,7 @@ function wireEvents() {
         }
     }
     
-    // Play page events
+    // Play page
     if (S.page === 'playing') {
         var speakBtn = g('speakBtn');
         if (speakBtn) speakBtn.addEventListener('click', speakWord);
@@ -3277,7 +2393,7 @@ function wireEvents() {
         }
     }
     
-    // Results page events
+    // Results page
     if (S.page === 'results') {
         var homeBtn = g('homeBtn3');
         if (homeBtn) homeBtn.addEventListener('click', goHome);
@@ -3292,7 +2408,7 @@ function wireEvents() {
         if (listsBtn) listsBtn.addEventListener('click', goManage);
     }
     
-    // Parent page events
+    // Parent page
     if (S.page === 'parent') {
         var homeBtn = g('homeBtn4');
         if (homeBtn) homeBtn.addEventListener('click', goHome);
@@ -3303,17 +2419,14 @@ function wireEvents() {
         var csvBtn = g('csvBtn');
         if (csvBtn) csvBtn.addEventListener('click', exportCSV);
         
-        var exportBtn = g('exportAllBtn');
-        if (exportBtn) exportBtn.addEventListener('click', exportCSV);
-        
         var clearBtn = g('clearBtn');
         if (clearBtn) clearBtn.addEventListener('click', clearAll);
     }
 }
 
-// ── Global Event Listeners ─────────────────────────────────────────────────
+// ── Initialize ─────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-    // Theme toggle
+    // FAB buttons
     var fabHelp = g('fabHelp');
     if (fabHelp) {
         fabHelp.addEventListener('click', function() { 
@@ -3323,16 +2436,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     var fabTheme = g('fabTheme');
-    if (fabTheme) {
-        fabTheme.addEventListener('click', toggleTheme);
-    }
+    if (fabTheme) fabTheme.addEventListener('click', toggleTheme);
     
     // Help modal
     var helpClose = g('helpClose');
     if (helpClose) {
         helpClose.addEventListener('click', function() { 
-            var modal = g('helpModal');
-            if (modal) modal.style.display = 'none'; 
+            g('helpModal').style.display = 'none'; 
         });
     }
     
@@ -3345,14 +2455,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add List Modal
     var addListClose = g('addListClose');
-    if (addListClose) {
-        addListClose.addEventListener('click', closeAddListModal);
-    }
+    if (addListClose) addListClose.addEventListener('click', closeAddListModal);
     
     var confirmAddList = g('confirmAddList');
-    if (confirmAddList) {
-        confirmAddList.addEventListener('click', confirmAddList);
-    }
+    if (confirmAddList) confirmAddList.addEventListener('click', confirmAddList);
     
     var newListName = g('newListName');
     if (newListName) {
@@ -3364,10 +2470,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var addListModal = g('addListModal');
     if (addListModal) {
         addListModal.addEventListener('click', function(e) {
-            if (e.target === this) { 
-                closeAddListModal(); 
-                return; 
-            }
+            if (e.target === this) closeAddListModal();
             var opt = e.target.closest('#langPicker .lang-opt');
             if (opt) { 
                 pendingLang = opt.getAttribute('data-lang'); 
@@ -3378,14 +2481,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Edit List Modal
     var editListClose = g('editListClose');
-    if (editListClose) {
-        editListClose.addEventListener('click', closeEditListModal);
-    }
+    if (editListClose) editListClose.addEventListener('click', closeEditListModal);
     
     var confirmEditList = g('confirmEditList');
-    if (confirmEditList) {
-        confirmEditList.addEventListener('click', confirmEditList);
-    }
+    if (confirmEditList) confirmEditList.addEventListener('click', confirmEditList);
     
     var editListName = g('editListName');
     if (editListName) {
@@ -3397,10 +2496,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var editListModal = g('editListModal');
     if (editListModal) {
         editListModal.addEventListener('click', function(e) {
-            if (e.target === this) { 
-                closeEditListModal(); 
-                return; 
-            }
+            if (e.target === this) closeEditListModal();
             var opt = e.target.closest('#editLangPicker .lang-opt');
             if (opt) { 
                 editPendingLang = opt.getAttribute('data-lang'); 
@@ -3411,28 +2507,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Timer Modal
     var timerModalClose = g('timerModalClose');
-    if (timerModalClose) {
-        timerModalClose.addEventListener('click', closeTimerModal);
-    }
+    if (timerModalClose) timerModalClose.addEventListener('click', closeTimerModal);
     
     var cancelTimerBtn = g('cancelTimerBtn');
-    if (cancelTimerBtn) {
-        cancelTimerBtn.addEventListener('click', closeTimerModal);
-    }
+    if (cancelTimerBtn) cancelTimerBtn.addEventListener('click', closeTimerModal);
     
     var applyTimerBtn = g('applyTimerBtn');
-    if (applyTimerBtn) {
-        applyTimerBtn.addEventListener('click', applyTimerSettings);
-    }
+    if (applyTimerBtn) applyTimerBtn.addEventListener('click', applyTimerSettings);
     
-    // Timer toggle
     var timerToggle = g('timerToggle');
     if (timerToggle) {
         timerToggle.addEventListener('click', function(e) {
             var opt = e.target.closest('.timer-option');
             if (opt) {
-                var options = document.querySelectorAll('#timerToggle .timer-option');
-                options.forEach(function(o) { o.classList.remove('active'); });
+                document.querySelectorAll('#timerToggle .timer-option').forEach(function(o) { 
+                    o.classList.remove('active'); 
+                });
                 opt.classList.add('active');
             }
         });
