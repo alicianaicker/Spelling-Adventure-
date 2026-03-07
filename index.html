@@ -109,17 +109,6 @@ body {
     position: relative;
 }
 
-[data-theme="light"] body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background: radial-gradient(ellipse 55% 45% at 10% 8%, rgba(255,123,31,0.13) 0%, transparent 65%),
-                radial-gradient(ellipse 45% 55% at 90% 85%, rgba(255,79,163,0.11) 0%, transparent 65%),
-                radial-gradient(ellipse 40% 40% at 55% 50%, rgba(0,184,212,0.07) 0%, transparent 65%);
-}
-
 /* ── Layout ─────────────────────────────────────────────────────────────── */
 .wrap { 
     position: relative; 
@@ -140,9 +129,9 @@ body {
     background: var(--surface);
     border: 2px solid var(--border);
     border-radius: 24px;
-    padding: 28px;
+    padding: 24px;
     box-shadow: 0 6px 32px var(--shadow);
-    animation: fadeUp 0.3s cubic-bezier(0.22,1,0.36,1);
+    animation: fadeUp 0.3s;
     position: relative;
     overflow: hidden;
 }
@@ -154,8 +143,7 @@ body {
     left: 0;
     right: 0;
     height: 5px;
-    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow), var(--green), var(--teal), var(--violet));
-    border-radius: 24px 24px 0 0;
+    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow), var(--green));
 }
 
 @media(max-width:600px) { 
@@ -168,9 +156,9 @@ body {
 .logo {
     font-family: 'Fredoka', sans-serif;
     font-weight: 700;
-    font-size: clamp(3.5rem, 12vw, 6rem);
+    font-size: clamp(3.5rem, 12vw, 5rem);
     color: var(--logo-color);
-    text-shadow: 0 4px 0 var(--logo-shadow), 0 0 30px var(--action-glow);
+    text-shadow: 0 4px 0 var(--logo-shadow);
     letter-spacing: -0.02em;
     line-height: 0.9;
     display: block;
@@ -190,7 +178,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* ── Simple Home Menu ───────────────────────────────────────────────────── */
+/* ── Home Menu ──────────────────────────────────────────────────────────── */
 .home-menu {
     display: flex;
     flex-direction: column;
@@ -202,7 +190,7 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 18px 20px;
+    padding: 16px 20px;
     background: var(--surface);
     border: 2px solid var(--border);
     border-radius: 20px;
@@ -213,7 +201,6 @@ body {
 .home-menu-item:hover {
     transform: translateX(5px);
     border-color: var(--action);
-    box-shadow: 0 4px 12px var(--shadow);
 }
 
 .home-menu-icon {
@@ -230,7 +217,6 @@ body {
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--text);
-    margin-bottom: 4px;
 }
 
 .home-menu-desc {
@@ -243,78 +229,7 @@ body {
     color: var(--muted);
 }
 
-.active-list-preview {
-    background: var(--surface2);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.active-list-name {
-    font-weight: 700;
-    color: var(--action);
-    font-size: 1.1rem;
-}
-
-.active-list-meta {
-    display: flex;
-    gap: 12px;
-    margin-top: 8px;
-    font-size: 0.85rem;
-    color: var(--soft);
-}
-
-/* ── Buttons ────────────────────────────────────────────────────────────── */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 22px;
-    border-radius: 50px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    letter-spacing: 0.01em;
-    transition: all 0.18s cubic-bezier(0.22,1,0.36,1);
-    -webkit-appearance: none;
-}
-
-.btn:hover:not(:disabled) { 
-    transform: translateY(-3px) scale(1.02); 
-}
-
-.btn:active:not(:disabled) { 
-    transform: translateY(0) scale(0.98); 
-}
-
-.btn:disabled { 
-    opacity: 0.35; 
-    cursor: not-allowed; 
-    transform: none !important; 
-}
-
-.btn-action { 
-    background: var(--action); 
-    color: var(--action-text); 
-    font-weight: 700; 
-    box-shadow: 0 4px 18px var(--action-shadow), 0 2px 0 rgba(0,0,0,0.1); 
-}
-
-.btn-ghost { 
-    background: var(--surface2); 
-    color: var(--soft); 
-    border: 2px solid var(--border-hi); 
-}
-
-.w-full { 
-    width: 100%; 
-}
-
-/* ── Stats Row (simplified) ────────────────────────────────────────────── */
+/* ── Stats Row ──────────────────────────────────────────────────────────── */
 .stats-row { 
     display: flex; 
     justify-content: space-around;
@@ -341,19 +256,70 @@ body {
     letter-spacing: 0.05em;
 }
 
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.18s;
+    -webkit-appearance: none;
+}
+
+.btn:hover:not(:disabled) { 
+    transform: translateY(-2px); 
+}
+
+.btn:disabled { 
+    opacity: 0.35; 
+    cursor: not-allowed; 
+}
+
+.btn-action { 
+    background: var(--action); 
+    color: var(--action-text); 
+    font-weight: 700; 
+    box-shadow: 0 4px 18px var(--action-shadow); 
+}
+
+.btn-ghost { 
+    background: var(--surface2); 
+    color: var(--soft); 
+    border: 2px solid var(--border-hi); 
+}
+
+.btn-sm { 
+    padding: 8px 16px; 
+    font-size: 0.9rem; 
+}
+
+.btn-lg { 
+    padding: 16px 24px; 
+    font-size: 1.1rem; 
+}
+
+.w-full { 
+    width: 100%; 
+}
+
 /* ── Inputs ─────────────────────────────────────────────────────────────── */
 .word-inp {
     flex: 1;
     padding: 12px 18px;
     font-family: 'Fredoka', sans-serif;
     font-size: 1rem;
-    font-weight: 500;
     border: 2px solid var(--border-hi);
     border-radius: 50px;
     background: var(--surface2);
     color: var(--text);
     outline: none;
-    transition: border-color 0.18s, box-shadow 0.18s;
 }
 
 .word-inp:focus { 
@@ -363,22 +329,36 @@ body {
 
 .ans-inp {
     width: 100%;
-    padding: 20px 24px;
+    padding: 20px;
     font-family: 'Syne Mono', monospace;
-    font-size: 1.9rem;
+    font-size: 2rem;
     text-align: center;
     border: 3px solid var(--border-hi);
     border-radius: 20px;
     background: var(--surface2);
     color: var(--ans-color);
     outline: none;
-    transition: all 0.2s;
-    letter-spacing: 0.06em;
 }
 
 .ans-inp:focus { 
     border-color: var(--action); 
     box-shadow: 0 0 0 5px var(--action-shadow); 
+}
+
+.inp-field {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    border: 2px solid var(--border-hi);
+    border-radius: 14px;
+    background: var(--surface2);
+    color: var(--text);
+    outline: none;
+}
+
+.inp-field:focus { 
+    border-color: var(--action); 
 }
 
 /* ── Word chips ─────────────────────────────────────────────────────────── */
@@ -396,7 +376,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
 }
 
 .wname { 
@@ -411,9 +390,8 @@ body {
     border: none;
     cursor: pointer;
     color: var(--red);
-    font-size: 0.85rem;
-    padding: 1px 3px;
-    border-radius: 50%;
+    font-size: 0.9rem;
+    padding: 2px 6px;
 }
 
 /* ── List cards ─────────────────────────────────────────────────────────── */
@@ -423,7 +401,6 @@ body {
     border-radius: 16px;
     padding: 14px 16px;
     cursor: pointer;
-    transition: border-color 0.18s;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -451,10 +428,7 @@ body {
 
 .list-card-name { 
     font-weight: 700; 
-    font-size: 0.98rem; 
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
+    font-size: 1rem; 
 }
 
 .list-card-meta { 
@@ -470,7 +444,7 @@ body {
     flex-shrink: 0; 
 }
 
-/* ── Progress ───────────────────────────────────────────────────────────── */
+/* ── Progress Bar ───────────────────────────────────────────────────────── */
 .prog-wrap { 
     height: 8px; 
     background: var(--prog-track); 
@@ -480,7 +454,6 @@ body {
 
 .prog-fill {
     height: 100%;
-    border-radius: 100px;
     background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow));
     transition: width 0.5s;
 }
@@ -488,20 +461,18 @@ body {
 /* ── Speak button ───────────────────────────────────────────────────────── */
 .speak-btn {
     width: 100%;
-    padding: 24px 20px;
+    padding: 24px;
     background: linear-gradient(135deg, var(--teal-dim), var(--violet-dim));
     border: 3px dashed var(--teal);
     border-radius: 22px;
     color: var(--text);
-    font-family: 'Fredoka', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-    transition: all 0.22s;
+    gap: 12px;
 }
 
 .speak-btn:hover {
@@ -511,15 +482,15 @@ body {
 
 .speak-icon { 
     font-size: 2rem; 
-    animation: pulse-icon 2.5s ease-in-out infinite; 
+    animation: pulse 2s infinite; 
 }
 
-@keyframes pulse-icon { 
+@keyframes pulse { 
     0%, 100% { transform: scale(1); } 
-    50% { transform: scale(1.15); } 
+    50% { transform: scale(1.1); } 
 }
 
-/* ── Feedback ───────────────────────────────────────────────────────────── */
+/* ── Feedback Boxes ─────────────────────────────────────────────────────── */
 .fb-box { 
     border-radius: 20px; 
     padding: 20px; 
@@ -536,12 +507,6 @@ body {
     border: 3px solid rgba(255,61,90,0.35); 
 }
 
-.fb-emoji { 
-    font-size: 3rem; 
-    display: block; 
-    margin-bottom: 8px; 
-}
-
 .fb-word { 
     font-family: 'Syne Mono', monospace; 
     font-size: 1.5rem; 
@@ -550,7 +515,7 @@ body {
     margin-top: 6px; 
 }
 
-/* ── Dictionary ─────────────────────────────────────────────────────────── */
+/* ── Dictionary Box ─────────────────────────────────────────────────────── */
 .dict-box {
     background: var(--violet-dim);
     border: 2px solid rgba(139,92,246,0.25);
@@ -565,16 +530,6 @@ body {
     color: var(--text); 
     padding-left: 12px; 
     border-left: 4px solid var(--violet); 
-    margin-bottom: 8px; 
-}
-
-.dict-ex { 
-    font-style: italic; 
-    color: var(--soft); 
-    font-size: 0.9rem; 
-    padding: 8px 12px; 
-    border-radius: 8px; 
-    background: rgba(139,92,246,0.08); 
 }
 
 /* ── Game header ────────────────────────────────────────────────────────── */
@@ -585,8 +540,6 @@ body {
     margin-bottom: 18px; 
     padding-bottom: 12px; 
     border-bottom: 2px solid var(--border); 
-    flex-wrap: wrap; 
-    gap: 8px; 
 }
 
 .chip { 
@@ -610,7 +563,7 @@ body {
     color: var(--pink); 
 }
 
-/* ── FABs ───────────────────────────────────────────────────────────────── */
+/* ── FAB Buttons ────────────────────────────────────────────────────────── */
 .fab-row { 
     position: fixed; 
     bottom: 22px; 
@@ -619,7 +572,6 @@ body {
     display: flex; 
     flex-direction: column; 
     gap: 10px; 
-    align-items: flex-end; 
 }
 
 .fab { 
@@ -629,7 +581,7 @@ body {
     border: 2px solid var(--fab-border); 
     background: var(--fab-bg); 
     cursor: pointer; 
-    font-size: 1.1rem; 
+    font-size: 1.2rem; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
@@ -665,7 +617,6 @@ body {
     overflow-y: auto; 
     padding: 30px; 
     position: relative; 
-    box-shadow: 0 40px 100px rgba(0,0,0,0.4); 
     animation: popIn 0.3s; 
 }
 
@@ -676,7 +627,7 @@ body {
     left: 0; 
     right: 0; 
     height: 5px; 
-    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow), var(--green), var(--teal), var(--violet)); 
+    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow), var(--green)); 
     border-radius: 28px 28px 0 0; 
 }
 
@@ -701,7 +652,7 @@ body {
     color: var(--red); 
 }
 
-/* ── Lang picker ────────────────────────────────────────────────────────── */
+/* ── Language Picker ────────────────────────────────────────────────────── */
 .lang-picker { 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
@@ -715,12 +666,10 @@ body {
     background: var(--surface2); 
     cursor: pointer; 
     text-align: center; 
-    transition: all 0.18s; 
 }
 
 .lang-opt:hover { 
     border-color: var(--action); 
-    background: var(--orange-dim); 
 }
 
 .lang-opt.sel { 
@@ -735,9 +684,9 @@ body {
 }
 
 .lang-flag { 
-    font-size: 1.8rem; 
+    font-size: 2rem; 
     display: block; 
-    margin-bottom: 5px; 
+    margin-bottom: 4px; 
 }
 
 .lang-name { 
@@ -748,14 +697,6 @@ body {
 }
 
 /* ── Timer Styles ───────────────────────────────────────────────────────── */
-.timer-section {
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: 20px;
-    padding: 20px;
-    margin: 15px 0;
-}
-
 .timer-toggle {
     display: flex;
     gap: 10px;
@@ -770,13 +711,8 @@ body {
     background: var(--surface2);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
     text-align: center;
     font-size: 0.9rem;
-}
-
-.timer-option:hover {
-    border-color: var(--action);
 }
 
 .timer-option.active {
@@ -792,26 +728,13 @@ body {
     margin: 15px 0;
 }
 
-.timer-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.timer-input-group label {
-    font-size: 0.8rem;
-    color: var(--soft);
-    font-weight: 600;
-}
-
 .timer-input {
     padding: 10px;
     border-radius: 12px;
     border: 2px solid var(--border-hi);
     background: var(--surface2);
     color: var(--text);
-    font-weight: 600;
-    text-align: center;
+    width: 100%;
 }
 
 .timer-display {
@@ -821,18 +744,6 @@ body {
     color: var(--action);
     margin: 15px 0;
     font-family: 'Syne Mono', monospace;
-}
-
-.timer-warning {
-    color: var(--red);
-    font-size: 0.9rem;
-    text-align: center;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
 }
 
 /* ── Results Page ───────────────────────────────────────────────────────── */
@@ -849,13 +760,6 @@ body {
     font-size: 4rem; 
     font-weight: 700; 
     color: var(--action); 
-    line-height: 1; 
-}
-
-.score-pct { 
-    font-size: 1.3rem; 
-    color: var(--soft); 
-    margin-top: 4px; 
 }
 
 .rword { 
@@ -866,7 +770,6 @@ body {
     justify-content: space-between; 
     font-weight: 600; 
     font-size: 0.9rem; 
-    text-transform: capitalize; 
 }
 
 .rw-ok { 
@@ -896,10 +799,6 @@ body {
     gap: 8px; 
 }
 
-.gap3 { 
-    gap: 12px; 
-}
-
 .grid2 { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
@@ -918,12 +817,8 @@ body {
     margin-bottom: 16px; 
 }
 
-.mb6 { 
-    margin-bottom: 24px; 
-}
-
-.mt3 { 
-    margin-top: 12px; 
+.mt2 { 
+    margin-top: 8px; 
 }
 
 .tc { 
@@ -948,7 +843,6 @@ body {
     padding: 2px 8px; 
     border-radius: 50px; 
     font-size: 0.65rem; 
-    font-weight: 600; 
     background: rgba(0,0,0,0.1); 
 }
 
@@ -957,21 +851,6 @@ body {
     background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow)); 
     margin: 20px 0; 
     opacity: 0.3; 
-}
-
-/* ── Animations ─────────────────────────────────────────────────────────── */
-@keyframes fadeUp { 
-    from { opacity: 0; transform: translateY(18px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
-
-@keyframes popIn { 
-    0% { transform: scale(0.9); opacity: 0; } 
-    100% { transform: scale(1); opacity: 1; } 
-}
-
-.pop { 
-    animation: popIn 0.3s; 
 }
 
 /* ── Navigation Bar ─────────────────────────────────────────────────────── */
@@ -1004,7 +883,6 @@ body {
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
 .nav-link:hover {
@@ -1034,8 +912,6 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px var(--shadow);
 }
 
 .exit-fab:hover {
@@ -1066,6 +942,20 @@ body {
     from { transform: translateX(30px); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
+
+@keyframes fadeUp { 
+    from { opacity: 0; transform: translateY(18px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+@keyframes popIn { 
+    0% { transform: scale(0.9); opacity: 0; } 
+    100% { transform: scale(1); opacity: 1; } 
+}
+
+.pop { 
+    animation: popIn 0.3s; 
+}
 </style>
 </head>
 <body>
@@ -1078,9 +968,7 @@ body {
 </div>
 
 <!-- Save Indicator -->
-<div id="saveIndicator" class="save-indicator" style="display: none;">
-    <span>✓</span> Saved
-</div>
+<div id="saveIndicator" class="save-indicator" style="display: none;">✓ Saved</div>
 
 <div class="wrap" id="app"></div>
 
@@ -1094,16 +982,14 @@ body {
             <input id="newListName" class="inp-field" placeholder="e.g. Week 3 Words" maxlength="40" />
         </div>
         <div class="mb6">
-            <div class="fs-xs muted mb3">Dictionary Language</div>
+            <div class="fs-xs muted mb3">Language</div>
             <div class="lang-picker" id="langPicker">
                 <div class="lang-opt sel" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span></div>
                 <div class="lang-opt" data-lang="af"><span class="lang-flag">🇿🇦</span><span class="lang-name">Afrikaans</span></div>
                 <div class="lang-opt" data-lang="zu"><span class="lang-flag">🇿🇦</span><span class="lang-name">IsiZulu</span></div>
-                <div class="lang-opt" data-lang="es"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span></div>
-                <div class="lang-opt" data-lang="fr"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span></div>
             </div>
         </div>
-        <button class="btn btn-action btn-lg w-full" id="confirmAddList">Create List 🎉</button>
+        <button class="btn btn-action btn-lg w-full" id="confirmAddListBtn">Create List 🎉</button>
     </div>
 </div>
 
@@ -1117,16 +1003,14 @@ body {
             <input id="editListName" class="inp-field" placeholder="List name" maxlength="40" />
         </div>
         <div class="mb6">
-            <div class="fs-xs muted mb3">Dictionary Language</div>
+            <div class="fs-xs muted mb3">Language</div>
             <div class="lang-picker" id="editLangPicker">
                 <div class="lang-opt" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span></div>
                 <div class="lang-opt" data-lang="af"><span class="lang-flag">🇿🇦</span><span class="lang-name">Afrikaans</span></div>
                 <div class="lang-opt" data-lang="zu"><span class="lang-flag">🇿🇦</span><span class="lang-name">IsiZulu</span></div>
-                <div class="lang-opt" data-lang="es"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span></div>
-                <div class="lang-opt" data-lang="fr"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span></div>
             </div>
         </div>
-        <button class="btn btn-violet btn-lg w-full" id="confirmEditList">Save Changes ✅</button>
+        <button class="btn btn-violet btn-lg w-full" id="confirmEditListBtn">Save Changes ✅</button>
     </div>
 </div>
 
@@ -1145,11 +1029,11 @@ body {
             
             <div id="timerControls" class="timer-controls">
                 <div class="timer-input-group">
-                    <label>Seconds per word</label>
+                    <div class="fs-xs muted mb1">Seconds per word</div>
                     <input type="number" id="secondsPerWord" class="timer-input" min="5" max="300" value="30">
                 </div>
                 <div class="timer-input-group">
-                    <label>Total minutes</label>
+                    <div class="fs-xs muted mb1">Total minutes</div>
                     <input type="number" id="totalMinutes" class="timer-input" min="1" max="60" value="5">
                 </div>
             </div>
@@ -1169,10 +1053,10 @@ body {
     <div class="modal-card">
         <button class="modal-close" id="helpClose">✕</button>
         <h2 style="font-size:1.3rem;margin-bottom:20px;color:var(--teal)">🌟 How to Use</h2>
-        <div class="mb3">• Create lists with different languages</div>
+        <div class="mb3">• Create lists in English, Afrikaans, or Zulu</div>
         <div class="mb3">• Add words you want to practice</div>
         <div class="mb3">• Start a test and listen to each word</div>
-        <div class="mb3">• Use dictionary for hints</div>
+        <div class="mb3">• Use Show Definition for help</div>
         <div class="mb3">• Track progress in Parent Dashboard</div>
     </div>
 </div>
@@ -1204,7 +1088,6 @@ var S = {
     timerTotalMinutes: 5,
     timerRemaining: 0,
     timerInterval: null,
-    timerWarningShown: false,
     
     // Dictionary cache
     dictCache: {}
@@ -1218,10 +1101,7 @@ var editPendingLang = 'en';
 function g(id) { return document.getElementById(id); }
 
 function esc(s) { 
-    return String(s).replace(/&/g, '&amp;')
-                   .replace(/</g, '&lt;')
-                   .replace(/>/g, '&gt;')
-                   .replace(/"/g, '&quot;'); 
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); 
 }
 
 function curList() { 
@@ -1232,8 +1112,8 @@ function curWords() {
     return curList().words; 
 }
 
-var LANG_LABEL = { en: 'English', af: 'Afrikaans', zu: 'IsiZulu', es: 'Spanish', fr: 'French' };
-var LANG_FLAG = { en: '🇬🇧', af: '🇿🇦', zu: '🇿🇦', es: '🇪🇸', fr: '🇫🇷' };
+var LANG_LABEL = { en: 'English', af: 'Afrikaans', zu: 'IsiZulu' };
+var LANG_FLAG = { en: '🇬🇧', af: '🇿🇦', zu: '🇿🇦' };
 
 // ── Theme Management ───────────────────────────────────────────────────────
 var currentTheme = localStorage.getItem('sp_theme') || 'light';
@@ -1254,20 +1134,15 @@ function toggleTheme() {
 function showSaveIndicator() {
     var indicator = g('saveIndicator');
     if (!indicator) return;
-    
     indicator.style.display = 'flex';
-    setTimeout(function() {
-        indicator.style.display = 'none';
-    }, 1500);
+    setTimeout(function() { indicator.style.display = 'none'; }, 1500);
 }
 
 // ── Persistence ────────────────────────────────────────────────────────────
 function load() {
     try {
-        var d;
-        d = localStorage.getItem('sp_lists');
+        var d = localStorage.getItem('sp_lists');
         S.lists = d ? JSON.parse(d) : [{ name: 'My First Words', lang: 'en', words: [] }];
-        if (!S.lists.length) S.lists = [{ name: 'My First Words', lang: 'en', words: [] }];
         S.lists.forEach(function(l) { if (!l.lang) l.lang = 'en'; });
         
         d = localStorage.getItem('sp_li'); 
@@ -1282,7 +1157,6 @@ function load() {
         d = localStorage.getItem('sp_res'); 
         if (d) S.results = JSON.parse(d);
         
-        // Load timer settings
         d = localStorage.getItem('sp_timer_mode'); 
         if (d) S.timerMode = d;
         
@@ -1292,7 +1166,6 @@ function load() {
         d = localStorage.getItem('sp_timer_min'); 
         if (d) S.timerTotalMinutes = parseInt(d, 10) || 5;
         
-        // Load dictionary cache
         d = localStorage.getItem('sp_dict_cache'); 
         if (d) S.dictCache = JSON.parse(d);
     } catch (e) { 
@@ -1311,7 +1184,6 @@ function save() {
         localStorage.setItem('sp_timer_sec', S.timerSecondsPerWord);
         localStorage.setItem('sp_timer_min', S.timerTotalMinutes);
         localStorage.setItem('sp_dict_cache', JSON.stringify(S.dictCache));
-        
         showSaveIndicator();
     } catch (e) { 
         console.warn('Save error:', e); 
@@ -1329,23 +1201,14 @@ function pickVoice(lang) {
     var langMap = {
         'en': ['en-US', 'en-GB', 'en-ZA'],
         'af': ['af-ZA'],
-        'zu': ['zu-ZA'],
-        'es': ['es-ES'],
-        'fr': ['fr-FR']
+        'zu': ['zu-ZA']
     };
     
     var possibleLangs = langMap[lang] || [lang];
-    
     for (var i = 0; i < possibleLangs.length; i++) {
-        var found = vv.find(function(v) { 
-            return v.lang.startsWith(possibleLangs[i]); 
-        });
-        if (found) {
-            voice = found;
-            return;
-        }
+        var found = vv.find(function(v) { return v.lang.startsWith(possibleLangs[i]); });
+        if (found) { voice = found; return; }
     }
-    
     voice = vv.find(function(v) { return v.lang.startsWith('en'); }) || vv[0] || null;
 }
 
@@ -1367,49 +1230,38 @@ function speak(text) {
 }
 
 // ── Dictionary Functions ───────────────────────────────────────────────────
-function fetchDef(word, lang, cb) {
+function fetchDefinition(word, lang, cb) {
     var cacheKey = lang + ':' + word.toLowerCase();
     if (S.dictCache[cacheKey]) {
         cb(S.dictCache[cacheKey]);
         return;
     }
     
-    var apiUrls = {
-        'en': 'https://api.dictionaryapi.dev/api/v2/entries/en/',
-        'es': 'https://api.dictionaryapi.dev/api/v2/entries/es/',
-        'fr': 'https://api.dictionaryapi.dev/api/v2/entries/fr/'
-    };
-    
-    var url = apiUrls[lang];
-    
-    if (url) {
-        fetch(url + encodeURIComponent(word.toLowerCase()))
+    if (lang === 'en') {
+        // English: get real definition
+        fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word.toLowerCase()))
             .then(function(r) { 
                 if (!r.ok) throw new Error(); 
                 return r.json(); 
             })
             .then(function(data) {
                 var entry = data[0];
-                var def = '', example = '';
-                
+                var definition = '';
                 if (entry && entry.meanings && entry.meanings.length) {
                     for (var m = 0; m < entry.meanings.length; m++) {
                         var meaning = entry.meanings[m];
                         for (var d = 0; d < meaning.definitions.length; d++) {
-                            var item = meaning.definitions[d];
-                            if (item.definition) {
-                                def = item.definition;
-                                example = item.example || '';
+                            if (meaning.definitions[d].definition) {
+                                definition = meaning.definitions[d].definition;
                                 break;
                             }
                         }
-                        if (def) break;
+                        if (definition) break;
                     }
                 }
                 
                 var result = {
-                    definition: def || 'No definition found.',
-                    example: example,
+                    definition: definition || 'No definition found.',
                     ok: true
                 };
                 
@@ -1418,22 +1270,52 @@ function fetchDef(word, lang, cb) {
                 save();
             })
             .catch(function() {
-                cb({ definition: 'Could not load definition.', example: '', ok: false });
+                cb({ definition: 'Could not load definition.', ok: false });
             });
     } else {
-        var offlineDict = {
-            'af': { definition: "Afrikaans woord", example: "", ok: true },
-            'zu': { definition: "IsiZulu word", example: "", ok: true }
+        // Afrikaans/Zulu: show English translation (using a simple mapping)
+        var translations = {
+            'af': {
+                'hond': 'dog',
+                'kat': 'cat',
+                'huis': 'house',
+                'motor': 'car',
+                'boom': 'tree',
+                'water': 'water',
+                'boek': 'book',
+                'skool': 'school',
+                'man': 'man',
+                'vrou': 'woman'
+            },
+            'zu': {
+                'inja': 'dog',
+                'ikati': 'cat',
+                'indlu': 'house',
+                'imoto': 'car',
+                'umuthi': 'tree',
+                'amanzi': 'water',
+                'incwadi': 'book',
+                'isikole': 'school',
+                'indoda': 'man',
+                'umfazi': 'woman'
+            }
         };
         
-        cb(offlineDict[lang] || { definition: 'Dictionary not available.', example: '', ok: true });
+        var translation = translations[lang]?.[word.toLowerCase()] || 'translation not available';
+        var result = {
+            definition: 'English: ' + translation,
+            ok: true
+        };
+        
+        S.dictCache[cacheKey] = result;
+        cb(result);
+        save();
     }
 }
 
 // ── Timer Functions ────────────────────────────────────────────────────────
 function startTimer() {
     if (S.timerMode === 'untimed') return;
-    
     stopTimer();
     
     if (S.timerMode === 'timed') {
@@ -1442,30 +1324,20 @@ function startTimer() {
         S.timerRemaining = S.timerSecondsPerWord;
     }
     
-    S.timerWarningShown = false;
-    
     S.timerInterval = setInterval(function() {
-        if (S.page !== 'playing') {
-            stopTimer();
-            return;
-        }
-        
+        if (S.page !== 'playing') { stopTimer(); return; }
         S.timerRemaining--;
-        
         if (S.timerRemaining <= 0) {
-            if (S.timerMode === 'countdown') {
-                if (!S.answered) {
-                    S.userAnswer = '';
-                    S.answered = true;
-                    S.streak = 0;
-                    render();
-                }
-            } else {
+            if (S.timerMode === 'countdown' && !S.answered) {
+                S.userAnswer = '';
+                S.answered = true;
+                S.streak = 0;
+                render();
+            } else if (S.timerMode === 'timed') {
                 stopTimer();
                 if (S.page === 'playing') endGame();
             }
         }
-        
         render();
     }, 1000);
 }
@@ -1488,12 +1360,10 @@ function openTimerModal() {
     if (secInput) secInput.value = S.timerSecondsPerWord;
     if (minInput) minInput.value = S.timerTotalMinutes;
     
+    var mins = Math.floor(S.timerSecondsPerWord / 60);
+    var secs = S.timerSecondsPerWord % 60;
     var display = g('timerDisplay');
-    if (display) {
-        var mins = Math.floor(S.timerSecondsPerWord / 60);
-        var secs = S.timerSecondsPerWord % 60;
-        display.textContent = mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
-    }
+    if (display) display.textContent = mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
     
     var modal = g('timerModal');
     if (modal) modal.style.display = 'flex';
@@ -1501,13 +1371,10 @@ function openTimerModal() {
 
 function applyTimerSettings() {
     var activeOption = document.querySelector('#timerToggle .timer-option.active');
-    if (activeOption) {
-        S.timerMode = activeOption.getAttribute('data-mode');
-    }
+    if (activeOption) S.timerMode = activeOption.getAttribute('data-mode');
     
     var secInput = g('secondsPerWord');
     var minInput = g('totalMinutes');
-    
     if (secInput) S.timerSecondsPerWord = parseInt(secInput.value, 10) || 30;
     if (minInput) S.timerTotalMinutes = parseInt(minInput.value, 10) || 5;
     
@@ -1536,13 +1403,11 @@ function openAddListModal() {
     setLangPicker('langPicker', 'en');
     
     var modal = g('addListModal');
-    if (modal) {
-        modal.style.display = 'flex';
-        setTimeout(function() { 
-            var n = g('newListName'); 
-            if (n) n.focus(); 
-        }, 50);
-    }
+    if (modal) modal.style.display = 'flex';
+    setTimeout(function() { 
+        var n = g('newListName'); 
+        if (n) n.focus(); 
+    }, 50);
 }
 
 function closeAddListModal() { 
@@ -1582,10 +1447,7 @@ function openEditListModal(i) {
         modal.style.display = 'flex';
         setTimeout(function() { 
             var n = g('editListName'); 
-            if (n) { 
-                n.focus(); 
-                n.select(); 
-            } 
+            if (n) { n.focus(); n.select(); } 
         }, 50);
     }
 }
@@ -1638,10 +1500,7 @@ function addWord() {
     if (!inp) return;
     
     var w = inp.value.trim().toLowerCase().replace(/[^a-z\-']/g, '');
-    if (!w) { 
-        inp.value = ''; 
-        return; 
-    }
+    if (!w) { inp.value = ''; return; }
     
     var words = S.lists[S.listIdx].words;
     if (words.indexOf(w) === -1) { 
@@ -1684,7 +1543,6 @@ function startGame() {
     S.lastResult = null;
     
     render();
-    
     setTimeout(function() { 
         speakWord();
         startTimer();
@@ -1702,7 +1560,7 @@ function showDefinition() {
     S.defError = false;
     render();
     
-    fetchDef(curWords()[S.wordIdx], curList().lang, function(data) {
+    fetchDefinition(curWords()[S.wordIdx], curList().lang, function(data) {
         S.def = data;
         S.hintLoading = false;
         S.defError = !data.ok;
@@ -1748,7 +1606,6 @@ function nextWord() {
         
         if (S.timerMode === 'countdown') {
             S.timerRemaining = S.timerSecondsPerWord;
-            S.timerWarningShown = false;
         }
         
         render();
@@ -1885,9 +1742,7 @@ function launchConfetti() {
             r: 4 + Math.random() * 6,
             color: colors[Math.floor(Math.random() * colors.length)],
             vx: (Math.random() - 0.5) * 6,
-            vy: 2 + Math.random() * 5,
-            rot: Math.random() * 360,
-            rotV: (Math.random() - 0.5) * 10
+            vy: 2 + Math.random() * 5
         });
     }
     
@@ -1900,17 +1755,13 @@ function launchConfetti() {
         pieces.forEach(function(p) {
             p.x += p.vx;
             p.y += p.vy;
-            p.rot += p.rotV;
             p.vy += 0.1;
-            
             if (p.y < canvas.height + 20) alive = true;
             
             ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.rot * Math.PI / 180);
             ctx.globalAlpha = Math.max(0, 1 - frame / 100);
             ctx.fillStyle = p.color;
-            ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r);
+            ctx.fillRect(p.x, p.y, p.r, p.r);
             ctx.restore();
         });
         
@@ -1928,10 +1779,6 @@ function launchConfetti() {
 
 // ── Page Renderers ─────────────────────────────────────────────────────────
 function renderHome() {
-    var al = curList();
-    var wc = al.words.length;
-    var langName = LANG_LABEL[al.lang] || al.lang;
-    
     return `
         <div class="logo">Spello</div>
         <div class="logo-sub">Spelling Practice</div>
@@ -1946,17 +1793,8 @@ function renderHome() {
                 <div class="stat-label">Mastered</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">${wc}</div>
-                <div class="stat-label">Ready</div>
-            </div>
-        </div>
-        
-        <div class="active-list-preview">
-            <div class="active-list-name">${esc(al.name)}</div>
-            <div class="active-list-meta">
-                <span>${LANG_FLAG[al.lang] || '🇬🇧'} ${langName}</span>
-                <span>•</span>
-                <span>${wc} word${wc !== 1 ? 's' : ''}</span>
+                <div class="stat-value">${S.results.length}</div>
+                <div class="stat-label">Tests</div>
             </div>
         </div>
         
@@ -1965,7 +1803,7 @@ function renderHome() {
                 <span class="home-menu-icon">🚀</span>
                 <div class="home-menu-content">
                     <div class="home-menu-title">Start Test</div>
-                    <div class="home-menu-desc">Practice your words</div>
+                    <div class="home-menu-desc">Practice with current list</div>
                 </div>
                 <span class="home-menu-badge">→</span>
             </div>
@@ -1974,7 +1812,7 @@ function renderHome() {
                 <span class="home-menu-icon">📋</span>
                 <div class="home-menu-content">
                     <div class="home-menu-title">Manage Lists</div>
-                    <div class="home-menu-desc">Add, edit, or create lists</div>
+                    <div class="home-menu-desc">Create and edit word lists</div>
                 </div>
                 <span class="home-menu-badge">→</span>
             </div>
@@ -2007,7 +1845,7 @@ function renderManage() {
     for (var i = 0; i < S.lists.length; i++) {
         var lst = S.lists[i];
         var isActive = (i === S.listIdx);
-        var badge = isActive ? '<span class="active-badge">ACTIVE</span>' : '';
+        var badge = isActive ? '<span class="active-badge" style="background:var(--action);color:var(--action-text);padding:2px 8px;border-radius:12px;font-size:0.7rem;">ACTIVE</span>' : '';
         
         listCardsHtml += `
             <div class="list-card${isActive ? ' active' : ''}" data-li="${i}">
@@ -2017,8 +1855,8 @@ function renderManage() {
                 </div>
                 <div class="list-card-actions">
                     ${badge}
-                    <button class="btn btn-icon btn-sm list-edit" data-li="${i}" style="padding:5px 10px;">✏️</button>
-                    ${S.lists.length > 1 ? '<button class="btn btn-danger btn-sm list-del" data-li="' + i + '" style="padding:5px 10px;">🗑️</button>' : ''}
+                    <button class="btn btn-sm list-edit" data-li="${i}" style="background:none;border:none;font-size:1.1rem;cursor:pointer;">✏️</button>
+                    ${S.lists.length > 1 ? '<button class="btn btn-sm list-del" data-li="' + i + '" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--red);">🗑️</button>' : ''}
                 </div>
             </div>
         `;
@@ -2100,12 +1938,11 @@ function renderPlay() {
     var hintHtml = '';
     if (S.showHint) {
         if (S.hintLoading) {
-            hintHtml = '<div class="dict-box tc soft">Loading definition...</div>';
+            hintHtml = '<div class="dict-box tc soft">Loading...</div>';
         } else if (S.def) {
             hintHtml = `
                 <div class="dict-box">
                     <div class="dict-def">${esc(S.def.definition)}</div>
-                    ${S.def.example ? '<div class="dict-ex">"' + esc(S.def.example) + '"</div>' : ''}
                     <button class="btn btn-ghost btn-sm mt2" id="replayBtn">🔊 Read</button>
                 </div>
             `;
@@ -2117,15 +1954,17 @@ function renderPlay() {
         if (S.userAnswer === w) {
             fbHtml = `
                 <div class="fb-box fb-ok mb3 pop">
-                    <span class="fb-emoji">🎉</span>
-                    <div>Correct! ${S.streak > 1 ? '🔥 ' + S.streak : ''}</div>
+                    <div style="font-size:2rem;margin-bottom:8px;">🎉</div>
+                    <div style="font-weight:700;">Correct!</div>
+                    ${S.streak > 1 ? '<div class="soft">🔥 ' + S.streak + ' streak</div>' : ''}
                 </div>
             `;
         } else {
             fbHtml = `
                 <div class="fb-box fb-bad mb3 pop">
-                    <span class="fb-emoji">💪</span>
-                    <div>Correct spelling: <span class="fb-word">${esc(w)}</span></div>
+                    <div style="font-size:2rem;margin-bottom:8px;">💪</div>
+                    <div>Correct spelling:</div>
+                    <div class="fb-word">${esc(w)}</div>
                 </div>
             `;
         }
@@ -2165,7 +2004,7 @@ function renderPlay() {
                 HEAR THE WORD
             </button>
             
-            ${!S.showHint ? '<button class="btn btn-violet w-full mb3" id="defBtn">📖 Show Hint</button>' : ''}
+            ${!S.showHint ? '<button class="btn btn-violet w-full mb3" id="defBtn">📖 Show Definition</button>' : ''}
             ${hintHtml}
             
             <input id="ansinp" class="ans-inp mb3" value="${esc(S.answered ? S.userAnswer : '')}" 
@@ -2230,7 +2069,7 @@ function renderParent() {
         for (var i = 0; i < slice.length; i++) {
             var r = slice[i];
             bodyHtml += `
-                <div class="test-row">
+                <div style="background:var(--surface2);border:2px solid var(--border);border-radius:16px;padding:14px;margin-bottom:8px;">
                     <div class="row jb mb1">
                         <span style="font-weight:600;">${esc(r.listName)}</span>
                         <span>${r.score}/${r.total} (${r.pct}%)</span>
@@ -2442,7 +2281,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var helpClose = g('helpClose');
     if (helpClose) {
         helpClose.addEventListener('click', function() { 
-            g('helpModal').style.display = 'none'; 
+            var modal = g('helpModal');
+            if (modal) modal.style.display = 'none'; 
         });
     }
     
@@ -2453,12 +2293,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Add List Modal
+    // Add List Modal - FIXED: Use correct button ID
     var addListClose = g('addListClose');
     if (addListClose) addListClose.addEventListener('click', closeAddListModal);
     
-    var confirmAddList = g('confirmAddList');
-    if (confirmAddList) confirmAddList.addEventListener('click', confirmAddList);
+    var confirmAddListBtn = g('confirmAddListBtn');
+    if (confirmAddListBtn) confirmAddListBtn.addEventListener('click', confirmAddList);
     
     var newListName = g('newListName');
     if (newListName) {
@@ -2479,12 +2319,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Edit List Modal
+    // Edit List Modal - FIXED: Use correct button ID
     var editListClose = g('editListClose');
     if (editListClose) editListClose.addEventListener('click', closeEditListModal);
     
-    var confirmEditList = g('confirmEditList');
-    if (confirmEditList) confirmEditList.addEventListener('click', confirmEditList);
+    var confirmEditListBtn = g('confirmEditListBtn');
+    if (confirmEditListBtn) confirmEditListBtn.addEventListener('click', confirmEditList);
     
     var editListName = g('editListName');
     if (editListName) {
