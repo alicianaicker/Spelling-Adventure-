@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Spello – Fixed Timer & Page Persistence</title>
+    <title>Spello – Master Your Spelling</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- complete style block (exactly as before, only timer moved) --- */
+        /* --- COMPLETE ORIGINAL STYLE BLOCK (from first working version) --- */
         :root {
             --bg-start: #1a0533;
             --bg-mid: #2d0b5e;
@@ -15,7 +15,7 @@
             --card-bg: #ffffff;
             --card-border: rgba(255,255,255,0.15);
             --text-primary: #1e1b4b;
-            --text-secondary: #2c3e50;
+            --text-secondary: #6b7280;
             --accent: #7c3aed;
             --accent2: #ec4899;
             --accent3: #f59e0b;
@@ -27,22 +27,18 @@
             --input-border: #a78bfa;
             --shadow: 0 20px 60px rgba(0,0,0,0.35);
             --placeholder-light: #5b6f82;
-            --start-gradient: linear-gradient(135deg, #8b5cf6, #a78bfa);
-            --start-hover: linear-gradient(135deg, #7c3aed, #8b5cf6);
         }
         .dark {
             --card-bg: #16103a;
             --card-border: rgba(139,92,246,0.3);
             --text-primary: #f0eaff;
-            --text-secondary: #cfc0f0;
+            --text-secondary: #b0a0d8;
             --chip-bg: #2a2060;
             --chip-border: #7c5ccc;
             --input-bg: #1e1750;
             --input-border: #7c5ccc;
             --shadow: 0 20px 60px rgba(0,0,0,0.7);
             --placeholder-light: #a28fc0;
-            --start-gradient: linear-gradient(135deg, #9f7aea, #b794f4);
-            --start-hover: linear-gradient(135deg, #8b5cf6, #9f7aea);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -71,30 +67,6 @@
         .btn-ghost { background: rgba(124,58,237,0.1); color: var(--accent); border: 2px solid var(--chip-border); }
         .btn-danger { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
         .btn-sm { padding: 10px 20px; font-size: 0.95rem; border-radius: 12px; }
-        .btn-start {
-            background: var(--start-gradient);
-            color: white;
-            font-size: 1.4rem;
-            padding: 22px;
-            border: none;
-            box-shadow: 0 8px 20px rgba(139,92,246,0.5);
-        }
-        .btn-start:hover:not(:disabled) {
-            background: var(--start-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(139,92,246,0.7);
-        }
-        .btn-start:disabled { opacity: 0.5; background: #a0a0a0; }
-        .btn-mywords {
-            background: var(--chip-bg);
-            color: var(--accent);
-            border: 2px solid var(--chip-border);
-            font-size: 1.3rem;
-            padding: 16px 24px;
-            width: 100%;
-            justify-content: center;
-        }
-        .btn-mywords:hover { background: var(--chip-border); color: white; }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
         @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
         .stat-card { border-radius: 20px; padding: 20px 16px; text-align: center; border: 2px solid rgba(255,255,255,0.3); }
@@ -122,8 +94,8 @@
         .dark .feedback-box.correct { background: linear-gradient(135deg, #064e3b, #065f46); border-color: #10b981; }
         .dark .feedback-box.incorrect { background: linear-gradient(135deg, #7f1d1d, #991b1b); border-color: #ef4444; }
         .dict-box { background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(236,72,153,0.08)); border: 2px solid rgba(124,58,237,0.3); border-radius: 20px; padding: 24px; margin-top: 16px; text-align: left; }
-        .dict-box .definition { font-size: 1.2rem; line-height: 1.6; color: var(--text-primary); margin-bottom: 12px; padding-left: 12px; border-left: 5px solid var(--accent2); }
-        .dict-box .example { font-style: italic; color: var(--text-secondary); background: rgba(124,58,237,0.05); padding: 14px; border-radius: 12px; font-size: 1.1rem; }
+        .dict-box .definition { font-size: 1.1rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 10px; padding-left: 8px; border-left: 4px solid var(--accent2); }
+        .dict-box .example { font-style: italic; color: var(--text-secondary); background: rgba(124,58,237,0.05); padding: 12px; border-radius: 12px; }
         .speak-btn { width: 100%; padding: 22px; background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; border: none; border-radius: 20px; font-family: 'Fredoka One', cursive; font-size: 1.6rem; letter-spacing: 0.05em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 14px; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
         .speak-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,99,235,0.5); }
         .speak-btn:active { transform: translateY(0); }
@@ -188,12 +160,12 @@
 </head>
 <body id="body">
     <div class="fab-row">
-        <button class="fab fab-theme" onclick="toggleDark()" id="themeBtn">🌙</button>
-        <button class="fab fab-help" onclick="openHelp()">❓</button>
+        <button class="fab fab-theme" onclick="toggleDark()" id="themeBtn" title="Toggle dark mode">🌙</button>
+        <button class="fab fab-help" onclick="openHelp()" title="Help">❓</button>
     </div>
     <div class="main-wrap" id="app"></div>
 
-    <!-- Help modal -->
+    <!-- Help modal (short) -->
     <div class="modal-bg" id="helpModal" style="display:none" onclick="closeHelp(event)">
         <div class="modal-card">
             <button style="position:absolute;top:18px;right:18px;background:rgba(124,58,237,0.1);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--accent)" onclick="closeHelp()">✕</button>
@@ -211,10 +183,10 @@
 
 <script>
 (function() {
-    // ========== STATE ==========
+    // ========== STATE (fully restored to original) ==========
     const state = {
-        page: 'home',                // home | manage | playing | results | parent
-        lists: [],                   // each: { name, lang: 'en'|'af'|'zu', words: [] }
+        page: 'home',
+        lists: [],
         activeListIndex: 0,
         idx: 0,
         score: 0,
@@ -232,7 +204,7 @@
         dark: false
     };
 
-    // ========== LOAD/SAVE (preserve current page) ==========
+    // ========== LOAD/SAVE (with page persistence) ==========
     function load() {
         try {
             const d = localStorage.getItem('spello_dark');
@@ -255,31 +227,10 @@
             const results = localStorage.getItem('spello_testResults');
             if (results) state.testResults = JSON.parse(results);
 
-            // Restore current page - crucial fix!
+            // Restore current page
             const savedPage = localStorage.getItem('spello_page');
             if (savedPage && ['home','manage','playing','results','parent'].includes(savedPage)) {
                 state.page = savedPage;
-            } else {
-                state.page = 'home';
-            }
-
-            // Restore game session if on playing page
-            if (state.page === 'playing') {
-                const savedIdx = localStorage.getItem('spello_game_idx');
-                if (savedIdx) state.idx = parseInt(savedIdx, 10);
-                const savedScore = localStorage.getItem('spello_game_score');
-                if (savedScore) state.score = parseInt(savedScore, 10);
-                const savedStreak = localStorage.getItem('spello_game_streak');
-                if (savedStreak) state.streak = parseInt(savedStreak, 10);
-                const savedCorrect = localStorage.getItem('spello_game_correct');
-                if (savedCorrect) state.correctSet = new Set(JSON.parse(savedCorrect));
-                const savedAnswered = localStorage.getItem('spello_game_answered');
-                if (savedAnswered) state.answered = savedAnswered === 'true';
-                const savedUserAnswer = localStorage.getItem('spello_game_userAnswer');
-                if (savedUserAnswer) state.userAnswer = savedUserAnswer;
-                const savedShowFeedback = localStorage.getItem('spello_game_showFeedback');
-                if (savedShowFeedback) state.showFeedback = savedShowFeedback === 'true';
-                // don't restore definition popup automatically
             }
 
             if (state.dark) {
@@ -298,26 +249,6 @@
             localStorage.setItem('spello_totalWords', state.totalWords);
             localStorage.setItem('spello_testResults', JSON.stringify(state.testResults));
             localStorage.setItem('spello_page', state.page);
-
-            // Save game session if playing
-            if (state.page === 'playing') {
-                localStorage.setItem('spello_game_idx', state.idx);
-                localStorage.setItem('spello_game_score', state.score);
-                localStorage.setItem('spello_game_streak', state.streak);
-                localStorage.setItem('spello_game_correct', JSON.stringify([...state.correctSet]));
-                localStorage.setItem('spello_game_answered', state.answered);
-                localStorage.setItem('spello_game_userAnswer', state.userAnswer);
-                localStorage.setItem('spello_game_showFeedback', state.showFeedback);
-            } else {
-                // Clear game session when not playing
-                localStorage.removeItem('spello_game_idx');
-                localStorage.removeItem('spello_game_score');
-                localStorage.removeItem('spello_game_streak');
-                localStorage.removeItem('spello_game_correct');
-                localStorage.removeItem('spello_game_answered');
-                localStorage.removeItem('spello_game_userAnswer');
-                localStorage.removeItem('spello_game_showFeedback');
-            }
         } catch(e) { console.error(e); }
     }
 
@@ -347,7 +278,7 @@
         setTimeout(() => window.speechSynthesis.speak(utter), 50);
     }
 
-    // ========== DICTIONARY ==========
+    // ========== DICTIONARY (fully restored) ==========
     async function fetchDefinition(word, lang) {
         try {
             if (lang === 'en') {
@@ -384,7 +315,7 @@
     }
     function replayDefinition() { if (state.currentDefinition?.definition) speak(state.currentDefinition.definition, 0.8); }
 
-    // ========== LIST MANAGEMENT ==========
+    // ========== LIST MANAGEMENT (fully restored, with single-list delete fix) ==========
     function currentWords() { return state.lists[state.activeListIndex]?.words || []; }
     function setActiveList(index) { if (state.lists[index]) { state.activeListIndex = index; save(); render(); } }
     function addList() {
@@ -421,21 +352,14 @@
     }
     function removeWord(idx) { state.lists[state.activeListIndex].words.splice(idx, 1); save(); render(); }
 
-    // ========== GAME FLOW ==========
+    // ========== GAME FLOW (fully restored) ==========
     function startGame() {
         if (!currentWords().length) { alert('Add words first.'); return; }
         state.page = 'playing'; 
-        state.idx = 0; 
-        state.score = 0; 
-        state.streak = 0;
-        state.correctSet = new Set(); 
-        state.userAnswer = ''; 
-        state.answered = false;
-        state.showFeedback = false; 
-        state.showHint = false; 
-        state.currentDefinition = null; 
-        save(); 
-        render();
+        state.idx = 0; state.score = 0; state.streak = 0;
+        state.correctSet = new Set(); state.userAnswer = ''; state.answered = false;
+        state.showFeedback = false; state.showHint = false; state.currentDefinition = null; 
+        save(); render();
     }
     function speakCurrentWord() { speak(currentWords()[state.idx], 0.65); }
     function submitAnswer() {
@@ -444,36 +368,20 @@
         state.userAnswer = val;
         const correct = val === currentWords()[state.idx];
         if (correct) { 
-            state.score++; 
-            state.correctSet.add(state.idx); 
-            state.streak++; 
+            state.score++; state.correctSet.add(state.idx); state.streak++; 
             if (state.streak > state.bestStreak) state.bestStreak = state.streak; 
             state.totalWords++; 
-        } else { 
-            state.streak = 0; 
-        }
-        state.answered = true; 
-        state.showFeedback = true; 
-        save(); 
-        render();
+        } else { state.streak = 0; }
+        state.answered = true; state.showFeedback = true; save(); render();
     }
     function nextWord() {
         if (state.idx < currentWords().length - 1) {
-            state.idx++; 
-            state.userAnswer = ''; 
-            state.answered = false; 
-            state.showFeedback = false;
-            state.showHint = false; 
-            state.currentDefinition = null; 
-            save(); 
-            render();
-        } else { 
-            endGame(); 
-        }
+            state.idx++; state.userAnswer = ''; state.answered = false; state.showFeedback = false;
+            state.showHint = false; state.currentDefinition = null; save(); render();
+        } else { endGame(); }
     }
     function endGame() {
-        const words = currentWords(); 
-        const pct = Math.round((state.score / words.length) * 100);
+        const words = currentWords(); const pct = Math.round((state.score / words.length) * 100);
         const result = { 
             date: new Date().toISOString(), 
             listName: state.lists[state.activeListIndex].name, 
@@ -484,34 +392,22 @@
             percentage: pct, 
             correctIndices: [...state.correctSet] 
         };
-        state.testResults.push(result); 
-        state.page = 'results'; 
-        save(); 
-        render();
+        state.testResults.push(result); state.page = 'results'; save(); render();
     }
     function practiceAgain() { 
         state.page = 'playing'; 
-        state.idx = 0; 
-        state.score = 0; 
-        state.streak = 0; 
-        state.correctSet = new Set(); 
-        state.userAnswer = ''; 
-        state.answered = false; 
-        state.showFeedback = false; 
-        state.showHint = false; 
-        state.currentDefinition = null; 
-        save(); 
-        render(); 
+        state.idx = 0; state.score = 0; state.streak = 0; 
+        state.correctSet = new Set(); state.userAnswer = ''; state.answered = false; 
+        state.showFeedback = false; state.showHint = false; state.currentDefinition = null; 
+        save(); render(); 
     }
     function newWords() { state.page = 'manage'; save(); render(); }
     function clearCurrentList() { 
         if (!confirm(`Clear all words from "${state.lists[state.activeListIndex].name}"?`)) return; 
-        state.lists[state.activeListIndex].words = []; 
-        save(); 
-        render(); 
+        state.lists[state.activeListIndex].words = []; save(); render(); 
     }
 
-    // ========== PARENT ==========
+    // ========== PARENT DASHBOARD (fully restored) ==========
     function goParent() { state.page = 'parent'; save(); render(); }
     function exportCSV() {
         const rows = [['Date','List','Lang','Score','Percentage','Words']];
@@ -524,19 +420,13 @@
         if (!confirm('⚠️ Delete ALL?')) return;
         localStorage.clear();
         state.lists = [{ name: 'My Words', lang: 'en', words: [] }]; 
-        state.activeListIndex = 0; 
-        state.bestStreak = 0; 
-        state.totalWords = 0; 
-        state.testResults = []; 
-        state.dark = false;
-        state.page = 'home';
-        document.body.classList.remove('dark'); 
-        document.getElementById('themeBtn').textContent = '🌙'; 
-        save(); 
-        render();
+        state.activeListIndex = 0; state.bestStreak = 0; state.totalWords = 0; 
+        state.testResults = []; state.dark = false; state.page = 'home';
+        document.body.classList.remove('dark'); document.getElementById('themeBtn').textContent = '🌙'; 
+        save(); render();
     }
 
-    // ========== NAV ==========
+    // ========== NAVIGATION ==========
     function goHome() { state.page = 'home'; save(); render(); }
     function goManage() { state.page = 'manage'; save(); render(); }
 
@@ -545,7 +435,7 @@
     function openHelp() { document.getElementById('helpModal').style.display = 'flex'; }
     function closeHelp(e) { if (!e || e.target === document.getElementById('helpModal')) document.getElementById('helpModal').style.display = 'none'; }
 
-    // ========== RENDER ==========
+    // ========== RENDER (fully restored HTML) ==========
     function render() {
         const app = document.getElementById('app');
         switch(state.page) {
@@ -563,17 +453,37 @@
         const activeList = state.lists[state.activeListIndex];
         return `
         <div class="card">
-            <div class="text-center mb-8"><div class="logo">✨ Spello ✨</div><p>Multi‑language spelling</p></div>
-            <div class="stats-grid mb-8">${['Best Streak 🔥', 'Words Mastered 📚', 'Tests Done 📝', 'Words Ready 🎯'].map((label,i)=>`
-                <div class="stat-card" style="background:linear-gradient(135deg,${i===0?'#fef3c7,#fde68a':i===1?'#d1fae5,#a7f3d0':i===2?'#dbeafe,#bfdbfe':'#ede9fe,#ddd6fe'});border-color:${i===0?'#f59e0b':i===1?'#10b981':i===2?'#3b82f6':'#8b5cf6'}">
-                    <span class="stat-num">${i===0?state.bestStreak:i===1?state.totalWords:i===2?tests:wCount}</span>
-                    <span class="stat-label">${label}</span>
-                </div>`).join('')}
+            <div class="text-center mb-8">
+                <div class="logo">✨ Spello ✨</div>
+                <p style="font-size:1.2rem;">Multi‑language spelling</p>
             </div>
-            <button class="btn btn-mywords w-full mb-4" onclick="goManage()">📋 My Words · ${activeList.name} (${activeList.lang}) · ${activeList.words.length} words</button>
+            <div class="stats-grid mb-8">
+                <div class="stat-card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#f59e0b">
+                    <span class="stat-num">${state.bestStreak}</span>
+                    <span class="stat-label">Best Streak 🔥</span>
+                </div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-color:#10b981">
+                    <span class="stat-num">${state.totalWords}</span>
+                    <span class="stat-label">Words Mastered 📚</span>
+                </div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#3b82f6">
+                    <span class="stat-num">${tests}</span>
+                    <span class="stat-label">Tests Done 📝</span>
+                </div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-color:#8b5cf6">
+                    <span class="stat-num">${wCount}</span>
+                    <span class="stat-label">Words Ready 🎯</span>
+                </div>
+            </div>
+
+            <!-- My Words button (original style) -->
+            <button class="btn btn-ghost w-full mb-4" onclick="goManage()" style="font-size:1.3rem; padding:20px;">
+                📋 My Words · ${activeList.name} (${activeList.lang}) · ${activeList.words.length} words
+            </button>
+
             <div class="flex gap-4" style="flex-direction:column">
-                <button class="btn btn-start w-full" onclick="startGame()" ${!wCount ? 'disabled' : ''}>🚀 Continue with this list</button>
-                <button class="btn btn-blue w-full" onclick="goParent()">👪 Parent Dashboard</button>
+                <button class="btn btn-success w-full" onclick="startGame()" style="font-size:1.3rem;padding:20px;" ${!wCount ? 'disabled' : ''}>🚀 Start Spelling</button>
+                <button class="btn btn-blue w-full" onclick="goParent()" style="font-size:1.3rem;padding:20px;">👪 Parent Dashboard</button>
             </div>
         </div>`;
     }
@@ -582,14 +492,37 @@
         const activeList = state.lists[state.activeListIndex];
         return `
         <div class="card">
-            <div class="flex justify-between items-center mb-6"><h1 style="font-size:2rem;">📚 My Word Lists</h1><button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button></div>
+            <div class="flex justify-between items-center mb-6">
+                <h1 style="font-size:2rem;">📚 My Word Lists</h1>
+                <button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button>
+            </div>
             <div class="mb-6">
                 <label class="bold mb-2">Select a list:</label>
-                <div class="chip-row">${state.lists.map((lst,i)=>`<span class="list-tab ${i===state.activeListIndex?'active':''}" onclick="setActiveList(${i})">${lst.name} <span class="language-badge">${lst.lang}</span> ${lst.words.length}</span>`).join('')}<span class="list-tab" onclick="addList()">➕ New List</span></div>
+                <div class="chip-row">
+                    ${state.lists.map((lst, i) => `
+                        <span class="list-tab ${i === state.activeListIndex ? 'active' : ''}" onclick="setActiveList(${i})">
+                            ${lst.name} <span class="language-badge">${lst.lang}</span> ${lst.words.length}
+                        </span>`).join('')}
+                    <span class="list-tab" onclick="addList()">➕ New List</span>
+                </div>
                 <button class="btn btn-danger btn-sm mt-2" onclick="deleteList(${state.activeListIndex})">🗑️ Delete "${activeList.name}"</button>
             </div>
-            <div class="mb-6"><label class="bold mb-2">Add words to "${activeList.name}" (${activeList.lang})</label><div class="flex gap-3"><input id="wordInput" class="word-input" placeholder="e.g. hello" onkeydown="if(event.key==='Enter')addWord()"><button class="btn btn-blue" onclick="addWord()">Add</button></div></div>
-            ${activeList.words.length ? `<div class="mb-6"><h3>Words (${activeList.words.length})</h3><div class="grid2">${activeList.words.map((w,i)=>`<div class="word-chip"><span class="wname">${w}</span><button class="wdel" onclick="removeWord(${i})">✕</button></div>`).join('')}</div></div>` : '<p class="mb-4">This list is empty.</p>'}
+            <div class="mb-6">
+                <label class="bold mb-2">Add words to "${activeList.name}" (${activeList.lang})</label>
+                <div class="flex gap-3">
+                    <input id="wordInput" class="word-input" placeholder="e.g. hello" onkeydown="if(event.key==='Enter')addWord()">
+                    <button class="btn btn-blue" onclick="addWord()">Add</button>
+                </div>
+            </div>
+            ${activeList.words.length ? `
+            <div class="mb-6">
+                <h3 style="font-size:1.1rem;">Words (${activeList.words.length})</h3>
+                <div class="grid2">
+                    ${activeList.words.map((w,i) => `
+                        <div class="word-chip"><span class="wname">${w}</span><button class="wdel" onclick="removeWord(${i})">✕</button></div>
+                    `).join('')}
+                </div>
+            </div>` : '<p class="mb-4">This list is empty.</p>'}
             <button class="btn btn-success w-full" onclick="startGame()" ${!activeList.words.length ? 'disabled' : ''}>🚀 Start Spelling</button>
         </div>`;
     }
@@ -603,8 +536,14 @@
         const list = state.lists[state.activeListIndex];
         return `
         <div class="card">
-            <div class="flex justify-between items-center mb-4"><div><h2 style="font-size:1.6rem;">${list.name} <span class="language-badge">${list.lang}</span></h2></div><button class="btn btn-ghost btn-sm" onclick="goHome()">Exit</button></div>
-            <div class="mb-4"><div class="flex justify-between"><span>Word ${state.idx+1}/${words.length}</span><span>Score: ${state.score} ⭐</span><span>Streak: ${state.streak} 🔥</span></div><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div></div>
+            <div class="flex justify-between items-center mb-4">
+                <div><h2 style="font-size:1.6rem;">${list.name} <span class="language-badge">${list.lang}</span></h2></div>
+                <button class="btn btn-ghost btn-sm" onclick="goHome()">Exit</button>
+            </div>
+            <div class="mb-4">
+                <div class="flex justify-between"><span>Word ${state.idx+1}/${words.length}</span><span>Score: ${state.score} ⭐</span><span>Streak: ${state.streak} 🔥</span></div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+            </div>
             <div class="listen-section">
                 <button class="speak-btn mb-3" onclick="speakCurrentWord()"><span class="pulse-ring">🔊</span> SAY THE WORD</button>
                 <button class="btn btn-primary w-full" onclick="requestDefinition()">📘 Definition (word hidden)</button>
@@ -612,12 +551,14 @@
             </div>
             <div class="mb-4"><input id="answerInput" class="answer-input" value="${state.answered ? state.userAnswer : ''}" placeholder="✏️ Spell the word…" autocomplete="off" ${state.answered ? 'disabled' : ''} onkeydown="if(event.key==='Enter'&&!state.answered)submitAnswer()"></div>
             ${!state.answered ? `<button class="btn btn-primary w-full" onclick="submitAnswer()">✅ Check Answer</button>` : `<button class="btn btn-success w-full" onclick="nextWord()">${state.idx < words.length-1 ? '🚀 Next Word' : '🎉 See Results'}</button>`}
-            <!-- timer row moved here, below the check button -->
+            
+            <!-- timer row moved here, below the check button (ONLY change) -->
             <div class="timer-row flex justify-between items-center">
                 <span>⏱️ Word ${state.idx+1}/${words.length}</span>
                 <span>✅ ${state.score} correct</span>
                 <span>🔥 ${state.streak} streak</span>
             </div>
+            
             ${state.showFeedback ? `<div class="feedback-box ${isCorrect ? 'correct' : 'incorrect'} mt-4"><div style="font-size:3.5rem;">${isCorrect ? '🎉' : '💪'}</div><h3 style="font-size:1.5rem;">${isCorrect ? 'Perfect!' : `Correct: <em>${w}</em>`}</h3></div>` : ''}
         </div>`;
     }
@@ -641,7 +582,10 @@
         const totalCorrect = state.testResults.reduce((acc, t) => acc + t.score, 0);
         return `
         <div class="card">
-            <div class="flex justify-between items-center mb-6"><h1 style="font-size:1.8rem;">👪 Parent Dashboard</h1><div><button class="btn btn-blue btn-sm" onclick="exportCSV()">📥 Export CSV</button><button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button></div></div>
+            <div class="flex justify-between items-center mb-6">
+                <h1 style="font-size:1.8rem;">👪 Parent Dashboard</h1>
+                <div><button class="btn btn-blue btn-sm" onclick="exportCSV()">📥 Export CSV</button><button class="btn btn-ghost btn-sm" onclick="goHome()">🏠 Home</button></div>
+            </div>
             ${state.testResults.length === 0 ? '<p class="text-center">No tests taken yet.</p>' : `
             <div class="stats-grid mb-6">
                 <div class="stat-card" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);"><span class="stat-num">${totalTests}</span><span class="stat-label">Total Tests</span></div>
@@ -671,4 +615,4 @@
 })();
 </script>
 </body>
-</html> 
+</html>
