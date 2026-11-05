@@ -43,6 +43,8 @@
             --parent-grad: linear-gradient(135deg, #E8F4FD 0%, #F5E8FD 100%);
             --parent-border: #C5DDF5;
             --stat-card-bg: #F8FAFF;
+            --picker-card-bg: #FFFFFF;
+            --picker-card-border: #E4E9F2;
         }
         body.dark {
             --surface: #1F2937;
@@ -70,6 +72,8 @@
             --parent-grad: linear-gradient(135deg, #1E3A8A 0%, #4C1D95 100%);
             --parent-border: #1E40AF;
             --stat-card-bg: #111827;
+            --picker-card-bg: #1F2937;
+            --picker-card-border: #374151;
         }
         html, body { min-height: 100%; }
         body {
@@ -84,9 +88,7 @@
             background: var(--surface); border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.25);
             overflow: hidden; margin: 0 auto;
-            transition: background 0.3s;
         }
-        
         .app-header {
             background: var(--header-grad);
             padding: 12px var(--pad);
@@ -114,22 +116,21 @@
             border: 2px solid rgba(255,255,255,0.35);
             color: white; font-size: 1.15rem; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; transition: background 0.15s, transform 0.15s;
-            font-weight: bold; padding: 0;
+            flex-shrink: 0; font-weight: bold; padding: 0;
         }
         .hdr-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.94); }
         .hdr-btn.hidden { visibility: hidden; }
         
         .user-bar {
-            display: flex; align-items: center; gap: 6px;
+            display: flex; align-items: center; gap: 5px;
             background: var(--userbar-grad);
             border-bottom: 2px solid var(--userbar-border);
-            padding: 10px var(--pad);
+            padding: 9px var(--pad);
         }
-        .user-bar .u-avatar { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+        .user-bar .u-avatar { font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
         .user-bar .u-name {
             flex: 1; min-width: 0; font-weight: bold; color: var(--ink);
-            font-size: 0.88rem; text-align: left; overflow: hidden;
+            font-size: 0.86rem; text-align: left; overflow: hidden;
             text-overflow: ellipsis; white-space: nowrap;
         }
         .u-btn {
@@ -137,10 +138,10 @@
             border: 2px solid var(--userbar-border);
             color: var(--ink);
             font-family: inherit; font-weight: bold;
-            font-size: 0.72rem; padding: 6px 9px; border-radius: 9px;
+            font-size: 0.72rem; padding: 5px 8px; border-radius: 8px;
             cursor: pointer; flex-shrink: 0;
             display: inline-flex; align-items: center; gap: 3px;
-            white-space: nowrap;
+            white-space: nowrap; min-width: 32px; justify-content: center;
         }
         .u-btn:active { background: var(--pink); color: white; }
         .u-btn-highlight { border-color: var(--purple); color: var(--purple); }
@@ -213,7 +214,90 @@
             transform: scale(1.05); box-shadow: 0 4px 12px rgba(255,109,180,0.3);
         }
         
-        /* ===== HOME: MY LISTS ===== */
+        /* ===== PROFILE PICKER ===== */
+        .picker-title {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+        .picker-subtitle {
+            text-align: center;
+            color: var(--ink-soft);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .picker-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .picker-card {
+            background: var(--picker-card-bg);
+            border: 2px solid var(--picker-card-border);
+            border-radius: 16px;
+            padding: 16px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .picker-card:active { transform: scale(0.97); }
+        .picker-card.new {
+            border-style: dashed;
+            border-color: var(--purple);
+            background: rgba(155, 126, 255, 0.08);
+        }
+        .picker-avatar {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin: 0 auto 8px;
+            box-shadow: 0 4px 10px rgba(74,158,255,0.25);
+        }
+        .picker-card.new .picker-avatar {
+            background: rgba(155, 126, 255, 0.15);
+            box-shadow: none;
+            font-size: 1.8rem;
+            color: var(--purple);
+        }
+        .picker-name {
+            font-weight: bold;
+            color: var(--ink);
+            font-size: 1rem;
+            word-break: break-word;
+            line-height: 1.2;
+            margin-bottom: 3px;
+        }
+        .picker-meta {
+            font-size: 0.75rem;
+            color: var(--ink-soft);
+            font-weight: bold;
+        }
+        .picker-card.new .picker-name { color: var(--purple); }
+        .picker-delete {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: rgba(255, 92, 92, 0.15);
+            border: none;
+            color: var(--red);
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+        }
+        .picker-delete:active { background: var(--red); color: white; }
+        .picker-card-wrap { position: relative; }
+        
+        /* ===== HOME ===== */
         .dash-header {
             display: flex; align-items: center; justify-content: space-between;
             margin-bottom: 14px;
@@ -283,36 +367,26 @@
             text-align: left;
         }
         .parent-banner h2 {
-            font-size: 1.2rem;
-            color: var(--ink);
-            margin-bottom: 4px;
+            font-size: 1.2rem; color: var(--ink); margin-bottom: 4px;
         }
         .parent-banner p {
-            font-size: 0.85rem;
-            color: var(--ink-soft);
-            line-height: 1.4;
+            font-size: 0.85rem; color: var(--ink-soft); line-height: 1.4;
         }
         body.dark .parent-banner h2 { color: white; }
         
         .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
             margin-bottom: 20px;
         }
         .stat-card {
             background: var(--stat-card-bg);
             border: 2px solid var(--border);
             border-radius: 14px;
-            padding: 14px 12px;
-            text-align: center;
+            padding: 14px 12px; text-align: center;
         }
         .stat-value {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: var(--blue-dark);
-            line-height: 1.1;
-            margin-bottom: 4px;
+            font-size: 1.6rem; font-weight: bold;
+            color: var(--blue-dark); line-height: 1.1; margin-bottom: 4px;
         }
         .stat-card:nth-child(1) .stat-value { color: var(--blue-dark); }
         .stat-card:nth-child(2) .stat-value { color: var(--purple); }
@@ -323,10 +397,8 @@
         body.dark .stat-card:nth-child(3) .stat-value { color: #F9A8D4; }
         body.dark .stat-card:nth-child(4) .stat-value { color: #6EE7B7; }
         .stat-label {
-            font-size: 0.75rem;
-            color: var(--ink-soft);
-            font-weight: bold;
-            line-height: 1.2;
+            font-size: 0.75rem; color: var(--ink-soft);
+            font-weight: bold; line-height: 1.2;
         }
         
         .list-header {
@@ -341,78 +413,49 @@
         }
         
         .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 2px;
+            display: flex; flex-direction: column; gap: 10px;
+            max-height: 400px; overflow-y: auto; padding: 2px;
         }
         .history-list::-webkit-scrollbar { width: 6px; }
         .history-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        
         .history-card {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            background: var(--surface);
-            border-radius: 14px;
-            padding: 12px 14px;
-            border: 2px solid var(--border);
+            display: flex; gap: 12px; align-items: flex-start;
+            background: var(--surface); border-radius: 14px;
+            padding: 12px 14px; border: 2px solid var(--border);
             border-left: 5px solid var(--blue);
         }
         .history-card.test { border-left-color: var(--pink); }
         .history-card.practice { border-left-color: var(--blue); }
-        
         .history-icon {
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-            background: rgba(74,158,255,0.12);
+            width: 36px; height: 36px; min-width: 36px;
+            border-radius: 10px; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 1.15rem; background: rgba(74,158,255,0.12);
         }
         .history-card.test .history-icon { background: rgba(255,109,180,0.12); }
-        
         .history-body { flex: 1; min-width: 0; text-align: left; }
         .history-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 2px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 8px; margin-bottom: 2px;
         }
         .history-type {
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: var(--ink-soft);
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            font-size: 0.8rem; font-weight: bold; color: var(--ink-soft);
+            text-transform: uppercase; letter-spacing: 0.3px;
         }
         .history-score {
-            font-size: 0.95rem;
-            font-weight: bold;
-            color: var(--blue-dark);
-            white-space: nowrap;
+            font-size: 0.95rem; font-weight: bold;
+            color: var(--blue-dark); white-space: nowrap;
         }
         .history-score.high { color: var(--green); }
         .history-score.mid { color: var(--orange); }
         .history-score.low { color: var(--red); }
         .history-list-name {
-            font-size: 0.95rem;
-            font-weight: bold;
-            color: var(--ink);
-            word-break: break-word;
-            margin-bottom: 2px;
+            font-size: 0.95rem; font-weight: bold;
+            color: var(--ink); word-break: break-word; margin-bottom: 2px;
         }
         .history-meta {
-            font-size: 0.78rem;
-            color: var(--ink-soft);
-            line-height: 1.3;
-            word-break: break-word;
+            font-size: 0.78rem; color: var(--ink-soft);
+            line-height: 1.3; word-break: break-word;
         }
         
         .danger-zone {
@@ -430,7 +473,6 @@
             font-size: 1.2rem; font-weight: bold; color: var(--ink);
             flex: 1; min-width: 0; word-break: break-word;
         }
-        
         .list-actions {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
             margin-bottom: 20px;
@@ -458,7 +500,6 @@
         }
         .word-list::-webkit-scrollbar { width: 6px; }
         .word-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        
         .word-card {
             display: flex; align-items: center; gap: 12px;
             background: var(--surface); border-radius: 14px;
@@ -620,8 +661,11 @@
             .btn { font-size: 0.9rem; }
             .word-list { max-height: 260px; }
             .history-list { max-height: 340px; }
-            .u-btn { font-size: 0.68rem; padding: 5px 7px; }
+            .u-btn { font-size: 0.68rem; padding: 4px 6px; }
             .stat-value { font-size: 1.35rem; }
+            .picker-grid { gap: 10px; }
+            .picker-avatar { width: 52px; height: 52px; font-size: 1.7rem; }
+            .picker-name { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -629,7 +673,7 @@
     <div class="container">
         <div class="app-header">
             <button class="hdr-btn hidden" id="back-btn" onclick="goBack()" aria-label="Back">←</button>
-            <h1><span class="bee">🐝</span> Spello <span class="bee">🐝</span><span class="version-badge">v6</span></h1>
+            <h1><span class="bee">🐝</span> Spello <span class="bee">🐝</span><span class="version-badge">v7</span></h1>
             <button class="hdr-btn" onclick="showInfo()" aria-label="Info">ℹ️</button>
             <button class="hdr-btn" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle theme">🌙</button>
         </div>
@@ -637,15 +681,16 @@
         <div class="user-bar hidden" id="user-bar">
             <span class="u-avatar" id="ubar-avatar">👧</span>
             <span class="u-name" id="ubar-name">Name</span>
-            <button class="u-btn u-btn-highlight" onclick="goToProgress()">📊 Progress</button>
+            <button class="u-btn" onclick="showProfilePicker()" title="Switch user">🔄</button>
+            <button class="u-btn u-btn-highlight" onclick="goToProgress()">📊</button>
             <button class="u-btn" onclick="goToProfile()">👤</button>
         </div>
         
         <div class="app-body">
-            <!-- WELCOME -->
+            <!-- WELCOME (creates new profile) -->
             <div class="screen welcome-screen">
                 <div class="big-avatar" id="preview-avatar">👧</div>
-                <p class="welcome-text">Welcome to Spello! Pick your buddy and tell me your name.</p>
+                <p class="welcome-text" id="welcome-text">Welcome! Pick your buddy and tell me your name.</p>
                 <div class="avatar-picker" id="welcome-avatar-picker">
                     <button type="button" class="avatar-opt selected" onclick="pickAvatar('👧', this)">👧</button>
                     <button type="button" class="avatar-opt" onclick="pickAvatar('👦', this)">👦</button>
@@ -657,10 +702,18 @@
                 <input type="text" class="text-input" id="input-name" placeholder="Type your name" autocomplete="off">
                 <div class="stack" style="margin-top: 14px;">
                     <button class="btn btn-primary" onclick="startApp()">Let's Start! 🚀</button>
+                    <button class="btn btn-ghost btn-sm" id="welcome-back-btn" onclick="cancelWelcome()" style="display: none;">← Back to User Picker</button>
                 </div>
             </div>
             
-            <!-- PROFILE -->
+            <!-- PROFILE PICKER -->
+            <div class="screen picker-screen">
+                <h2 class="picker-title">👋 Who's using Spello?</h2>
+                <p class="picker-subtitle">Tap your name. New here? Pick "New User" to start fresh!</p>
+                <div class="picker-grid" id="picker-grid"></div>
+            </div>
+            
+            <!-- PROFILE EDIT -->
             <div class="screen profile-screen">
                 <h2 style="text-align: center; font-size: 1.15rem; margin-bottom: 14px;">👤 My Profile</h2>
                 <div class="big-avatar" id="profile-preview">👧</div>
@@ -677,23 +730,21 @@
                     <button class="btn btn-primary" onclick="saveProfile()">💾 Save Changes</button>
                 </div>
                 <div class="danger-zone">
-                    <p>Start over with a different user?</p>
-                    <button class="btn btn-danger btn-sm" onclick="resetApp()">🔄 Start Fresh (New User)</button>
+                    <p>Delete this profile and all its data?</p>
+                    <button class="btn btn-danger btn-sm" onclick="deleteCurrentProfile()">🗑️ Delete This Profile</button>
                 </div>
             </div>
             
-            <!-- HOME (MY LISTS) -->
+            <!-- HOME -->
             <div class="screen dashboard-screen">
                 <div class="dash-header">
                     <h2>📚 My Lists</h2>
                     <span class="dash-stats" id="dash-stats">0 lists · 0 words</span>
                 </div>
-                
                 <div class="create-row">
                     <input type="text" class="text-input" id="new-list-name" placeholder="New list name…" autocomplete="off">
                     <button class="btn btn-accent" onclick="createList()" aria-label="Create list">+</button>
                 </div>
-                
                 <div class="list-grid" id="lists-container">
                     <div class="empty-state">
                         <span class="emoji">📝</span>
@@ -702,13 +753,12 @@
                 </div>
             </div>
             
-            <!-- PARENT DASHBOARD (PROGRESS HISTORY) -->
+            <!-- PARENT DASHBOARD -->
             <div class="screen parent-screen">
                 <div class="parent-banner">
                     <h2>👨‍👩‍👧 Parent Dashboard</h2>
                     <p id="parent-banner-text">See how your child is doing with their spelling practice.</p>
                 </div>
-                
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value" id="stat-sessions">0</div>
@@ -727,21 +777,18 @@
                         <div class="stat-label">Best Score</div>
                     </div>
                 </div>
-                
                 <div class="list-header">
                     <h2>📊 Recent Activity</h2>
                     <span class="count-badge" id="history-count">0</span>
                 </div>
-                
                 <div class="history-list" id="history-list">
                     <div class="empty-state">
                         <span class="emoji">📊</span>
                         No activity yet.<br>Results will appear here after practice or test sessions.
                     </div>
                 </div>
-                
                 <div class="danger-zone">
-                    <p>Clear all progress history?</p>
+                    <p>Clear this profile's progress history?</p>
                     <button class="btn btn-danger btn-sm" onclick="clearHistory()">🗑️ Clear History</button>
                 </div>
             </div>
@@ -752,18 +799,14 @@
                     <h2 class="list-title" id="current-list-name">List</h2>
                     <button class="delete-btn" onclick="deleteCurrentList()" aria-label="Delete list">🗑️</button>
                 </div>
-                
                 <div class="list-actions" id="list-actions" style="display: none;">
                     <button class="btn btn-primary" onclick="startPractice()">
-                        <span class="icn">📖</span>
-                        Practice
+                        <span class="icn">📖</span> Practice
                     </button>
                     <button class="btn btn-accent" onclick="startTest()">
-                        <span class="icn">📝</span>
-                        Test
+                        <span class="icn">📝</span> Test
                     </button>
                 </div>
-                
                 <div class="add-card">
                     <div class="add-card-title">➕ Add a Word</div>
                     <label class="field-label" for="new-word">The word:</label>
@@ -775,12 +818,10 @@
                         <button class="btn btn-accent" onclick="addWord()">Add Word</button>
                     </div>
                 </div>
-                
                 <div class="list-header">
                     <h2>📖 Words</h2>
                     <span class="count-badge" id="count-badge">0 words</span>
                 </div>
-                
                 <div class="word-list" id="word-list">
                     <div class="empty-state">
                         <span class="emoji">📝</span>
@@ -870,16 +911,16 @@
             <span class="modal-close" onclick="closeInfo()">&times;</span>
             <h3>ℹ️ About Spello</h3>
             <div class="info-section">
+                <h4>Multiple users</h4>
+                <p>Each person gets their own profile with separate lists, words and progress. Tap <b>🔄</b> in the top bar to switch or add a new user.</p>
+            </div>
+            <div class="info-section">
                 <h4>For parents</h4>
-                <p>Create spelling lists on the home screen. Add words with definitions (auto-lookup supported). Open the <b>📊 Progress</b> screen to view a history of your child's practice and test results.</p>
+                <p>Create spelling lists on the home screen. Tap <b>📊</b> to view the current user's full practice and test history.</p>
             </div>
             <div class="info-section">
                 <h4>For kids</h4>
-                <p>Tap any list and choose <b>📖 Practice</b> or <b>📝 Test</b>. Hear each word, type it, and get instant feedback. All results are saved automatically.</p>
-            </div>
-            <div class="info-section">
-                <h4>Navigation</h4>
-                <p>Use the ← back arrow (top left) to go back one screen. The 🌙 / ☀️ button switches themes.</p>
+                <p>Tap any list, choose <b>📖 Practice</b> or <b>📝 Test</b>. Hear each word, type it, and get instant feedback.</p>
             </div>
             <div class="stack" style="margin-top: 16px;">
                 <button class="btn btn-primary" onclick="closeInfo()">Got it!</button>
@@ -923,7 +964,10 @@
             }
         };
         
-        let data = { name: '', avatar: '👧', lists: [], history: [] };
+        // ===== NEW DATA MODEL =====
+        // data = { activeProfileId, profiles: [{ id, name, avatar, lists, history }] }
+        let data = { activeProfileId: null, profiles: [] };
+        let pendingAvatar = '👧';
         let currentListId = null;
         let currentIdx = 0;
         let practiceCorrect = new Set();
@@ -931,57 +975,99 @@
         let testCorrectSet = new Set();
         let tempProfileAvatar = '👧';
         let profileReturnScreen = 'dashboard-screen';
+        let pickerReturnScreen = 'dashboard-screen';
+        let currentScreenName = 'welcome-screen';
         
+        function getActiveProfile() {
+            if (!data.activeProfileId) return null;
+            return data.profiles.find(p => p.id === data.activeProfileId) || null;
+        }
+        
+        function saveData() {
+            try { store.set('sb_v7', data); } catch(e){ console.error(e); }
+        }
+        
+        // ===== BOOT =====
         window.addEventListener('load', () => {
             const savedTheme = store.get('sb_theme', 'light');
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark');
                 document.getElementById('theme-btn').textContent = '☀️';
             }
-            try {
-                const saved = store.get('sb_data', null);
-                if (saved && typeof saved === 'object' && saved.name && Array.isArray(saved.lists)) {
-                    data = saved;
-                    data.lists.forEach(l => { if (!Array.isArray(l.words)) l.words = []; });
-                    if (!Array.isArray(data.history)) data.history = [];
-                    renderDashboard();
-                    showScreen('dashboard-screen');
-                } else {
-                    showScreen('welcome-screen');
+            
+            // Try new format
+            let saved = store.get('sb_v7', null);
+            
+            // Migrate from v6 if needed
+            if (!saved) {
+                const legacy = store.get('sb_data', null);
+                if (legacy && legacy.name) {
+                    saved = {
+                        activeProfileId: 1,
+                        profiles: [{
+                            id: 1,
+                            name: legacy.name,
+                            avatar: legacy.avatar || '👧',
+                            lists: legacy.lists || [],
+                            history: legacy.history || []
+                        }]
+                    };
+                    store.set('sb_v7', saved);
+                    store.remove('sb_data');
                 }
-            } catch(err) {
-                console.error(err);
+            }
+            
+            if (!saved || !Array.isArray(saved.profiles) || saved.profiles.length === 0) {
+                // Fresh install — no profiles yet
+                data = { activeProfileId: null, profiles: [] };
                 showScreen('welcome-screen');
+                return;
+            }
+            
+            data = saved;
+            // Sanitize
+            data.profiles.forEach(p => {
+                if (!Array.isArray(p.lists)) p.lists = [];
+                if (!Array.isArray(p.history)) p.history = [];
+                p.lists.forEach(l => { if (!Array.isArray(l.words)) l.words = []; });
+            });
+            
+            // Validate active profile
+            if (!getActiveProfile()) {
+                data.activeProfileId = data.profiles[data.profiles.length - 1].id;
+            }
+            
+            // Decide landing screen
+            if (data.profiles.length >= 2) {
+                // Multiple profiles → show picker so it's always clear who's using
+                showProfilePicker();
+            } else {
+                // Single profile → straight to dashboard
+                updateUserBar();
+                renderDashboard();
+                showScreen('dashboard-screen');
             }
         });
         
-        function saveData() { try { store.set('sb_data', data); } catch(e){ console.error(e); } }
-        
-        function toggleTheme() {
-            const isDark = document.body.classList.toggle('dark');
-            document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-            store.set('sb_theme', isDark ? 'dark' : 'light');
-        }
-        
-        function showInfo() { document.getElementById('info-modal').classList.add('show'); }
-        function closeInfo() { document.getElementById('info-modal').classList.remove('show'); }
-        
+        // ===== SCREEN MANAGEMENT =====
         function showScreen(name) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const t = document.querySelector('.' + name);
             if (t) t.classList.add('active');
+            currentScreenName = name;
             
             const ub = document.getElementById('user-bar');
             const backBtn = document.getElementById('back-btn');
             
-            if (name === 'welcome-screen') {
+            if (name === 'welcome-screen' || name === 'picker-screen') {
                 ub.classList.add('hidden');
             } else {
                 ub.classList.remove('hidden');
                 updateUserBar();
             }
             
-            if (name === 'welcome-screen' || name === 'dashboard-screen') {
+            // Back button logic
+            if (name === 'welcome-screen' || name === 'dashboard-screen' || name === 'picker-screen') {
                 backBtn.classList.add('hidden');
             } else {
                 backBtn.classList.remove('hidden');
@@ -991,9 +1077,7 @@
         }
         
         function goBack() {
-            const active = document.querySelector('.screen.active');
-            if (!active) return;
-            const cur = active.classList[1];
+            const cur = currentScreenName;
             if (cur === 'profile-screen') { showScreen(profileReturnScreen); return; }
             if (cur === 'parent-screen') { showScreen('dashboard-screen'); return; }
             if (cur === 'list-detail-screen') { showScreen('dashboard-screen'); return; }
@@ -1002,12 +1086,15 @@
         }
         
         function updateUserBar() {
-            document.getElementById('ubar-avatar').textContent = data.avatar;
-            document.getElementById('ubar-name').textContent = data.name;
+            const p = getActiveProfile();
+            if (!p) return;
+            document.getElementById('ubar-avatar').textContent = p.avatar;
+            document.getElementById('ubar-name').textContent = p.name;
         }
         
+        // ===== WELCOME / NEW USER =====
         function pickAvatar(emoji, el) {
-            data.avatar = emoji;
+            pendingAvatar = emoji;
             document.getElementById('preview-avatar').textContent = emoji;
             document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
@@ -1016,20 +1103,132 @@
         function startApp() {
             const name = document.getElementById('input-name').value.trim();
             if (!name) { showToast('Please type your name!', 'warning'); return; }
-            data = { name, avatar: data.avatar || '👧', lists: [], history: [] };
+            
+            const newProfile = {
+                id: Date.now() + Math.floor(Math.random() * 1000),
+                name: name,
+                avatar: pendingAvatar,
+                lists: [],
+                history: []
+            };
+            data.profiles.push(newProfile);
+            data.activeProfileId = newProfile.id;
             saveData();
+            
+            // Reset form for next time
+            document.getElementById('input-name').value = '';
+            
+            updateUserBar();
             renderDashboard();
             showScreen('dashboard-screen');
+            showToast(`Welcome, ${name}! 🎉`, 'success');
         }
         
+        function cancelWelcome() {
+            // Return to picker (only if this welcome was opened from picker)
+            if (data.profiles.length > 0) {
+                showProfilePicker();
+            }
+        }
+        
+        // ===== PROFILE PICKER =====
+        function showProfilePicker() {
+            pickerReturnScreen = currentScreenName;
+            renderProfilePicker();
+            showScreen('picker-screen');
+        }
+        
+        function renderProfilePicker() {
+            const c = document.getElementById('picker-grid');
+            const cards = data.profiles.map(p => {
+                const isActive = p.id === data.activeProfileId;
+                return `
+                    <div class="picker-card-wrap">
+                        <div class="picker-card" onclick="switchToProfile(${p.id})">
+                            <div class="picker-avatar">${p.avatar}</div>
+                            <div class="picker-name">${esc(p.name)}${isActive ? ' ✓' : ''}</div>
+                            <div class="picker-meta">${p.lists.length} list${p.lists.length !== 1 ? 's' : ''}</div>
+                        </div>
+                        ${data.profiles.length > 1 ? `<button class="picker-delete" onclick="event.stopPropagation(); deleteProfileById(${p.id})" aria-label="Delete profile">✕</button>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            const newCard = `
+                <div class="picker-card new" onclick="startNewUser()">
+                    <div class="picker-avatar">➕</div>
+                    <div class="picker-name">New User</div>
+                    <div class="picker-meta">Start fresh</div>
+                </div>
+            `;
+            
+            c.innerHTML = cards + newCard;
+        }
+        
+        function switchToProfile(id) {
+            const p = data.profiles.find(x => x.id === id);
+            if (!p) return;
+            data.activeProfileId = id;
+            saveData();
+            resetSessionState();
+            updateUserBar();
+            renderDashboard();
+            showScreen('dashboard-screen');
+            showToast(`Hi, ${p.name}!`, 'success');
+        }
+        
+        function startNewUser() {
+            // Reset welcome form to blank
+            pendingAvatar = '👧';
+            document.getElementById('input-name').value = '';
+            document.getElementById('preview-avatar').textContent = '👧';
+            document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
+            document.querySelector('#welcome-avatar-picker .avatar-opt').classList.add('selected');
+            
+            // Update text and show back button if there are existing profiles
+            document.getElementById('welcome-text').textContent = 'New here? Pick your buddy and tell me your name.';
+            const backBtn = document.getElementById('welcome-back-btn');
+            backBtn.style.display = data.profiles.length > 0 ? 'flex' : 'none';
+            
+            showScreen('welcome-screen');
+        }
+        
+        function deleteProfileById(id) {
+            const p = data.profiles.find(x => x.id === id);
+            if (!p) return;
+            if (!confirm(`Delete profile "${p.name}" and all their data?`)) return;
+            data.profiles = data.profiles.filter(x => x.id !== id);
+            if (data.activeProfileId === id) {
+                data.activeProfileId = data.profiles.length > 0 ? data.profiles[0].id : null;
+            }
+            saveData();
+            if (data.profiles.length === 0) {
+                startNewUser();
+            } else {
+                renderProfilePicker();
+                updateUserBar();
+                showToast('Profile deleted', 'success');
+            }
+        }
+        
+        function resetSessionState() {
+            currentListId = null;
+            currentIdx = 0;
+            practiceCorrect = new Set();
+            testCorrectSet = new Set();
+            testAnswered = false;
+        }
+        
+        // ===== PROFILE EDIT =====
         function goToProfile() {
-            const active = document.querySelector('.screen.active');
-            if (active) profileReturnScreen = active.classList[1];
-            tempProfileAvatar = data.avatar;
-            document.getElementById('profile-preview').textContent = data.avatar;
-            document.getElementById('profile-name-input').value = data.name;
+            const p = getActiveProfile();
+            if (!p) return;
+            profileReturnScreen = currentScreenName;
+            tempProfileAvatar = p.avatar;
+            document.getElementById('profile-preview').textContent = p.avatar;
+            document.getElementById('profile-name-input').value = p.name;
             document.querySelectorAll('#profile-avatar-picker .avatar-opt').forEach(o => {
-                o.classList.toggle('selected', o.textContent === data.avatar);
+                o.classList.toggle('selected', o.textContent === p.avatar);
             });
             showScreen('profile-screen');
         }
@@ -1042,154 +1241,52 @@
         }
         
         function saveProfile() {
+            const p = getActiveProfile();
+            if (!p) return;
             const newName = document.getElementById('profile-name-input').value.trim();
             if (!newName) { showToast('Name cannot be empty!', 'warning'); return; }
-            data.name = newName;
-            data.avatar = tempProfileAvatar;
+            p.name = newName;
+            p.avatar = tempProfileAvatar;
             saveData();
             updateUserBar();
             showToast('Profile saved!', 'success');
             showScreen(profileReturnScreen);
         }
         
-        function resetApp() {
-            if (!confirm('Clear EVERYTHING (name, lists, progress history) and start fresh?')) return;
-            data = { name: '', avatar: '👧', lists: [], history: [] };
-            saveData();
-            document.getElementById('input-name').value = '';
-            document.getElementById('preview-avatar').textContent = '👧';
-            document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
-            document.querySelector('#welcome-avatar-picker .avatar-opt').classList.add('selected');
-            currentListId = null;
-            showScreen('welcome-screen');
-            showToast('All cleared. Fresh start!', 'success');
-        }
-        
-        // ===== PROGRESS / PARENT DASHBOARD =====
-        function goToProgress() {
-            renderParentDashboard();
-            showScreen('parent-screen');
-        }
-        
-        function renderParentDashboard() {
-            document.getElementById('parent-banner-text').textContent = 
-                `See how ${data.name || 'your child'} is doing with their spelling practice.`;
-            
-            const history = Array.isArray(data.history) ? data.history : [];
-            const practices = history.filter(h => h.type === 'practice');
-            const tests = history.filter(h => h.type === 'test');
-            const total = history.length;
-            
-            // Stats
-            document.getElementById('stat-sessions').textContent = total;
-            document.getElementById('stat-tests').textContent = tests.length;
-            
-            if (total > 0) {
-                const avgPct = Math.round(history.reduce((sum, h) => sum + (h.correct / h.total) * 100, 0) / total);
-                document.getElementById('stat-avg').textContent = avgPct + '%';
-                const bestPct = Math.round(Math.max(...history.map(h => (h.correct / h.total) * 100)));
-                document.getElementById('stat-best').textContent = bestPct + '%';
-            } else {
-                document.getElementById('stat-avg').textContent = '—';
-                document.getElementById('stat-best').textContent = '—';
-            }
-            
-            document.getElementById('history-count').textContent = `${total} ${total === 1 ? 'entry' : 'entries'}`;
-            
-            // History list
-            const container = document.getElementById('history-list');
-            if (total === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <span class="emoji">📊</span>
-                        No activity yet.<br>Results will appear here after practice or test sessions.
-                    </div>
-                `;
+        function deleteCurrentProfile() {
+            const p = getActiveProfile();
+            if (!p) return;
+            if (!confirm(`Delete "${p.name}" and all their lists, words and history?`)) return;
+            data.profiles = data.profiles.filter(x => x.id !== p.id);
+            if (data.profiles.length === 0) {
+                data.activeProfileId = null;
+                saveData();
+                startNewUser();
                 return;
             }
-            
-            // Most recent first
-            const sorted = [...history].sort((a, b) => b.timestamp - a.timestamp);
-            
-            container.innerHTML = sorted.map(h => {
-                const pct = Math.round((h.correct / h.total) * 100);
-                let scoreClass = 'high';
-                if (pct < 60) scoreClass = 'low';
-                else if (pct < 80) scoreClass = 'mid';
-                
-                const icon = h.type === 'test' ? '📝' : '📖';
-                const typeLabel = h.type === 'test' ? 'Test' : 'Practice';
-                
-                return `
-                    <div class="history-card ${h.type}">
-                        <div class="history-icon">${icon}</div>
-                        <div class="history-body">
-                            <div class="history-top">
-                                <span class="history-type">${typeLabel}</span>
-                                <span class="history-score ${scoreClass}">${pct}%</span>
-                            </div>
-                            <div class="history-list-name">${esc(h.listName)}</div>
-                            <div class="history-meta">${h.correct} of ${h.total} correct · ${formatDate(h.timestamp)}</div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        function formatDate(timestamp) {
-            const d = new Date(timestamp);
-            const now = new Date();
-            const diffMs = now - d;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins}m ago`;
-            if (diffHours < 24) return `${diffHours}h ago`;
-            if (diffDays === 1) return 'Yesterday';
-            if (diffDays < 7) return `${diffDays}d ago`;
-            return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-        }
-        
-        function clearHistory() {
-            if (!confirm('Clear all progress history? (Lists and words will NOT be affected.)')) return;
-            data.history = [];
+            data.activeProfileId = data.profiles[0].id;
             saveData();
-            renderParentDashboard();
-            showToast('History cleared', 'success');
+            resetSessionState();
+            updateUserBar();
+            renderDashboard();
+            showScreen('dashboard-screen');
+            showToast('Profile deleted', 'success');
         }
         
-        function saveHistoryEntry(type, list, correct, total) {
-            if (!Array.isArray(data.history)) data.history = [];
-            data.history.push({
-                id: Date.now() + Math.random(),
-                type: type,
-                listId: list.id,
-                listName: list.name,
-                correct: correct,
-                total: total,
-                timestamp: Date.now()
-            });
-            // Keep last 100 entries
-            if (data.history.length > 100) {
-                data.history = data.history.slice(-100);
-            }
-            saveData();
-        }
-        
-        // ===== HOME (MY LISTS) =====
+        // ===== HOME =====
         function renderDashboard() {
+            const p = getActiveProfile();
+            if (!p) return;
             const c = document.getElementById('lists-container');
             const stats = document.getElementById('dash-stats');
             if (!c) return;
-            const totalWords = data.lists.reduce((sum, l) => sum + l.words.length, 0);
-            stats.textContent = `${data.lists.length} list${data.lists.length !== 1 ? 's' : ''} · ${totalWords} word${totalWords !== 1 ? 's' : ''}`;
-            if (data.lists.length === 0) {
+            const totalWords = p.lists.reduce((sum, l) => sum + l.words.length, 0);
+            stats.textContent = `${p.lists.length} list${p.lists.length !== 1 ? 's' : ''} · ${totalWords} word${totalWords !== 1 ? 's' : ''}`;
+            if (p.lists.length === 0) {
                 c.innerHTML = `<div class="empty-state"><span class="emoji">📝</span>No lists yet.<br>Type a name above and tap + to create one.</div>`;
                 return;
             }
-            c.innerHTML = data.lists.map(list => `
+            c.innerHTML = p.lists.map(list => `
                 <div class="list-card" onclick="openList(${list.id})">
                     <div class="list-card-body">
                         <div class="list-card-name">${esc(list.name)}</div>
@@ -1202,10 +1299,12 @@
         }
         
         function createList() {
+            const p = getActiveProfile();
+            if (!p) return;
             const input = document.getElementById('new-list-name');
             const name = input.value.trim();
             if (!name) { showToast('Give your list a name!', 'warning'); input.focus(); return; }
-            data.lists.push({ id: Date.now(), name, words: [] });
+            p.lists.push({ id: Date.now(), name, words: [] });
             saveData();
             input.value = '';
             renderDashboard();
@@ -1213,31 +1312,41 @@
         }
         
         function deleteList(id) {
-            const list = data.lists.find(l => l.id === id);
+            const p = getActiveProfile();
+            if (!p) return;
+            const list = p.lists.find(l => l.id === id);
             if (!list) return;
             if (!confirm(`Delete "${list.name}" and all its words?`)) return;
-            data.lists = data.lists.filter(l => l.id !== id);
+            p.lists = p.lists.filter(l => l.id !== id);
             saveData();
             renderDashboard();
             showToast('List deleted', 'success');
         }
         
         function openList(id) {
+            const p = getActiveProfile();
+            if (!p) return;
             currentListId = id;
-            const list = currentList();
+            const list = p.lists.find(l => l.id === id);
             if (!list) { showToast('List not found', 'error'); showScreen('dashboard-screen'); return; }
             document.getElementById('current-list-name').textContent = list.name;
             renderWords();
             showScreen('list-detail-screen');
         }
         
-        function currentList() { return data.lists.find(l => l.id === currentListId); }
+        function currentList() {
+            const p = getActiveProfile();
+            if (!p) return null;
+            return p.lists.find(l => l.id === currentListId);
+        }
         
         function deleteCurrentList() {
+            const p = getActiveProfile();
+            if (!p) return;
             const list = currentList();
             if (!list) return;
             if (!confirm(`Delete "${list.name}" and all its words?`)) return;
-            data.lists = data.lists.filter(l => l.id !== currentListId);
+            p.lists = p.lists.filter(l => l.id !== currentListId);
             saveData();
             currentListId = null;
             showScreen('dashboard-screen');
@@ -1354,6 +1463,115 @@
             `).join('');
         }
         
+        // ===== PARENT DASHBOARD =====
+        function goToProgress() {
+            renderParentDashboard();
+            showScreen('parent-screen');
+        }
+        
+        function renderParentDashboard() {
+            const p = getActiveProfile();
+            if (!p) return;
+            document.getElementById('parent-banner-text').textContent = 
+                `See how ${p.name || 'your child'} is doing with their spelling practice.`;
+            
+            const history = Array.isArray(p.history) ? p.history : [];
+            const practices = history.filter(h => h.type === 'practice');
+            const tests = history.filter(h => h.type === 'test');
+            const total = history.length;
+            
+            document.getElementById('stat-sessions').textContent = total;
+            document.getElementById('stat-tests').textContent = tests.length;
+            
+            if (total > 0) {
+                const avgPct = Math.round(history.reduce((sum, h) => sum + (h.correct / h.total) * 100, 0) / total);
+                document.getElementById('stat-avg').textContent = avgPct + '%';
+                const bestPct = Math.round(Math.max(...history.map(h => (h.correct / h.total) * 100)));
+                document.getElementById('stat-best').textContent = bestPct + '%';
+            } else {
+                document.getElementById('stat-avg').textContent = '—';
+                document.getElementById('stat-best').textContent = '—';
+            }
+            
+            document.getElementById('history-count').textContent = `${total} ${total === 1 ? 'entry' : 'entries'}`;
+            
+            const container = document.getElementById('history-list');
+            if (total === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">📊</span>
+                        No activity yet.<br>Results will appear here after practice or test sessions.
+                    </div>
+                `;
+                return;
+            }
+            
+            const sorted = [...history].sort((a, b) => b.timestamp - a.timestamp);
+            container.innerHTML = sorted.map(h => {
+                const pct = Math.round((h.correct / h.total) * 100);
+                let scoreClass = 'high';
+                if (pct < 60) scoreClass = 'low';
+                else if (pct < 80) scoreClass = 'mid';
+                const icon = h.type === 'test' ? '📝' : '📖';
+                const typeLabel = h.type === 'test' ? 'Test' : 'Practice';
+                return `
+                    <div class="history-card ${h.type}">
+                        <div class="history-icon">${icon}</div>
+                        <div class="history-body">
+                            <div class="history-top">
+                                <span class="history-type">${typeLabel}</span>
+                                <span class="history-score ${scoreClass}">${pct}%</span>
+                            </div>
+                            <div class="history-list-name">${esc(h.listName)}</div>
+                            <div class="history-meta">${h.correct} of ${h.total} correct · ${formatDate(h.timestamp)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function formatDate(timestamp) {
+            const d = new Date(timestamp);
+            const now = new Date();
+            const diffMs = now - d;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return `${diffDays}d ago`;
+            return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        }
+        
+        function clearHistory() {
+            const p = getActiveProfile();
+            if (!p) return;
+            if (!confirm('Clear this profile\'s progress history? (Lists and words will NOT be affected.)')) return;
+            p.history = [];
+            saveData();
+            renderParentDashboard();
+            showToast('History cleared', 'success');
+        }
+        
+        function saveHistoryEntry(type, list, correct, total) {
+            const p = getActiveProfile();
+            if (!p) return;
+            if (!Array.isArray(p.history)) p.history = [];
+            p.history.push({
+                id: Date.now() + Math.random(),
+                type: type,
+                listId: list.id,
+                listName: list.name,
+                correct: correct,
+                total: total,
+                timestamp: Date.now()
+            });
+            if (p.history.length > 100) p.history = p.history.slice(-100);
+            saveData();
+        }
+        
         // ===== PRACTICE =====
         function startPractice() {
             const list = currentList();
@@ -1437,10 +1655,7 @@
             document.getElementById('practice-final-score').innerHTML = `${correct} of ${total} (${pct}%)<span class="sub">words correct</span>`;
             document.getElementById('practice-live').style.display = 'none';
             document.getElementById('practice-done').style.display = 'block';
-            
-            // Save to history
             saveHistoryEntry('practice', list, correct, total);
-            
             if (correct === total) confetti(30);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1524,10 +1739,7 @@
             document.getElementById('test-celebrate-wrap').innerHTML = pct === 100 ? '<p class="celebrate">⭐ Perfect Score! ⭐</p>' : '';
             document.getElementById('test-live').style.display = 'none';
             document.getElementById('test-done').style.display = 'block';
-            
-            // Save to history
             saveHistoryEntry('test', list, correct, total);
-            
             if (correct === total) confetti(30);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1567,6 +1779,15 @@
             s.textContent = `@keyframes confettiDrop { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(105vh) rotate(720deg); opacity: 0; } }`;
             document.head.appendChild(s);
         })();
+        
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
+            store.set('sb_theme', isDark ? 'dark' : 'light');
+        }
+        
+        function showInfo() { document.getElementById('info-modal').classList.add('show'); }
+        function closeInfo() { document.getElementById('info-modal').classList.remove('show'); }
         
         document.addEventListener('keydown', e => {
             if (e.key !== 'Enter') return;
