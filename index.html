@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Spelling Bee Helper</title>
+    <title>Spelling Bee</title>
     <style>
         * {
             box-sizing: border-box;
@@ -25,6 +25,7 @@
             --ink-soft: #636E72;
             --surface: #FFFFFF;
             --bg-soft: #F7FAFF;
+            --pad: 16px;
         }
         
         html, body { min-height: 100%; }
@@ -52,34 +53,21 @@
         /* ===== HEADER ===== */
         .app-header {
             background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-            padding: 22px 20px;
+            padding: 18px var(--pad);
             text-align: center;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .app-header::before {
-            content: '';
-            position: absolute;
-            top: -60px; right: -40px;
-            width: 160px; height: 160px;
-            background: rgba(255,255,255,0.12);
-            border-radius: 50%;
-            pointer-events: none;
         }
         
         .app-header h1 {
             color: white;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 1;
         }
         
         .app-header .bee {
             display: inline-block;
-            font-size: 1.4rem;
-            margin: 0 6px;
+            font-size: 1.3rem;
+            margin: 0 4px;
             animation: wiggle 2s ease-in-out infinite;
             vertical-align: middle;
         }
@@ -89,18 +77,68 @@
             50% { transform: rotate(8deg); }
         }
         
-        .app-body { padding: 20px 18px 24px; }
+        /* ===== USER BAR (always visible when logged in) ===== */
+        .user-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #FFF5EB 0%, #FFE5F1 100%);
+            border-bottom: 2px solid #FFD9C7;
+            padding: 10px var(--pad);
+        }
         
-        /* ===== SCREENS ===== */
+        .user-bar .u-avatar {
+            font-size: 1.8rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        
+        .user-bar .u-name {
+            flex: 1;
+            min-width: 0;
+            font-weight: bold;
+            color: var(--ink);
+            font-size: 0.95rem;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .user-bar .u-edit {
+            background: white;
+            border: 2px solid #FFD9C7;
+            color: var(--pink);
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.78rem;
+            padding: 7px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        
+        .user-bar .u-edit:active {
+            background: var(--pink);
+            color: white;
+            transform: scale(0.96);
+        }
+        
+        /* ===== BODY ===== */
+        .app-body {
+            padding: 18px var(--pad) 22px;
+        }
+        
         .screen { display: none; }
-        .active { display: block; animation: slideIn 0.35s ease; }
+        .active { display: block; animation: slideIn 0.3s ease; }
         
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ===== FORM ===== */
+        /* ===== UNIVERSAL FORM STYLES ===== */
         .field-label {
             display: block;
             font-weight: bold;
@@ -108,9 +146,10 @@
             font-size: 0.9rem;
             margin: 14px 0 6px;
         }
-        .field-label:first-child { margin-top: 0; }
+        .field-label:first-of-type { margin-top: 0; }
         
-        input[type="text"] {
+        .text-input {
+            display: block;
             width: 100%;
             padding: 13px 15px;
             border-radius: 13px;
@@ -119,35 +158,35 @@
             font-family: inherit;
             background: var(--bg-soft);
             color: var(--ink);
-            display: block;
             transition: all 0.2s;
         }
-        input[type="text"]:focus {
+        .text-input:focus {
             outline: none;
             border-color: var(--blue);
             background: white;
             box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
         }
-        input[type="text"]::placeholder { color: #B0B8C4; }
+        .text-input::placeholder { color: #B0B8C4; }
         
-        /* ===== BUTTONS ===== */
+        /* ===== UNIVERSAL BUTTONS ===== */
         .btn {
-            width: 100%;
-            padding: 13px 20px;
-            border: none;
-            border-radius: 13px;
-            font-size: 0.98rem;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            width: 100%;
             min-height: 46px;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 13px;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.98rem;
             line-height: 1.2;
+            cursor: pointer;
+            color: white;
             transition: transform 0.15s;
+            text-align: center;
         }
         .btn:active:not(:disabled) { transform: scale(0.97); }
         .btn:disabled { opacity: 0.55; cursor: not-allowed; }
@@ -167,27 +206,28 @@
         .btn-ghost {
             background: #F1F4F9;
             color: var(--ink);
-            box-shadow: none;
             border: 2px solid #E4E9F2;
         }
-        .btn-sm { padding: 10px 16px; font-size: 0.88rem; min-height: 40px; }
-        
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 14px;
+        .btn-danger {
+            background: #FFF0F0;
+            color: var(--red);
+            border: 2px solid #FFD0D0;
         }
         
-        /* ===== WELCOME ===== */
-        .current-avatar {
-            width: 84px; height: 84px;
+        /* Universal button/input spacing */
+        .stack > * + * { margin-top: 10px; }
+        .stack-lg > * + * { margin-top: 14px; }
+        
+        /* ===== WELCOME SCREEN ===== */
+        .big-avatar {
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--blue), var(--purple));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             margin: 0 auto 14px;
             box-shadow: 0 8px 20px rgba(74, 158, 255, 0.35);
         }
@@ -200,101 +240,34 @@
             line-height: 1.4;
         }
         
+        /* ===== AVATAR PICKER (shared) ===== */
         .avatar-picker {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 8px;
-            flex-wrap: wrap;
             margin: 14px 0;
         }
         
         .avatar-opt {
-            width: 52px; height: 52px;
-            border-radius: 15px;
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            border-radius: 14px;
             background: #F1F4F9;
             border: 3px solid transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s;
             user-select: none;
+            padding: 0;
         }
         .avatar-opt.selected {
             border-color: var(--pink);
             background: #FFF0F6;
-            transform: scale(1.06);
+            transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(255, 109, 180, 0.3);
-        }
-        
-        /* ===== NAME BANNER (with editable avatar) ===== */
-        .name-banner {
-            background: linear-gradient(135deg, #FFF5EB 0%, #FFE5F1 100%);
-            border-radius: 14px;
-            padding: 10px 12px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 2px solid #FFD9C7;
-        }
-        
-        .banner-avatar-btn {
-            position: relative;
-            background: white;
-            border: 2px solid #FFD9C7;
-            width: 44px; height: 44px;
-            min-width: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.15s;
-            padding: 0;
-        }
-        .banner-avatar-btn:active { transform: scale(0.92); }
-        
-        .banner-avatar-btn .edit-pip {
-            position: absolute;
-            bottom: -4px;
-            right: -4px;
-            background: var(--pink);
-            color: white;
-            width: 18px; height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            border: 2px solid white;
-            line-height: 1;
-        }
-        
-        .banner-text {
-            font-weight: bold;
-            color: var(--ink);
-            font-size: 1rem;
-            flex: 1;
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        .banner-edit-link {
-            background: none;
-            border: none;
-            color: var(--blue-dark);
-            font-family: inherit;
-            font-size: 0.75rem;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 6px 8px;
-            text-decoration: underline;
-            flex-shrink: 0;
         }
         
         /* ===== ADD CARD ===== */
@@ -302,7 +275,7 @@
             background: linear-gradient(135deg, #F7F9FF 0%, #EFF5FF 100%);
             border: 2px dashed #C8D9F0;
             border-radius: 18px;
-            padding: 16px;
+            padding: var(--pad);
             margin-bottom: 22px;
         }
         
@@ -310,35 +283,36 @@
             font-size: 1rem;
             font-weight: bold;
             color: var(--blue-dark);
-            margin-bottom: 4px;
+            margin-bottom: 10px;
         }
         
-        /* ===== WORD LIST ===== */
+        /* ===== LIST HEADER ===== */
         .list-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
         }
-        .list-header h2 { font-size: 1.05rem; color: var(--ink); }
+        .list-header h2 { font-size: 1.05rem; }
         
         .count-badge {
             background: linear-gradient(135deg, var(--orange), var(--pink));
             color: white;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: bold;
             padding: 4px 12px;
             border-radius: 20px;
             white-space: nowrap;
         }
         
+        /* ===== WORD LIST ===== */
         .word-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 320px;
+            gap: 10px;
+            max-height: 300px;
             overflow-y: auto;
-            padding: 2px 4px 8px 2px;
+            padding: 2px;
             scrollbar-width: thin;
         }
         .word-list::-webkit-scrollbar { width: 6px; }
@@ -346,11 +320,11 @@
         
         .word-card {
             display: flex;
-            align-items: flex-start;
-            gap: 10px;
+            align-items: center;   /* CENTER align fixes delete button alignment */
+            gap: 12px;
             background: white;
             border-radius: 14px;
-            padding: 12px 10px 12px 14px;
+            padding: 12px 12px 12px 14px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-left: 5px solid var(--blue);
         }
@@ -371,35 +345,38 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            margin-top: 1px;
         }
         
-        .word-body { flex: 1; min-width: 0; text-align: left; }
+        .word-body {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+        }
         
         .word-text {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: bold;
             color: var(--ink);
             word-break: break-word;
-            line-height: 1.2;
+            line-height: 1.25;
             display: block;
         }
         
         .word-def {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--ink-soft);
             line-height: 1.4;
             word-break: break-word;
-            margin-top: 4px;
+            margin-top: 3px;
         }
         
         .delete-btn {
             background: #FFF0F0;
             border: none;
             color: var(--red);
-            width: 34px; height: 34px; min-width: 34px;
+            width: 36px; height: 36px; min-width: 36px;
             border-radius: 10px;
-            font-size: 1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -431,14 +408,15 @@
         .practice-card, .test-card {
             background: linear-gradient(135deg, #F0F7FF 0%, #EFF0FF 100%);
             border-radius: 18px;
-            padding: 16px;
+            padding: var(--pad);
             border: 2px solid #DDE6F5;
         }
         
         .spell-input {
+            display: block;
             width: 100%;
-            font-size: 1.15rem;
             padding: 14px;
+            font-size: 1.15rem;
             text-align: center;
             letter-spacing: 2px;
             font-weight: bold;
@@ -447,7 +425,6 @@
             background: white;
             font-family: inherit;
             color: var(--ink);
-            display: block;
             margin-top: 6px;
         }
         .spell-input:focus {
@@ -465,13 +442,12 @@
             font-size: 0.95rem;
             line-height: 1.4;
             word-break: break-word;
-            animation: slideIn 0.25s ease;
         }
         .feedback:empty { display: none; }
         .feedback.correct { background: #D4F8E0; color: #0F7B3E; border: 2px solid #A8E6BC; }
         .feedback.incorrect { background: #FFE0E0; color: #B71C1C; border: 2px solid #FFB8B8; }
         
-        .progress-wrap { margin-top: 16px; }
+        .progress-wrap { margin-top: 14px; }
         .progress-bar {
             height: 10px;
             background: #E4E9F2;
@@ -481,7 +457,6 @@
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--blue), var(--purple));
-            border-radius: 5px;
             width: 0%;
             transition: width 0.4s ease;
         }
@@ -495,15 +470,15 @@
         }
         
         .results {
-            margin-top: 16px;
-            padding: 18px;
+            margin-top: 14px;
+            padding: var(--pad);
             background: linear-gradient(135deg, #FFF5EB, #FFE5F1);
             border-radius: 16px;
             border: 2px solid #FFD9C7;
             text-align: center;
         }
         .results h2 { color: var(--pink); margin-bottom: 8px; font-size: 1.15rem; }
-        .results p { margin: 6px 0; color: var(--ink); }
+        .results p { margin: 6px 0; }
         
         .celebrate {
             animation: celebrate 0.8s ease infinite alternate;
@@ -527,7 +502,7 @@
             border: 3px solid var(--blue);
         }
         
-        /* ===== TOAST (bottom) ===== */
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 24px;
@@ -551,7 +526,7 @@
         .toast.error { background: var(--red); }
         .toast.warning { background: #F39C12; }
         
-        /* ===== MODAL ===== */
+        /* ===== MODAL (definition only) ===== */
         .modal {
             display: none;
             position: fixed;
@@ -572,7 +547,6 @@
             max-width: 380px;
             text-align: center;
             position: relative;
-            animation: slideIn 0.25s ease;
             max-height: 85vh;
             overflow-y: auto;
         }
@@ -588,11 +562,7 @@
             padding: 4px;
         }
         
-        .modal-content h3 {
-            color: var(--purple);
-            margin-bottom: 14px;
-            padding-right: 20px;
-        }
+        .modal-content h3 { color: var(--purple); margin-bottom: 12px; }
         
         .modal-def {
             background: #F7F9FF;
@@ -624,12 +594,12 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         
         @media (max-width: 380px) {
-            .app-header h1 { font-size: 1.35rem; }
-            .app-body { padding: 16px 14px 20px; }
-            .avatar-opt { width: 46px; height: 46px; font-size: 1.4rem; }
-            .current-avatar { width: 72px; height: 72px; font-size: 2.2rem; }
+            :root { --pad: 14px; }
+            .app-header h1 { font-size: 1.3rem; }
+            .avatar-opt { font-size: 1.5rem; }
+            .big-avatar { width: 76px; height: 76px; font-size: 2.3rem; }
             .btn { font-size: 0.92rem; }
-            .word-list { max-height: 280px; }
+            .word-list { max-height: 260px; }
         }
     </style>
 </head>
@@ -639,50 +609,73 @@
             <h1><span class="bee">🐝</span> Spelling Bee <span class="bee">🐝</span></h1>
         </div>
         
+        <!-- User bar (hidden on welcome/profile screens) -->
+        <div class="user-bar" id="user-bar" style="display: none;">
+            <span class="u-avatar" id="ubar-avatar">👧</span>
+            <span class="u-name" id="ubar-name">Name</span>
+            <button class="u-edit" onclick="goToProfile()">👤 Change Avatar</button>
+        </div>
+        
         <div class="app-body">
-            <!-- WELCOME SCREEN (only shown to new users) -->
+            <!-- ===== WELCOME SCREEN ===== -->
             <div class="screen welcome-screen">
-                <div class="current-avatar" id="preview-avatar">👧</div>
+                <div class="big-avatar" id="preview-avatar">👧</div>
                 <p class="welcome-text">Welcome! Pick your buddy and tell me your name.</p>
                 
-                <div class="avatar-picker">
-                    <div class="avatar-opt selected" onclick="pickAvatar('👧', this)">👧</div>
-                    <div class="avatar-opt" onclick="pickAvatar('👦', this)">👦</div>
-                    <div class="avatar-opt" onclick="pickAvatar('🐶', this)">🐶</div>
-                    <div class="avatar-opt" onclick="pickAvatar('🐱', this)">🐱</div>
-                    <div class="avatar-opt" onclick="pickAvatar('🦄', this)">🦄</div>
+                <div class="avatar-picker" id="welcome-avatar-picker">
+                    <button type="button" class="avatar-opt selected" onclick="pickAvatar('👧', this)">👧</button>
+                    <button type="button" class="avatar-opt" onclick="pickAvatar('👦', this)">👦</button>
+                    <button type="button" class="avatar-opt" onclick="pickAvatar('🐶', this)">🐶</button>
+                    <button type="button" class="avatar-opt" onclick="pickAvatar('🐱', this)">🐱</button>
+                    <button type="button" class="avatar-opt" onclick="pickAvatar('🦄', this)">🦄</button>
                 </div>
                 
                 <label class="field-label" for="input-name">Your name:</label>
-                <input type="text" id="input-name" placeholder="Type your name" autocomplete="off">
+                <input type="text" class="text-input" id="input-name" placeholder="Type your name" autocomplete="off">
                 
-                <div class="btn-group">
+                <div class="stack" style="margin-top: 14px;">
                     <button class="btn btn-primary" onclick="startApp()">Let's Start! 🚀</button>
                 </div>
             </div>
             
-            <!-- WORD INPUT SCREEN -->
-            <div class="screen word-screen">
-                <div class="name-banner">
-                    <button class="banner-avatar-btn" onclick="openProfileModal()" aria-label="Change avatar">
-                        <span id="banner-avatar">👧</span>
-                        <span class="edit-pip">✏️</span>
-                    </button>
-                    <span class="banner-text">Hi, <span id="banner-name"></span>!</span>
-                    <button class="banner-edit-link" onclick="openProfileModal()">Edit</button>
+            <!-- ===== PROFILE SCREEN (dedicated, always accessible) ===== -->
+            <div class="screen profile-screen">
+                <h2 style="text-align: center; font-size: 1.15rem; margin-bottom: 6px;">👤 My Profile</h2>
+                <p style="text-align: center; color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 14px;">Change your avatar or name here.</p>
+                
+                <div class="big-avatar" id="profile-preview">👧</div>
+                
+                <div class="avatar-picker" id="profile-avatar-picker">
+                    <button type="button" class="avatar-opt" onclick="pickProfileAvatar('👧', this)">👧</button>
+                    <button type="button" class="avatar-opt" onclick="pickProfileAvatar('👦', this)">👦</button>
+                    <button type="button" class="avatar-opt" onclick="pickProfileAvatar('🐶', this)">🐶</button>
+                    <button type="button" class="avatar-opt" onclick="pickProfileAvatar('🐱', this)">🐱</button>
+                    <button type="button" class="avatar-opt" onclick="pickProfileAvatar('🦄', this)">🦄</button>
                 </div>
                 
+                <label class="field-label" for="profile-name-input">Your name:</label>
+                <input type="text" class="text-input" id="profile-name-input" placeholder="Your name" autocomplete="off">
+                
+                <div class="stack" style="margin-top: 14px;">
+                    <button class="btn btn-primary" onclick="saveProfile()">💾 Save Changes</button>
+                    <button class="btn btn-ghost" onclick="cancelProfile()">Cancel</button>
+                    <button class="btn btn-danger" onclick="resetApp()" style="margin-top: 8px;">🔄 Reset for New User</button>
+                </div>
+            </div>
+            
+            <!-- ===== WORD INPUT SCREEN ===== -->
+            <div class="screen word-screen">
                 <div class="add-card">
                     <div class="add-card-title">➕ Add a New Word</div>
                     
                     <label class="field-label" for="new-word">The word:</label>
-                    <input type="text" id="new-word" placeholder="e.g. beautiful" autocomplete="off" autocapitalize="off">
+                    <input type="text" class="text-input" id="new-word" placeholder="e.g. beautiful" autocomplete="off" autocapitalize="off">
                     
                     <label class="field-label" for="new-def">What it means (optional):</label>
-                    <input type="text" id="new-def" placeholder="Tap Lookup or type your own" autocomplete="off">
+                    <input type="text" class="text-input" id="new-def" placeholder="Tap Lookup or type your own" autocomplete="off">
                     
-                    <div class="btn-group">
-                        <button class="btn btn-lookup btn-sm" id="lookup-btn" onclick="lookupDef()">🔍 Look Up the Definition</button>
+                    <div class="stack" style="margin-top: 12px;">
+                        <button class="btn btn-lookup" id="lookup-btn" onclick="lookupDef()">🔍 Look Up the Definition</button>
                         <button class="btn btn-accent" onclick="addWord()">Add to My List</button>
                     </div>
                 </div>
@@ -699,26 +692,18 @@
                     </div>
                 </div>
                 
-                <div class="btn-group" style="margin-top: 20px;">
+                <div class="stack" style="margin-top: 18px;">
                     <button class="btn btn-primary" onclick="startPractice()">📖 Practice These Words</button>
-                    <button class="btn btn-accent" id="start-test-btn" onclick="startTest()" style="display:none;">📝 Take a Test</button>
+                    <button class="btn btn-accent" id="start-test-btn" onclick="startTest()" style="display: none;">📝 Take a Test</button>
                 </div>
             </div>
             
-            <!-- PRACTICE SCREEN -->
+            <!-- ===== PRACTICE SCREEN ===== -->
             <div class="screen practice-screen">
-                <div class="name-banner">
-                    <button class="banner-avatar-btn" onclick="openProfileModal()">
-                        <span id="practice-avatar">👧</span>
-                        <span class="edit-pip">✏️</span>
-                    </button>
-                    <span class="banner-text">Practice time, <span id="practice-name"></span>!</span>
-                </div>
-                
                 <div class="practice-card">
-                    <div class="btn-group" style="margin-top: 0;">
-                        <button class="btn btn-primary btn-sm" onclick="speakWord()">🔊 Hear the Word</button>
-                        <button class="btn btn-ghost btn-sm" onclick="showHint()">🖼️ Picture Hint</button>
+                    <div class="stack">
+                        <button class="btn btn-primary" onclick="speakWord()">🔊 Hear the Word</button>
+                        <button class="btn btn-ghost" onclick="showHint()">🖼️ Picture Hint</button>
                     </div>
                     
                     <img id="hint-img" class="hint-img" alt="Picture hint">
@@ -727,10 +712,10 @@
                     <input type="text" class="spell-input" id="practice-input"
                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     
-                    <div class="btn-group">
+                    <div class="stack" style="margin-top: 12px;">
                         <button class="btn btn-accent" onclick="checkPractice()">Check My Spelling</button>
-                        <button class="btn btn-ghost btn-sm" onclick="showDefinition()">📖 Show Definition</button>
-                        <button class="btn btn-ghost btn-sm" onclick="nextPractice()">➡️ Next Word</button>
+                        <button class="btn btn-ghost" onclick="showDefinition()">📖 Show Definition</button>
+                        <button class="btn btn-ghost" onclick="nextPractice()">➡️ Next Word</button>
                     </div>
                     
                     <div class="feedback" id="practice-feedback"></div>
@@ -744,33 +729,23 @@
                     </div>
                 </div>
                 
-                <div class="btn-group">
+                <div class="stack" style="margin-top: 14px;">
                     <button class="btn btn-ghost" onclick="backToWords()">← Back to My List</button>
                 </div>
             </div>
             
-            <!-- TEST SCREEN -->
+            <!-- ===== TEST SCREEN ===== -->
             <div class="screen test-screen">
-                <div class="name-banner">
-                    <button class="banner-avatar-btn" onclick="openProfileModal()">
-                        <span id="test-avatar">👧</span>
-                        <span class="edit-pip">✏️</span>
-                    </button>
-                    <span class="banner-text">Test time, <span id="test-name"></span>!</span>
-                </div>
-                
                 <div class="test-card">
-                    <div style="margin-bottom: 14px;">
-                        <button class="btn btn-primary btn-sm" onclick="speakWord()">🔊 Hear the Word</button>
-                    </div>
+                    <button class="btn btn-primary" onclick="speakWord()">🔊 Hear the Word</button>
                     
                     <label class="field-label" for="test-input">Spell the word:</label>
                     <input type="text" class="spell-input" id="test-input"
                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     
-                    <div class="btn-group">
+                    <div class="stack" style="margin-top: 12px;">
                         <button class="btn btn-accent" id="check-test-btn" onclick="checkTest()">Check Answer</button>
-                        <button class="btn btn-ghost btn-sm" onclick="nextTest()">➡️ Next Word</button>
+                        <button class="btn btn-ghost" onclick="nextTest()">➡️ Next Word</button>
                     </div>
                     
                     <div class="feedback" id="test-feedback"></div>
@@ -786,68 +761,62 @@
                 
                 <div class="results" id="test-results" style="display: none;"></div>
                 
-                <div class="btn-group">
+                <div class="stack" style="margin-top: 14px;">
                     <button class="btn btn-ghost" onclick="backToWords()">← Back to My List</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Profile Edit Modal -->
-    <div id="profile-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeProfileModal()">&times;</span>
-            <h3>Edit Profile</h3>
-            
-            <div class="current-avatar" id="profile-preview">👧</div>
-            
-            <p style="color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 12px;">Pick your buddy:</p>
-            <div class="avatar-picker">
-                <div class="avatar-opt" onclick="pickProfileAvatar('👧', this)">👧</div>
-                <div class="avatar-opt" onclick="pickProfileAvatar('👦', this)">👦</div>
-                <div class="avatar-opt" onclick="pickProfileAvatar('🐶', this)">🐶</div>
-                <div class="avatar-opt" onclick="pickProfileAvatar('🐱', this)">🐱</div>
-                <div class="avatar-opt" onclick="pickProfileAvatar('🦄', this)">🦄</div>
-            </div>
-            
-            <label class="field-label" for="profile-name-input">Your name:</label>
-            <input type="text" id="profile-name-input" placeholder="Your name" autocomplete="off">
-            
-            <div class="btn-group">
-                <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save</button>
-                <button class="btn btn-ghost btn-sm" onclick="resetApp()" style="color: var(--red);">🔄 Reset for New User</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Definition Modal -->
+    <!-- Definition Modal (only for viewing word definitions) -->
     <div id="def-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <h3>Word Definition</h3>
             <div class="modal-def" id="def-modal-content"></div>
-            <div class="btn-group">
-                <button class="btn btn-primary btn-sm" onclick="closeModal()">Got it!</button>
+            <div class="stack" style="margin-top: 12px;">
+                <button class="btn btn-primary" onclick="closeModal()">Got it!</button>
             </div>
         </div>
     </div>
     
     <script>
+        // ===== STORAGE (with in-memory fallback if localStorage is blocked) =====
+        const memoryStore = {};
+        let storageWorks = true;
+        try {
+            localStorage.setItem('__sb_test', '1');
+            localStorage.removeItem('__sb_test');
+        } catch (e) {
+            storageWorks = false;
+            console.warn('localStorage blocked — using in-memory store (data will not persist after refresh)');
+        }
+        
         const store = {
             get(key, def) {
                 try {
-                    const v = localStorage.getItem(key);
-                    return v === null ? def : JSON.parse(v);
+                    if (storageWorks) {
+                        const v = localStorage.getItem(key);
+                        return v === null ? def : JSON.parse(v);
+                    }
+                    return memoryStore.hasOwnProperty(key) ? memoryStore[key] : def;
                 } catch (e) { return def; }
             },
             set(key, val) {
-                try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+                try {
+                    if (storageWorks) localStorage.setItem(key, JSON.stringify(val));
+                    else memoryStore[key] = val;
+                } catch (e) { memoryStore[key] = val; }
             },
             remove(key) {
-                try { localStorage.removeItem(key); } catch (e) {}
+                try {
+                    if (storageWorks) localStorage.removeItem(key);
+                    memoryStore[key] = undefined;
+                } catch (e) { memoryStore[key] = undefined; }
             }
         };
         
+        // ===== STATE =====
         let userName = '';
         let userAvatar = '👧';
         let wordList = [];
@@ -855,23 +824,20 @@
         let correctCount = 0;
         let testAnswered = false;
         let tempProfileAvatar = '👧';
+        let previousScreen = 'word-screen';
         
+        // ===== BOOT =====
         window.addEventListener('load', () => {
-            try {
-                const savedName = store.get('sb_name', '');
-                if (savedName) {
-                    userName = savedName;
-                    userAvatar = store.get('sb_avatar', '👧');
-                    wordList = store.get('sb_words', []);
-                    if (!Array.isArray(wordList)) wordList = [];
-                    updateNameDisplays();
-                    renderWords();
-                    showScreen('word-screen');
-                } else {
-                    showScreen('welcome-screen');
-                }
-            } catch (err) {
-                console.error(err);
+            const savedName = store.get('sb_name', '');
+            if (savedName) {
+                userName = savedName;
+                userAvatar = store.get('sb_avatar', '👧');
+                wordList = store.get('sb_words', []);
+                if (!Array.isArray(wordList)) wordList = [];
+                updateUserBar();
+                renderWords();
+                showScreen('word-screen');
+            } else {
                 showScreen('welcome-screen');
             }
         });
@@ -880,22 +846,30 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const t = document.querySelector('.' + name);
             if (t) t.classList.add('active');
+            
+            // Show/hide user bar
+            const ub = document.getElementById('user-bar');
+            if (name === 'welcome-screen' || name === 'profile-screen') {
+                ub.style.display = 'none';
+            } else {
+                ub.style.display = 'flex';
+                updateUserBar();
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        function updateNameDisplays() {
-            document.getElementById('banner-name').textContent = userName;
-            document.getElementById('banner-avatar').textContent = userAvatar;
-            document.getElementById('practice-name').textContent = userName;
-            document.getElementById('practice-avatar').textContent = userAvatar;
-            document.getElementById('test-name').textContent = userName;
-            document.getElementById('test-avatar').textContent = userAvatar;
+        function updateUserBar() {
+            document.getElementById('ubar-avatar').textContent = userAvatar;
+            document.getElementById('ubar-name').textContent = userName;
         }
         
-        // ===== WELCOME =====
+        // ===== WELCOME SCREEN =====
         function pickAvatar(emoji, el) {
             userAvatar = emoji;
             document.getElementById('preview-avatar').textContent = emoji;
-            document.querySelectorAll('.welcome-screen .avatar-opt').forEach(o => o.classList.remove('selected'));
+            document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
         }
         
@@ -908,33 +882,33 @@
             userName = name;
             store.set('sb_name', userName);
             store.set('sb_avatar', userAvatar);
-            updateNameDisplays();
+            updateUserBar();
             renderWords();
             showScreen('word-screen');
         }
         
-        // ===== PROFILE EDIT =====
-        function openProfileModal() {
+        // ===== PROFILE SCREEN =====
+        function goToProfile() {
+            // Remember where we came from so Cancel returns there
+            const active = document.querySelector('.screen.active');
+            if (active) previousScreen = active.classList[1];
+            
             tempProfileAvatar = userAvatar;
             document.getElementById('profile-preview').textContent = userAvatar;
             document.getElementById('profile-name-input').value = userName;
             
             // Highlight current avatar
-            document.querySelectorAll('#profile-modal .avatar-opt').forEach(o => {
+            document.querySelectorAll('#profile-avatar-picker .avatar-opt').forEach(o => {
                 o.classList.toggle('selected', o.textContent === userAvatar);
             });
             
-            document.getElementById('profile-modal').classList.add('show');
-        }
-        
-        function closeProfileModal() {
-            document.getElementById('profile-modal').classList.remove('show');
+            showScreen('profile-screen');
         }
         
         function pickProfileAvatar(emoji, el) {
             tempProfileAvatar = emoji;
             document.getElementById('profile-preview').textContent = emoji;
-            document.querySelectorAll('#profile-modal .avatar-opt').forEach(o => o.classList.remove('selected'));
+            document.querySelectorAll('#profile-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
         }
         
@@ -948,9 +922,13 @@
             userAvatar = tempProfileAvatar;
             store.set('sb_name', userName);
             store.set('sb_avatar', userAvatar);
-            updateNameDisplays();
-            closeProfileModal();
-            showToast('Profile updated!', 'success');
+            updateUserBar();
+            showToast('Profile saved!', 'success');
+            showScreen(previousScreen);
+        }
+        
+        function cancelProfile() {
+            showScreen(previousScreen);
         }
         
         function resetApp() {
@@ -963,11 +941,10 @@
             wordList = [];
             document.getElementById('input-name').value = '';
             document.getElementById('preview-avatar').textContent = '👧';
-            document.querySelectorAll('.welcome-screen .avatar-opt').forEach(o => o.classList.remove('selected'));
-            document.querySelector('.welcome-screen .avatar-opt').classList.add('selected');
-            closeProfileModal();
+            document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
+            document.querySelector('#welcome-avatar-picker .avatar-opt').classList.add('selected');
             showScreen('welcome-screen');
-            showToast('All reset! Ready for a new user.', 'success');
+            showToast('Ready for a new user!', 'success');
         }
         
         // ===== LOOKUP =====
@@ -979,6 +956,7 @@
                 return;
             }
             const btn = document.getElementById('lookup-btn');
+            const orig = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span> Searching...';
             
@@ -994,7 +972,7 @@
                 showToast("Couldn't find it — type your own definition", 'error');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '🔍 Look Up the Definition';
+                btn.innerHTML = orig;
             }
         }
         
@@ -1007,8 +985,7 @@
                     if (d.definition && d.definition.length > 12 && d.definition.length < 200) {
                         candidates.push({
                             partOfSpeech: m.partOfSpeech || '',
-                            definition: cleanDef(d.definition),
-                            example: d.example || ''
+                            definition: cleanDef(d.definition)
                         });
                     }
                 });
@@ -1016,11 +993,9 @@
             if (candidates.length === 0) {
                 const fm = entry.meanings[0];
                 const fd = fm?.definitions?.[0];
-                if (fd?.definition) return {
-                    partOfSpeech: fm.partOfSpeech || '',
-                    definition: cleanDef(fd.definition),
-                    example: fd.example || ''
-                };
+                if (fd?.definition) {
+                    return { partOfSpeech: fm.partOfSpeech || '', definition: cleanDef(fd.definition) };
+                }
                 return null;
             }
             candidates.sort((a, b) => {
@@ -1037,6 +1012,7 @@
             return t.charAt(0).toUpperCase() + t.slice(1);
         }
         
+        // ===== ADD/REMOVE WORDS =====
         function addWord() {
             const word = document.getElementById('new-word').value.trim();
             const def = document.getElementById('new-def').value.trim();
@@ -1049,7 +1025,7 @@
                 showToast('That word is already in your list!', 'warning');
                 return;
             }
-            wordList.push({ word, definition: def || 'No definition yet', partOfSpeech: '', example: '' });
+            wordList.push({ word, definition: def || 'No definition yet' });
             store.set('sb_words', wordList);
             renderWords();
             document.getElementById('new-word').value = '';
@@ -1077,6 +1053,7 @@
                 list.innerHTML = `<div class="empty-state"><span class="emoji">📝</span>Your list is empty.<br>Add your first word above!</div>`;
                 return;
             }
+            
             list.innerHTML = wordList.map((w, i) => `
                 <div class="word-card">
                     <div class="word-number">${i + 1}</div>
@@ -1282,9 +1259,6 @@
         document.getElementById('def-modal').addEventListener('click', e => {
             if (e.target.id === 'def-modal') closeModal();
         });
-        document.getElementById('profile-modal').addEventListener('click', e => {
-            if (e.target.id === 'profile-modal') closeProfileModal();
-        });
     </script>
 </body>
-</html>
+</html> 
