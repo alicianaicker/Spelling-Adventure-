@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Spelling Bee v3</title>
+    <title>Spelling Bee v4</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,319 +12,153 @@
             font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        
         :root {
-            --blue: #4A9EFF;
-            --blue-dark: #2E7FE0;
-            --orange: #FF9E6D;
-            --pink: #FF6DB4;
-            --green: #2ECC71;
-            --red: #FF5C5C;
+            --blue: #4A9EFF; --blue-dark: #2E7FE0;
+            --orange: #FF9E6D; --pink: #FF6DB4;
+            --green: #2ECC71; --red: #FF5C5C;
             --purple: #9B7EFF;
-            --ink: #2D3436;
-            --ink-soft: #636E72;
-            --surface: #FFFFFF;
-            --bg-soft: #F7FAFF;
+            --ink: #2D3436; --ink-soft: #636E72;
+            --surface: #FFFFFF; --bg-soft: #F7FAFF;
             --pad: 16px;
         }
-        
         html, body { min-height: 100%; }
-        
         body {
             background: linear-gradient(160deg, #4A9EFF 0%, #9B7EFF 50%, #FF9E6D 100%);
             background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 14px 12px 30px;
-            color: var(--ink);
+            display: flex; flex-direction: column; align-items: center;
+            padding: 14px 12px 30px; color: var(--ink);
         }
-        
         .container {
-            width: 100%;
-            max-width: 500px;
-            background: var(--surface);
-            border-radius: 24px;
+            width: 100%; max-width: 500px;
+            background: var(--surface); border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-            overflow: hidden;
-            margin: 0 auto;
+            overflow: hidden; margin: 0 auto;
         }
-        
         .app-header {
             background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-            padding: 18px var(--pad);
-            text-align: center;
-            position: relative;
+            padding: 18px var(--pad); text-align: center;
         }
-        
-        .app-header h1 {
-            color: white;
-            font-size: 1.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
+        .app-header h1 { color: white; font-size: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .app-header .bee {
-            display: inline-block;
-            font-size: 1.3rem;
-            margin: 0 4px;
-            animation: wiggle 2s ease-in-out infinite;
-            vertical-align: middle;
+            display: inline-block; font-size: 1.3rem; margin: 0 4px;
+            animation: wiggle 2s ease-in-out infinite; vertical-align: middle;
         }
-        
         .version-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.25);
-            color: white;
-            font-size: 0.65rem;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-left: 6px;
-            vertical-align: middle;
+            display: inline-block; background: #FFD93D; color: #2D3436;
+            font-size: 0.75rem; font-weight: bold;
+            padding: 3px 10px; border-radius: 20px; margin-left: 8px;
+            vertical-align: middle; border: 2px solid white;
         }
-        
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-8deg); }
-            50% { transform: rotate(8deg); }
-        }
-        
+        @keyframes wiggle { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
         .user-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
             background: linear-gradient(135deg, #FFF5EB 0%, #FFE5F1 100%);
-            border-bottom: 2px solid #FFD9C7;
-            padding: 10px var(--pad);
+            border-bottom: 2px solid #FFD9C7; padding: 10px var(--pad);
         }
-        
-        .user-bar .u-avatar {
-            font-size: 1.6rem;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-        
+        .user-bar .u-avatar { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
         .user-bar .u-name {
-            flex: 1;
-            min-width: 0;
-            font-weight: bold;
-            color: var(--ink);
-            font-size: 0.92rem;
-            text-align: left;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            flex: 1; min-width: 0; font-weight: bold; color: var(--ink);
+            font-size: 0.92rem; text-align: left; overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap;
         }
-        
         .u-btn {
-            background: white;
-            border: 2px solid #FFD9C7;
-            color: var(--pink);
-            font-family: inherit;
-            font-weight: bold;
-            font-size: 0.76rem;
-            padding: 6px 10px;
-            border-radius: 9px;
-            cursor: pointer;
-            flex-shrink: 0;
-            white-space: nowrap;
+            background: white; border: 2px solid #FFD9C7; color: var(--pink);
+            font-family: inherit; font-weight: bold; font-size: 0.76rem;
+            padding: 6px 10px; border-radius: 9px; cursor: pointer;
+            flex-shrink: 0; white-space: nowrap;
         }
-        
-        .u-btn:active {
-            background: var(--pink);
-            color: white;
-        }
-        
+        .u-btn:active { background: var(--pink); color: white; }
         .app-body { padding: 18px var(--pad) 22px; }
-        
         .screen { display: none; }
         .active { display: block; animation: slideIn 0.3s ease; }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+        @keyframes slideIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: #F1F4F9;
-            border: 2px solid #E4E9F2;
-            color: var(--ink);
-            font-family: inherit;
-            font-weight: bold;
-            font-size: 0.85rem;
-            padding: 8px 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-bottom: 14px;
+            display: inline-flex; align-items: center; gap: 4px;
+            background: #F1F4F9; border: 2px solid #E4E9F2; color: var(--ink);
+            font-family: inherit; font-weight: bold; font-size: 0.85rem;
+            padding: 8px 12px; border-radius: 10px; cursor: pointer; margin-bottom: 14px;
         }
-        
         .back-btn:active { background: #E4E9F2; }
-        
         .field-label {
-            display: block;
-            font-weight: bold;
-            color: var(--ink);
-            font-size: 0.9rem;
-            margin: 12px 0 6px;
+            display: block; font-weight: bold; color: var(--ink);
+            font-size: 0.9rem; margin: 12px 0 6px;
         }
         .field-label:first-of-type { margin-top: 0; }
-        
         .text-input {
-            display: block;
-            width: 100%;
-            padding: 13px 15px;
-            border-radius: 13px;
-            border: 2.5px solid #E4E9F2;
-            font-size: 1rem;
-            font-family: inherit;
-            background: var(--bg-soft);
-            color: var(--ink);
-            transition: all 0.2s;
+            display: block; width: 100%; padding: 13px 15px;
+            border-radius: 13px; border: 2.5px solid #E4E9F2;
+            font-size: 1rem; font-family: inherit;
+            background: var(--bg-soft); color: var(--ink); transition: all 0.2s;
         }
         .text-input:focus {
-            outline: none;
-            border-color: var(--blue);
-            background: white;
+            outline: none; border-color: var(--blue); background: white;
             box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
         }
         .text-input::placeholder { color: #B0B8C4; }
-        
         .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            width: 100%;
-            min-height: 46px;
-            padding: 13px 20px;
-            border: none;
-            border-radius: 13px;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: 0.96rem;
-            line-height: 1.2;
-            cursor: pointer;
-            color: white;
-            text-align: center;
-            transition: transform 0.15s;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            width: 100%; min-height: 46px; padding: 13px 20px;
+            border: none; border-radius: 13px; font-family: inherit;
+            font-weight: bold; font-size: 0.96rem; line-height: 1.2;
+            cursor: pointer; color: white; text-align: center; transition: transform 0.15s;
         }
         .btn:active:not(:disabled) { transform: scale(0.97); }
         .btn:disabled { opacity: 0.55; cursor: not-allowed; }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.35);
-        }
-        .btn-accent {
-            background: linear-gradient(135deg, var(--orange), var(--pink));
-            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.35);
-        }
-        .btn-lookup {
-            background: linear-gradient(135deg, var(--purple), var(--blue));
-            box-shadow: 0 4px 12px rgba(155, 126, 255, 0.35);
-        }
-        .btn-ghost {
-            background: #F1F4F9;
-            color: var(--ink);
-            border: 2px solid #E4E9F2;
-        }
-        .btn-danger {
-            background: #FFF0F0;
-            color: var(--red);
-            border: 2px solid #FFD0D0;
-        }
-        .btn-sm {
-            min-height: 38px;
-            padding: 9px 14px;
-            font-size: 0.85rem;
-        }
-        
+        .btn-primary { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); box-shadow: 0 4px 12px rgba(74,158,255,0.35); }
+        .btn-accent { background: linear-gradient(135deg, var(--orange), var(--pink)); box-shadow: 0 4px 12px rgba(255,109,180,0.35); }
+        .btn-lookup { background: linear-gradient(135deg, var(--purple), var(--blue)); box-shadow: 0 4px 12px rgba(155,126,255,0.35); }
+        .btn-ghost { background: #F1F4F9; color: var(--ink); border: 2px solid #E4E9F2; }
+        .btn-danger { background: #FFF0F0; color: var(--red); border: 2px solid #FFD0D0; }
+        .btn-sm { min-height: 38px; padding: 9px 14px; font-size: 0.85rem; }
         .stack > * + * { margin-top: 10px; }
-        
         .big-avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
+            width: 90px; height: 90px; border-radius: 50%;
             background: linear-gradient(135deg, var(--blue), var(--purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            margin: 0 auto 14px;
-            box-shadow: 0 8px 20px rgba(74, 158, 255, 0.35);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.8rem; margin: 0 auto 14px;
+            box-shadow: 0 8px 20px rgba(74,158,255,0.35);
         }
-        
         .welcome-text {
-            text-align: center;
-            color: var(--ink-soft);
-            margin-bottom: 14px;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            text-align: center; color: var(--ink-soft);
+            margin-bottom: 14px; font-size: 0.95rem; line-height: 1.4;
         }
-        
         .avatar-picker {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin: 14px 0;
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 8px; margin: 14px 0;
         }
-        
         .avatar-opt {
-            aspect-ratio: 1 / 1;
-            width: 100%;
-            border-radius: 14px;
-            background: #F1F4F9;
-            border: 3px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            cursor: pointer;
-            transition: all 0.15s;
-            user-select: none;
-            padding: 0;
+            aspect-ratio: 1 / 1; width: 100%; border-radius: 14px;
+            background: #F1F4F9; border: 3px solid transparent;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.7rem; cursor: pointer; transition: all 0.15s;
+            user-select: none; padding: 0;
         }
         .avatar-opt.selected {
-            border-color: var(--pink);
-            background: #FFF0F6;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.3);
+            border-color: var(--pink); background: #FFF0F6;
+            transform: scale(1.05); box-shadow: 0 4px 12px rgba(255,109,180,0.3);
         }
-        
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--ink);
-            margin-bottom: 12px;
+        .dash-title {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 6px;
         }
-        
+        .dash-title h2 { font-size: 1.15rem; color: var(--ink); }
+        .dash-stats {
+            font-size: 0.82rem; color: var(--ink-soft);
+            margin-bottom: 16px; font-weight: bold;
+        }
         .create-list-card {
             background: linear-gradient(135deg, #F7F9FF 0%, #EFF5FF 100%);
-            border: 2px dashed #C8D9F0;
-            border-radius: 18px;
-            padding: var(--pad);
-            margin-bottom: 22px;
+            border: 2px dashed #C8D9F0; border-radius: 18px;
+            padding: var(--pad); margin-bottom: 22px;
         }
-        
-        .list-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
+        .list-grid { display: flex; flex-direction: column; gap: 10px; }
         .list-card {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: white;
-            border-radius: 16px;
+            display: flex; align-items: center; gap: 10px;
+            background: white; border-radius: 16px;
             padding: 14px 12px 14px 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-left: 6px solid var(--blue);
-            cursor: pointer;
-            transition: transform 0.15s;
+            cursor: pointer; transition: transform 0.15s;
         }
         .list-card:active { transform: scale(0.99); }
         .list-card:nth-child(5n+1) { border-left-color: var(--blue); }
@@ -332,133 +166,71 @@
         .list-card:nth-child(5n+3) { border-left-color: var(--orange); }
         .list-card:nth-child(5n+4) { border-left-color: var(--green); }
         .list-card:nth-child(5n+5) { border-left-color: var(--purple); }
-        
-        .list-card-body {
-            flex: 1;
-            min-width: 0;
-            text-align: left;
-        }
-        
+        .list-card-body { flex: 1; min-width: 0; text-align: left; }
         .list-card-name {
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: var(--ink);
-            word-break: break-word;
-            line-height: 1.2;
+            font-size: 1.05rem; font-weight: bold; color: var(--ink);
+            word-break: break-word; line-height: 1.2;
         }
-        
-        .list-card-meta {
-            font-size: 0.8rem;
-            color: var(--ink-soft);
-            margin-top: 3px;
-        }
-        
-        .list-arrow {
-            font-size: 1.3rem;
-            color: var(--ink-soft);
-            flex-shrink: 0;
-        }
-        
+        .list-card-meta { font-size: 0.8rem; color: var(--ink-soft); margin-top: 3px; }
+        .list-arrow { font-size: 1.3rem; color: var(--ink-soft); flex-shrink: 0; }
         .delete-btn {
-            background: #FFF0F0;
-            border: none;
-            color: var(--red);
+            background: #FFF0F0; border: none; color: var(--red);
             width: 36px; height: 36px; min-width: 36px;
-            border-radius: 10px;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-weight: bold;
+            border-radius: 10px; font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; font-weight: bold;
         }
         .delete-btn:active { background: var(--red); color: white; transform: scale(0.92); }
-        
         .empty-state {
-            text-align: center;
-            padding: 26px 20px;
-            color: #A0ACBE;
-            font-size: 0.9rem;
-            background: #F7FAFF;
-            border-radius: 14px;
-            border: 2px dashed #D8E2EF;
-            line-height: 1.5;
+            text-align: center; padding: 26px 20px; color: #A0ACBE;
+            font-size: 0.9rem; background: #F7FAFF; border-radius: 14px;
+            border: 2px dashed #D8E2EF; line-height: 1.5;
         }
         .empty-state .emoji {
-            font-size: 2.2rem;
-            display: block;
-            margin-bottom: 8px;
-            opacity: 0.8;
+            font-size: 2.2rem; display: block; margin-bottom: 8px; opacity: 0.8;
         }
-        
         .list-title-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; margin-bottom: 14px;
         }
-        
         .list-title {
-            font-size: 1.15rem;
-            font-weight: bold;
-            color: var(--ink);
-            flex: 1;
-            min-width: 0;
-            word-break: break-word;
+            font-size: 1.2rem; font-weight: bold; color: var(--ink);
+            flex: 1; min-width: 0; word-break: break-word;
         }
-        
+        .list-actions {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            margin-bottom: 20px;
+        }
+        .list-actions .btn { min-height: 60px; flex-direction: column; font-size: 0.85rem; gap: 2px; }
+        .list-actions .btn .icn { font-size: 1.5rem; }
         .add-card {
             background: linear-gradient(135deg, #F7F9FF 0%, #EFF5FF 100%);
-            border: 2px dashed #C8D9F0;
-            border-radius: 18px;
-            padding: var(--pad);
-            margin-bottom: 22px;
+            border: 2px dashed #C8D9F0; border-radius: 18px;
+            padding: var(--pad); margin-bottom: 22px;
         }
-        
         .add-card-title {
-            font-size: 1rem;
-            font-weight: bold;
-            color: var(--blue-dark);
+            font-size: 1rem; font-weight: bold; color: var(--blue-dark);
             margin-bottom: 10px;
         }
-        
         .list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 12px;
         }
         .list-header h2 { font-size: 1.05rem; }
-        
         .count-badge {
             background: linear-gradient(135deg, var(--orange), var(--pink));
-            color: white;
-            font-size: 0.78rem;
-            font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 20px;
-            white-space: nowrap;
+            color: white; font-size: 0.78rem; font-weight: bold;
+            padding: 4px 12px; border-radius: 20px; white-space: nowrap;
         }
-        
         .word-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 2px;
+            display: flex; flex-direction: column; gap: 10px;
+            max-height: 300px; overflow-y: auto; padding: 2px;
         }
         .word-list::-webkit-scrollbar { width: 6px; }
         .word-list::-webkit-scrollbar-thumb { background: #D5DDE8; border-radius: 3px; }
-        
         .word-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: white;
-            border-radius: 14px;
+            display: flex; align-items: center; gap: 12px;
+            background: white; border-radius: 14px;
             padding: 12px 12px 12px 14px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-left: 5px solid var(--blue);
@@ -468,260 +240,126 @@
         .word-card:nth-child(5n+3) { border-left-color: var(--orange); }
         .word-card:nth-child(5n+4) { border-left-color: var(--green); }
         .word-card:nth-child(5n+5) { border-left-color: var(--purple); }
-        
         .word-number {
-            width: 26px; height: 26px; min-width: 26px;
-            border-radius: 50%;
-            background: #EEF3FB;
-            color: var(--blue-dark);
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            width: 26px; height: 26px; min-width: 26px; border-radius: 50%;
+            background: #EEF3FB; color: var(--blue-dark);
+            font-size: 0.8rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-        
         .word-body { flex: 1; min-width: 0; text-align: left; }
-        
         .word-text {
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: var(--ink);
-            word-break: break-word;
-            line-height: 1.25;
-            display: block;
+            font-size: 1.05rem; font-weight: bold; color: var(--ink);
+            word-break: break-word; line-height: 1.25; display: block;
         }
-        
         .word-def {
-            font-size: 0.82rem;
-            color: var(--ink-soft);
-            line-height: 1.4;
-            word-break: break-word;
-            margin-top: 3px;
+            font-size: 0.82rem; color: var(--ink-soft);
+            line-height: 1.4; word-break: break-word; margin-top: 3px;
         }
-        
         .practice-card, .test-card {
             background: linear-gradient(135deg, #F0F7FF 0%, #EFF0FF 100%);
-            border-radius: 18px;
-            padding: var(--pad);
-            border: 2px solid #DDE6F5;
+            border-radius: 18px; padding: var(--pad); border: 2px solid #DDE6F5;
         }
-        
         .spell-input {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            font-size: 1.15rem;
-            text-align: center;
-            letter-spacing: 2px;
-            font-weight: bold;
-            border-radius: 13px;
-            border: 3px solid var(--blue);
-            background: white;
-            font-family: inherit;
-            color: var(--ink);
-            margin-top: 6px;
+            display: block; width: 100%; padding: 14px;
+            font-size: 1.15rem; text-align: center; letter-spacing: 2px;
+            font-weight: bold; border-radius: 13px;
+            border: 3px solid var(--blue); background: white;
+            font-family: inherit; color: var(--ink); margin-top: 6px;
         }
         .spell-input:focus {
-            outline: none;
-            border-color: var(--purple);
-            box-shadow: 0 0 0 5px rgba(155, 126, 255, 0.15);
+            outline: none; border-color: var(--purple);
+            box-shadow: 0 0 0 5px rgba(155,126,255,0.15);
         }
-        
         .feedback {
-            margin-top: 12px;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            word-break: break-word;
+            margin-top: 12px; padding: 12px; border-radius: 12px;
+            font-weight: bold; text-align: center; font-size: 0.95rem;
+            line-height: 1.4; word-break: break-word;
         }
         .feedback:empty { display: none; }
         .feedback.correct { background: #D4F8E0; color: #0F7B3E; border: 2px solid #A8E6BC; }
         .feedback.incorrect { background: #FFE0E0; color: #B71C1C; border: 2px solid #FFB8B8; }
-        
         .progress-wrap { margin-top: 14px; }
-        .progress-bar {
-            height: 10px;
-            background: #E4E9F2;
-            border-radius: 5px;
-            overflow: hidden;
-        }
+        .progress-bar { height: 10px; background: #E4E9F2; border-radius: 5px; overflow: hidden; }
         .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--blue), var(--purple));
-            width: 0%;
-            transition: width 0.4s ease;
+            height: 100%; background: linear-gradient(90deg, var(--blue), var(--purple));
+            width: 0%; transition: width 0.4s ease;
         }
         .progress-text {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: var(--ink-soft);
-            margin-top: 6px;
-            font-weight: bold;
+            display: flex; justify-content: space-between;
+            font-size: 0.8rem; color: var(--ink-soft); margin-top: 6px; font-weight: bold;
         }
-        
         .completion-card {
             background: linear-gradient(135deg, #FFF5EB, #FFE5F1);
-            border-radius: 20px;
-            padding: 24px var(--pad);
-            border: 2px solid #FFD9C7;
-            text-align: center;
+            border-radius: 20px; padding: 24px var(--pad);
+            border: 2px solid #FFD9C7; text-align: center;
         }
-        
-        .completion-emoji {
-            font-size: 3rem;
-            line-height: 1;
-            margin-bottom: 12px;
-        }
-        
+        .completion-emoji { font-size: 3rem; line-height: 1; margin-bottom: 12px; }
         .completion-title {
-            font-size: 1.35rem;
-            color: var(--pink);
-            font-weight: bold;
-            margin-bottom: 8px;
+            font-size: 1.35rem; color: var(--pink); font-weight: bold; margin-bottom: 8px;
         }
-        
-        .completion-message {
-            color: var(--ink);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 6px;
-        }
-        
+        .completion-message { color: var(--ink); font-size: 0.95rem; line-height: 1.5; margin-bottom: 6px; }
         .completion-score {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--purple);
-            margin: 12px 0 20px;
+            font-size: 2rem; font-weight: bold; color: var(--purple); margin: 12px 0 20px;
         }
-        
         .completion-score .sub {
-            display: block;
-            font-size: 0.9rem;
-            color: var(--ink-soft);
-            font-weight: normal;
-            margin-top: 4px;
+            display: block; font-size: 0.9rem; color: var(--ink-soft);
+            font-weight: normal; margin-top: 4px;
         }
-        
         .celebrate {
             animation: celebrate 0.8s ease infinite alternate;
-            color: var(--orange);
-            font-size: 1rem;
-            margin: 12px 0;
-            font-weight: bold;
+            color: var(--orange); font-size: 1rem; margin: 12px 0; font-weight: bold;
         }
-        @keyframes celebrate {
-            from { transform: scale(1); }
-            to { transform: scale(1.05); }
-        }
-        
+        @keyframes celebrate { from{transform:scale(1)} to{transform:scale(1.05)} }
         .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
+            position: fixed; bottom: 24px; left: 50%;
             transform: translateX(-50%) translateY(120px);
-            background: var(--ink);
-            color: white;
-            padding: 12px 22px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            z-index: 1500;
-            transition: transform 0.35s ease;
+            background: var(--ink); color: white; padding: 12px 22px;
+            border-radius: 30px; font-weight: bold; font-size: 0.9rem;
+            z-index: 1500; transition: transform 0.35s ease;
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            max-width: calc(100vw - 40px);
-            text-align: center;
-            pointer-events: none;
+            max-width: calc(100vw - 40px); text-align: center; pointer-events: none;
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { background: var(--green); }
         .toast.error { background: var(--red); }
         .toast.warning { background: #F39C12; }
-        
         .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 2500;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); z-index: 2500;
+            justify-content: center; align-items: center; padding: 20px;
         }
         .modal.show { display: flex; }
-        
         .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 22px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            position: relative;
-            max-height: 85vh;
-            overflow-y: auto;
+            background: white; border-radius: 20px; padding: 22px;
+            width: 100%; max-width: 380px; text-align: center;
+            position: relative; max-height: 85vh; overflow-y: auto;
         }
-        
         .modal-close {
-            position: absolute;
-            top: 10px; right: 14px;
-            font-size: 1.7rem;
-            color: #AAA;
-            cursor: pointer;
-            line-height: 1;
-            font-weight: bold;
-            padding: 4px;
+            position: absolute; top: 10px; right: 14px;
+            font-size: 1.7rem; color: #AAA; cursor: pointer;
+            line-height: 1; font-weight: bold; padding: 4px;
         }
-        
         .modal-content h3 { color: var(--purple); margin-bottom: 12px; }
-        
         .modal-def {
-            background: #F7F9FF;
-            padding: 14px;
-            border-radius: 12px;
-            text-align: left;
-            line-height: 1.5;
-            color: var(--ink);
-            word-break: break-word;
+            background: #F7F9FF; padding: 14px; border-radius: 12px;
+            text-align: left; line-height: 1.5; color: var(--ink); word-break: break-word;
         }
-        
         .modal-def .word {
-            font-size: 1.15rem;
-            font-weight: bold;
-            color: var(--blue-dark);
-            margin-bottom: 6px;
+            font-size: 1.15rem; font-weight: bold;
+            color: var(--blue-dark); margin-bottom: 6px;
         }
-        
         .spinner {
-            display: inline-block;
-            width: 15px; height: 15px;
-            border: 2.5px solid rgba(255,255,255,0.4);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 4px;
-            vertical-align: -2px;
+            display: inline-block; width: 15px; height: 15px;
+            border: 2.5px solid rgba(255,255,255,0.4); border-top-color: white;
+            border-radius: 50%; animation: spin 0.8s linear infinite;
+            margin-right: 4px; vertical-align: -2px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        
         .danger-zone {
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 2px dashed #E4E9F2;
-            text-align: center;
+            margin-top: 24px; padding-top: 16px;
+            border-top: 2px dashed #E4E9F2; text-align: center;
         }
-        
-        .danger-zone p {
-            font-size: 0.8rem;
-            color: var(--ink-soft);
-            margin-bottom: 8px;
-        }
-        
+        .danger-zone p { font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 8px; }
         @media (max-width: 380px) {
             :root { --pad: 14px; }
             .app-header h1 { font-size: 1.3rem; }
@@ -735,7 +373,7 @@
 <body>
     <div class="container">
         <div class="app-header">
-            <h1><span class="bee">🐝</span> Spelling Bee <span class="bee">🐝</span><span class="version-badge">v3</span></h1>
+            <h1><span class="bee">🐝</span> Spelling Bee <span class="bee">🐝</span><span class="version-badge">v4</span></h1>
         </div>
         
         <div class="user-bar" id="user-bar" style="display: none;">
@@ -750,7 +388,6 @@
             <div class="screen welcome-screen">
                 <div class="big-avatar" id="preview-avatar">👧</div>
                 <p class="welcome-text">Welcome! Pick your buddy and tell me your name.</p>
-                
                 <div class="avatar-picker" id="welcome-avatar-picker">
                     <button type="button" class="avatar-opt selected" onclick="pickAvatar('👧', this)">👧</button>
                     <button type="button" class="avatar-opt" onclick="pickAvatar('👦', this)">👦</button>
@@ -758,10 +395,8 @@
                     <button type="button" class="avatar-opt" onclick="pickAvatar('🐱', this)">🐱</button>
                     <button type="button" class="avatar-opt" onclick="pickAvatar('🦄', this)">🦄</button>
                 </div>
-                
                 <label class="field-label" for="input-name">Your name:</label>
                 <input type="text" class="text-input" id="input-name" placeholder="Type your name" autocomplete="off">
-                
                 <div class="stack" style="margin-top: 14px;">
                     <button class="btn btn-primary" onclick="startApp()">Let's Start! 🚀</button>
                 </div>
@@ -771,9 +406,7 @@
             <div class="screen profile-screen">
                 <button class="back-btn" onclick="cancelProfile()">← Back</button>
                 <h2 style="text-align: center; font-size: 1.15rem; margin-bottom: 14px;">👤 My Profile</h2>
-                
                 <div class="big-avatar" id="profile-preview">👧</div>
-                
                 <div class="avatar-picker" id="profile-avatar-picker">
                     <button type="button" class="avatar-opt" onclick="pickProfileAvatar('👧', this)">👧</button>
                     <button type="button" class="avatar-opt" onclick="pickProfileAvatar('👦', this)">👦</button>
@@ -781,24 +414,24 @@
                     <button type="button" class="avatar-opt" onclick="pickProfileAvatar('🐱', this)">🐱</button>
                     <button type="button" class="avatar-opt" onclick="pickProfileAvatar('🦄', this)">🦄</button>
                 </div>
-                
                 <label class="field-label" for="profile-name-input">Your name:</label>
                 <input type="text" class="text-input" id="profile-name-input" placeholder="Your name" autocomplete="off">
-                
                 <div class="stack" style="margin-top: 14px;">
                     <button class="btn btn-primary" onclick="saveProfile()">💾 Save Changes</button>
                     <button class="btn btn-ghost" onclick="cancelProfile()">Cancel</button>
                 </div>
-                
                 <div class="danger-zone">
-                    <p>Want to start over with a different user?</p>
+                    <p>Start over with a different user?</p>
                     <button class="btn btn-danger btn-sm" onclick="resetApp()">🔄 Start Fresh (New User)</button>
                 </div>
             </div>
             
-            <!-- DASHBOARD -->
+            <!-- DASHBOARD / PARENT HUB -->
             <div class="screen dashboard-screen">
-                <h2 class="section-title">📚 My Word Lists</h2>
+                <div class="dash-title">
+                    <h2>📚 Parent Dashboard</h2>
+                </div>
+                <p class="dash-stats" id="dash-stats">0 lists · 0 words</p>
                 
                 <div class="create-list-card">
                     <label class="field-label" for="new-list-name">Create a new list:</label>
@@ -816,7 +449,7 @@
                 </div>
                 
                 <div class="danger-zone">
-                    <p>Changing user? Start over with a fresh welcome screen.</p>
+                    <p>Changing user? Start fresh with the welcome screen.</p>
                     <button class="btn btn-ghost btn-sm" onclick="resetApp()">🔄 Start Fresh (New User)</button>
                 </div>
             </div>
@@ -830,15 +463,23 @@
                     <button class="delete-btn" onclick="deleteCurrentList()" aria-label="Delete list">🗑️</button>
                 </div>
                 
+                <div class="list-actions" id="list-actions" style="display: none;">
+                    <button class="btn btn-primary" onclick="startPractice()">
+                        <span class="icn">📖</span>
+                        Practice Words
+                    </button>
+                    <button class="btn btn-accent" onclick="startTest()">
+                        <span class="icn">📝</span>
+                        Take a Test
+                    </button>
+                </div>
+                
                 <div class="add-card">
                     <div class="add-card-title">➕ Add a New Word</div>
-                    
                     <label class="field-label" for="new-word">The word:</label>
                     <input type="text" class="text-input" id="new-word" placeholder="e.g. beautiful" autocomplete="off" autocapitalize="off">
-                    
                     <label class="field-label" for="new-def">What it means (optional):</label>
                     <input type="text" class="text-input" id="new-def" placeholder="Tap Lookup or type your own" autocomplete="off">
-                    
                     <div class="stack" style="margin-top: 12px;">
                         <button class="btn btn-lookup" id="lookup-btn" onclick="lookupDef()">🔍 Look Up the Definition</button>
                         <button class="btn btn-accent" onclick="addWord()">Add to List</button>
@@ -856,34 +497,24 @@
                         No words yet.<br>Add your first word above!
                     </div>
                 </div>
-                
-                <div class="stack" style="margin-top: 18px;">
-                    <button class="btn btn-primary" onclick="startPractice()">📖 Practice These Words</button>
-                    <button class="btn btn-accent" id="start-test-btn" onclick="startTest()" style="display: none;">📝 Take a Test</button>
-                </div>
             </div>
             
             <!-- PRACTICE -->
             <div class="screen practice-screen">
                 <button class="back-btn" onclick="exitPractice()">← Back to List</button>
-                
                 <div id="practice-live">
                     <div class="practice-card">
                         <button class="btn btn-primary" onclick="speakWord()">🔊 Hear the Word</button>
-                        
                         <label class="field-label" for="practice-input">Type what you hear:</label>
                         <input type="text" class="spell-input" id="practice-input"
                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                        
                         <div class="stack" style="margin-top: 12px;">
                             <button class="btn btn-accent" onclick="checkPractice()">Check My Spelling</button>
                             <button class="btn btn-ghost" onclick="showDefinition()">📖 Show Definition</button>
                             <button class="btn btn-ghost" id="practice-next-btn" onclick="nextPractice()">Next Word ➡️</button>
                         </div>
-                        
                         <div class="feedback" id="practice-feedback"></div>
                     </div>
-                    
                     <div class="progress-wrap">
                         <div class="progress-bar"><div class="progress-fill" id="practice-progress"></div></div>
                         <div class="progress-text">
@@ -892,16 +523,12 @@
                         </div>
                     </div>
                 </div>
-                
                 <div id="practice-done" style="display: none;">
                     <div class="completion-card">
                         <div class="completion-emoji">🎉</div>
                         <div class="completion-title">Practice Complete!</div>
                         <p class="completion-message">You finished practicing this list.</p>
-                        <div class="completion-score" id="practice-final-score">
-                            0 of 0
-                            <span class="sub">words correct</span>
-                        </div>
+                        <div class="completion-score" id="practice-final-score">0 of 0<span class="sub">words correct</span></div>
                         <div class="stack">
                             <button class="btn btn-primary" onclick="restartPractice()">🔄 Practice Again</button>
                             <button class="btn btn-ghost" onclick="exitPractice()">← Back to List</button>
@@ -914,23 +541,18 @@
             <!-- TEST -->
             <div class="screen test-screen">
                 <button class="back-btn" onclick="exitTest()">← Back to List</button>
-                
                 <div id="test-live">
                     <div class="test-card">
                         <button class="btn btn-primary" onclick="speakWord()">🔊 Hear the Word</button>
-                        
                         <label class="field-label" for="test-input">Spell the word:</label>
                         <input type="text" class="spell-input" id="test-input"
                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                        
                         <div class="stack" style="margin-top: 12px;">
                             <button class="btn btn-accent" id="check-test-btn" onclick="checkTest()">Check Answer</button>
                             <button class="btn btn-ghost" id="test-next-btn" onclick="nextTest()">Next Word ➡️</button>
                         </div>
-                        
                         <div class="feedback" id="test-feedback"></div>
                     </div>
-                    
                     <div class="progress-wrap">
                         <div class="progress-bar"><div class="progress-fill" id="test-progress"></div></div>
                         <div class="progress-text">
@@ -939,16 +561,12 @@
                         </div>
                     </div>
                 </div>
-                
                 <div id="test-done" style="display: none;">
                     <div class="completion-card">
                         <div class="completion-emoji" id="test-result-emoji">🎉</div>
                         <div class="completion-title">Test Complete!</div>
                         <p class="completion-message" id="test-result-message">You've finished the test.</p>
-                        <div class="completion-score" id="test-final-score">
-                            0 of 0
-                            <span class="sub">words correct</span>
-                        </div>
+                        <div class="completion-score" id="test-final-score">0 of 0<span class="sub">words correct</span></div>
                         <div id="test-celebrate-wrap"></div>
                         <div class="stack">
                             <button class="btn btn-primary" onclick="restartTest()">🔄 Test Again</button>
@@ -973,44 +591,34 @@
     </div>
     
     <script>
-        // ===== STORAGE =====
         const memoryStore = {};
         let storageWorks = true;
-        try {
-            localStorage.setItem('__sb_t', '1');
-            localStorage.removeItem('__sb_t');
-        } catch (e) { storageWorks = false; }
-        
+        try { localStorage.setItem('__sb_t','1'); localStorage.removeItem('__sb_t'); } catch(e){ storageWorks = false; }
         const store = {
             get(key, def) {
                 try {
-                    if (storageWorks) {
-                        const v = localStorage.getItem(key);
-                        return v === null ? def : JSON.parse(v);
-                    }
+                    if (storageWorks) { const v = localStorage.getItem(key); return v === null ? def : JSON.parse(v); }
                     return memoryStore.hasOwnProperty(key) ? memoryStore[key] : def;
-                } catch (e) { return def; }
+                } catch(e){ return def; }
             },
             set(key, val) {
                 try {
                     if (storageWorks) localStorage.setItem(key, JSON.stringify(val));
                     else memoryStore[key] = val;
-                } catch (e) { memoryStore[key] = val; }
+                } catch(e){ memoryStore[key] = val; }
             },
             remove(key) {
                 try {
                     if (storageWorks) localStorage.removeItem(key);
                     memoryStore[key] = undefined;
-                } catch (e) { memoryStore[key] = undefined; }
+                } catch(e){ memoryStore[key] = undefined; }
             }
         };
-        
-        // ===== CLEANUP LEGACY DATA FROM OLD VERSIONS =====
-        ['sb_name', 'sb_avatar', 'sb_words', 'sb_screen', 'sb_theme'].forEach(k => {
-            try { localStorage.removeItem(k); } catch (e) {}
+        // Clear legacy data keys
+        ['sb_name','sb_avatar','sb_words','sb_screen','sb_theme'].forEach(k => {
+            try { localStorage.removeItem(k); } catch(e){}
         });
         
-        // ===== STATE =====
         let data = { name: '', avatar: '👧', lists: [] };
         let currentListId = null;
         let currentIdx = 0;
@@ -1021,77 +629,55 @@
         let tempProfileAvatar = '👧';
         let profileReturnScreen = 'dashboard-screen';
         
-        // ===== BOOT =====
         window.addEventListener('load', () => {
             try {
                 const saved = store.get('sb_data', null);
-                // Validate the saved structure
                 if (saved && typeof saved === 'object' && saved.name && Array.isArray(saved.lists)) {
                     data = saved;
-                    // Ensure each list has a words array
-                    data.lists.forEach(l => {
-                        if (!Array.isArray(l.words)) l.words = [];
-                    });
+                    data.lists.forEach(l => { if (!Array.isArray(l.words)) l.words = []; });
                     updateUserBar();
                     renderDashboard();
                     showScreen('dashboard-screen');
                 } else {
-                    // No valid data — show welcome
                     showScreen('welcome-screen');
                 }
-            } catch (err) {
-                console.error('Boot error:', err);
+            } catch(err) {
+                console.error(err);
                 showScreen('welcome-screen');
             }
         });
         
-        function saveData() {
-            try { store.set('sb_data', data); } catch (e) { console.error(e); }
-        }
+        function saveData() { try { store.set('sb_data', data); } catch(e){ console.error(e); } }
         
         function showScreen(name) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const t = document.querySelector('.' + name);
             if (t) t.classList.add('active');
-            
             const ub = document.getElementById('user-bar');
             const homeBtn = document.getElementById('home-btn');
-            
-            if (name === 'welcome-screen') {
-                ub.style.display = 'none';
-            } else {
+            if (name === 'welcome-screen') { ub.style.display = 'none'; }
+            else {
                 ub.style.display = 'flex';
                 homeBtn.style.display = (name === 'dashboard-screen' || name === 'profile-screen') ? 'none' : 'inline-block';
                 updateUserBar();
             }
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
         function updateUserBar() {
             document.getElementById('ubar-avatar').textContent = data.avatar;
             document.getElementById('ubar-name').textContent = data.name;
         }
+        function goHome() { renderDashboard(); showScreen('dashboard-screen'); }
         
-        function goHome() {
-            renderDashboard();
-            showScreen('dashboard-screen');
-        }
-        
-        // ===== WELCOME =====
         function pickAvatar(emoji, el) {
             data.avatar = emoji;
             document.getElementById('preview-avatar').textContent = emoji;
             document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
         }
-        
         function startApp() {
             const name = document.getElementById('input-name').value.trim();
-            if (!name) {
-                showToast('Please type your name!', 'warning');
-                return;
-            }
+            if (!name) { showToast('Please type your name!', 'warning'); return; }
             data = { name, avatar: data.avatar || '👧', lists: [] };
             saveData();
             updateUserBar();
@@ -1099,35 +685,26 @@
             showScreen('dashboard-screen');
         }
         
-        // ===== PROFILE =====
         function goToProfile() {
             const active = document.querySelector('.screen.active');
             if (active) profileReturnScreen = active.classList[1];
-            
             tempProfileAvatar = data.avatar;
             document.getElementById('profile-preview').textContent = data.avatar;
             document.getElementById('profile-name-input').value = data.name;
-            
             document.querySelectorAll('#profile-avatar-picker .avatar-opt').forEach(o => {
                 o.classList.toggle('selected', o.textContent === data.avatar);
             });
-            
             showScreen('profile-screen');
         }
-        
         function pickProfileAvatar(emoji, el) {
             tempProfileAvatar = emoji;
             document.getElementById('profile-preview').textContent = emoji;
             document.querySelectorAll('#profile-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
         }
-        
         function saveProfile() {
             const newName = document.getElementById('profile-name-input').value.trim();
-            if (!newName) {
-                showToast('Name cannot be empty!', 'warning');
-                return;
-            }
+            if (!newName) { showToast('Name cannot be empty!', 'warning'); return; }
             data.name = newName;
             data.avatar = tempProfileAvatar;
             saveData();
@@ -1135,44 +712,32 @@
             showToast('Profile saved!', 'success');
             showScreen(profileReturnScreen);
         }
-        
-        function cancelProfile() {
-            showScreen(profileReturnScreen);
-        }
+        function cancelProfile() { showScreen(profileReturnScreen); }
         
         function resetApp() {
-            if (!confirm('This will clear EVERYTHING (name, avatar, all lists and words) and start fresh.\n\nContinue?')) return;
-            
+            if (!confirm('Clear EVERYTHING (name, avatar, lists, words) and start fresh?')) return;
             data = { name: '', avatar: '👧', lists: [] };
             saveData();
-            
-            // Reset welcome screen UI
             document.getElementById('input-name').value = '';
             document.getElementById('preview-avatar').textContent = '👧';
             document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             const first = document.querySelector('#welcome-avatar-picker .avatar-opt');
             if (first) first.classList.add('selected');
-            
             currentListId = null;
             showScreen('welcome-screen');
             showToast('All cleared. Fresh start!', 'success');
         }
         
-        // ===== DASHBOARD =====
         function renderDashboard() {
             const c = document.getElementById('lists-container');
+            const stats = document.getElementById('dash-stats');
             if (!c) return;
-            
+            const totalWords = data.lists.reduce((sum, l) => sum + l.words.length, 0);
+            stats.textContent = `${data.lists.length} list${data.lists.length !== 1 ? 's' : ''} · ${totalWords} word${totalWords !== 1 ? 's' : ''} total`;
             if (!Array.isArray(data.lists) || data.lists.length === 0) {
-                c.innerHTML = `
-                    <div class="empty-state">
-                        <span class="emoji">📝</span>
-                        No lists yet.<br>Create your first list above!
-                    </div>
-                `;
+                c.innerHTML = `<div class="empty-state"><span class="emoji">📝</span>No lists yet.<br>Create your first list above!</div>`;
                 return;
             }
-            
             c.innerHTML = data.lists.map(list => `
                 <div class="list-card" onclick="openList(${list.id})">
                     <div class="list-card-body">
@@ -1184,22 +749,16 @@
                 </div>
             `).join('');
         }
-        
         function createList() {
             const input = document.getElementById('new-list-name');
             const name = input.value.trim();
-            if (!name) {
-                showToast('Give your list a name!', 'warning');
-                input.focus();
-                return;
-            }
+            if (!name) { showToast('Give your list a name!', 'warning'); input.focus(); return; }
             data.lists.push({ id: Date.now(), name, words: [] });
             saveData();
             input.value = '';
             renderDashboard();
             showToast(`List "${name}" created!`, 'success');
         }
-        
         function deleteList(id) {
             const list = data.lists.find(l => l.id === id);
             if (!list) return;
@@ -1209,24 +768,15 @@
             renderDashboard();
             showToast('List deleted', 'success');
         }
-        
         function openList(id) {
             currentListId = id;
             const list = currentList();
-            if (!list) {
-                showToast('List not found', 'error');
-                goHome();
-                return;
-            }
+            if (!list) { showToast('List not found', 'error'); goHome(); return; }
             document.getElementById('current-list-name').textContent = list.name;
             renderWords();
             showScreen('list-detail-screen');
         }
-        
-        function currentList() {
-            return data.lists.find(l => l.id === currentListId);
-        }
-        
+        function currentList() { return data.lists.find(l => l.id === currentListId); }
         function deleteCurrentList() {
             const list = currentList();
             if (!list) return;
@@ -1238,19 +788,13 @@
             showToast('List deleted', 'success');
         }
         
-        // ===== LOOKUP =====
         async function lookupDef() {
             const word = document.getElementById('new-word').value.trim();
-            if (!word) {
-                showToast('Type a word first!', 'warning');
-                document.getElementById('new-word').focus();
-                return;
-            }
+            if (!word) { showToast('Type a word first!', 'warning'); document.getElementById('new-word').focus(); return; }
             const btn = document.getElementById('lookup-btn');
             const orig = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span> Searching...';
-            
             try {
                 const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word.toLowerCase())}`);
                 if (!res.ok) throw new Error('Not found');
@@ -1259,14 +803,13 @@
                 if (!best) throw new Error('No definition');
                 document.getElementById('new-def').value = best.definition;
                 showToast(`Found! (${best.partOfSpeech || 'word'})`, 'success');
-            } catch (err) {
+            } catch(err) {
                 showToast("Couldn't find it — type your own", 'error');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = orig;
             }
         }
-        
         function findBestDefinition(entry) {
             if (!entry || !entry.meanings) return null;
             const priority = { noun: 1, verb: 2, adjective: 3, adverb: 4 };
@@ -1284,7 +827,7 @@
                 if (fd?.definition) return { partOfSpeech: fm.partOfSpeech || '', definition: cleanDef(fd.definition) };
                 return null;
             }
-            candidates.sort((a, b) => {
+            candidates.sort((a,b) => {
                 const pa = priority[a.partOfSpeech] || 5;
                 const pb = priority[b.partOfSpeech] || 5;
                 if (pa !== pb) return pa - pb;
@@ -1292,24 +835,17 @@
             });
             return candidates[0];
         }
-        
         function cleanDef(text) {
             let t = text.trim().replace(/^\([^)]+\)\s*/, '');
             return t.charAt(0).toUpperCase() + t.slice(1);
         }
         
-        // ===== WORDS =====
         function addWord() {
             const list = currentList();
             if (!list) return;
-            
             const word = document.getElementById('new-word').value.trim();
             const def = document.getElementById('new-def').value.trim();
-            if (!word) {
-                showToast('Please type a word!', 'warning');
-                document.getElementById('new-word').focus();
-                return;
-            }
+            if (!word) { showToast('Please type a word!', 'warning'); document.getElementById('new-word').focus(); return; }
             if (list.words.some(w => w.word.toLowerCase() === word.toLowerCase())) {
                 showToast('That word is already in this list!', 'warning');
                 return;
@@ -1322,7 +858,6 @@
             document.getElementById('new-word').focus();
             showToast(`"${word}" added!`, 'success');
         }
-        
         function removeWord(i) {
             const list = currentList();
             if (!list) return;
@@ -1332,22 +867,18 @@
             renderWords();
             showToast(`"${removed}" removed`, 'success');
         }
-        
         function renderWords() {
             const list = currentList();
             if (!list) return;
             const container = document.getElementById('word-list');
             const badge = document.getElementById('count-badge');
-            const testBtn = document.getElementById('start-test-btn');
-            
+            const actions = document.getElementById('list-actions');
             badge.textContent = `${list.words.length} word${list.words.length !== 1 ? 's' : ''}`;
-            testBtn.style.display = list.words.length > 0 ? 'flex' : 'none';
-            
+            actions.style.display = list.words.length > 0 ? 'grid' : 'none';
             if (list.words.length === 0) {
                 container.innerHTML = `<div class="empty-state"><span class="emoji">📝</span>No words yet.<br>Add your first word above!</div>`;
                 return;
             }
-            
             container.innerHTML = list.words.map((w, i) => `
                 <div class="word-card">
                     <div class="word-number">${i + 1}</div>
@@ -1360,7 +891,6 @@
             `).join('');
         }
         
-        // ===== PRACTICE =====
         function startPractice() {
             const list = currentList();
             if (!list || list.words.length === 0) { showToast('Add some words first!', 'warning'); return; }
@@ -1372,7 +902,6 @@
             showScreen('practice-screen');
             updatePracticeUI();
         }
-        
         function updatePracticeUI() {
             const list = currentList();
             if (!list) return;
@@ -1385,7 +914,6 @@
             document.getElementById('practice-feedback').className = 'feedback';
             document.getElementById('practice-next-btn').textContent = (currentIdx === list.words.length - 1) ? '🏁 Finish Practice' : 'Next Word ➡️';
         }
-        
         function speakWord() {
             const list = currentList();
             if (!list || list.words.length === 0) return;
@@ -1394,9 +922,8 @@
                 u.rate = 0.85;
                 speechSynthesis.cancel();
                 speechSynthesis.speak(u);
-            } catch (e) { showToast('Audio not available', 'error'); }
+            } catch(e){ showToast('Audio not available', 'error'); }
         }
-        
         function showDefinition() {
             const list = currentList();
             if (!list) return;
@@ -1407,11 +934,7 @@
             `;
             document.getElementById('def-modal').classList.add('show');
         }
-        
-        function closeModal() {
-            document.getElementById('def-modal').classList.remove('show');
-        }
-        
+        function closeModal() { document.getElementById('def-modal').classList.remove('show'); }
         function checkPractice() {
             const list = currentList();
             if (!list) return;
@@ -1429,36 +952,27 @@
                 fb.className = 'feedback incorrect';
             }
         }
-        
         function nextPractice() {
             const list = currentList();
             if (!list) return;
-            if (currentIdx >= list.words.length - 1) {
-                showPracticeComplete();
-            } else {
-                currentIdx++;
-                updatePracticeUI();
-            }
+            if (currentIdx >= list.words.length - 1) { showPracticeComplete(); }
+            else { currentIdx++; updatePracticeUI(); }
         }
-        
         function showPracticeComplete() {
             const list = currentList();
             if (!list) return;
             const correct = practiceCorrect.size;
             const total = list.words.length;
             const pct = Math.round((correct / total) * 100);
-            
             document.getElementById('practice-final-score').innerHTML = `${correct} of ${total} (${pct}%)<span class="sub">words correct</span>`;
             document.getElementById('practice-live').style.display = 'none';
             document.getElementById('practice-done').style.display = 'block';
             if (correct === total) confetti(30);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
         function restartPractice() { startPractice(); }
         function exitPractice() { openList(currentListId); }
         
-        // ===== TEST =====
         function startTest() {
             const list = currentList();
             if (!list || list.words.length === 0) { showToast('Add some words first!', 'warning'); return; }
@@ -1471,7 +985,6 @@
             showScreen('test-screen');
             updateTestUI();
         }
-        
         function updateTestUI() {
             const list = currentList();
             if (!list) return;
@@ -1487,7 +1000,6 @@
             testAnswered = false;
             document.getElementById('test-next-btn').textContent = (currentIdx === list.words.length - 1) ? '🏁 Finish Test' : 'Next Word ➡️';
         }
-        
         function checkTest() {
             const list = currentList();
             if (!list || testAnswered) return;
@@ -1508,54 +1020,42 @@
             document.getElementById('test-input').disabled = true;
             document.getElementById('check-test-btn').disabled = true;
         }
-        
         function nextTest() {
             const list = currentList();
             if (!list) return;
-            if (currentIdx >= list.words.length - 1) {
-                showTestComplete();
-            } else {
-                currentIdx++;
-                updateTestUI();
-            }
+            if (currentIdx >= list.words.length - 1) { showTestComplete(); }
+            else { currentIdx++; updateTestUI(); }
         }
-        
         function showTestComplete() {
             const list = currentList();
             if (!list) return;
             const correct = testCorrectSet.size;
             const total = list.words.length;
             const pct = Math.round((correct / total) * 100);
-            
             let emoji = '🎉';
             let message = "You've finished the test!";
             if (pct === 100) { emoji = '⭐'; message = 'PERFECT SCORE! Amazing work!'; }
             else if (pct >= 80) { emoji = '🎉'; message = 'Great job! Almost perfect!'; }
             else if (pct >= 60) { emoji = '👍'; message = 'Nice work! Keep practicing!'; }
             else { emoji = '💪'; message = "Good try! Let's practice these words again."; }
-            
             document.getElementById('test-result-emoji').textContent = emoji;
             document.getElementById('test-result-message').textContent = message;
             document.getElementById('test-final-score').innerHTML = `${correct} of ${total} (${pct}%)<span class="sub">words correct</span>`;
             document.getElementById('test-celebrate-wrap').innerHTML = pct === 100 ? '<p class="celebrate">⭐ Perfect Score! ⭐</p>' : '';
-            
             document.getElementById('test-live').style.display = 'none';
             document.getElementById('test-done').style.display = 'block';
             if (correct === total) confetti(30);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
         function restartTest() { startTest(); }
         function exitTest() { openList(currentListId); }
         
-        // ===== UTILS =====
         function esc(t) {
             if (t == null) return '';
             const d = document.createElement('div');
             d.textContent = String(t);
             return d.innerHTML;
         }
-        
         function showToast(msg, type) {
             type = type || 'info';
             const t = document.createElement('div');
@@ -1565,7 +1065,6 @@
             setTimeout(() => t.classList.add('show'), 10);
             setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 2400);
         }
-        
         function confetti(count) {
             count = count || 16;
             for (let i = 0; i < count; i++) {
@@ -1575,13 +1074,11 @@
                 setTimeout(() => c.remove(), 5000);
             }
         }
-        
         (() => {
             const s = document.createElement('style');
             s.textContent = `@keyframes confettiDrop { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(105vh) rotate(720deg); opacity: 0; } }`;
             document.head.appendChild(s);
         })();
-        
         document.addEventListener('keydown', e => {
             if (e.key !== 'Enter') return;
             const id = document.activeElement.id;
@@ -1592,10 +1089,9 @@
             else if (id === 'test-input') checkTest();
             else if (id === 'profile-name-input') saveProfile();
         });
-        
         document.getElementById('def-modal').addEventListener('click', e => {
             if (e.target.id === 'def-modal') closeModal();
         });
     </script>
 </body>
-</html> 
+</html>
