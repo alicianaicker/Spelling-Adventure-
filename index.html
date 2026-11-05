@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Spelling Bee Helper</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
         
@@ -21,37 +21,38 @@
             --green: #2ECC71;
             --red: #FF5C5C;
             --purple: #9B7EFF;
-            --yellow: #FFD93D;
             --ink: #2D3436;
             --ink-soft: #636E72;
             --surface: #FFFFFF;
             --bg-soft: #F7FAFF;
         }
         
+        html, body { min-height: 100%; }
+        
         body {
             background: linear-gradient(160deg, #4A9EFF 0%, #9B7EFF 50%, #FF9E6D 100%);
-            min-height: 100vh;
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 16px;
+            padding: 14px 12px 30px;
+            color: var(--ink);
         }
         
         .container {
             width: 100%;
-            max-width: 520px;
+            max-width: 500px;
             background: var(--surface);
-            border-radius: 28px;
-            padding: 0;
+            border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.25);
             overflow: hidden;
-            margin-top: 8px;
+            margin: 0 auto;
         }
         
-        /* ========== HEADER ========== */
+        /* ===== HEADER ===== */
         .app-header {
             background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-            padding: 24px 20px 20px;
+            padding: 22px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -60,27 +61,27 @@
         .app-header::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
+            top: -60px; right: -40px;
+            width: 160px; height: 160px;
+            background: rgba(255,255,255,0.12);
             border-radius: 50%;
+            pointer-events: none;
         }
         
         .app-header h1 {
             color: white;
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             position: relative;
             z-index: 1;
         }
         
         .app-header .bee {
-            font-size: 1.5rem;
-            margin: 0 6px;
             display: inline-block;
+            font-size: 1.4rem;
+            margin: 0 6px;
             animation: wiggle 2s ease-in-out infinite;
+            vertical-align: middle;
         }
         
         @keyframes wiggle {
@@ -88,196 +89,271 @@
             50% { transform: rotate(8deg); }
         }
         
-        .app-body {
-            padding: 20px;
-        }
+        .app-body { padding: 20px 18px 24px; }
         
+        /* ===== SCREENS ===== */
         .screen { display: none; }
-        .active { display: block; animation: slideIn 0.4s ease; }
+        .active { display: block; animation: slideIn 0.35s ease; }
         
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ========== FORM ELEMENTS ========== */
+        /* ===== FORM ===== */
         .field-label {
             display: block;
             font-weight: bold;
             color: var(--ink);
             font-size: 0.9rem;
-            margin-bottom: 6px;
-            margin-top: 14px;
+            margin: 14px 0 6px;
         }
+        .field-label:first-child { margin-top: 0; }
         
         input[type="text"] {
             width: 100%;
-            padding: 14px 16px;
-            border-radius: 14px;
+            padding: 13px 15px;
+            border-radius: 13px;
             border: 2.5px solid #E4E9F2;
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-family: inherit;
             background: var(--bg-soft);
-            transition: all 0.2s;
             color: var(--ink);
+            display: block;
+            transition: all 0.2s;
         }
-        
         input[type="text"]:focus {
             outline: none;
             border-color: var(--blue);
             background: white;
             box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
         }
+        input[type="text"]::placeholder { color: #B0B8C4; }
         
-        input[type="text"]::placeholder {
-            color: #B0B8C4;
-        }
-        
-        /* ========== BUTTONS ========== */
+        /* ===== BUTTONS ===== */
         .btn {
             width: 100%;
-            padding: 14px 20px;
+            padding: 13px 20px;
             border: none;
-            border-radius: 14px;
-            font-size: 1rem;
+            border-radius: 13px;
+            font-size: 0.98rem;
             font-weight: bold;
             font-family: inherit;
             cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.2s;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
+            min-height: 46px;
+            line-height: 1.2;
+            transition: transform 0.15s;
         }
-        
-        .btn:active:not(:disabled) {
-            transform: scale(0.97);
-        }
-        
-        .btn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
+        .btn:active:not(:disabled) { transform: scale(0.97); }
+        .btn:disabled { opacity: 0.55; cursor: not-allowed; }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
-            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4);
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.35);
         }
-        
         .btn-accent {
-            background: linear-gradient(135deg, var(--orange) 0%, var(--pink) 100%);
-            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.4);
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.35);
         }
-        
         .btn-lookup {
-            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
-            box-shadow: 0 4px 12px rgba(155, 126, 255, 0.4);
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            box-shadow: 0 4px 12px rgba(155, 126, 255, 0.35);
         }
-        
         .btn-ghost {
             background: #F1F4F9;
             color: var(--ink);
             box-shadow: none;
             border: 2px solid #E4E9F2;
         }
-        
-        .btn-sm {
-            padding: 10px 16px;
-            font-size: 0.9rem;
-            border-radius: 12px;
-        }
+        .btn-sm { padding: 10px 16px; font-size: 0.88rem; min-height: 40px; }
         
         .btn-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: 16px;
+            margin-top: 14px;
         }
         
-        /* ========== ADD WORD CARD ========== */
+        /* ===== WELCOME ===== */
+        .current-avatar {
+            width: 84px; height: 84px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            margin: 0 auto 14px;
+            box-shadow: 0 8px 20px rgba(74, 158, 255, 0.35);
+        }
+        
+        .welcome-text {
+            text-align: center;
+            color: var(--ink-soft);
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        .avatar-picker {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        
+        .avatar-opt {
+            width: 52px; height: 52px;
+            border-radius: 15px;
+            background: #F1F4F9;
+            border: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .avatar-opt.selected {
+            border-color: var(--pink);
+            background: #FFF0F6;
+            transform: scale(1.06);
+            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.3);
+        }
+        
+        /* ===== NAME BANNER (with editable avatar) ===== */
+        .name-banner {
+            background: linear-gradient(135deg, #FFF5EB 0%, #FFE5F1 100%);
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid #FFD9C7;
+        }
+        
+        .banner-avatar-btn {
+            position: relative;
+            background: white;
+            border: 2px solid #FFD9C7;
+            width: 44px; height: 44px;
+            min-width: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.15s;
+            padding: 0;
+        }
+        .banner-avatar-btn:active { transform: scale(0.92); }
+        
+        .banner-avatar-btn .edit-pip {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            background: var(--pink);
+            color: white;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            border: 2px solid white;
+            line-height: 1;
+        }
+        
+        .banner-text {
+            font-weight: bold;
+            color: var(--ink);
+            font-size: 1rem;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .banner-edit-link {
+            background: none;
+            border: none;
+            color: var(--blue-dark);
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 6px 8px;
+            text-decoration: underline;
+            flex-shrink: 0;
+        }
+        
+        /* ===== ADD CARD ===== */
         .add-card {
             background: linear-gradient(135deg, #F7F9FF 0%, #EFF5FF 100%);
             border: 2px dashed #C8D9F0;
-            border-radius: 20px;
-            padding: 18px;
-            margin-bottom: 20px;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 22px;
         }
         
         .add-card-title {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: bold;
             color: var(--blue-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
         
-        /* ========== WORD LIST ========== */
+        /* ===== WORD LIST ===== */
         .list-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            padding: 0 4px;
         }
-        
-        .list-header h2 {
-            font-size: 1.1rem;
-            color: var(--ink);
-        }
+        .list-header h2 { font-size: 1.05rem; color: var(--ink); }
         
         .count-badge {
             background: linear-gradient(135deg, var(--orange), var(--pink));
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             padding: 4px 12px;
             border-radius: 20px;
-            box-shadow: 0 2px 6px rgba(255, 109, 180, 0.3);
+            white-space: nowrap;
         }
         
         .word-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 340px;
+            max-height: 320px;
             overflow-y: auto;
-            padding: 4px 2px 8px;
-            margin: 0 auto;
-            width: 100%;
+            padding: 2px 4px 8px 2px;
             scrollbar-width: thin;
         }
+        .word-list::-webkit-scrollbar { width: 6px; }
+        .word-list::-webkit-scrollbar-thumb { background: #D5DDE8; border-radius: 3px; }
         
-        .word-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .word-list::-webkit-scrollbar-thumb {
-            background: #D5DDE8;
-            border-radius: 3px;
-        }
-        
-        /* ========== WORD CARD (REDESIGNED) ========== */
         .word-card {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 10px;
             background: white;
-            border-radius: 16px;
-            padding: 14px 14px 14px 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border-radius: 14px;
+            padding: 12px 10px 12px 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-left: 5px solid var(--blue);
-            position: relative;
-            animation: popIn 0.3s ease;
         }
-        
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
         .word-card:nth-child(5n+1) { border-left-color: var(--blue); }
         .word-card:nth-child(5n+2) { border-left-color: var(--pink); }
         .word-card:nth-child(5n+3) { border-left-color: var(--orange); }
@@ -285,246 +361,134 @@
         .word-card:nth-child(5n+5) { border-left-color: var(--purple); }
         
         .word-number {
-            width: 28px;
-            height: 28px;
-            min-width: 28px;
+            width: 26px; height: 26px; min-width: 26px;
             border-radius: 50%;
             background: #EEF3FB;
             color: var(--blue-dark);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 2px;
+            flex-shrink: 0;
+            margin-top: 1px;
         }
         
-        .word-body {
-            flex: 1;
-            min-width: 0;
-            text-align: left;
-        }
-        
-        .word-head {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 4px;
-        }
+        .word-body { flex: 1; min-width: 0; text-align: left; }
         
         .word-text {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--ink);
             word-break: break-word;
-        }
-        
-        .pos-badge {
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: #FFF3E0;
-            color: #E67E22;
-            text-transform: lowercase;
-            font-style: italic;
+            line-height: 1.2;
+            display: block;
         }
         
         .word-def {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: var(--ink-soft);
-            line-height: 1.45;
+            line-height: 1.4;
             word-break: break-word;
-        }
-        
-        .word-example {
-            font-size: 0.82rem;
-            color: var(--purple);
-            font-style: italic;
-            margin-top: 5px;
-            padding-left: 8px;
-            border-left: 2px solid #E0D5FF;
-            word-break: break-word;
+            margin-top: 4px;
         }
         
         .delete-btn {
             background: #FFF0F0;
             border: none;
             color: var(--red);
-            width: 32px;
-            height: 32px;
-            min-width: 32px;
+            width: 34px; height: 34px; min-width: 34px;
             border-radius: 10px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
             flex-shrink: 0;
+            font-weight: bold;
+            transition: all 0.15s;
         }
-        
-        .delete-btn:active {
-            background: var(--red);
-            color: white;
-            transform: scale(0.9);
-        }
+        .delete-btn:active { background: var(--red); color: white; transform: scale(0.92); }
         
         .empty-state {
             text-align: center;
-            padding: 30px 20px;
+            padding: 26px 20px;
             color: #A0ACBE;
             font-size: 0.9rem;
             background: #F7FAFF;
-            border-radius: 16px;
+            border-radius: 14px;
             border: 2px dashed #D8E2EF;
+            line-height: 1.5;
         }
-        
         .empty-state .emoji {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             display: block;
             margin-bottom: 8px;
-            opacity: 0.7;
+            opacity: 0.8;
         }
         
-        /* ========== WELCOME ========== */
-        .avatar-picker {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 16px 0;
-        }
-        
-        .avatar-opt {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
-            background: #F1F4F9;
-            border: 3px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .avatar-opt.selected {
-            border-color: var(--pink);
-            background: #FFF0F6;
-            transform: scale(1.08);
-            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.3);
-        }
-        
-        .current-avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--blue), var(--purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            margin: 0 auto 12px;
-            box-shadow: 0 8px 20px rgba(74, 158, 255, 0.35);
-        }
-        
-        /* ========== NAME DISPLAY ========== */
-        .name-banner {
-            background: linear-gradient(135deg, #FFF5EB 0%, #FFE5F1 100%);
-            border-radius: 16px;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 2px solid #FFD9C7;
-        }
-        
-        .name-banner .avatar {
-            font-size: 1.8rem;
-        }
-        
-        .name-banner .text {
-            font-weight: bold;
-            color: var(--ink);
-            font-size: 1.05rem;
-            text-align: left;
-        }
-        
-        /* ========== PRACTICE/TEST ========== */
+        /* ===== PRACTICE / TEST ===== */
         .practice-card, .test-card {
             background: linear-gradient(135deg, #F0F7FF 0%, #EFF0FF 100%);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 16px;
             border: 2px solid #DDE6F5;
         }
         
-        .practice-card .spell-input, .test-card .spell-input {
+        .spell-input {
             width: 100%;
-            font-size: 1.3rem;
-            padding: 16px;
+            font-size: 1.15rem;
+            padding: 14px;
             text-align: center;
             letter-spacing: 2px;
             font-weight: bold;
-            border-radius: 14px;
+            border-radius: 13px;
             border: 3px solid var(--blue);
             background: white;
             font-family: inherit;
+            color: var(--ink);
+            display: block;
+            margin-top: 6px;
         }
-        
-        .practice-card .spell-input:focus, .test-card .spell-input:focus {
+        .spell-input:focus {
+            outline: none;
             border-color: var(--purple);
             box-shadow: 0 0 0 5px rgba(155, 126, 255, 0.15);
         }
         
         .feedback {
-            margin-top: 14px;
-            padding: 14px;
-            border-radius: 14px;
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 12px;
             font-weight: bold;
             text-align: center;
-            font-size: 1rem;
-            animation: popIn 0.3s ease;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-break: break-word;
+            animation: slideIn 0.25s ease;
         }
+        .feedback:empty { display: none; }
+        .feedback.correct { background: #D4F8E0; color: #0F7B3E; border: 2px solid #A8E6BC; }
+        .feedback.incorrect { background: #FFE0E0; color: #B71C1C; border: 2px solid #FFB8B8; }
         
-        .feedback.correct {
-            background: #D4F8E0;
-            color: #0F7B3E;
-            border: 2px solid #A8E6BC;
-        }
-        
-        .feedback.incorrect {
-            background: #FFE0E0;
-            color: #B71C1C;
-            border: 2px solid #FFB8B8;
-        }
-        
-        .progress-wrap {
-            margin-top: 16px;
-        }
-        
+        .progress-wrap { margin-top: 16px; }
         .progress-bar {
-            height: 12px;
+            height: 10px;
             background: #E4E9F2;
-            border-radius: 6px;
+            border-radius: 5px;
             overflow: hidden;
         }
-        
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--blue), var(--purple));
-            border-radius: 6px;
+            border-radius: 5px;
             width: 0%;
             transition: width 0.4s ease;
         }
-        
         .progress-text {
             display: flex;
             justify-content: space-between;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--ink-soft);
             margin-top: 6px;
             font-weight: bold;
@@ -532,128 +496,140 @@
         
         .results {
             margin-top: 16px;
-            padding: 20px;
+            padding: 18px;
             background: linear-gradient(135deg, #FFF5EB, #FFE5F1);
-            border-radius: 20px;
+            border-radius: 16px;
             border: 2px solid #FFD9C7;
+            text-align: center;
         }
-        
-        .results h2 { color: var(--pink); margin-bottom: 8px; }
+        .results h2 { color: var(--pink); margin-bottom: 8px; font-size: 1.15rem; }
+        .results p { margin: 6px 0; color: var(--ink); }
         
         .celebrate {
             animation: celebrate 0.8s ease infinite alternate;
             color: var(--orange);
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             margin-top: 8px;
+            font-weight: bold;
         }
-        
         @keyframes celebrate {
             from { transform: scale(1); }
             to { transform: scale(1.06); }
         }
         
-        /* ========== TOAST ========== */
+        .hint-img {
+            max-width: 100%;
+            max-height: 140px;
+            object-fit: contain;
+            margin: 12px auto 0;
+            border-radius: 12px;
+            display: none;
+            border: 3px solid var(--blue);
+        }
+        
+        /* ===== TOAST (bottom) ===== */
         .toast {
             position: fixed;
-            top: 20px;
+            bottom: 24px;
             left: 50%;
-            transform: translateX(-50%) translateY(-120px);
+            transform: translateX(-50%) translateY(120px);
             background: var(--ink);
             color: white;
             padding: 12px 22px;
             border-radius: 30px;
             font-weight: bold;
-            font-size: 0.92rem;
-            z-index: 3000;
+            font-size: 0.9rem;
+            z-index: 1500;
             transition: transform 0.35s ease;
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            max-width: 90vw;
+            max-width: calc(100vw - 40px);
             text-align: center;
+            pointer-events: none;
         }
-        
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { background: var(--green); }
         .toast.error { background: var(--red); }
         .toast.warning { background: #F39C12; }
         
-        /* ========== MODAL ========== */
+        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.6);
-            z-index: 2000;
+            z-index: 2500;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
+        .modal.show { display: flex; }
         
         .modal-content {
             background: white;
             border-radius: 20px;
-            padding: 24px;
+            padding: 22px;
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             text-align: center;
             position: relative;
-            animation: popIn 0.3s ease;
+            animation: slideIn 0.25s ease;
+            max-height: 85vh;
+            overflow-y: auto;
         }
         
         .modal-close {
             position: absolute;
-            top: 12px;
-            right: 16px;
-            font-size: 1.8rem;
+            top: 10px; right: 14px;
+            font-size: 1.7rem;
             color: #AAA;
             cursor: pointer;
             line-height: 1;
             font-weight: bold;
+            padding: 4px;
         }
         
         .modal-content h3 {
             color: var(--purple);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            padding-right: 20px;
         }
         
         .modal-def {
             background: #F7F9FF;
-            padding: 16px;
+            padding: 14px;
             border-radius: 12px;
             text-align: left;
             line-height: 1.5;
             color: var(--ink);
+            word-break: break-word;
         }
         
         .modal-def .word {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: bold;
             color: var(--blue-dark);
             margin-bottom: 6px;
         }
         
-        .hint-img {
-            max-width: 100%;
-            max-height: 160px;
-            object-fit: contain;
-            margin: 12px auto 0;
-            border-radius: 14px;
-            display: none;
-            border: 3px solid var(--blue);
-        }
-        
-        /* ========== SPINNER ========== */
         .spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 15px; height: 15px;
             border: 2.5px solid rgba(255,255,255,0.4);
             border-top-color: white;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
+            margin-right: 4px;
+            vertical-align: -2px;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @media (max-width: 380px) {
+            .app-header h1 { font-size: 1.35rem; }
+            .app-body { padding: 16px 14px 20px; }
+            .avatar-opt { width: 46px; height: 46px; font-size: 1.4rem; }
+            .current-avatar { width: 72px; height: 72px; font-size: 2.2rem; }
+            .btn { font-size: 0.92rem; }
+            .word-list { max-height: 280px; }
         }
     </style>
 </head>
@@ -664,12 +640,12 @@
         </div>
         
         <div class="app-body">
-            <!-- WELCOME SCREEN -->
-            <div class="screen welcome-screen active">
+            <!-- WELCOME SCREEN (only shown to new users) -->
+            <div class="screen welcome-screen">
                 <div class="current-avatar" id="preview-avatar">👧</div>
-                <p style="text-align: center; color: var(--ink-soft); margin-bottom: 4px;">Welcome! Pick your buddy and tell me your name.</p>
+                <p class="welcome-text">Welcome! Pick your buddy and tell me your name.</p>
                 
-                <div class="avatar-picker" id="avatar-picker">
+                <div class="avatar-picker">
                     <div class="avatar-opt selected" onclick="pickAvatar('👧', this)">👧</div>
                     <div class="avatar-opt" onclick="pickAvatar('👦', this)">👦</div>
                     <div class="avatar-opt" onclick="pickAvatar('🐶', this)">🐶</div>
@@ -677,35 +653,36 @@
                     <div class="avatar-opt" onclick="pickAvatar('🦄', this)">🦄</div>
                 </div>
                 
-                <label class="field-label">Your name:</label>
+                <label class="field-label" for="input-name">Your name:</label>
                 <input type="text" id="input-name" placeholder="Type your name" autocomplete="off">
                 
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="startApp()">Let's Start! 🚀</button>
-                    <button class="btn btn-ghost btn-sm" onclick="resetApp()">🔄 Reset for New User</button>
                 </div>
             </div>
             
             <!-- WORD INPUT SCREEN -->
             <div class="screen word-screen">
                 <div class="name-banner">
-                    <span class="avatar" id="banner-avatar">👧</span>
-                    <span class="text">Hi, <span id="banner-name"></span>!</span>
+                    <button class="banner-avatar-btn" onclick="openProfileModal()" aria-label="Change avatar">
+                        <span id="banner-avatar">👧</span>
+                        <span class="edit-pip">✏️</span>
+                    </button>
+                    <span class="banner-text">Hi, <span id="banner-name"></span>!</span>
+                    <button class="banner-edit-link" onclick="openProfileModal()">Edit</button>
                 </div>
                 
                 <div class="add-card">
                     <div class="add-card-title">➕ Add a New Word</div>
                     
-                    <label class="field-label">The word:</label>
+                    <label class="field-label" for="new-word">The word:</label>
                     <input type="text" id="new-word" placeholder="e.g. beautiful" autocomplete="off" autocapitalize="off">
                     
-                    <label class="field-label">What it means (optional):</label>
+                    <label class="field-label" for="new-def">What it means (optional):</label>
                     <input type="text" id="new-def" placeholder="Tap Lookup or type your own" autocomplete="off">
                     
                     <div class="btn-group">
-                        <button class="btn btn-lookup btn-sm" id="lookup-btn" onclick="lookupDef()">
-                            🔍 Look Up the Definition
-                        </button>
+                        <button class="btn btn-lookup btn-sm" id="lookup-btn" onclick="lookupDef()">🔍 Look Up the Definition</button>
                         <button class="btn btn-accent" onclick="addWord()">Add to My List</button>
                     </div>
                 </div>
@@ -724,30 +701,34 @@
                 
                 <div class="btn-group" style="margin-top: 20px;">
                     <button class="btn btn-primary" onclick="startPractice()">📖 Practice These Words</button>
+                    <button class="btn btn-accent" id="start-test-btn" onclick="startTest()" style="display:none;">📝 Take a Test</button>
                 </div>
             </div>
             
             <!-- PRACTICE SCREEN -->
             <div class="screen practice-screen">
                 <div class="name-banner">
-                    <span class="avatar" id="practice-avatar">👧</span>
-                    <span class="text">Practice time, <span id="practice-name"></span>!</span>
+                    <button class="banner-avatar-btn" onclick="openProfileModal()">
+                        <span id="practice-avatar">👧</span>
+                        <span class="edit-pip">✏️</span>
+                    </button>
+                    <span class="banner-text">Practice time, <span id="practice-name"></span>!</span>
                 </div>
                 
                 <div class="practice-card">
-                    <div class="btn-group" style="margin-top: 0; margin-bottom: 16px;">
+                    <div class="btn-group" style="margin-top: 0;">
                         <button class="btn btn-primary btn-sm" onclick="speakWord()">🔊 Hear the Word</button>
                         <button class="btn btn-ghost btn-sm" onclick="showHint()">🖼️ Picture Hint</button>
                     </div>
                     
                     <img id="hint-img" class="hint-img" alt="Picture hint">
                     
-                    <label class="field-label">Type what you hear:</label>
-                    <input type="text" class="spell-input" id="practice-input" 
+                    <label class="field-label" for="practice-input">Type what you hear:</label>
+                    <input type="text" class="spell-input" id="practice-input"
                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     
                     <div class="btn-group">
-                        <button class="btn btn-accent" onclick="checkPractice()">✓ Check My Spelling</button>
+                        <button class="btn btn-accent" onclick="checkPractice()">Check My Spelling</button>
                         <button class="btn btn-ghost btn-sm" onclick="showDefinition()">📖 Show Definition</button>
                         <button class="btn btn-ghost btn-sm" onclick="nextPractice()">➡️ Next Word</button>
                     </div>
@@ -756,9 +737,7 @@
                 </div>
                 
                 <div class="progress-wrap">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="practice-progress"></div>
-                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="practice-progress"></div></div>
                     <div class="progress-text">
                         <span>Word <span id="practice-current">1</span> of <span id="practice-total">0</span></span>
                         <span id="practice-percent">0%</span>
@@ -773,19 +752,24 @@
             <!-- TEST SCREEN -->
             <div class="screen test-screen">
                 <div class="name-banner">
-                    <span class="avatar" id="test-avatar">👧</span>
-                    <span class="text">Test time, <span id="test-name"></span>!</span>
+                    <button class="banner-avatar-btn" onclick="openProfileModal()">
+                        <span id="test-avatar">👧</span>
+                        <span class="edit-pip">✏️</span>
+                    </button>
+                    <span class="banner-text">Test time, <span id="test-name"></span>!</span>
                 </div>
                 
                 <div class="test-card">
-                    <button class="btn btn-primary btn-sm" onclick="speakWord()" style="margin-bottom: 16px;">🔊 Hear the Word</button>
+                    <div style="margin-bottom: 14px;">
+                        <button class="btn btn-primary btn-sm" onclick="speakWord()">🔊 Hear the Word</button>
+                    </div>
                     
-                    <label class="field-label">Spell the word:</label>
+                    <label class="field-label" for="test-input">Spell the word:</label>
                     <input type="text" class="spell-input" id="test-input"
                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     
                     <div class="btn-group">
-                        <button class="btn btn-accent" onclick="checkTest()">✓ Check Answer</button>
+                        <button class="btn btn-accent" id="check-test-btn" onclick="checkTest()">Check Answer</button>
                         <button class="btn btn-ghost btn-sm" onclick="nextTest()">➡️ Next Word</button>
                     </div>
                     
@@ -793,9 +777,7 @@
                 </div>
                 
                 <div class="progress-wrap">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="test-progress"></div>
-                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="test-progress"></div></div>
                     <div class="progress-text">
                         <span>Word <span id="test-current">1</span> of <span id="test-total">0</span></span>
                         <span id="test-percent">0%</span>
@@ -808,9 +790,32 @@
                     <button class="btn btn-ghost" onclick="backToWords()">← Back to My List</button>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- Profile Edit Modal -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeProfileModal()">&times;</span>
+            <h3>Edit Profile</h3>
             
-            <div class="btn-group" id="mode-buttons" style="display: none;">
-                <button class="btn btn-accent" onclick="startTest()">📝 Take a Test</button>
+            <div class="current-avatar" id="profile-preview">👧</div>
+            
+            <p style="color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 12px;">Pick your buddy:</p>
+            <div class="avatar-picker">
+                <div class="avatar-opt" onclick="pickProfileAvatar('👧', this)">👧</div>
+                <div class="avatar-opt" onclick="pickProfileAvatar('👦', this)">👦</div>
+                <div class="avatar-opt" onclick="pickProfileAvatar('🐶', this)">🐶</div>
+                <div class="avatar-opt" onclick="pickProfileAvatar('🐱', this)">🐱</div>
+                <div class="avatar-opt" onclick="pickProfileAvatar('🦄', this)">🦄</div>
+            </div>
+            
+            <label class="field-label" for="profile-name-input">Your name:</label>
+            <input type="text" id="profile-name-input" placeholder="Your name" autocomplete="off">
+            
+            <div class="btn-group">
+                <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save</button>
+                <button class="btn btn-ghost btn-sm" onclick="resetApp()" style="color: var(--red);">🔄 Reset for New User</button>
             </div>
         </div>
     </div>
@@ -828,36 +833,53 @@
     </div>
     
     <script>
+        const store = {
+            get(key, def) {
+                try {
+                    const v = localStorage.getItem(key);
+                    return v === null ? def : JSON.parse(v);
+                } catch (e) { return def; }
+            },
+            set(key, val) {
+                try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+            },
+            remove(key) {
+                try { localStorage.removeItem(key); } catch (e) {}
+            }
+        };
+        
         let userName = '';
         let userAvatar = '👧';
         let wordList = [];
         let currentIdx = 0;
         let correctCount = 0;
         let testAnswered = false;
+        let tempProfileAvatar = '👧';
         
-        // ===== BOOT =====
-        window.onload = () => {
-            const savedName = localStorage.getItem('sb_name');
-            const savedAvatar = localStorage.getItem('sb_avatar');
-            const savedWords = localStorage.getItem('sb_words');
-            
-            if (savedName) {
-                userName = savedName;
-                userAvatar = savedAvatar || '👧';
-                updateNameDisplays();
-                
-                try { wordList = savedWords ? JSON.parse(savedWords) : []; }
-                catch(e) { wordList = []; }
-                
-                renderWords();
-                document.getElementById('mode-buttons').style.display = wordList.length > 0 ? 'flex' : 'none';
-                showScreen('word-screen');
+        window.addEventListener('load', () => {
+            try {
+                const savedName = store.get('sb_name', '');
+                if (savedName) {
+                    userName = savedName;
+                    userAvatar = store.get('sb_avatar', '👧');
+                    wordList = store.get('sb_words', []);
+                    if (!Array.isArray(wordList)) wordList = [];
+                    updateNameDisplays();
+                    renderWords();
+                    showScreen('word-screen');
+                } else {
+                    showScreen('welcome-screen');
+                }
+            } catch (err) {
+                console.error(err);
+                showScreen('welcome-screen');
             }
-        };
+        });
         
         function showScreen(name) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.querySelector(`.${name}`).classList.add('active');
+            const t = document.querySelector('.' + name);
+            if (t) t.classList.add('active');
         }
         
         function updateNameDisplays() {
@@ -873,7 +895,7 @@
         function pickAvatar(emoji, el) {
             userAvatar = emoji;
             document.getElementById('preview-avatar').textContent = emoji;
-            document.querySelectorAll('.avatar-opt').forEach(o => o.classList.remove('selected'));
+            document.querySelectorAll('.welcome-screen .avatar-opt').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
         }
         
@@ -884,31 +906,71 @@
                 return;
             }
             userName = name;
-            localStorage.setItem('sb_name', userName);
-            localStorage.setItem('sb_avatar', userAvatar);
+            store.set('sb_name', userName);
+            store.set('sb_avatar', userAvatar);
             updateNameDisplays();
             renderWords();
             showScreen('word-screen');
         }
         
+        // ===== PROFILE EDIT =====
+        function openProfileModal() {
+            tempProfileAvatar = userAvatar;
+            document.getElementById('profile-preview').textContent = userAvatar;
+            document.getElementById('profile-name-input').value = userName;
+            
+            // Highlight current avatar
+            document.querySelectorAll('#profile-modal .avatar-opt').forEach(o => {
+                o.classList.toggle('selected', o.textContent === userAvatar);
+            });
+            
+            document.getElementById('profile-modal').classList.add('show');
+        }
+        
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.remove('show');
+        }
+        
+        function pickProfileAvatar(emoji, el) {
+            tempProfileAvatar = emoji;
+            document.getElementById('profile-preview').textContent = emoji;
+            document.querySelectorAll('#profile-modal .avatar-opt').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+        
+        function saveProfile() {
+            const newName = document.getElementById('profile-name-input').value.trim();
+            if (!newName) {
+                showToast('Name cannot be empty!', 'warning');
+                return;
+            }
+            userName = newName;
+            userAvatar = tempProfileAvatar;
+            store.set('sb_name', userName);
+            store.set('sb_avatar', userAvatar);
+            updateNameDisplays();
+            closeProfileModal();
+            showToast('Profile updated!', 'success');
+        }
+        
         function resetApp() {
             if (!confirm('This will clear everything for a new user. Continue?')) return;
-            localStorage.removeItem('sb_name');
-            localStorage.removeItem('sb_avatar');
-            localStorage.removeItem('sb_words');
+            store.remove('sb_name');
+            store.remove('sb_avatar');
+            store.remove('sb_words');
             userName = '';
             userAvatar = '👧';
             wordList = [];
             document.getElementById('input-name').value = '';
             document.getElementById('preview-avatar').textContent = '👧';
-            document.querySelectorAll('.avatar-opt').forEach(o => o.classList.remove('selected'));
-            document.querySelector('.avatar-opt').classList.add('selected');
-            document.getElementById('mode-buttons').style.display = 'none';
+            document.querySelectorAll('.welcome-screen .avatar-opt').forEach(o => o.classList.remove('selected'));
+            document.querySelector('.welcome-screen .avatar-opt').classList.add('selected');
+            closeProfileModal();
             showScreen('welcome-screen');
             showToast('All reset! Ready for a new user.', 'success');
         }
         
-        // ===== ADD WORDS =====
+        // ===== LOOKUP =====
         async function lookupDef() {
             const word = document.getElementById('new-word').value.trim();
             if (!word) {
@@ -916,7 +978,6 @@
                 document.getElementById('new-word').focus();
                 return;
             }
-            
             const btn = document.getElementById('lookup-btn');
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span> Searching...';
@@ -925,12 +986,10 @@
                 const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word.toLowerCase())}`);
                 if (!res.ok) throw new Error('Not found');
                 const data = await res.json();
-                
                 const best = findBestDefinition(data[0]);
                 if (!best) throw new Error('No definition');
-                
                 document.getElementById('new-def').value = best.definition;
-                showToast(`✓ Found! (${best.partOfSpeech})`, 'success');
+                showToast(`Found! (${best.partOfSpeech || 'word'})`, 'success');
             } catch (err) {
                 showToast("Couldn't find it — type your own definition", 'error');
             } finally {
@@ -939,16 +998,13 @@
             }
         }
         
-        // Pick the clearest, most child-friendly definition
         function findBestDefinition(entry) {
             if (!entry || !entry.meanings) return null;
-            
             const priority = { noun: 1, verb: 2, adjective: 3, adverb: 4 };
             const candidates = [];
-            
             entry.meanings.forEach(m => {
-                m.definitions.forEach(d => {
-                    if (d.definition && d.definition.length > 15 && d.definition.length < 180) {
+                (m.definitions || []).forEach(d => {
+                    if (d.definition && d.definition.length > 12 && d.definition.length < 200) {
                         candidates.push({
                             partOfSpeech: m.partOfSpeech || '',
                             definition: cleanDef(d.definition),
@@ -957,122 +1013,86 @@
                     }
                 });
             });
-            
             if (candidates.length === 0) {
-                // Fall back to any definition
-                const first = entry.meanings[0]?.definitions[0];
-                if (first?.definition) {
-                    return {
-                        partOfSpeech: entry.meanings[0].partOfSpeech || '',
-                        definition: cleanDef(first.definition),
-                        example: first.example || ''
-                    };
-                }
+                const fm = entry.meanings[0];
+                const fd = fm?.definitions?.[0];
+                if (fd?.definition) return {
+                    partOfSpeech: fm.partOfSpeech || '',
+                    definition: cleanDef(fd.definition),
+                    example: fd.example || ''
+                };
                 return null;
             }
-            
-            // Sort by part of speech priority, then shortest (usually clearest)
             candidates.sort((a, b) => {
                 const pa = priority[a.partOfSpeech] || 5;
                 const pb = priority[b.partOfSpeech] || 5;
                 if (pa !== pb) return pa - pb;
                 return a.definition.length - b.definition.length;
             });
-            
             return candidates[0];
         }
         
         function cleanDef(text) {
-            let t = text.trim();
-            // Remove leading articles/labels like "(informal)" or "a "
-            t = t.replace(/^\([^)]+\)\s*/, '');
-            // Capitalize first letter
-            t = t.charAt(0).toUpperCase() + t.slice(1);
-            // Remove trailing period if very short
-            return t;
+            let t = text.trim().replace(/^\([^)]+\)\s*/, '');
+            return t.charAt(0).toUpperCase() + t.slice(1);
         }
         
         function addWord() {
             const word = document.getElementById('new-word').value.trim();
             const def = document.getElementById('new-def').value.trim();
-            
             if (!word) {
                 showToast('Please type a word!', 'warning');
                 document.getElementById('new-word').focus();
                 return;
             }
-            
             if (wordList.some(w => w.word.toLowerCase() === word.toLowerCase())) {
                 showToast('That word is already in your list!', 'warning');
                 return;
             }
-            
-            wordList.push({
-                word,
-                definition: def || 'No definition yet',
-                partOfSpeech: '',
-                example: ''
-            });
-            
-            saveWords();
+            wordList.push({ word, definition: def || 'No definition yet', partOfSpeech: '', example: '' });
+            store.set('sb_words', wordList);
             renderWords();
-            
             document.getElementById('new-word').value = '';
             document.getElementById('new-def').value = '';
             document.getElementById('new-word').focus();
-            
-            showToast(`"${word}" added! ✨`, 'success');
-        }
-        
-        function saveWords() {
-            localStorage.setItem('sb_words', JSON.stringify(wordList));
+            showToast(`"${word}" added!`, 'success');
         }
         
         function removeWord(i) {
             const removed = wordList[i].word;
             wordList.splice(i, 1);
-            saveWords();
+            store.set('sb_words', wordList);
             renderWords();
             showToast(`"${removed}" removed`, 'success');
         }
         
-        // ===== RENDER WORD LIST =====
         function renderWords() {
             const list = document.getElementById('word-list');
             const badge = document.getElementById('count-badge');
-            const modeBtns = document.getElementById('mode-buttons');
-            
+            const testBtn = document.getElementById('start-test-btn');
             badge.textContent = `${wordList.length} word${wordList.length !== 1 ? 's' : ''}`;
-            modeBtns.style.display = wordList.length > 0 ? 'flex' : 'none';
+            testBtn.style.display = wordList.length > 0 ? 'flex' : 'none';
             
             if (wordList.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <span class="emoji">📝</span>
-                        Your list is empty.<br>Add your first word above!
-                    </div>`;
+                list.innerHTML = `<div class="empty-state"><span class="emoji">📝</span>Your list is empty.<br>Add your first word above!</div>`;
                 return;
             }
-            
             list.innerHTML = wordList.map((w, i) => `
                 <div class="word-card">
                     <div class="word-number">${i + 1}</div>
                     <div class="word-body">
-                        <div class="word-head">
-                            <span class="word-text">${esc(w.word)}</span>
-                            ${w.partOfSpeech ? `<span class="pos-badge">${esc(w.partOfSpeech)}</span>` : ''}
-                        </div>
+                        <span class="word-text">${esc(w.word)}</span>
                         <div class="word-def">${esc(w.definition || 'No definition yet')}</div>
-                        ${w.example ? `<div class="word-example">"${esc(w.example)}"</div>` : ''}
                     </div>
-                    <button class="delete-btn" onclick="removeWord(${i})" aria-label="Remove word">✕</button>
+                    <button class="delete-btn" onclick="removeWord(${i})" aria-label="Remove">✕</button>
                 </div>
             `).join('');
         }
         
         function esc(t) {
+            if (t == null) return '';
             const d = document.createElement('div');
-            d.textContent = t;
+            d.textContent = String(t);
             return d.innerHTML;
         }
         
@@ -1081,8 +1101,8 @@
             if (wordList.length === 0) { showToast('Add some words first!', 'warning'); return; }
             currentIdx = 0;
             document.getElementById('practice-total').textContent = wordList.length;
-            updatePracticeUI();
             showScreen('practice-screen');
+            updatePracticeUI();
         }
         
         function updatePracticeUI() {
@@ -1094,15 +1114,16 @@
             document.getElementById('practice-feedback').textContent = '';
             document.getElementById('practice-feedback').className = 'feedback';
             document.getElementById('hint-img').style.display = 'none';
-            document.getElementById('practice-input').focus();
         }
         
         function speakWord() {
             if (wordList.length === 0) return;
-            const u = new SpeechSynthesisUtterance(wordList[currentIdx].word);
-            u.rate = 0.85;
-            speechSynthesis.cancel();
-            speechSynthesis.speak(u);
+            try {
+                const u = new SpeechSynthesisUtterance(wordList[currentIdx].word);
+                u.rate = 0.85;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(u);
+            } catch (e) { showToast('Audio not available', 'error'); }
         }
         
         function showHint() {
@@ -1111,10 +1132,7 @@
             const img = document.getElementById('hint-img');
             img.src = `https://loremflickr.com/300/200/${encodeURIComponent(word)}`;
             img.style.display = 'block';
-            img.onerror = () => {
-                img.style.display = 'none';
-                showToast('No picture for this word', 'warning');
-            };
+            img.onerror = () => { img.style.display = 'none'; showToast('No picture for this word', 'warning'); };
         }
         
         function showDefinition() {
@@ -1122,30 +1140,26 @@
             const w = wordList[currentIdx];
             document.getElementById('def-modal-content').innerHTML = `
                 <div class="word">${esc(w.word)}</div>
-                ${w.partOfSpeech ? `<div style="color: #E67E22; font-style: italic; margin-bottom: 6px;">${esc(w.partOfSpeech)}</div>` : ''}
                 <div>${esc(w.definition)}</div>
-                ${w.example ? `<div style="margin-top: 8px; color: #9B7EFF; font-style: italic;">Example: "${esc(w.example)}"</div>` : ''}
             `;
-            document.getElementById('def-modal').style.display = 'flex';
+            document.getElementById('def-modal').classList.add('show');
         }
         
         function closeModal() {
-            document.getElementById('def-modal').style.display = 'none';
+            document.getElementById('def-modal').classList.remove('show');
         }
         
         function checkPractice() {
             const input = document.getElementById('practice-input').value.trim().toLowerCase();
             const correct = wordList[currentIdx].word.toLowerCase();
             const fb = document.getElementById('practice-feedback');
-            
             if (!input) { showToast('Type a word first!', 'warning'); return; }
-            
             if (input === correct) {
-                fb.textContent = '✓ Correct! Well done!';
+                fb.textContent = '✅ Correct! Well done!';
                 fb.className = 'feedback correct';
                 confetti();
             } else {
-                fb.innerHTML = `✗ Not quite. It's spelled: <strong>${esc(wordList[currentIdx].word)}</strong>`;
+                fb.innerHTML = `❌ Not quite. The word is: <strong>${esc(wordList[currentIdx].word)}</strong>`;
                 fb.className = 'feedback incorrect';
             }
         }
@@ -1162,8 +1176,8 @@
             correctCount = 0;
             document.getElementById('test-total').textContent = wordList.length;
             document.getElementById('test-results').style.display = 'none';
-            updateTestUI();
             showScreen('test-screen');
+            updateTestUI();
         }
         
         function updateTestUI() {
@@ -1175,87 +1189,70 @@
             document.getElementById('test-input').disabled = false;
             document.getElementById('test-feedback').textContent = '';
             document.getElementById('test-feedback').className = 'feedback';
-            document.querySelector('.test-card .btn-accent').disabled = false;
+            document.getElementById('check-test-btn').disabled = false;
             testAnswered = false;
-            document.getElementById('test-input').focus();
         }
         
         function checkTest() {
             if (testAnswered) return;
-            
             const input = document.getElementById('test-input').value.trim().toLowerCase();
             const correct = wordList[currentIdx].word.toLowerCase();
             const fb = document.getElementById('test-feedback');
-            
             if (!input) { showToast('Type a word first!', 'warning'); return; }
-            
             testAnswered = true;
-            
             if (input === correct) {
-                fb.textContent = '✓ Correct!';
+                fb.textContent = '✅ Correct!';
                 fb.className = 'feedback correct';
                 correctCount++;
                 confetti();
             } else {
-                fb.innerHTML = `✗ It's spelled: <strong>${esc(wordList[currentIdx].word)}</strong>`;
+                fb.innerHTML = `❌ The word is spelled: <strong>${esc(wordList[currentIdx].word)}</strong>`;
                 fb.className = 'feedback incorrect';
             }
-            
             document.getElementById('test-input').disabled = true;
-            document.querySelector('.test-card .btn-accent').disabled = true;
+            document.getElementById('check-test-btn').disabled = true;
         }
         
         function nextTest() {
             currentIdx++;
-            
             if (currentIdx >= wordList.length) {
                 const pct = Math.round((correctCount / wordList.length) * 100);
                 const results = document.getElementById('test-results');
                 results.style.display = 'block';
                 results.innerHTML = `
                     <h2>🎉 Test Complete!</h2>
-                    <p style="margin: 8px 0;">You got <strong>${correctCount}</strong> of <strong>${wordList.length}</strong> correct</p>
-                    <p style="font-size: 1.5rem; color: var(--pink); font-weight: bold;">${pct}%</p>
+                    <p>You got <strong>${correctCount}</strong> of <strong>${wordList.length}</strong> correct</p>
+                    <p style="font-size:1.4rem; color:var(--pink); font-weight:bold; margin-top:8px;">${pct}%</p>
                     ${correctCount === wordList.length ? '<p class="celebrate">⭐ Perfect Score! ⭐</p>' : ''}
                 `;
                 if (correctCount === wordList.length) confetti(30);
-                updateTestUI();
                 return;
             }
-            
             updateTestUI();
         }
         
-        function backToWords() {
-            showScreen('word-screen');
-        }
+        function backToWords() { showScreen('word-screen'); }
         
-        // ===== UTILITIES =====
-        function showToast(msg, type = 'info') {
+        // ===== UTILS =====
+        function showToast(msg, type) {
+            type = type || 'info';
             const t = document.createElement('div');
-            t.className = `toast ${type}`;
+            t.className = 'toast ' + type;
             t.textContent = msg;
             document.body.appendChild(t);
             setTimeout(() => t.classList.add('show'), 10);
-            setTimeout(() => {
-                t.classList.remove('show');
-                setTimeout(() => t.remove(), 400);
-            }, 2400);
+            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 2400);
         }
         
-        function confetti(count = 18) {
+        function confetti(count) {
+            count = count || 16;
             for (let i = 0; i < count; i++) {
                 const c = document.createElement('div');
                 c.style.cssText = `
-                    position: fixed;
-                    left: ${Math.random() * 100}vw;
-                    top: -12px;
-                    width: ${6 + Math.random() * 8}px;
-                    height: ${6 + Math.random() * 8}px;
-                    background: hsl(${Math.random() * 360}, 100%, 62%);
-                    z-index: 3000;
-                    pointer-events: none;
-                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                    position: fixed; left: ${Math.random() * 100}vw; top: -12px;
+                    width: ${6 + Math.random() * 8}px; height: ${6 + Math.random() * 8}px;
+                    background: hsl(${Math.random() * 360}, 100%, 62%); z-index: 3000;
+                    pointer-events: none; border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
                     animation: confettiDrop ${2.5 + Math.random() * 2}s linear forwards;
                 `;
                 document.body.appendChild(c);
@@ -1263,30 +1260,31 @@
             }
         }
         
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes confettiDrop {
+        (() => {
+            const s = document.createElement('style');
+            s.textContent = `@keyframes confettiDrop {
                 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
                 100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+            }`;
+            document.head.appendChild(s);
+        })();
         
-        // ===== KEYBOARD SHORTCUTS =====
         document.addEventListener('keydown', e => {
             if (e.key !== 'Enter') return;
             const id = document.activeElement.id;
             if (id === 'input-name') startApp();
-            else if (id === 'new-word') document.getElementById('new-def').focus();
             else if (id === 'new-def') addWord();
             else if (id === 'practice-input') checkPractice();
             else if (id === 'test-input') checkTest();
+            else if (id === 'profile-name-input') saveProfile();
         });
         
-        // Close modal on outside click
         document.getElementById('def-modal').addEventListener('click', e => {
             if (e.target.id === 'def-modal') closeModal();
         });
+        document.getElementById('profile-modal').addEventListener('click', e => {
+            if (e.target.id === 'profile-modal') closeProfileModal();
+        });
     </script>
 </body>
-</html> 
+</html>
