@@ -55,7 +55,6 @@
             background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
             padding: 18px var(--pad);
             text-align: center;
-            position: relative;
         }
         
         .app-header h1 {
@@ -77,18 +76,18 @@
             50% { transform: rotate(8deg); }
         }
         
-        /* ===== USER BAR (always visible when logged in) ===== */
+        /* ===== USER BAR ===== */
         .user-bar {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: linear-gradient(135deg, #FFF5EB 0%, #FFE5F1 100%);
             border-bottom: 2px solid #FFD9C7;
             padding: 10px var(--pad);
         }
         
         .user-bar .u-avatar {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             line-height: 1;
             flex-shrink: 0;
         }
@@ -98,31 +97,30 @@
             min-width: 0;
             font-weight: bold;
             color: var(--ink);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             text-align: left;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
         
-        .user-bar .u-edit {
+        .u-btn {
             background: white;
             border: 2px solid #FFD9C7;
             color: var(--pink);
             font-family: inherit;
             font-weight: bold;
-            font-size: 0.78rem;
-            padding: 7px 12px;
-            border-radius: 10px;
+            font-size: 0.76rem;
+            padding: 6px 10px;
+            border-radius: 9px;
             cursor: pointer;
             flex-shrink: 0;
             white-space: nowrap;
         }
         
-        .user-bar .u-edit:active {
+        .u-btn:active {
             background: var(--pink);
             color: white;
-            transform: scale(0.96);
         }
         
         /* ===== BODY ===== */
@@ -138,13 +136,34 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ===== UNIVERSAL FORM STYLES ===== */
+        /* ===== NAV BACK BUTTON ===== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #F1F4F9;
+            border: 2px solid #E4E9F2;
+            color: var(--ink);
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 14px;
+        }
+        
+        .back-btn:active {
+            background: #E4E9F2;
+        }
+        
+        /* ===== FORM ===== */
         .field-label {
             display: block;
             font-weight: bold;
             color: var(--ink);
             font-size: 0.9rem;
-            margin: 14px 0 6px;
+            margin: 12px 0 6px;
         }
         .field-label:first-of-type { margin-top: 0; }
         
@@ -168,7 +187,7 @@
         }
         .text-input::placeholder { color: #B0B8C4; }
         
-        /* ===== UNIVERSAL BUTTONS ===== */
+        /* ===== BUTTONS ===== */
         .btn {
             display: flex;
             align-items: center;
@@ -181,12 +200,12 @@
             border-radius: 13px;
             font-family: inherit;
             font-weight: bold;
-            font-size: 0.98rem;
+            font-size: 0.96rem;
             line-height: 1.2;
             cursor: pointer;
             color: white;
-            transition: transform 0.15s;
             text-align: center;
+            transition: transform 0.15s;
         }
         .btn:active:not(:disabled) { transform: scale(0.97); }
         .btn:disabled { opacity: 0.55; cursor: not-allowed; }
@@ -214,11 +233,9 @@
             border: 2px solid #FFD0D0;
         }
         
-        /* Universal button/input spacing */
         .stack > * + * { margin-top: 10px; }
-        .stack-lg > * + * { margin-top: 14px; }
         
-        /* ===== WELCOME SCREEN ===== */
+        /* ===== WELCOME ===== */
         .big-avatar {
             width: 90px;
             height: 90px;
@@ -240,7 +257,7 @@
             line-height: 1.4;
         }
         
-        /* ===== AVATAR PICKER (shared) ===== */
+        /* ===== AVATAR PICKER ===== */
         .avatar-picker {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -270,7 +287,125 @@
             box-shadow: 0 4px 12px rgba(255, 109, 180, 0.3);
         }
         
-        /* ===== ADD CARD ===== */
+        /* ===== DASHBOARD ===== */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--ink);
+            margin-bottom: 12px;
+        }
+        
+        .create-list-card {
+            background: linear-gradient(135deg, #F7F9FF 0%, #EFF5FF 100%);
+            border: 2px dashed #C8D9F0;
+            border-radius: 18px;
+            padding: var(--pad);
+            margin-bottom: 22px;
+        }
+        
+        .list-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .list-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border-radius: 16px;
+            padding: 14px 12px 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 6px solid var(--blue);
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        .list-card:active { transform: scale(0.99); }
+        
+        .list-card:nth-child(5n+1) { border-left-color: var(--blue); }
+        .list-card:nth-child(5n+2) { border-left-color: var(--pink); }
+        .list-card:nth-child(5n+3) { border-left-color: var(--orange); }
+        .list-card:nth-child(5n+4) { border-left-color: var(--green); }
+        .list-card:nth-child(5n+5) { border-left-color: var(--purple); }
+        
+        .list-card-body {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+        }
+        
+        .list-card-name {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--ink);
+            word-break: break-word;
+            line-height: 1.2;
+        }
+        
+        .list-card-meta {
+            font-size: 0.8rem;
+            color: var(--ink-soft);
+            margin-top: 3px;
+        }
+        
+        .list-arrow {
+            font-size: 1.3rem;
+            color: var(--ink-soft);
+            flex-shrink: 0;
+        }
+        
+        .delete-btn {
+            background: #FFF0F0;
+            border: none;
+            color: var(--red);
+            width: 36px; height: 36px; min-width: 36px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+        .delete-btn:active { background: var(--red); color: white; transform: scale(0.92); }
+        
+        .empty-state {
+            text-align: center;
+            padding: 26px 20px;
+            color: #A0ACBE;
+            font-size: 0.9rem;
+            background: #F7FAFF;
+            border-radius: 14px;
+            border: 2px dashed #D8E2EF;
+            line-height: 1.5;
+        }
+        .empty-state .emoji {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+        
+        /* ===== LIST DETAIL ===== */
+        .list-title-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        
+        .list-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--ink);
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+        }
+        
         .add-card {
             background: linear-gradient(135deg, #F7F9FF 0%, #EFF5FF 100%);
             border: 2px dashed #C8D9F0;
@@ -286,7 +421,6 @@
             margin-bottom: 10px;
         }
         
-        /* ===== LIST HEADER ===== */
         .list-header {
             display: flex;
             justify-content: space-between;
@@ -305,7 +439,6 @@
             white-space: nowrap;
         }
         
-        /* ===== WORD LIST ===== */
         .word-list {
             display: flex;
             flex-direction: column;
@@ -313,14 +446,13 @@
             max-height: 300px;
             overflow-y: auto;
             padding: 2px;
-            scrollbar-width: thin;
         }
         .word-list::-webkit-scrollbar { width: 6px; }
         .word-list::-webkit-scrollbar-thumb { background: #D5DDE8; border-radius: 3px; }
         
         .word-card {
             display: flex;
-            align-items: center;   /* CENTER align fixes delete button alignment */
+            align-items: center;
             gap: 12px;
             background: white;
             border-radius: 14px;
@@ -347,11 +479,7 @@
             flex-shrink: 0;
         }
         
-        .word-body {
-            flex: 1;
-            min-width: 0;
-            text-align: left;
-        }
+        .word-body { flex: 1; min-width: 0; text-align: left; }
         
         .word-text {
             font-size: 1.05rem;
@@ -368,40 +496,6 @@
             line-height: 1.4;
             word-break: break-word;
             margin-top: 3px;
-        }
-        
-        .delete-btn {
-            background: #FFF0F0;
-            border: none;
-            color: var(--red);
-            width: 36px; height: 36px; min-width: 36px;
-            border-radius: 10px;
-            font-size: 1.05rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-weight: bold;
-            transition: all 0.15s;
-        }
-        .delete-btn:active { background: var(--red); color: white; transform: scale(0.92); }
-        
-        .empty-state {
-            text-align: center;
-            padding: 26px 20px;
-            color: #A0ACBE;
-            font-size: 0.9rem;
-            background: #F7FAFF;
-            border-radius: 14px;
-            border: 2px dashed #D8E2EF;
-            line-height: 1.5;
-        }
-        .empty-state .emoji {
-            font-size: 2.2rem;
-            display: block;
-            margin-bottom: 8px;
-            opacity: 0.8;
         }
         
         /* ===== PRACTICE / TEST ===== */
@@ -469,37 +563,60 @@
             font-weight: bold;
         }
         
-        .results {
-            margin-top: 14px;
-            padding: var(--pad);
+        /* ===== COMPLETION ===== */
+        .completion-card {
             background: linear-gradient(135deg, #FFF5EB, #FFE5F1);
-            border-radius: 16px;
+            border-radius: 20px;
+            padding: 24px var(--pad);
             border: 2px solid #FFD9C7;
             text-align: center;
         }
-        .results h2 { color: var(--pink); margin-bottom: 8px; font-size: 1.15rem; }
-        .results p { margin: 6px 0; }
+        
+        .completion-emoji {
+            font-size: 3rem;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+        
+        .completion-title {
+            font-size: 1.35rem;
+            color: var(--pink);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .completion-message {
+            color: var(--ink);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+        
+        .completion-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--purple);
+            margin: 12px 0 20px;
+        }
+        
+        .completion-score .sub {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--ink-soft);
+            font-weight: normal;
+            margin-top: 4px;
+        }
         
         .celebrate {
             animation: celebrate 0.8s ease infinite alternate;
             color: var(--orange);
-            font-size: 1.05rem;
-            margin-top: 8px;
+            font-size: 1rem;
+            margin: 12px 0;
             font-weight: bold;
         }
         @keyframes celebrate {
             from { transform: scale(1); }
-            to { transform: scale(1.06); }
-        }
-        
-        .hint-img {
-            max-width: 100%;
-            max-height: 140px;
-            object-fit: contain;
-            margin: 12px auto 0;
-            border-radius: 12px;
-            display: none;
-            border: 3px solid var(--blue);
+            to { transform: scale(1.05); }
         }
         
         /* ===== TOAST ===== */
@@ -526,7 +643,7 @@
         .toast.error { background: var(--red); }
         .toast.warning { background: #F39C12; }
         
-        /* ===== MODAL (definition only) ===== */
+        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
@@ -598,7 +715,7 @@
             .app-header h1 { font-size: 1.3rem; }
             .avatar-opt { font-size: 1.5rem; }
             .big-avatar { width: 76px; height: 76px; font-size: 2.3rem; }
-            .btn { font-size: 0.92rem; }
+            .btn { font-size: 0.9rem; }
             .word-list { max-height: 260px; }
         }
     </style>
@@ -609,15 +726,16 @@
             <h1><span class="bee">🐝</span> Spelling Bee <span class="bee">🐝</span></h1>
         </div>
         
-        <!-- User bar (hidden on welcome/profile screens) -->
+        <!-- Persistent user bar -->
         <div class="user-bar" id="user-bar" style="display: none;">
             <span class="u-avatar" id="ubar-avatar">👧</span>
             <span class="u-name" id="ubar-name">Name</span>
-            <button class="u-edit" onclick="goToProfile()">👤 Change Avatar</button>
+            <button class="u-btn" id="home-btn" onclick="goHome()" style="display: none;">🏠 Home</button>
+            <button class="u-btn" onclick="goToProfile()">👤 Profile</button>
         </div>
         
         <div class="app-body">
-            <!-- ===== WELCOME SCREEN ===== -->
+            <!-- ===== WELCOME ===== -->
             <div class="screen welcome-screen">
                 <div class="big-avatar" id="preview-avatar">👧</div>
                 <p class="welcome-text">Welcome! Pick your buddy and tell me your name.</p>
@@ -638,10 +756,10 @@
                 </div>
             </div>
             
-            <!-- ===== PROFILE SCREEN (dedicated, always accessible) ===== -->
+            <!-- ===== PROFILE ===== -->
             <div class="screen profile-screen">
-                <h2 style="text-align: center; font-size: 1.15rem; margin-bottom: 6px;">👤 My Profile</h2>
-                <p style="text-align: center; color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 14px;">Change your avatar or name here.</p>
+                <button class="back-btn" onclick="cancelProfile()">← Back</button>
+                <h2 style="text-align: center; font-size: 1.15rem; margin-bottom: 14px;">👤 My Profile</h2>
                 
                 <div class="big-avatar" id="profile-preview">👧</div>
                 
@@ -663,8 +781,35 @@
                 </div>
             </div>
             
-            <!-- ===== WORD INPUT SCREEN ===== -->
-            <div class="screen word-screen">
+            <!-- ===== DASHBOARD (HOME) ===== -->
+            <div class="screen dashboard-screen">
+                <h2 class="section-title">📚 My Word Lists</h2>
+                
+                <div class="create-list-card">
+                    <label class="field-label" for="new-list-name">Create a new list:</label>
+                    <input type="text" class="text-input" id="new-list-name" placeholder="e.g. Week 1, Animals, Science" autocomplete="off">
+                    <div class="stack" style="margin-top: 10px;">
+                        <button class="btn btn-accent" onclick="createList()">➕ Create List</button>
+                    </div>
+                </div>
+                
+                <div class="list-grid" id="lists-container">
+                    <div class="empty-state">
+                        <span class="emoji">📝</span>
+                        No lists yet.<br>Create your first list above!
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ===== LIST DETAIL ===== -->
+            <div class="screen list-detail-screen">
+                <button class="back-btn" onclick="goHome()">← All Lists</button>
+                
+                <div class="list-title-bar">
+                    <h2 class="list-title" id="current-list-name">List</h2>
+                    <button class="delete-btn" onclick="deleteCurrentList()" aria-label="Delete list">🗑️</button>
+                </div>
+                
                 <div class="add-card">
                     <div class="add-card-title">➕ Add a New Word</div>
                     
@@ -676,19 +821,19 @@
                     
                     <div class="stack" style="margin-top: 12px;">
                         <button class="btn btn-lookup" id="lookup-btn" onclick="lookupDef()">🔍 Look Up the Definition</button>
-                        <button class="btn btn-accent" onclick="addWord()">Add to My List</button>
+                        <button class="btn btn-accent" onclick="addWord()">Add to List</button>
                     </div>
                 </div>
                 
                 <div class="list-header">
-                    <h2>📚 My Word List</h2>
+                    <h2>📖 Words</h2>
                     <span class="count-badge" id="count-badge">0 words</span>
                 </div>
                 
                 <div class="word-list" id="word-list">
                     <div class="empty-state">
                         <span class="emoji">📝</span>
-                        Your list is empty.<br>Add your first word above!
+                        No words yet.<br>Add your first word above!
                     </div>
                 </div>
                 
@@ -698,77 +843,105 @@
                 </div>
             </div>
             
-            <!-- ===== PRACTICE SCREEN ===== -->
+            <!-- ===== PRACTICE ===== -->
             <div class="screen practice-screen">
-                <div class="practice-card">
-                    <div class="stack">
+                <button class="back-btn" onclick="exitPractice()">← Back to List</button>
+                
+                <div id="practice-live">
+                    <div class="practice-card">
                         <button class="btn btn-primary" onclick="speakWord()">🔊 Hear the Word</button>
-                        <button class="btn btn-ghost" onclick="showHint()">🖼️ Picture Hint</button>
+                        
+                        <label class="field-label" for="practice-input">Type what you hear:</label>
+                        <input type="text" class="spell-input" id="practice-input"
+                               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        
+                        <div class="stack" style="margin-top: 12px;">
+                            <button class="btn btn-accent" onclick="checkPractice()">Check My Spelling</button>
+                            <button class="btn btn-ghost" onclick="showDefinition()">📖 Show Definition</button>
+                            <button class="btn btn-ghost" id="practice-next-btn" onclick="nextPractice()">Next Word ➡️</button>
+                        </div>
+                        
+                        <div class="feedback" id="practice-feedback"></div>
                     </div>
                     
-                    <img id="hint-img" class="hint-img" alt="Picture hint">
-                    
-                    <label class="field-label" for="practice-input">Type what you hear:</label>
-                    <input type="text" class="spell-input" id="practice-input"
-                           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                    
-                    <div class="stack" style="margin-top: 12px;">
-                        <button class="btn btn-accent" onclick="checkPractice()">Check My Spelling</button>
-                        <button class="btn btn-ghost" onclick="showDefinition()">📖 Show Definition</button>
-                        <button class="btn btn-ghost" onclick="nextPractice()">➡️ Next Word</button>
-                    </div>
-                    
-                    <div class="feedback" id="practice-feedback"></div>
-                </div>
-                
-                <div class="progress-wrap">
-                    <div class="progress-bar"><div class="progress-fill" id="practice-progress"></div></div>
-                    <div class="progress-text">
-                        <span>Word <span id="practice-current">1</span> of <span id="practice-total">0</span></span>
-                        <span id="practice-percent">0%</span>
+                    <div class="progress-wrap">
+                        <div class="progress-bar"><div class="progress-fill" id="practice-progress"></div></div>
+                        <div class="progress-text">
+                            <span>Word <span id="practice-current">1</span> of <span id="practice-total">0</span></span>
+                            <span id="practice-percent">0%</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="stack" style="margin-top: 14px;">
-                    <button class="btn btn-ghost" onclick="backToWords()">← Back to My List</button>
+                <div id="practice-done" style="display: none;">
+                    <div class="completion-card">
+                        <div class="completion-emoji">🎉</div>
+                        <div class="completion-title">Practice Complete!</div>
+                        <p class="completion-message">You finished practicing this list.</p>
+                        <div class="completion-score" id="practice-final-score">
+                            0 of 0
+                            <span class="sub">words correct</span>
+                        </div>
+                        <div class="stack">
+                            <button class="btn btn-primary" onclick="restartPractice()">🔄 Practice Again</button>
+                            <button class="btn btn-ghost" onclick="exitPractice()">← Back to List</button>
+                            <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <!-- ===== TEST SCREEN ===== -->
+            <!-- ===== TEST ===== -->
             <div class="screen test-screen">
-                <div class="test-card">
-                    <button class="btn btn-primary" onclick="speakWord()">🔊 Hear the Word</button>
-                    
-                    <label class="field-label" for="test-input">Spell the word:</label>
-                    <input type="text" class="spell-input" id="test-input"
-                           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                    
-                    <div class="stack" style="margin-top: 12px;">
-                        <button class="btn btn-accent" id="check-test-btn" onclick="checkTest()">Check Answer</button>
-                        <button class="btn btn-ghost" onclick="nextTest()">➡️ Next Word</button>
+                <button class="back-btn" onclick="exitTest()">← Back to List</button>
+                
+                <div id="test-live">
+                    <div class="test-card">
+                        <button class="btn btn-primary" onclick="speakWord()">🔊 Hear the Word</button>
+                        
+                        <label class="field-label" for="test-input">Spell the word:</label>
+                        <input type="text" class="spell-input" id="test-input"
+                               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        
+                        <div class="stack" style="margin-top: 12px;">
+                            <button class="btn btn-accent" id="check-test-btn" onclick="checkTest()">Check Answer</button>
+                            <button class="btn btn-ghost" id="test-next-btn" onclick="nextTest()">Next Word ➡️</button>
+                        </div>
+                        
+                        <div class="feedback" id="test-feedback"></div>
                     </div>
                     
-                    <div class="feedback" id="test-feedback"></div>
-                </div>
-                
-                <div class="progress-wrap">
-                    <div class="progress-bar"><div class="progress-fill" id="test-progress"></div></div>
-                    <div class="progress-text">
-                        <span>Word <span id="test-current">1</span> of <span id="test-total">0</span></span>
-                        <span id="test-percent">0%</span>
+                    <div class="progress-wrap">
+                        <div class="progress-bar"><div class="progress-fill" id="test-progress"></div></div>
+                        <div class="progress-text">
+                            <span>Word <span id="test-current">1</span> of <span id="test-total">0</span></span>
+                            <span id="test-percent">0%</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="results" id="test-results" style="display: none;"></div>
-                
-                <div class="stack" style="margin-top: 14px;">
-                    <button class="btn btn-ghost" onclick="backToWords()">← Back to My List</button>
+                <div id="test-done" style="display: none;">
+                    <div class="completion-card">
+                        <div class="completion-emoji" id="test-result-emoji">🎉</div>
+                        <div class="completion-title">Test Complete!</div>
+                        <p class="completion-message" id="test-result-message">You've finished the test.</p>
+                        <div class="completion-score" id="test-final-score">
+                            0 of 0
+                            <span class="sub">words correct</span>
+                        </div>
+                        <div class="idiv" id="test-celebrate-wrap"></div>
+                        <div class="stack">
+                            <button class="btn btn-primary" onclick="restartTest()">🔄 Test Again</button>
+                            <button class="btn btn-ghost" onclick="exitTest()">← Back to List</button>
+                            <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Definition Modal (only for viewing word definitions) -->
+    <!-- Definition modal -->
     <div id="def-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -781,16 +954,13 @@
     </div>
     
     <script>
-        // ===== STORAGE (with in-memory fallback if localStorage is blocked) =====
+        // ===== STORAGE =====
         const memoryStore = {};
         let storageWorks = true;
         try {
-            localStorage.setItem('__sb_test', '1');
-            localStorage.removeItem('__sb_test');
-        } catch (e) {
-            storageWorks = false;
-            console.warn('localStorage blocked — using in-memory store (data will not persist after refresh)');
-        }
+            localStorage.setItem('__sb_t', '1');
+            localStorage.removeItem('__sb_t');
+        } catch (e) { storageWorks = false; }
         
         const store = {
             get(key, def) {
@@ -807,67 +977,75 @@
                     if (storageWorks) localStorage.setItem(key, JSON.stringify(val));
                     else memoryStore[key] = val;
                 } catch (e) { memoryStore[key] = val; }
-            },
-            remove(key) {
-                try {
-                    if (storageWorks) localStorage.removeItem(key);
-                    memoryStore[key] = undefined;
-                } catch (e) { memoryStore[key] = undefined; }
             }
         };
         
         // ===== STATE =====
-        let userName = '';
-        let userAvatar = '👧';
-        let wordList = [];
+        let data = {
+            name: '',
+            avatar: '👧',
+            lists: []  // { id, name, words: [{word, definition}] }
+        };
+        let currentListId = null;
         let currentIdx = 0;
         let correctCount = 0;
+        let practiceCorrect = new Set();  // indices answered correctly
         let testAnswered = false;
+        let testCorrectSet = new Set();
         let tempProfileAvatar = '👧';
-        let previousScreen = 'word-screen';
+        let profileReturnScreen = 'dashboard-screen';
         
         // ===== BOOT =====
         window.addEventListener('load', () => {
-            const savedName = store.get('sb_name', '');
-            if (savedName) {
-                userName = savedName;
-                userAvatar = store.get('sb_avatar', '👧');
-                wordList = store.get('sb_words', []);
-                if (!Array.isArray(wordList)) wordList = [];
+            const saved = store.get('sb_data', null);
+            if (saved && saved.name) {
+                data = saved;
+                if (!Array.isArray(data.lists)) data.lists = [];
                 updateUserBar();
-                renderWords();
-                showScreen('word-screen');
+                renderDashboard();
+                showScreen('dashboard-screen');
             } else {
                 showScreen('welcome-screen');
             }
         });
+        
+        function saveData() {
+            store.set('sb_data', data);
+        }
         
         function showScreen(name) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const t = document.querySelector('.' + name);
             if (t) t.classList.add('active');
             
-            // Show/hide user bar
             const ub = document.getElementById('user-bar');
-            if (name === 'welcome-screen' || name === 'profile-screen') {
+            const homeBtn = document.getElementById('home-btn');
+            
+            if (name === 'welcome-screen') {
                 ub.style.display = 'none';
             } else {
                 ub.style.display = 'flex';
+                // Hide home button when already on home / profile / welcome
+                homeBtn.style.display = (name === 'dashboard-screen' || name === 'profile-screen') ? 'none' : 'inline-block';
                 updateUserBar();
             }
             
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
         function updateUserBar() {
-            document.getElementById('ubar-avatar').textContent = userAvatar;
-            document.getElementById('ubar-name').textContent = userName;
+            document.getElementById('ubar-avatar').textContent = data.avatar;
+            document.getElementById('ubar-name').textContent = data.name;
         }
         
-        // ===== WELCOME SCREEN =====
+        function goHome() {
+            renderDashboard();
+            showScreen('dashboard-screen');
+        }
+        
+        // ===== WELCOME =====
         function pickAvatar(emoji, el) {
-            userAvatar = emoji;
+            data.avatar = emoji;
             document.getElementById('preview-avatar').textContent = emoji;
             document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
@@ -879,27 +1057,24 @@
                 showToast('Please type your name!', 'warning');
                 return;
             }
-            userName = name;
-            store.set('sb_name', userName);
-            store.set('sb_avatar', userAvatar);
+            data.name = name;
+            saveData();
             updateUserBar();
-            renderWords();
-            showScreen('word-screen');
+            renderDashboard();
+            showScreen('dashboard-screen');
         }
         
-        // ===== PROFILE SCREEN =====
+        // ===== PROFILE =====
         function goToProfile() {
-            // Remember where we came from so Cancel returns there
             const active = document.querySelector('.screen.active');
-            if (active) previousScreen = active.classList[1];
+            if (active) profileReturnScreen = active.classList[1];
             
-            tempProfileAvatar = userAvatar;
-            document.getElementById('profile-preview').textContent = userAvatar;
-            document.getElementById('profile-name-input').value = userName;
+            tempProfileAvatar = data.avatar;
+            document.getElementById('profile-preview').textContent = data.avatar;
+            document.getElementById('profile-name-input').value = data.name;
             
-            // Highlight current avatar
             document.querySelectorAll('#profile-avatar-picker .avatar-opt').forEach(o => {
-                o.classList.toggle('selected', o.textContent === userAvatar);
+                o.classList.toggle('selected', o.textContent === data.avatar);
             });
             
             showScreen('profile-screen');
@@ -918,33 +1093,108 @@
                 showToast('Name cannot be empty!', 'warning');
                 return;
             }
-            userName = newName;
-            userAvatar = tempProfileAvatar;
-            store.set('sb_name', userName);
-            store.set('sb_avatar', userAvatar);
+            data.name = newName;
+            data.avatar = tempProfileAvatar;
+            saveData();
             updateUserBar();
             showToast('Profile saved!', 'success');
-            showScreen(previousScreen);
+            showScreen(profileReturnScreen);
         }
         
         function cancelProfile() {
-            showScreen(previousScreen);
+            showScreen(profileReturnScreen);
         }
         
         function resetApp() {
             if (!confirm('This will clear everything for a new user. Continue?')) return;
-            store.remove('sb_name');
-            store.remove('sb_avatar');
-            store.remove('sb_words');
-            userName = '';
-            userAvatar = '👧';
-            wordList = [];
+            data = { name: '', avatar: '👧', lists: [] };
+            saveData();
             document.getElementById('input-name').value = '';
             document.getElementById('preview-avatar').textContent = '👧';
             document.querySelectorAll('#welcome-avatar-picker .avatar-opt').forEach(o => o.classList.remove('selected'));
             document.querySelector('#welcome-avatar-picker .avatar-opt').classList.add('selected');
             showScreen('welcome-screen');
             showToast('Ready for a new user!', 'success');
+        }
+        
+        // ===== DASHBOARD =====
+        function renderDashboard() {
+            const c = document.getElementById('lists-container');
+            
+            if (data.lists.length === 0) {
+                c.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">📝</span>
+                        No lists yet.<br>Create your first list above!
+                    </div>
+                `;
+                return;
+            }
+            
+            c.innerHTML = data.lists.map(list => `
+                <div class="list-card" onclick="openList(${list.id})">
+                    <div class="list-card-body">
+                        <div class="list-card-name">${esc(list.name)}</div>
+                        <div class="list-card-meta">${list.words.length} word${list.words.length !== 1 ? 's' : ''}</div>
+                    </div>
+                    <div class="list-arrow">›</div>
+                    <button class="delete-btn" onclick="event.stopPropagation(); deleteList(${list.id})" aria-label="Delete list">✕</button>
+                </div>
+            `).join('');
+        }
+        
+        function createList() {
+            const input = document.getElementById('new-list-name');
+            const name = input.value.trim();
+            if (!name) {
+                showToast('Give your list a name!', 'warning');
+                input.focus();
+                return;
+            }
+            data.lists.push({
+                id: Date.now(),
+                name: name,
+                words: []
+            });
+            saveData();
+            input.value = '';
+            renderDashboard();
+            showToast(`List "${name}" created!`, 'success');
+        }
+        
+        function deleteList(id) {
+            const list = data.lists.find(l => l.id === id);
+            if (!list) return;
+            if (!confirm(`Delete "${list.name}" and all its words?`)) return;
+            data.lists = data.lists.filter(l => l.id !== id);
+            saveData();
+            renderDashboard();
+            showToast('List deleted', 'success');
+        }
+        
+        function openList(id) {
+            currentListId = id;
+            const list = currentList();
+            if (!list) return;
+            
+            document.getElementById('current-list-name').textContent = list.name;
+            renderWords();
+            showScreen('list-detail-screen');
+        }
+        
+        function currentList() {
+            return data.lists.find(l => l.id === currentListId);
+        }
+        
+        function deleteCurrentList() {
+            const list = currentList();
+            if (!list) return;
+            if (!confirm(`Delete "${list.name}" and all its words?`)) return;
+            data.lists = data.lists.filter(l => l.id !== currentListId);
+            saveData();
+            currentListId = null;
+            goHome();
+            showToast('List deleted', 'success');
         }
         
         // ===== LOOKUP =====
@@ -963,13 +1213,13 @@
             try {
                 const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word.toLowerCase())}`);
                 if (!res.ok) throw new Error('Not found');
-                const data = await res.json();
-                const best = findBestDefinition(data[0]);
+                const json = await res.json();
+                const best = findBestDefinition(json[0]);
                 if (!best) throw new Error('No definition');
                 document.getElementById('new-def').value = best.definition;
                 showToast(`Found! (${best.partOfSpeech || 'word'})`, 'success');
             } catch (err) {
-                showToast("Couldn't find it — type your own definition", 'error');
+                showToast("Couldn't find it — type your own", 'error');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = orig;
@@ -993,9 +1243,10 @@
             if (candidates.length === 0) {
                 const fm = entry.meanings[0];
                 const fd = fm?.definitions?.[0];
-                if (fd?.definition) {
-                    return { partOfSpeech: fm.partOfSpeech || '', definition: cleanDef(fd.definition) };
-                }
+                if (fd?.definition) return {
+                    partOfSpeech: fm.partOfSpeech || '',
+                    definition: cleanDef(fd.definition)
+                };
                 return null;
             }
             candidates.sort((a, b) => {
@@ -1012,8 +1263,11 @@
             return t.charAt(0).toUpperCase() + t.slice(1);
         }
         
-        // ===== ADD/REMOVE WORDS =====
+        // ===== WORDS =====
         function addWord() {
+            const list = currentList();
+            if (!list) return;
+            
             const word = document.getElementById('new-word').value.trim();
             const def = document.getElementById('new-def').value.trim();
             if (!word) {
@@ -1021,12 +1275,12 @@
                 document.getElementById('new-word').focus();
                 return;
             }
-            if (wordList.some(w => w.word.toLowerCase() === word.toLowerCase())) {
-                showToast('That word is already in your list!', 'warning');
+            if (list.words.some(w => w.word.toLowerCase() === word.toLowerCase())) {
+                showToast('That word is already in this list!', 'warning');
                 return;
             }
-            wordList.push({ word, definition: def || 'No definition yet' });
-            store.set('sb_words', wordList);
+            list.words.push({ word, definition: def || 'No definition yet' });
+            saveData();
             renderWords();
             document.getElementById('new-word').value = '';
             document.getElementById('new-def').value = '';
@@ -1035,26 +1289,36 @@
         }
         
         function removeWord(i) {
-            const removed = wordList[i].word;
-            wordList.splice(i, 1);
-            store.set('sb_words', wordList);
+            const list = currentList();
+            if (!list) return;
+            const removed = list.words[i].word;
+            list.words.splice(i, 1);
+            saveData();
             renderWords();
             showToast(`"${removed}" removed`, 'success');
         }
         
         function renderWords() {
-            const list = document.getElementById('word-list');
+            const list = currentList();
+            if (!list) return;
+            const container = document.getElementById('word-list');
             const badge = document.getElementById('count-badge');
             const testBtn = document.getElementById('start-test-btn');
-            badge.textContent = `${wordList.length} word${wordList.length !== 1 ? 's' : ''}`;
-            testBtn.style.display = wordList.length > 0 ? 'flex' : 'none';
             
-            if (wordList.length === 0) {
-                list.innerHTML = `<div class="empty-state"><span class="emoji">📝</span>Your list is empty.<br>Add your first word above!</div>`;
+            badge.textContent = `${list.words.length} word${list.words.length !== 1 ? 's' : ''}`;
+            testBtn.style.display = list.words.length > 0 ? 'flex' : 'none';
+            
+            if (list.words.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">📝</span>
+                        No words yet.<br>Add your first word above!
+                    </div>
+                `;
                 return;
             }
             
-            list.innerHTML = wordList.map((w, i) => `
+            container.innerHTML = list.words.map((w, i) => `
                 <div class="word-card">
                     <div class="word-number">${i + 1}</div>
                     <div class="word-body">
@@ -1066,55 +1330,57 @@
             `).join('');
         }
         
-        function esc(t) {
-            if (t == null) return '';
-            const d = document.createElement('div');
-            d.textContent = String(t);
-            return d.innerHTML;
-        }
-        
         // ===== PRACTICE =====
         function startPractice() {
-            if (wordList.length === 0) { showToast('Add some words first!', 'warning'); return; }
+            const list = currentList();
+            if (!list || list.words.length === 0) {
+                showToast('Add some words first!', 'warning');
+                return;
+            }
             currentIdx = 0;
-            document.getElementById('practice-total').textContent = wordList.length;
+            practiceCorrect = new Set();
+            document.getElementById('practice-total').textContent = list.words.length;
+            document.getElementById('practice-live').style.display = 'block';
+            document.getElementById('practice-done').style.display = 'none';
             showScreen('practice-screen');
             updatePracticeUI();
         }
         
         function updatePracticeUI() {
-            const pct = Math.round((currentIdx / wordList.length) * 100);
+            const list = currentList();
+            if (!list) return;
+            const pct = Math.round((currentIdx / list.words.length) * 100);
             document.getElementById('practice-current').textContent = currentIdx + 1;
             document.getElementById('practice-progress').style.width = pct + '%';
             document.getElementById('practice-percent').textContent = pct + '%';
             document.getElementById('practice-input').value = '';
             document.getElementById('practice-feedback').textContent = '';
             document.getElementById('practice-feedback').className = 'feedback';
-            document.getElementById('hint-img').style.display = 'none';
+            
+            // Change next button text on last word
+            const nextBtn = document.getElementById('practice-next-btn');
+            if (currentIdx === list.words.length - 1) {
+                nextBtn.textContent = '🏁 Finish Practice';
+            } else {
+                nextBtn.textContent = 'Next Word ➡️';
+            }
         }
         
         function speakWord() {
-            if (wordList.length === 0) return;
+            const list = currentList();
+            if (!list || list.words.length === 0) return;
             try {
-                const u = new SpeechSynthesisUtterance(wordList[currentIdx].word);
+                const u = new SpeechSynthesisUtterance(list.words[currentIdx].word);
                 u.rate = 0.85;
                 speechSynthesis.cancel();
                 speechSynthesis.speak(u);
             } catch (e) { showToast('Audio not available', 'error'); }
         }
         
-        function showHint() {
-            if (wordList.length === 0) return;
-            const word = wordList[currentIdx].word;
-            const img = document.getElementById('hint-img');
-            img.src = `https://loremflickr.com/300/200/${encodeURIComponent(word)}`;
-            img.style.display = 'block';
-            img.onerror = () => { img.style.display = 'none'; showToast('No picture for this word', 'warning'); };
-        }
-        
         function showDefinition() {
-            if (wordList.length === 0) return;
-            const w = wordList[currentIdx];
+            const list = currentList();
+            if (!list) return;
+            const w = list.words[currentIdx];
             document.getElementById('def-modal-content').innerHTML = `
                 <div class="word">${esc(w.word)}</div>
                 <div>${esc(w.definition)}</div>
@@ -1127,39 +1393,86 @@
         }
         
         function checkPractice() {
+            const list = currentList();
+            if (!list) return;
             const input = document.getElementById('practice-input').value.trim().toLowerCase();
-            const correct = wordList[currentIdx].word.toLowerCase();
+            const correct = list.words[currentIdx].word.toLowerCase();
             const fb = document.getElementById('practice-feedback');
             if (!input) { showToast('Type a word first!', 'warning'); return; }
             if (input === correct) {
                 fb.textContent = '✅ Correct! Well done!';
                 fb.className = 'feedback correct';
+                practiceCorrect.add(currentIdx);
                 confetti();
             } else {
-                fb.innerHTML = `❌ Not quite. The word is: <strong>${esc(wordList[currentIdx].word)}</strong>`;
+                fb.innerHTML = `❌ Not quite. The word is: <strong>${esc(list.words[currentIdx].word)}</strong>`;
                 fb.className = 'feedback incorrect';
             }
         }
         
         function nextPractice() {
-            currentIdx = (currentIdx + 1) % wordList.length;
-            updatePracticeUI();
+            const list = currentList();
+            if (!list) return;
+            
+            if (currentIdx >= list.words.length - 1) {
+                showPracticeComplete();
+            } else {
+                currentIdx++;
+                updatePracticeUI();
+            }
+        }
+        
+        function showPracticeComplete() {
+            const list = currentList();
+            if (!list) return;
+            const correct = practiceCorrect.size;
+            const total = list.words.length;
+            const pct = Math.round((correct / total) * 100);
+            
+            document.getElementById('practice-final-score').innerHTML = `
+                ${correct} of ${total} (${pct}%)
+                <span class="sub">words correct</span>
+            `;
+            
+            document.getElementById('practice-live').style.display = 'none';
+            document.getElementById('practice-done').style.display = 'block';
+            
+            if (correct === total) {
+                confetti(30);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function restartPractice() {
+            startPractice();
+        }
+        
+        function exitPractice() {
+            openList(currentListId);
         }
         
         // ===== TEST =====
         function startTest() {
-            if (wordList.length === 0) { showToast('Add some words first!', 'warning'); return; }
+            const list = currentList();
+            if (!list || list.words.length === 0) {
+                showToast('Add some words first!', 'warning');
+                return;
+            }
             currentIdx = 0;
-            correctCount = 0;
-            document.getElementById('test-total').textContent = wordList.length;
-            document.getElementById('test-results').style.display = 'none';
+            testAnswered = false;
+            testCorrectSet = new Set();
+            document.getElementById('test-total').textContent = list.words.length;
+            document.getElementById('test-live').style.display = 'block';
+            document.getElementById('test-done').style.display = 'none';
             showScreen('test-screen');
             updateTestUI();
         }
         
         function updateTestUI() {
-            const pct = Math.round((currentIdx / wordList.length) * 100);
-            document.getElementById('test-current').textContent = Math.min(currentIdx + 1, wordList.length);
+            const list = currentList();
+            if (!list) return;
+            const pct = Math.round((currentIdx / list.words.length) * 100);
+            document.getElementById('test-current').textContent = Math.min(currentIdx + 1, list.words.length);
             document.getElementById('test-progress').style.width = pct + '%';
             document.getElementById('test-percent').textContent = pct + '%';
             document.getElementById('test-input').value = '';
@@ -1168,22 +1481,30 @@
             document.getElementById('test-feedback').className = 'feedback';
             document.getElementById('check-test-btn').disabled = false;
             testAnswered = false;
+            
+            const nextBtn = document.getElementById('test-next-btn');
+            if (currentIdx === list.words.length - 1) {
+                nextBtn.textContent = '🏁 Finish Test';
+            } else {
+                nextBtn.textContent = 'Next Word ➡️';
+            }
         }
         
         function checkTest() {
-            if (testAnswered) return;
+            const list = currentList();
+            if (!list || testAnswered) return;
             const input = document.getElementById('test-input').value.trim().toLowerCase();
-            const correct = wordList[currentIdx].word.toLowerCase();
+            const correct = list.words[currentIdx].word.toLowerCase();
             const fb = document.getElementById('test-feedback');
             if (!input) { showToast('Type a word first!', 'warning'); return; }
             testAnswered = true;
             if (input === correct) {
                 fb.textContent = '✅ Correct!';
                 fb.className = 'feedback correct';
-                correctCount++;
+                testCorrectSet.add(currentIdx);
                 confetti();
             } else {
-                fb.innerHTML = `❌ The word is spelled: <strong>${esc(wordList[currentIdx].word)}</strong>`;
+                fb.innerHTML = `❌ The word is spelled: <strong>${esc(list.words[currentIdx].word)}</strong>`;
                 fb.className = 'feedback incorrect';
             }
             document.getElementById('test-input').disabled = true;
@@ -1191,26 +1512,75 @@
         }
         
         function nextTest() {
-            currentIdx++;
-            if (currentIdx >= wordList.length) {
-                const pct = Math.round((correctCount / wordList.length) * 100);
-                const results = document.getElementById('test-results');
-                results.style.display = 'block';
-                results.innerHTML = `
-                    <h2>🎉 Test Complete!</h2>
-                    <p>You got <strong>${correctCount}</strong> of <strong>${wordList.length}</strong> correct</p>
-                    <p style="font-size:1.4rem; color:var(--pink); font-weight:bold; margin-top:8px;">${pct}%</p>
-                    ${correctCount === wordList.length ? '<p class="celebrate">⭐ Perfect Score! ⭐</p>' : ''}
-                `;
-                if (correctCount === wordList.length) confetti(30);
-                return;
+            const list = currentList();
+            if (!list) return;
+            
+            if (currentIdx >= list.words.length - 1) {
+                showTestComplete();
+            } else {
+                currentIdx++;
+                updateTestUI();
             }
-            updateTestUI();
         }
         
-        function backToWords() { showScreen('word-screen'); }
+        function showTestComplete() {
+            const list = currentList();
+            if (!list) return;
+            const correct = testCorrectSet.size;
+            const total = list.words.length;
+            const pct = Math.round((correct / total) * 100);
+            
+            // Emoji + message based on score
+            let emoji = '🎉';
+            let message = "You've finished the test!";
+            if (pct === 100) {
+                emoji = '⭐';
+                message = 'PERFECT SCORE! Amazing work!';
+            } else if (pct >= 80) {
+                emoji = '🎉';
+                message = 'Great job! Almost perfect!';
+            } else if (pct >= 60) {
+                emoji = '👍';
+                message = 'Nice work! Keep practicing!';
+            } else {
+                emoji = '💪';
+                message = "Good try! Let's practice these words again.";
+            }
+            
+            document.getElementById('test-result-emoji').textContent = emoji;
+            document.getElementById('test-result-message').textContent = message;
+            document.getElementById('test-final-score').innerHTML = `
+                ${correct} of ${total} (${pct}%)
+                <span class="sub">words correct</span>
+            `;
+            document.getElementById('test-celebrate-wrap').innerHTML = 
+                pct === 100 ? '<p class="celebrate">⭐ Perfect Score! ⭐</p>' : '';
+            
+            document.getElementById('test-live').style.display = 'none';
+            document.getElementById('test-done').style.display = 'block';
+            
+            if (correct === total) {
+                confetti(30);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function restartTest() {
+            startTest();
+        }
+        
+        function exitTest() {
+            openList(currentListId);
+        }
         
         // ===== UTILS =====
+        function esc(t) {
+            if (t == null) return '';
+            const d = document.createElement('div');
+            d.textContent = String(t);
+            return d.innerHTML;
+        }
+        
         function showToast(msg, type) {
             type = type || 'info';
             const t = document.createElement('div');
@@ -1218,7 +1588,10 @@
             t.textContent = msg;
             document.body.appendChild(t);
             setTimeout(() => t.classList.add('show'), 10);
-            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 2400);
+            setTimeout(() => {
+                t.classList.remove('show');
+                setTimeout(() => t.remove(), 400);
+            }, 2400);
         }
         
         function confetti(count) {
@@ -1246,10 +1619,12 @@
             document.head.appendChild(s);
         })();
         
+        // ===== KEYBOARD =====
         document.addEventListener('keydown', e => {
             if (e.key !== 'Enter') return;
             const id = document.activeElement.id;
             if (id === 'input-name') startApp();
+            else if (id === 'new-list-name') createList();
             else if (id === 'new-def') addWord();
             else if (id === 'practice-input') checkPractice();
             else if (id === 'test-input') checkTest();
@@ -1261,4 +1636,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
