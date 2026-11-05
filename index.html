@@ -10,937 +10,1216 @@
             margin: 0;
             padding: 0;
             font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --blue: #4A9EFF;
+            --blue-dark: #2E7FE0;
+            --orange: #FF9E6D;
+            --pink: #FF6DB4;
+            --green: #2ECC71;
+            --red: #FF5C5C;
+            --purple: #9B7EFF;
+            --yellow: #FFD93D;
+            --ink: #2D3436;
+            --ink-soft: #636E72;
+            --surface: #FFFFFF;
+            --bg-soft: #F7FAFF;
         }
         
         body {
-            background: linear-gradient(135deg, #6DB4FF 0%, #FF9E6D 100%);
+            background: linear-gradient(160deg, #4A9EFF 0%, #9B7EFF 50%, #FF9E6D 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
         }
         
         .container {
             width: 100%;
-            max-width: 500px;
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 520px;
+            background: var(--surface);
+            border-radius: 28px;
+            padding: 0;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        /* ========== HEADER ========== */
+        .app-header {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+            padding: 24px 20px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            margin-top: 10px;
         }
         
-        .bee-decoration {
+        .app-header::before {
+            content: '';
             position: absolute;
-            font-size: 2rem;
-            opacity: 0.2;
-            z-index: 0;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
         }
         
-        .bee-1 { top: 15px; left: 15px; animation: float 6s ease-in-out infinite; }
-        .bee-2 { top: 40px; right: 20px; animation: float 7s ease-in-out infinite reverse; }
-        .bee-3 { bottom: 30px; left: 30px; animation: float 8s ease-in-out infinite; }
-        .bee-4 { bottom: 15px; right: 15px; animation: float 9s ease-in-out infinite reverse; }
-        
-        h1 {
-            color: #FF9E6D;
-            margin: 10px 0;
-            font-size: 2rem;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        .app-header h1 {
+            color: white;
+            font-size: 1.7rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             position: relative;
             z-index: 1;
         }
         
-        .screen {
-            display: none;
-            position: relative;
-            z-index: 1;
+        .app-header .bee {
+            font-size: 1.5rem;
+            margin: 0 6px;
+            display: inline-block;
+            animation: wiggle 2s ease-in-out infinite;
         }
         
-        .active {
-            display: block;
-            animation: fadeIn 0.5s ease;
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        .app-body {
+            padding: 20px;
+        }
+        
+        .screen { display: none; }
+        .active { display: block; animation: slideIn 0.4s ease; }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        input, textarea, button, select {
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 10px;
-            border: 2px solid #6DB4FF;
-            font-size: 1rem;
-            width: 100%;
-            font-family: inherit;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #FF6DB4;
-            box-shadow: 0 0 0 3px rgba(255, 109, 180, 0.3);
-        }
-        
-        button {
-            background-color: #6DB4FF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
+        /* ========== FORM ELEMENTS ========== */
+        .field-label {
+            display: block;
             font-weight: bold;
-            padding: 12px 20px;
+            color: var(--ink);
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            margin-top: 14px;
         }
         
-        button:hover:not(:disabled) {
-            background-color: #FF9E6D;
-            transform: scale(1.03);
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 2.5px solid #E4E9F2;
+            font-size: 1.05rem;
+            font-family: inherit;
+            background: var(--bg-soft);
+            transition: all 0.2s;
+            color: var(--ink);
         }
         
-        button:disabled {
-            opacity: 0.6;
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--blue);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
+        }
+        
+        input[type="text"]::placeholder {
+            color: #B0B8C4;
+        }
+        
+        /* ========== BUTTONS ========== */
+        .btn {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+        
+        .btn:disabled {
+            opacity: 0.55;
             cursor: not-allowed;
         }
         
-        .button-group {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--orange) 0%, var(--pink) 100%);
+            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.4);
+        }
+        
+        .btn-lookup {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            box-shadow: 0 4px 12px rgba(155, 126, 255, 0.4);
+        }
+        
+        .btn-ghost {
+            background: #F1F4F9;
+            color: var(--ink);
+            box-shadow: none;
+            border: 2px solid #E4E9F2;
+        }
+        
+        .btn-sm {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            border-radius: 12px;
+        }
+        
+        .btn-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin: 15px 0;
+            margin-top: 16px;
         }
         
-        .secondary-btn {
-            background: #FF9E6D;
-            margin: 5px 0;
+        /* ========== ADD WORD CARD ========== */
+        .add-card {
+            background: linear-gradient(135deg, #F7F9FF 0%, #EFF5FF 100%);
+            border: 2px dashed #C8D9F0;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 20px;
         }
         
-        .secondary-btn:hover:not(:disabled) {
-            background: #FF6DB4;
-        }
-        
-        .name-display {
-            font-size: 1.4rem;
-            color: #FF6DB4;
-            margin-bottom: 15px;
+        .add-card-title {
+            font-size: 1.05rem;
             font-weight: bold;
-        }
-        
-        .section-title {
-            color: #333;
-            margin: 15px 0 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-        
-        /* FIXED WORD LIST - CENTERED */
-        .word-list {
+            color: var(--blue-dark);
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 15px auto;
-            width: 100%;
-            max-width: 440px;
-            padding: 0 4px;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
         }
         
-        .word-item {
+        /* ========== WORD LIST ========== */
+        .list-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-            text-align: left;
-            width: 100%;
+            margin-bottom: 12px;
+            padding: 0 4px;
         }
         
-        .word-content {
+        .list-header h2 {
+            font-size: 1.1rem;
+            color: var(--ink);
+        }
+        
+        .count-badge {
+            background: linear-gradient(135deg, var(--orange), var(--pink));
+            color: white;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 6px rgba(255, 109, 180, 0.3);
+        }
+        
+        .word-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 340px;
+            overflow-y: auto;
+            padding: 4px 2px 8px;
+            margin: 0 auto;
+            width: 100%;
+            scrollbar-width: thin;
+        }
+        
+        .word-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .word-list::-webkit-scrollbar-thumb {
+            background: #D5DDE8;
+            border-radius: 3px;
+        }
+        
+        /* ========== WORD CARD (REDESIGNED) ========== */
+        .word-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: white;
+            border-radius: 16px;
+            padding: 14px 14px 14px 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border-left: 5px solid var(--blue);
+            position: relative;
+            animation: popIn 0.3s ease;
+        }
+        
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .word-card:nth-child(5n+1) { border-left-color: var(--blue); }
+        .word-card:nth-child(5n+2) { border-left-color: var(--pink); }
+        .word-card:nth-child(5n+3) { border-left-color: var(--orange); }
+        .word-card:nth-child(5n+4) { border-left-color: var(--green); }
+        .word-card:nth-child(5n+5) { border-left-color: var(--purple); }
+        
+        .word-number {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            background: #EEF3FB;
+            color: var(--blue-dark);
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+        
+        .word-body {
             flex: 1;
             min-width: 0;
             text-align: left;
         }
         
-        .word-content strong {
-            display: block;
-            font-size: 1.05rem;
-            color: #2d3436;
+        .word-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+        
+        .word-text {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--ink);
             word-break: break-word;
         }
         
-        .word-content .definition {
-            font-size: 0.85rem;
-            color: #666;
+        .pos-badge {
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: #FFF3E0;
+            color: #E67E22;
+            text-transform: lowercase;
             font-style: italic;
-            margin-top: 4px;
-            line-height: 1.3;
+        }
+        
+        .word-def {
+            font-size: 0.88rem;
+            color: var(--ink-soft);
+            line-height: 1.45;
             word-break: break-word;
         }
         
-        .remove-btn {
-            background: #FF6DB4;
-            color: white;
+        .word-example {
+            font-size: 0.82rem;
+            color: var(--purple);
+            font-style: italic;
+            margin-top: 5px;
+            padding-left: 8px;
+            border-left: 2px solid #E0D5FF;
+            word-break: break-word;
+        }
+        
+        .delete-btn {
+            background: #FFF0F0;
             border: none;
-            width: 34px;
-            height: 34px;
-            min-width: 34px;
-            border-radius: 50%;
-            padding: 0;
-            font-size: 1rem;
-            flex-shrink: 0;
+            color: var(--red);
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
         }
         
-        .remove-btn:hover {
-            background: #e74c3c;
-            transform: scale(1.1);
+        .delete-btn:active {
+            background: var(--red);
+            color: white;
+            transform: scale(0.9);
         }
         
         .empty-state {
             text-align: center;
-            color: #999;
-            font-style: italic;
-            padding: 20px;
+            padding: 30px 20px;
+            color: #A0ACBE;
+            font-size: 0.9rem;
+            background: #F7FAFF;
+            border-radius: 16px;
+            border: 2px dashed #D8E2EF;
         }
         
-        .practice-area, .test-area {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(240, 247, 255, 0.5);
-            border-radius: 12px;
+        .empty-state .emoji {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+            opacity: 0.7;
         }
         
-        .spelling-input {
-            width: 100%;
-            font-size: 1.1rem;
-            padding: 12px;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-        
-        .feedback {
-            margin: 15px 0;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1rem;
-            min-height: 20px;
-        }
-        
-        .correct {
-            background: #d4edda;
-            color: #155724;
-            border: 2px solid #c3e6cb;
-        }
-        
-        .incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border: 2px solid #f5c6cb;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            background: #eee;
-            border-radius: 8px;
-            margin: 15px 0;
-            height: 18px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #6DB4FF 0%, #FF9E6D 100%);
-            border-radius: 8px;
-            width: 0%;
-            transition: width 0.5s;
-        }
-        
-        .results {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .celebrate {
-            animation: celebrate 1s infinite;
-            color: #FF6DB4;
-            font-size: 1.2rem;
-        }
-        
-        @keyframes celebrate {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .bee-icon {
-            font-size: 1.5rem;
-            margin: 0 5px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .instructions {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 12px;
-            border-radius: 10px;
-            margin: 12px 0;
-            font-size: 0.85rem;
-            color: #555;
-        }
-        
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 10px auto;
-            background: #6DB4FF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-        }
-        
-        .avatar-selection {
+        /* ========== WELCOME ========== */
+        .avatar-picker {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin: 15px 0;
             flex-wrap: wrap;
+            margin: 16px 0;
         }
         
-        .avatar-option {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        .avatar-opt {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: #F1F4F9;
+            border: 3px solid transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             cursor: pointer;
-            transition: transform 0.2s;
-            background: #f0f0f0;
+            transition: all 0.2s;
         }
         
-        .avatar-option:hover {
-            transform: scale(1.1);
+        .avatar-opt.selected {
+            border-color: var(--pink);
+            background: #FFF0F6;
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(255, 109, 180, 0.3);
         }
         
-        .selected-avatar {
-            border: 3px solid #FF6DB4;
-            background: #fff0f6;
+        .current-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            margin: 0 auto 12px;
+            box-shadow: 0 8px 20px rgba(74, 158, 255, 0.35);
         }
         
+        /* ========== NAME DISPLAY ========== */
+        .name-banner {
+            background: linear-gradient(135deg, #FFF5EB 0%, #FFE5F1 100%);
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid #FFD9C7;
+        }
+        
+        .name-banner .avatar {
+            font-size: 1.8rem;
+        }
+        
+        .name-banner .text {
+            font-weight: bold;
+            color: var(--ink);
+            font-size: 1.05rem;
+            text-align: left;
+        }
+        
+        /* ========== PRACTICE/TEST ========== */
+        .practice-card, .test-card {
+            background: linear-gradient(135deg, #F0F7FF 0%, #EFF0FF 100%);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid #DDE6F5;
+        }
+        
+        .practice-card .spell-input, .test-card .spell-input {
+            width: 100%;
+            font-size: 1.3rem;
+            padding: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: bold;
+            border-radius: 14px;
+            border: 3px solid var(--blue);
+            background: white;
+            font-family: inherit;
+        }
+        
+        .practice-card .spell-input:focus, .test-card .spell-input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 5px rgba(155, 126, 255, 0.15);
+        }
+        
+        .feedback {
+            margin-top: 14px;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1rem;
+            animation: popIn 0.3s ease;
+        }
+        
+        .feedback.correct {
+            background: #D4F8E0;
+            color: #0F7B3E;
+            border: 2px solid #A8E6BC;
+        }
+        
+        .feedback.incorrect {
+            background: #FFE0E0;
+            color: #B71C1C;
+            border: 2px solid #FFB8B8;
+        }
+        
+        .progress-wrap {
+            margin-top: 16px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: #E4E9F2;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            border-radius: 6px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            color: var(--ink-soft);
+            margin-top: 6px;
+            font-weight: bold;
+        }
+        
+        .results {
+            margin-top: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFF5EB, #FFE5F1);
+            border-radius: 20px;
+            border: 2px solid #FFD9C7;
+        }
+        
+        .results h2 { color: var(--pink); margin-bottom: 8px; }
+        
+        .celebrate {
+            animation: celebrate 0.8s ease infinite alternate;
+            color: var(--orange);
+            font-size: 1.15rem;
+            margin-top: 8px;
+        }
+        
+        @keyframes celebrate {
+            from { transform: scale(1); }
+            to { transform: scale(1.06); }
+        }
+        
+        /* ========== TOAST ========== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: var(--ink);
+            color: white;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.92rem;
+            z-index: 3000;
+            transition: transform 0.35s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            max-width: 90vw;
+            text-align: center;
+        }
+        
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+        .toast.warning { background: #F39C12; }
+        
+        /* ========== MODAL ========== */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 100;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
         
         .modal-content {
-            background-color: white;
-            padding: 25px;
-            border-radius: 15px;
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
             width: 100%;
             max-width: 400px;
             text-align: center;
             position: relative;
+            animation: popIn 0.3s ease;
         }
         
-        .close-button {
+        .modal-close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
+            top: 12px;
+            right: 16px;
+            font-size: 1.8rem;
+            color: #AAA;
             cursor: pointer;
             line-height: 1;
+            font-weight: bold;
         }
         
-        .close-button:hover {
-            color: #333;
+        .modal-content h3 {
+            color: var(--purple);
+            margin-bottom: 12px;
         }
         
-        .word-definition {
-            margin: 15px 0;
-            padding: 15px;
-            background: #f0f7ff;
-            border-radius: 10px;
+        .modal-def {
+            background: #F7F9FF;
+            padding: 16px;
+            border-radius: 12px;
             text-align: left;
             line-height: 1.5;
+            color: var(--ink);
         }
         
-        /* TOAST NOTIFICATIONS */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: #333;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 25px;
+        .modal-def .word {
+            font-size: 1.2rem;
             font-weight: bold;
-            z-index: 2000;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            max-width: 90%;
-            text-align: center;
-            font-size: 0.95rem;
+            color: var(--blue-dark);
+            margin-bottom: 6px;
         }
         
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-        
-        .toast-success { background: #00b894; }
-        .toast-error { background: #e74c3c; }
-        .toast-warning { background: #f39c12; }
-        
-        .image-hint {
+        .hint-img {
             max-width: 100%;
-            max-height: 150px;
+            max-height: 160px;
             object-fit: contain;
-            margin: 10px auto;
-            border-radius: 10px;
+            margin: 12px auto 0;
+            border-radius: 14px;
             display: none;
-            border: 3px solid #6DB4FF;
+            border: 3px solid var(--blue);
         }
         
-        .loading-spinner {
+        /* ========== SPINNER ========== */
+        .spinner {
             display: inline-block;
-            animation: spin 1s linear infinite;
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
         
         @keyframes spin {
-            from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="bee-decoration bee-1">🐝</div>
-        <div class="bee-decoration bee-2">🐝</div>
-        <div class="bee-decoration bee-3">🐝</div>
-        <div class="bee-decoration bee-4">🐝</div>
-        
-        <h1><span class="bee-icon">🐝</span> Spelling Bee <span class="bee-icon">🐝</span></h1>
-        
-        <!-- Welcome Screen -->
-        <div class="screen welcome-screen active">
-            <div class="user-avatar" id="user-avatar">👧</div>
-            <p>Welcome! Let's get started.</p>
-            
-            <div class="avatar-selection">
-                <div class="avatar-option selected-avatar" onclick="selectAvatar('👧', this)">👧</div>
-                <div class="avatar-option" onclick="selectAvatar('👦', this)">👦</div>
-                <div class="avatar-option" onclick="selectAvatar('🐶', this)">🐶</div>
-                <div class="avatar-option" onclick="selectAvatar('🐱', this)">🐱</div>
-                <div class="avatar-option" onclick="selectAvatar('🦄', this)">🦄</div>
-            </div>
-            
-            <input type="text" id="user-name" placeholder="Enter your name">
-            <div class="button-group">
-                <button onclick="saveName()">Let's Start! 🚀</button>
-                <button onclick="resetApp()" style="background: #999; font-size: 0.85rem;">🔄 Reset for New User</button>
-            </div>
+        <div class="app-header">
+            <h1><span class="bee">🐝</span> Spelling Bee <span class="bee">🐝</span></h1>
         </div>
         
-        <!-- Word Input Screen -->
-        <div class="screen word-input-screen">
-            <div class="name-display">Hello, <span id="display-name"></span>! <span id="display-avatar"></span></div>
-            
-            <p class="section-title">Add a new word:</p>
-            <input type="text" id="new-word" placeholder="Enter a spelling word" autocomplete="off">
-            <input type="text" id="new-definition" placeholder="Definition (or use auto-lookup)" autocomplete="off">
-            
-            <button id="lookup-btn" onclick="lookupDefinition()" class="secondary-btn">
-                🔍 Auto-Lookup Definition
-            </button>
-            <button onclick="addWord()">➕ Add Word to List</button>
-            
-            <p class="section-title">Your Words (<span id="word-count">0</span>):</p>
-            <div class="word-list" id="saved-words-list">
-                <div class="empty-state">No words added yet. Add some words above!</div>
-            </div>
-            
-            <div class="button-group" style="margin-top: 20px;">
-                <button onclick="startPractice()">📖 Practice These Words</button>
-            </div>
-        </div>
-        
-        <!-- Practice Screen -->
-        <div class="screen practice-screen">
-            <div class="name-display">Practice: <span id="practice-name"></span> <span id="practice-avatar"></span></div>
-            
-            <button onclick="speakWord()">🔊 Hear the Word</button>
-            <button onclick="showImageHint()" class="secondary-btn">🖼️ Picture Hint</button>
-            
-            <img id="image-hint" class="image-hint" alt="Picture hint">
-            
-            <div class="practice-area">
-                <p>Type the word you heard:</p>
-                <input type="text" class="spelling-input" id="practice-spelling" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                <div class="button-group">
-                    <button onclick="checkPracticeSpelling()">✓ Check Spelling</button>
-                    <button onclick="showDefinition()" class="secondary-btn">📖 Show Definition</button>
-                    <button onclick="nextWord()" class="secondary-btn">➡️ Next Word</button>
+        <div class="app-body">
+            <!-- WELCOME SCREEN -->
+            <div class="screen welcome-screen active">
+                <div class="current-avatar" id="preview-avatar">👧</div>
+                <p style="text-align: center; color: var(--ink-soft); margin-bottom: 4px;">Welcome! Pick your buddy and tell me your name.</p>
+                
+                <div class="avatar-picker" id="avatar-picker">
+                    <div class="avatar-opt selected" onclick="pickAvatar('👧', this)">👧</div>
+                    <div class="avatar-opt" onclick="pickAvatar('👦', this)">👦</div>
+                    <div class="avatar-opt" onclick="pickAvatar('🐶', this)">🐶</div>
+                    <div class="avatar-opt" onclick="pickAvatar('🐱', this)">🐱</div>
+                    <div class="avatar-opt" onclick="pickAvatar('🦄', this)">🦄</div>
                 </div>
-                <div class="feedback" id="practice-feedback"></div>
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress" id="practice-progress"></div>
-            </div>
-            <p style="font-size: 0.85rem; color: #666;">Word <span id="practice-current">1</span> of <span id="practice-total">0</span></p>
-            
-            <div class="button-group">
-                <button onclick="backToWords()" style="background: #999;">← Back to Word List</button>
-            </div>
-        </div>
-        
-        <!-- Test Screen -->
-        <div class="screen test-screen">
-            <div class="name-display">Test: <span id="test-name"></span> <span id="test-avatar"></span></div>
-            
-            <button onclick="speakTestWord()">🔊 Hear the Word</button>
-            
-            <div class="test-area">
-                <p>Spell the word you heard:</p>
-                <input type="text" class="spelling-input" id="test-spelling" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                <div class="button-group">
-                    <button onclick="checkTestSpelling()">✓ Check Answer</button>
-                    <button onclick="nextTestWord()" class="secondary-btn">➡️ Next Word</button>
+                
+                <label class="field-label">Your name:</label>
+                <input type="text" id="input-name" placeholder="Type your name" autocomplete="off">
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="startApp()">Let's Start! 🚀</button>
+                    <button class="btn btn-ghost btn-sm" onclick="resetApp()">🔄 Reset for New User</button>
                 </div>
-                <div class="feedback" id="test-feedback"></div>
             </div>
             
-            <div class="progress-bar">
-                <div class="progress" id="test-progress"></div>
+            <!-- WORD INPUT SCREEN -->
+            <div class="screen word-screen">
+                <div class="name-banner">
+                    <span class="avatar" id="banner-avatar">👧</span>
+                    <span class="text">Hi, <span id="banner-name"></span>!</span>
+                </div>
+                
+                <div class="add-card">
+                    <div class="add-card-title">➕ Add a New Word</div>
+                    
+                    <label class="field-label">The word:</label>
+                    <input type="text" id="new-word" placeholder="e.g. beautiful" autocomplete="off" autocapitalize="off">
+                    
+                    <label class="field-label">What it means (optional):</label>
+                    <input type="text" id="new-def" placeholder="Tap Lookup or type your own" autocomplete="off">
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-lookup btn-sm" id="lookup-btn" onclick="lookupDef()">
+                            🔍 Look Up the Definition
+                        </button>
+                        <button class="btn btn-accent" onclick="addWord()">Add to My List</button>
+                    </div>
+                </div>
+                
+                <div class="list-header">
+                    <h2>📚 My Word List</h2>
+                    <span class="count-badge" id="count-badge">0 words</span>
+                </div>
+                
+                <div class="word-list" id="word-list">
+                    <div class="empty-state">
+                        <span class="emoji">📝</span>
+                        Your list is empty.<br>Add your first word above!
+                    </div>
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="startPractice()">📖 Practice These Words</button>
+                </div>
             </div>
-            <p style="font-size: 0.85rem; color: #666;">Word <span id="test-current">1</span> of <span id="test-total">0</span></p>
             
-            <div class="results" id="test-results"></div>
-            
-            <div class="button-group">
-                <button onclick="backToWords()" style="background: #999;">← Back to Word List</button>
+            <!-- PRACTICE SCREEN -->
+            <div class="screen practice-screen">
+                <div class="name-banner">
+                    <span class="avatar" id="practice-avatar">👧</span>
+                    <span class="text">Practice time, <span id="practice-name"></span>!</span>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="btn-group" style="margin-top: 0; margin-bottom: 16px;">
+                        <button class="btn btn-primary btn-sm" onclick="speakWord()">🔊 Hear the Word</button>
+                        <button class="btn btn-ghost btn-sm" onclick="showHint()">🖼️ Picture Hint</button>
+                    </div>
+                    
+                    <img id="hint-img" class="hint-img" alt="Picture hint">
+                    
+                    <label class="field-label">Type what you hear:</label>
+                    <input type="text" class="spell-input" id="practice-input" 
+                           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-accent" onclick="checkPractice()">✓ Check My Spelling</button>
+                        <button class="btn btn-ghost btn-sm" onclick="showDefinition()">📖 Show Definition</button>
+                        <button class="btn btn-ghost btn-sm" onclick="nextPractice()">➡️ Next Word</button>
+                    </div>
+                    
+                    <div class="feedback" id="practice-feedback"></div>
+                </div>
+                
+                <div class="progress-wrap">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="practice-progress"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Word <span id="practice-current">1</span> of <span id="practice-total">0</span></span>
+                        <span id="practice-percent">0%</span>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-ghost" onclick="backToWords()">← Back to My List</button>
+                </div>
             </div>
-        </div>
-        
-        <div class="button-group" style="margin-top: 15px;">
-            <button onclick="switchToTestMode()" style="background: #FF6DB4;">📝 Take a Test</button>
-            <button onclick="switchToPracticeMode()" style="background: #FF9E6D;">📖 Practice Mode</button>
+            
+            <!-- TEST SCREEN -->
+            <div class="screen test-screen">
+                <div class="name-banner">
+                    <span class="avatar" id="test-avatar">👧</span>
+                    <span class="text">Test time, <span id="test-name"></span>!</span>
+                </div>
+                
+                <div class="test-card">
+                    <button class="btn btn-primary btn-sm" onclick="speakWord()" style="margin-bottom: 16px;">🔊 Hear the Word</button>
+                    
+                    <label class="field-label">Spell the word:</label>
+                    <input type="text" class="spell-input" id="test-input"
+                           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-accent" onclick="checkTest()">✓ Check Answer</button>
+                        <button class="btn btn-ghost btn-sm" onclick="nextTest()">➡️ Next Word</button>
+                    </div>
+                    
+                    <div class="feedback" id="test-feedback"></div>
+                </div>
+                
+                <div class="progress-wrap">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="test-progress"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Word <span id="test-current">1</span> of <span id="test-total">0</span></span>
+                        <span id="test-percent">0%</span>
+                    </div>
+                </div>
+                
+                <div class="results" id="test-results" style="display: none;"></div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-ghost" onclick="backToWords()">← Back to My List</button>
+                </div>
+            </div>
+            
+            <div class="btn-group" id="mode-buttons" style="display: none;">
+                <button class="btn btn-accent" onclick="startTest()">📝 Take a Test</button>
+            </div>
         </div>
     </div>
     
     <!-- Definition Modal -->
-    <div id="definition-modal" class="modal">
+    <div id="def-modal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
+            <span class="modal-close" onclick="closeModal()">&times;</span>
             <h3>Word Definition</h3>
-            <div class="word-definition" id="definition-text"></div>
-            <button onclick="closeModal()">Close</button>
+            <div class="modal-def" id="def-modal-content"></div>
+            <div class="btn-group">
+                <button class="btn btn-primary btn-sm" onclick="closeModal()">Got it!</button>
+            </div>
         </div>
     </div>
-
+    
     <script>
-        let userName = "";
-        let userAvatar = "👧";
+        let userName = '';
+        let userAvatar = '👧';
         let wordList = [];
-        let currentWordIndex = 0;
-        let correctAnswers = 0;
+        let currentIdx = 0;
+        let correctCount = 0;
+        let testAnswered = false;
         
-        // Load saved data on start
-        window.onload = function() {
-            const savedName = localStorage.getItem('spellingAppUserName');
-            const savedAvatar = localStorage.getItem('spellingAppUserAvatar');
-            const savedWords = localStorage.getItem('spellingAppWordList');
+        // ===== BOOT =====
+        window.onload = () => {
+            const savedName = localStorage.getItem('sb_name');
+            const savedAvatar = localStorage.getItem('sb_avatar');
+            const savedWords = localStorage.getItem('sb_words');
             
             if (savedName) {
                 userName = savedName;
-                userAvatar = savedAvatar || "👧";
+                userAvatar = savedAvatar || '👧';
                 updateNameDisplays();
                 
-                if (savedWords) {
-                    try {
-                        wordList = JSON.parse(savedWords);
-                    } catch(e) {
-                        wordList = [];
-                    }
-                    displaySavedWords();
-                }
+                try { wordList = savedWords ? JSON.parse(savedWords) : []; }
+                catch(e) { wordList = []; }
                 
-                // Restore avatar selection
-                document.querySelectorAll('.avatar-option').forEach(opt => {
-                    if (opt.textContent === userAvatar) {
-                        opt.classList.add('selected-avatar');
-                    } else {
-                        opt.classList.remove('selected-avatar');
-                    }
-                });
-                document.getElementById('user-avatar').textContent = userAvatar;
-                
-                showScreen('word-input-screen');
+                renderWords();
+                document.getElementById('mode-buttons').style.display = wordList.length > 0 ? 'flex' : 'none';
+                showScreen('word-screen');
             }
         };
         
-        function showScreen(screenName) {
+        function showScreen(name) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.querySelector(`.${screenName}`).classList.add('active');
+            document.querySelector(`.${name}`).classList.add('active');
         }
         
         function updateNameDisplays() {
-            document.getElementById('display-name').textContent = userName;
-            document.getElementById('display-avatar').textContent = userAvatar;
+            document.getElementById('banner-name').textContent = userName;
+            document.getElementById('banner-avatar').textContent = userAvatar;
             document.getElementById('practice-name').textContent = userName;
             document.getElementById('practice-avatar').textContent = userAvatar;
             document.getElementById('test-name').textContent = userName;
             document.getElementById('test-avatar').textContent = userAvatar;
         }
         
-        function saveName() {
-            userName = document.getElementById('user-name').value.trim();
-            if (userName) {
-                localStorage.setItem('spellingAppUserName', userName);
-                localStorage.setItem('spellingAppUserAvatar', userAvatar);
-                updateNameDisplays();
-                showScreen('word-input-screen');
-            } else {
-                showToast('Please enter your name!', 'warning');
-            }
+        // ===== WELCOME =====
+        function pickAvatar(emoji, el) {
+            userAvatar = emoji;
+            document.getElementById('preview-avatar').textContent = emoji;
+            document.querySelectorAll('.avatar-opt').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
         }
         
-        function selectAvatar(avatar, element) {
-            userAvatar = avatar;
-            document.getElementById('user-avatar').textContent = avatar;
-            document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected-avatar'));
-            element.classList.add('selected-avatar');
+        function startApp() {
+            const name = document.getElementById('input-name').value.trim();
+            if (!name) {
+                showToast('Please type your name!', 'warning');
+                return;
+            }
+            userName = name;
+            localStorage.setItem('sb_name', userName);
+            localStorage.setItem('sb_avatar', userAvatar);
+            updateNameDisplays();
+            renderWords();
+            showScreen('word-screen');
         }
         
         function resetApp() {
-            if (confirm("This will clear all data for a new user. Are you sure?")) {
-                localStorage.removeItem('spellingAppUserName');
-                localStorage.removeItem('spellingAppUserAvatar');
-                localStorage.removeItem('spellingAppWordList');
-                userName = "";
-                userAvatar = "👧";
-                wordList = [];
-                document.getElementById('user-name').value = '';
-                document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected-avatar'));
-                document.querySelector('.avatar-option').classList.add('selected-avatar');
-                document.getElementById('user-avatar').textContent = "👧";
-                showScreen('welcome-screen');
-                showToast('App reset! Ready for new user.', 'success');
-            }
+            if (!confirm('This will clear everything for a new user. Continue?')) return;
+            localStorage.removeItem('sb_name');
+            localStorage.removeItem('sb_avatar');
+            localStorage.removeItem('sb_words');
+            userName = '';
+            userAvatar = '👧';
+            wordList = [];
+            document.getElementById('input-name').value = '';
+            document.getElementById('preview-avatar').textContent = '👧';
+            document.querySelectorAll('.avatar-opt').forEach(o => o.classList.remove('selected'));
+            document.querySelector('.avatar-opt').classList.add('selected');
+            document.getElementById('mode-buttons').style.display = 'none';
+            showScreen('welcome-screen');
+            showToast('All reset! Ready for a new user.', 'success');
         }
         
-        // ===== DICTIONARY LOOKUP (FIXED) =====
-        async function lookupDefinition() {
+        // ===== ADD WORDS =====
+        async function lookupDef() {
             const word = document.getElementById('new-word').value.trim();
             if (!word) {
-                showToast('Please enter a word first!', 'warning');
+                showToast('Type a word first!', 'warning');
+                document.getElementById('new-word').focus();
                 return;
             }
             
             const btn = document.getElementById('lookup-btn');
-            const originalHTML = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = '<span class="loading-spinner">⏳</span> Looking up...';
+            btn.innerHTML = '<span class="spinner"></span> Searching...';
             
             try {
-                const response = await fetch(
-                    `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`
-                );
+                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word.toLowerCase())}`);
+                if (!res.ok) throw new Error('Not found');
+                const data = await res.json();
                 
-                if (!response.ok) {
-                    throw new Error('Word not found');
-                }
+                const best = findBestDefinition(data[0]);
+                if (!best) throw new Error('No definition');
                 
-                const data = await response.json();
-                
-                if (!data || !data[0] || !data[0].meanings || data[0].meanings.length === 0) {
-                    throw new Error('No definition available');
-                }
-                
-                // Get the first meaning and definition
-                const meaning = data[0].meanings[0];
-                const definition = meaning.definitions[0].definition;
-                const partOfSpeech = meaning.partOfSpeech || '';
-                
-                document.getElementById('new-definition').value = definition;
-                showToast(`✓ Found! (${partOfSpeech})`, 'success');
-                
-            } catch (error) {
-                console.error('Lookup error:', error);
-                showToast('Could not find definition. Please type it manually.', 'error');
+                document.getElementById('new-def').value = best.definition;
+                showToast(`✓ Found! (${best.partOfSpeech})`, 'success');
+            } catch (err) {
+                showToast("Couldn't find it — type your own definition", 'error');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = originalHTML;
+                btn.innerHTML = '🔍 Look Up the Definition';
             }
+        }
+        
+        // Pick the clearest, most child-friendly definition
+        function findBestDefinition(entry) {
+            if (!entry || !entry.meanings) return null;
+            
+            const priority = { noun: 1, verb: 2, adjective: 3, adverb: 4 };
+            const candidates = [];
+            
+            entry.meanings.forEach(m => {
+                m.definitions.forEach(d => {
+                    if (d.definition && d.definition.length > 15 && d.definition.length < 180) {
+                        candidates.push({
+                            partOfSpeech: m.partOfSpeech || '',
+                            definition: cleanDef(d.definition),
+                            example: d.example || ''
+                        });
+                    }
+                });
+            });
+            
+            if (candidates.length === 0) {
+                // Fall back to any definition
+                const first = entry.meanings[0]?.definitions[0];
+                if (first?.definition) {
+                    return {
+                        partOfSpeech: entry.meanings[0].partOfSpeech || '',
+                        definition: cleanDef(first.definition),
+                        example: first.example || ''
+                    };
+                }
+                return null;
+            }
+            
+            // Sort by part of speech priority, then shortest (usually clearest)
+            candidates.sort((a, b) => {
+                const pa = priority[a.partOfSpeech] || 5;
+                const pb = priority[b.partOfSpeech] || 5;
+                if (pa !== pb) return pa - pb;
+                return a.definition.length - b.definition.length;
+            });
+            
+            return candidates[0];
+        }
+        
+        function cleanDef(text) {
+            let t = text.trim();
+            // Remove leading articles/labels like "(informal)" or "a "
+            t = t.replace(/^\([^)]+\)\s*/, '');
+            // Capitalize first letter
+            t = t.charAt(0).toUpperCase() + t.slice(1);
+            // Remove trailing period if very short
+            return t;
         }
         
         function addWord() {
             const word = document.getElementById('new-word').value.trim();
-            const definition = document.getElementById('new-definition').value.trim();
+            const def = document.getElementById('new-def').value.trim();
             
             if (!word) {
-                showToast('Please enter a word!', 'warning');
+                showToast('Please type a word!', 'warning');
+                document.getElementById('new-word').focus();
                 return;
             }
             
-            // Check for duplicates
             if (wordList.some(w => w.word.toLowerCase() === word.toLowerCase())) {
-                showToast('This word is already in your list!', 'warning');
+                showToast('That word is already in your list!', 'warning');
                 return;
             }
             
-            wordList.push({ word, definition: definition || 'No definition provided' });
-            localStorage.setItem('spellingAppWordList', JSON.stringify(wordList));
-            displaySavedWords();
+            wordList.push({
+                word,
+                definition: def || 'No definition yet',
+                partOfSpeech: '',
+                example: ''
+            });
+            
+            saveWords();
+            renderWords();
             
             document.getElementById('new-word').value = '';
-            document.getElementById('new-definition').value = '';
+            document.getElementById('new-def').value = '';
             document.getElementById('new-word').focus();
             
-            showToast(`"${word}" added!`, 'success');
+            showToast(`"${word}" added! ✨`, 'success');
         }
         
-        // ===== WORD LIST DISPLAY (FIXED - CENTERED) =====
-        function displaySavedWords() {
-            const wordsList = document.getElementById('saved-words-list');
-            document.getElementById('word-count').textContent = wordList.length;
-            wordsList.innerHTML = '';
-            
-            if (wordList.length === 0) {
-                wordsList.innerHTML = '<div class="empty-state">No words added yet. Add some words above!</div>';
-                return;
-            }
-            
-            wordList.forEach((wordObj, index) => {
-                const wordElement = document.createElement('div');
-                wordElement.className = 'word-item';
-                wordElement.innerHTML = `
-                    <div class="word-content">
-                        <strong>${escapeHtml(wordObj.word)}</strong>
-                        <div class="definition">${escapeHtml(wordObj.definition)}</div>
-                    </div>
-                    <button class="remove-btn" onclick="removeWord(${index})" title="Remove">✕</button>
-                `;
-                wordsList.appendChild(wordElement);
-            });
+        function saveWords() {
+            localStorage.setItem('sb_words', JSON.stringify(wordList));
         }
         
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        function removeWord(index) {
-            const removed = wordList[index].word;
-            wordList.splice(index, 1);
-            localStorage.setItem('spellingAppWordList', JSON.stringify(wordList));
-            displaySavedWords();
+        function removeWord(i) {
+            const removed = wordList[i].word;
+            wordList.splice(i, 1);
+            saveWords();
+            renderWords();
             showToast(`"${removed}" removed`, 'success');
         }
         
-        // ===== PRACTICE MODE =====
-        function startPractice() {
+        // ===== RENDER WORD LIST =====
+        function renderWords() {
+            const list = document.getElementById('word-list');
+            const badge = document.getElementById('count-badge');
+            const modeBtns = document.getElementById('mode-buttons');
+            
+            badge.textContent = `${wordList.length} word${wordList.length !== 1 ? 's' : ''}`;
+            modeBtns.style.display = wordList.length > 0 ? 'flex' : 'none';
+            
             if (wordList.length === 0) {
-                showToast('Please add some words first!', 'warning');
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">📝</span>
+                        Your list is empty.<br>Add your first word above!
+                    </div>`;
                 return;
             }
-            currentWordIndex = 0;
-            showScreen('practice-screen');
+            
+            list.innerHTML = wordList.map((w, i) => `
+                <div class="word-card">
+                    <div class="word-number">${i + 1}</div>
+                    <div class="word-body">
+                        <div class="word-head">
+                            <span class="word-text">${esc(w.word)}</span>
+                            ${w.partOfSpeech ? `<span class="pos-badge">${esc(w.partOfSpeech)}</span>` : ''}
+                        </div>
+                        <div class="word-def">${esc(w.definition || 'No definition yet')}</div>
+                        ${w.example ? `<div class="word-example">"${esc(w.example)}"</div>` : ''}
+                    </div>
+                    <button class="delete-btn" onclick="removeWord(${i})" aria-label="Remove word">✕</button>
+                </div>
+            `).join('');
+        }
+        
+        function esc(t) {
+            const d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        // ===== PRACTICE =====
+        function startPractice() {
+            if (wordList.length === 0) { showToast('Add some words first!', 'warning'); return; }
+            currentIdx = 0;
             document.getElementById('practice-total').textContent = wordList.length;
             updatePracticeUI();
+            showScreen('practice-screen');
         }
         
         function updatePracticeUI() {
-            document.getElementById('practice-current').textContent = currentWordIndex + 1;
-            document.getElementById('practice-progress').style.width = 
-                ((currentWordIndex / wordList.length) * 100) + '%';
+            const pct = Math.round((currentIdx / wordList.length) * 100);
+            document.getElementById('practice-current').textContent = currentIdx + 1;
+            document.getElementById('practice-progress').style.width = pct + '%';
+            document.getElementById('practice-percent').textContent = pct + '%';
+            document.getElementById('practice-input').value = '';
             document.getElementById('practice-feedback').textContent = '';
             document.getElementById('practice-feedback').className = 'feedback';
-            document.getElementById('practice-spelling').value = '';
-            document.getElementById('image-hint').style.display = 'none';
+            document.getElementById('hint-img').style.display = 'none';
+            document.getElementById('practice-input').focus();
         }
         
         function speakWord() {
             if (wordList.length === 0) return;
-            const word = wordList[currentWordIndex].word;
-            const utterance = new SpeechSynthesisUtterance(word);
-            utterance.rate = 0.8;
-            utterance.pitch = 1;
+            const u = new SpeechSynthesisUtterance(wordList[currentIdx].word);
+            u.rate = 0.85;
             speechSynthesis.cancel();
-            speechSynthesis.speak(utterance);
+            speechSynthesis.speak(u);
         }
         
-        function speakTestWord() {
-            speakWord();
-        }
-        
-        function showImageHint() {
+        function showHint() {
             if (wordList.length === 0) return;
-            const word = wordList[currentWordIndex].word;
-            const img = document.getElementById('image-hint');
+            const word = wordList[currentIdx].word;
+            const img = document.getElementById('hint-img');
             img.src = `https://loremflickr.com/300/200/${encodeURIComponent(word)}`;
             img.style.display = 'block';
             img.onerror = () => {
                 img.style.display = 'none';
-                showToast('No picture available for this word', 'warning');
+                showToast('No picture for this word', 'warning');
             };
         }
         
         function showDefinition() {
             if (wordList.length === 0) return;
-            const wordObj = wordList[currentWordIndex];
-            document.getElementById('definition-text').innerHTML = 
-                `<strong>${escapeHtml(wordObj.word)}</strong><br><br>${escapeHtml(wordObj.definition)}`;
-            document.getElementById('definition-modal').style.display = 'flex';
+            const w = wordList[currentIdx];
+            document.getElementById('def-modal-content').innerHTML = `
+                <div class="word">${esc(w.word)}</div>
+                ${w.partOfSpeech ? `<div style="color: #E67E22; font-style: italic; margin-bottom: 6px;">${esc(w.partOfSpeech)}</div>` : ''}
+                <div>${esc(w.definition)}</div>
+                ${w.example ? `<div style="margin-top: 8px; color: #9B7EFF; font-style: italic;">Example: "${esc(w.example)}"</div>` : ''}
+            `;
+            document.getElementById('def-modal').style.display = 'flex';
         }
         
         function closeModal() {
-            document.getElementById('definition-modal').style.display = 'none';
+            document.getElementById('def-modal').style.display = 'none';
         }
         
-        function checkPracticeSpelling() {
-            if (wordList.length === 0) return;
+        function checkPractice() {
+            const input = document.getElementById('practice-input').value.trim().toLowerCase();
+            const correct = wordList[currentIdx].word.toLowerCase();
+            const fb = document.getElementById('practice-feedback');
             
-            const userInput = document.getElementById('practice-spelling').value.trim().toLowerCase();
-            const correctWord = wordList[currentWordIndex].word.toLowerCase();
-            const feedback = document.getElementById('practice-feedback');
+            if (!input) { showToast('Type a word first!', 'warning'); return; }
             
-            if (!userInput) {
-                showToast('Please type a word first!', 'warning');
-                return;
-            }
-            
-            if (userInput === correctWord) {
-                feedback.textContent = "✓ Correct! Well done!";
-                feedback.className = "feedback correct";
-                createConfetti();
+            if (input === correct) {
+                fb.textContent = '✓ Correct! Well done!';
+                fb.className = 'feedback correct';
+                confetti();
             } else {
-                feedback.innerHTML = `✗ Not quite. The correct spelling is: <strong>${escapeHtml(wordList[currentWordIndex].word)}</strong>`;
-                feedback.className = "feedback incorrect";
+                fb.innerHTML = `✗ Not quite. It's spelled: <strong>${esc(wordList[currentIdx].word)}</strong>`;
+                fb.className = 'feedback incorrect';
             }
         }
         
-        function nextWord() {
-            if (wordList.length === 0) return;
-            currentWordIndex = (currentWordIndex + 1) % wordList.length;
+        function nextPractice() {
+            currentIdx = (currentIdx + 1) % wordList.length;
             updatePracticeUI();
         }
         
-        function switchToPracticeMode() {
-            startPractice();
-        }
-        
-        // ===== TEST MODE =====
-        function switchToTestMode() {
-            if (wordList.length === 0) {
-                showToast('Please add some words first!', 'warning');
-                return;
-            }
-            currentWordIndex = 0;
-            correctAnswers = 0;
-            showScreen('test-screen');
+        // ===== TEST =====
+        function startTest() {
+            if (wordList.length === 0) { showToast('Add some words first!', 'warning'); return; }
+            currentIdx = 0;
+            correctCount = 0;
             document.getElementById('test-total').textContent = wordList.length;
-            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('test-results').style.display = 'none';
             updateTestUI();
+            showScreen('test-screen');
         }
         
         function updateTestUI() {
-            if (currentWordIndex < wordList.length) {
-                document.getElementById('test-current').textContent = currentWordIndex + 1;
-            } else {
-                document.getElementById('test-current').textContent = wordList.length;
-            }
-            document.getElementById('test-progress').style.width = 
-                ((currentWordIndex / wordList.length) * 100) + '%';
+            const pct = Math.round((currentIdx / wordList.length) * 100);
+            document.getElementById('test-current').textContent = Math.min(currentIdx + 1, wordList.length);
+            document.getElementById('test-progress').style.width = pct + '%';
+            document.getElementById('test-percent').textContent = pct + '%';
+            document.getElementById('test-input').value = '';
+            document.getElementById('test-input').disabled = false;
             document.getElementById('test-feedback').textContent = '';
             document.getElementById('test-feedback').className = 'feedback';
-            document.getElementById('test-spelling').value = '';
-            document.getElementById('test-spelling').disabled = false;
-            document.querySelector('.test-area button').disabled = false;
+            document.querySelector('.test-card .btn-accent').disabled = false;
+            testAnswered = false;
+            document.getElementById('test-input').focus();
         }
         
-        function checkTestSpelling() {
-            if (wordList.length === 0) return;
+        function checkTest() {
+            if (testAnswered) return;
             
-            const userInput = document.getElementById('test-spelling').value.trim().toLowerCase();
-            const correctWord = wordList[currentWordIndex].word.toLowerCase();
-            const feedback = document.getElementById('test-feedback');
+            const input = document.getElementById('test-input').value.trim().toLowerCase();
+            const correct = wordList[currentIdx].word.toLowerCase();
+            const fb = document.getElementById('test-feedback');
             
-            if (!userInput) {
-                showToast('Please type a word first!', 'warning');
-                return;
-            }
+            if (!input) { showToast('Type a word first!', 'warning'); return; }
             
-            if (userInput === correctWord) {
-                feedback.textContent = "✓ Correct!";
-                feedback.className = "feedback correct";
-                correctAnswers++;
-                createConfetti();
+            testAnswered = true;
+            
+            if (input === correct) {
+                fb.textContent = '✓ Correct!';
+                fb.className = 'feedback correct';
+                correctCount++;
+                confetti();
             } else {
-                feedback.innerHTML = `✗ The correct spelling is: <strong>${escapeHtml(wordList[currentWordIndex].word)}</strong>`;
-                feedback.className = "feedback incorrect";
+                fb.innerHTML = `✗ It's spelled: <strong>${esc(wordList[currentIdx].word)}</strong>`;
+                fb.className = 'feedback incorrect';
             }
             
-            document.querySelector('.test-area button').disabled = true;
-            document.getElementById('test-spelling').disabled = true;
+            document.getElementById('test-input').disabled = true;
+            document.querySelector('.test-card .btn-accent').disabled = true;
         }
         
-        function nextTestWord() {
-            if (wordList.length === 0) return;
+        function nextTest() {
+            currentIdx++;
             
-            currentWordIndex++;
-            
-            if (currentWordIndex >= wordList.length) {
-                // Test complete
+            if (currentIdx >= wordList.length) {
+                const pct = Math.round((correctCount / wordList.length) * 100);
                 const results = document.getElementById('test-results');
-                const percent = Math.round((correctAnswers / wordList.length) * 100);
+                results.style.display = 'block';
                 results.innerHTML = `
                     <h2>🎉 Test Complete!</h2>
-                    <p style="margin: 10px 0;">You got <strong>${correctAnswers}</strong> out of <strong>${wordList.length}</strong> correct</p>
-                    <p style="font-size: 1.3rem; color: #FF6DB4;"><strong>${percent}%</strong></p>
-                    ${correctAnswers === wordList.length ? '<p class="celebrate">⭐ Perfect Score! ⭐</p>' : ''}
+                    <p style="margin: 8px 0;">You got <strong>${correctCount}</strong> of <strong>${wordList.length}</strong> correct</p>
+                    <p style="font-size: 1.5rem; color: var(--pink); font-weight: bold;">${pct}%</p>
+                    ${correctCount === wordList.length ? '<p class="celebrate">⭐ Perfect Score! ⭐</p>' : ''}
                 `;
-                if (correctAnswers === wordList.length) {
-                    createConfetti(30);
-                }
-                currentWordIndex = 0;
+                if (correctCount === wordList.length) confetti(30);
                 updateTestUI();
-                document.getElementById('test-feedback').textContent = '';
                 return;
             }
             
@@ -948,68 +1227,65 @@
         }
         
         function backToWords() {
-            showScreen('word-input-screen');
+            showScreen('word-screen');
         }
         
         // ===== UTILITIES =====
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => toast.classList.add('show'), 10);
+        function showToast(msg, type = 'info') {
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.classList.add('show'), 10);
             setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
+                t.classList.remove('show');
+                setTimeout(() => t.remove(), 400);
+            }, 2400);
         }
         
-        function createConfetti(count = 15) {
+        function confetti(count = 18) {
             for (let i = 0; i < count; i++) {
-                const confetti = document.createElement('div');
-                confetti.style.cssText = `
+                const c = document.createElement('div');
+                c.style.cssText = `
                     position: fixed;
                     left: ${Math.random() * 100}vw;
-                    top: -10px;
-                    width: ${5 + Math.random() * 10}px;
-                    height: ${5 + Math.random() * 10}px;
-                    background: hsl(${Math.random() * 360}, 100%, 60%);
-                    z-index: 1000;
+                    top: -12px;
+                    width: ${6 + Math.random() * 8}px;
+                    height: ${6 + Math.random() * 8}px;
+                    background: hsl(${Math.random() * 360}, 100%, 62%);
+                    z-index: 3000;
                     pointer-events: none;
-                    animation: confetti-fall ${3 + Math.random() * 2}s linear forwards;
-                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                    animation: confettiDrop ${2.5 + Math.random() * 2}s linear forwards;
                 `;
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 5000);
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 5000);
             }
         }
         
-        // Add confetti animation to stylesheet
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes confetti-fall {
-                0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            @keyframes confettiDrop {
+                0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
             }
         `;
         document.head.appendChild(style);
         
-        window.onclick = function(event) {
-            const modal = document.getElementById('definition-modal');
-            if (event.target === modal) closeModal();
-        };
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Enter') return;
+            const id = document.activeElement.id;
+            if (id === 'input-name') startApp();
+            else if (id === 'new-word') document.getElementById('new-def').focus();
+            else if (id === 'new-def') addWord();
+            else if (id === 'practice-input') checkPractice();
+            else if (id === 'test-input') checkTest();
+        });
         
-        // Enter key support
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const active = document.activeElement;
-                if (active.id === 'user-name') saveName();
-                else if (active.id === 'new-word') document.getElementById('new-definition').focus();
-                else if (active.id === 'new-definition') addWord();
-                else if (active.id === 'practice-spelling') checkPracticeSpelling();
-                else if (active.id === 'test-spelling') checkTestSpelling();
-            }
+        // Close modal on outside click
+        document.getElementById('def-modal').addEventListener('click', e => {
+            if (e.target.id === 'def-modal') closeModal();
         });
     </script>
 </body>
